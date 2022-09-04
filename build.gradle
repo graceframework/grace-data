@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenCentral()
         maven { url "https://repo.grails.org/grails/core" }
         maven { url "https://plugins.gradle.org/m2/" }
     }
@@ -89,6 +90,7 @@ subprojects {
         apply plugin: 'idea'
         apply plugin: 'java-library'
         apply plugin: "org.gradle.test-retry"
+        apply plugin: 'checkstyle'
         sourceCompatibility = "1.8"
         targetCompatibility = "1.8"
     }
@@ -216,6 +218,11 @@ subprojects {
 
     if (isStandardGroovyMavenProject) {
 
+        checkstyle {
+            toolVersion = "10.3.2"
+            configDirectory.set(rootProject.file("$rootDir/gradle/checkstyle"))
+        }
+
         configure([javadoc]) {
             options.encoding "UTF-8"
             options.docEncoding "UTF-8"
@@ -241,7 +248,7 @@ dependencies {
 
 task install(dependsOn: subprojects*.tasks*.withType(PublishToMavenLocal))
 
-apply from: 'https://raw.githubusercontent.com/grails/grails-common-build/master/common-publishing.gradle'
+apply from: resources.text.fromInsecureUri('http://localhost:9000/common-publishing.gradle')
 
 task test(dependsOn: getTasksByName("test", true)) {
      doLast {
