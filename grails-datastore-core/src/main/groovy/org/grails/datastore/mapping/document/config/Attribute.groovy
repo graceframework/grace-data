@@ -12,12 +12,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.grails.datastore.mapping.document.config
 
 import groovy.transform.CompileStatic
 import groovy.transform.builder.Builder
 import groovy.transform.builder.SimpleStrategy
+
 import org.grails.datastore.mapping.config.Property
 
 /**
@@ -44,4 +44,5 @@ class Attribute extends Property {
     void attribute(String name) {
         setTargetName(name)
     }
+
 }

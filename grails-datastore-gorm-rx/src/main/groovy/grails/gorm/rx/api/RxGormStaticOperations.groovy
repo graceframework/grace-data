@@ -1,10 +1,11 @@
 package grails.gorm.rx.api
 
+import rx.Observable
+
 import grails.gorm.api.GormAllOperations
 import grails.gorm.rx.CriteriaBuilder
 import grails.gorm.rx.DetachedCriteria
 import grails.gorm.rx.proxy.ObservableProxy
-import rx.Observable
 
 /**
  * Static methods allowed by RxGORM
@@ -13,6 +14,7 @@ import rx.Observable
  * @since 6.0
  */
 interface RxGormStaticOperations<D> {
+
     /**
      * @return A new instance of this RxEntity
      */
@@ -36,7 +38,6 @@ interface RxGormStaticOperations<D> {
      */
     Observable<D> get(Serializable id, Map queryArgs)
 
-
     /**
      * Retrieve a proxy to an instance by id
      *
@@ -54,7 +55,6 @@ interface RxGormStaticOperations<D> {
      * @return An observable
      */
     ObservableProxy<D> proxy(Serializable id, Map queryArgs)
-
 
     /**
      * Retrieve a proxy to an instance by id
@@ -85,7 +85,7 @@ interface RxGormStaticOperations<D> {
      * @param objects The objects to delete
      * @return The number of objects actually deleted
      */
-    Observable<Number> deleteAll(D...objects)
+    Observable<Number> deleteAll(D... objects)
 
     /**
      * Batch deletes a number of objects in one go
@@ -208,8 +208,6 @@ interface RxGormStaticOperations<D> {
      * @return A single that will emit the last object, if it exists
      */
     Observable<D> last(Map params)
-
-
 
     /**
      * List all entities and return an observable
@@ -343,6 +341,7 @@ interface RxGormStaticOperations<D> {
      * Creates a criteria builder instance
      */
     Observable withCriteria(Map builderArgs, @DelegatesTo(CriteriaBuilder) Closure callable)
+
     /**
      * Handles dynamic finders
      *
@@ -361,7 +360,6 @@ interface RxGormStaticOperations<D> {
      */
     Object staticPropertyMissing(String property)
 
-
     /**
      * Execute the closure with the given tenantId
      *
@@ -370,7 +368,6 @@ interface RxGormStaticOperations<D> {
      * @return The result of the closure
      */
     def <T> T withTenant(Serializable tenantId, @DelegatesTo(RxGormAllOperations) Closure<T> callable)
-
 
     /**
      * Execute the closure for each tenant
@@ -387,4 +384,5 @@ interface RxGormStaticOperations<D> {
      * @return The operations
      */
     RxGormAllOperations<D> withTenant(Serializable tenantId)
+
 }

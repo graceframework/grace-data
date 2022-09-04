@@ -1,6 +1,5 @@
 package grails.gorm.api
 
-
 /**
  * Instance methods of the GORM API.
  *
@@ -8,6 +7,7 @@ package grails.gorm.api
  * @param <D> the entity/domain class
  */
 interface GormInstanceOperations<D> {
+
     /**
      * Allow access to datasource by name
      *
@@ -119,4 +119,5 @@ interface GormInstanceOperations<D> {
      * Deletes an instance from the datastore
      */
     void delete(D instance, Map params)
+
 }

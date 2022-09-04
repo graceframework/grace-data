@@ -1,8 +1,10 @@
 package org.grails.gorm.rx.events
 
 import groovy.transform.CompileStatic
+
 import org.grails.datastore.mapping.engine.event.AbstractPersistenceEvent
 import org.grails.datastore.rx.RxDatastoreClient
+
 /**
  * An auto timestamp event listener for RxGORM
  *
@@ -11,6 +13,7 @@ import org.grails.datastore.rx.RxDatastoreClient
  */
 @CompileStatic
 class AutoTimestampEventListener extends org.grails.datastore.gorm.events.AutoTimestampEventListener {
+
     final RxDatastoreClient datastoreClient
 
     AutoTimestampEventListener(RxDatastoreClient datastoreClient) {
@@ -28,4 +31,5 @@ class AutoTimestampEventListener extends org.grails.datastore.gorm.events.AutoTi
     boolean supportsSourceType(Class<?> sourceType) {
         datastoreClient.getClass().equals(sourceType)
     }
+
 }

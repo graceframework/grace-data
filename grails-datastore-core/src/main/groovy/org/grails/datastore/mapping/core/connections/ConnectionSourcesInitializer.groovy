@@ -1,8 +1,9 @@
 package org.grails.datastore.mapping.core.connections
 
 import groovy.transform.CompileStatic
-import org.grails.datastore.mapping.core.exceptions.ConfigurationException
 import org.springframework.core.env.PropertyResolver
+
+import org.grails.datastore.mapping.core.exceptions.ConfigurationException
 
 /**
  * Initializer sequence for creating {@link ConnectionSources}
@@ -20,19 +21,22 @@ class ConnectionSourcesInitializer {
      * @param configuration The configuration
      * @return The {@link ConnectionSources}
      */
-    public static <T,S extends ConnectionSourceSettings> ConnectionSources create(ConnectionSourceFactory<T, S> connectionSourceFactory, PropertyResolver configuration) {
+    static <T, S extends ConnectionSourceSettings> ConnectionSources create(ConnectionSourceFactory<T, S> connectionSourceFactory,
+                                                                            PropertyResolver configuration) {
         ConnectionSource defaultConnectionSource = connectionSourceFactory.create(ConnectionSource.DEFAULT, configuration);
         Class<ConnectionSources> connectionSourcesClass = defaultConnectionSource.getSettings().getConnectionSourcesClass();
 
-        if(connectionSourcesClass == null) {
+        if (connectionSourcesClass == null) {
             return new InMemoryConnectionSources(defaultConnectionSource, connectionSourceFactory, configuration);
         }
         else {
             try {
                 return connectionSourcesClass.newInstance(defaultConnectionSource, connectionSourceFactory, configuration)
-            } catch (Throwable e) {
+            }
+            catch (Throwable e) {
                 throw new ConfigurationException("Cannot instantiate custom ConnectionSources implementation: $e.message", e)
             }
         }
     }
+
 }

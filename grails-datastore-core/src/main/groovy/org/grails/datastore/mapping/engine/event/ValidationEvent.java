@@ -29,7 +29,6 @@ public class ValidationEvent extends AbstractPersistenceEvent {
     }
 
 
-
     public List<?> getValidatedFields() {
         return validatedFields;
     }
@@ -42,4 +41,5 @@ public class ValidationEvent extends AbstractPersistenceEvent {
     public EventType getEventType() {
         return EventType.Validation;
     }
+
 }

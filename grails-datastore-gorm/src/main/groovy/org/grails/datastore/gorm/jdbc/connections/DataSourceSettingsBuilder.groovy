@@ -1,9 +1,10 @@
 package org.grails.datastore.gorm.jdbc.connections
 
 import groovy.transform.CompileStatic
+import org.springframework.core.env.PropertyResolver
+
 import org.grails.datastore.mapping.config.ConfigurationBuilder
 import org.grails.datastore.mapping.config.Settings
-import org.springframework.core.env.PropertyResolver
 
 /**
  * Settings builder for {@link DataSourceSettings}
@@ -13,6 +14,7 @@ import org.springframework.core.env.PropertyResolver
  */
 @CompileStatic
 class DataSourceSettingsBuilder extends ConfigurationBuilder<DataSourceSettings, DataSourceSettings> {
+
     DataSourceSettingsBuilder(PropertyResolver propertyResolver, String configurationPrefix = Settings.SETTING_DATASOURCE, Object fallBackSettings = null) {
         super(propertyResolver, configurationPrefix, fallBackSettings)
     }
@@ -26,4 +28,5 @@ class DataSourceSettingsBuilder extends ConfigurationBuilder<DataSourceSettings,
     protected DataSourceSettings toConfiguration(DataSourceSettings builder) {
         return builder
     }
+
 }

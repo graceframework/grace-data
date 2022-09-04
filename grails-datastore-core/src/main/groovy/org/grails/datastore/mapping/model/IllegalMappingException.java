@@ -27,4 +27,5 @@ public class IllegalMappingException extends RuntimeException {
     public IllegalMappingException(String s) {
         super(s);
     }
+
 }

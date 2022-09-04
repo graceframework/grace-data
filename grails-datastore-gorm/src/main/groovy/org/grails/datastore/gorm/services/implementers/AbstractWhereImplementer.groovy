@@ -1,19 +1,31 @@
 package org.grails.datastore.gorm.services.implementers
 
-import grails.gorm.DetachedCriteria
-import grails.gorm.services.Where
 import groovy.transform.CompileStatic
-import org.codehaus.groovy.ast.*
+import org.codehaus.groovy.ast.AnnotationNode
+import org.codehaus.groovy.ast.ClassHelper
+import org.codehaus.groovy.ast.ClassNode
+import org.codehaus.groovy.ast.MethodNode
 import org.codehaus.groovy.ast.expr.ClosureExpression
 import org.codehaus.groovy.ast.expr.Expression
 import org.codehaus.groovy.ast.expr.VariableExpression
 import org.codehaus.groovy.ast.stmt.BlockStatement
 import org.codehaus.groovy.ast.stmt.Statement
 import org.codehaus.groovy.control.SourceUnit
+
+import grails.gorm.DetachedCriteria
+import grails.gorm.services.Where
+
 import org.grails.datastore.gorm.query.transform.DetachedCriteriaTransformer
 import org.grails.datastore.mapping.reflect.AstUtils
 
-import static org.codehaus.groovy.ast.tools.GeneralUtils.*
+import static org.codehaus.groovy.ast.tools.GeneralUtils.args
+import static org.codehaus.groovy.ast.tools.GeneralUtils.assignS
+import static org.codehaus.groovy.ast.tools.GeneralUtils.callX
+import static org.codehaus.groovy.ast.tools.GeneralUtils.classX
+import static org.codehaus.groovy.ast.tools.GeneralUtils.ctorX
+import static org.codehaus.groovy.ast.tools.GeneralUtils.declS
+import static org.codehaus.groovy.ast.tools.GeneralUtils.returnS
+import static org.codehaus.groovy.ast.tools.GeneralUtils.varX
 import static org.grails.datastore.mapping.reflect.AstUtils.processVariableScopes
 
 /**
@@ -40,7 +52,7 @@ abstract class AbstractWhereImplementer extends AbstractReadOperationImplementer
 
     @Override
     boolean doesImplement(ClassNode domainClass, MethodNode methodNode) {
-        if( isAnnotated(domainClass, methodNode) ) {
+        if (isAnnotated(domainClass, methodNode)) {
             return isCompatibleReturnType(domainClass, methodNode, methodNode.returnType, methodNode.name)
         }
         return false
@@ -48,18 +60,18 @@ abstract class AbstractWhereImplementer extends AbstractReadOperationImplementer
 
     @Override
     void doImplement(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode) {
-
         AnnotationNode annotationNode = AstUtils.findAnnotation(abstractMethodNode, Where)
         abstractMethodNode.annotations.remove(annotationNode)
-        Expression expr = annotationNode.getMember("value")
         SourceUnit sourceUnit = abstractMethodNode.declaringClass.module.context
-        if(expr instanceof ClosureExpression) {
+
+        Expression expr = annotationNode.getMember("value")
+        if (expr instanceof ClosureExpression) {
             ClosureExpression originalClosureExpression = (ClosureExpression) expr
             ClosureExpression closureExpression = AstUtils.makeClosureAwareOfArguments(newMethodNode, originalClosureExpression)
             DetachedCriteriaTransformer transformer = new DetachedCriteriaTransformer(sourceUnit)
-            transformer.transformClosureExpression( domainClassNode, closureExpression)
+            transformer.transformClosureExpression(domainClassNode, closureExpression)
 
-            BlockStatement body = (BlockStatement)newMethodNode.getCode()
+            BlockStatement body = (BlockStatement) newMethodNode.getCode()
 
             Expression argsExpression = findArgsExpression(newMethodNode)
             VariableExpression queryVar = varX('$query')
@@ -69,7 +81,7 @@ abstract class AbstractWhereImplementer extends AbstractReadOperationImplementer
             )
             Expression connectionId = findConnectionId(newMethodNode)
 
-            if(connectionId != null) {
+            if (connectionId != null) {
                 body.addStatement(
                         assignS(queryVar, callX(queryVar, "withConnection", connectionId))
                 )
@@ -79,7 +91,7 @@ abstract class AbstractWhereImplementer extends AbstractReadOperationImplementer
             )
             Expression queryExpression = callX(queryVar, getQueryMethodToExecute(domainClassNode, newMethodNode), argsExpression != null ? argsExpression : AstUtils.ZERO_ARGUMENTS)
             body.addStatement(
-                buildReturnStatement(domainClassNode, abstractMethodNode, newMethodNode, queryExpression)
+                    buildReturnStatement(domainClassNode, abstractMethodNode, newMethodNode, queryExpression)
             )
             processVariableScopes(sourceUnit, targetClassNode, newMethodNode)
         }
@@ -87,7 +99,6 @@ abstract class AbstractWhereImplementer extends AbstractReadOperationImplementer
             AstUtils.error(sourceUnit, annotationNode, "@Where value must be a closure")
         }
     }
-
 
     protected ClassNode getDetachedCriteriaType(ClassNode domainClassNode) {
         ClassHelper.make(DetachedCriteria)
@@ -105,4 +116,5 @@ abstract class AbstractWhereImplementer extends AbstractReadOperationImplementer
     Iterable<String> getHandledPrefixes() {
         return Collections.emptyList()
     }
+
 }

@@ -15,15 +15,21 @@
  */
 package grails.gorm.transactions;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import org.codehaus.groovy.transform.GroovyASTTransformationClass;
-import org.grails.datastore.gorm.transform.GormASTTransformationClass;
-import org.grails.datastore.mapping.core.connections.ConnectionSource;
-import org.grails.datastore.mapping.core.connections.ConnectionSourcesProvider;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 
-import java.lang.annotation.*;
+import org.grails.datastore.gorm.transform.GormASTTransformationClass;
+import org.grails.datastore.mapping.core.connections.ConnectionSource;
+import org.grails.datastore.mapping.core.connections.ConnectionSourcesProvider;
 
 /**
  * Define a read-only transaction
@@ -31,13 +37,14 @@ import java.lang.annotation.*;
  * @since 6.1
  * @author Graeme Rocher
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 @GroovyASTTransformationClass("org.grails.datastore.gorm.transform.OrderedGormTransformation")
 @GormASTTransformationClass("org.grails.datastore.gorm.transactions.transform.TransactionalTransform")
 public @interface ReadOnly {
+
     /**
      * A qualifier value for the specified transaction.
      * <p>May be used to determine the target transaction manager,
@@ -136,4 +143,5 @@ public @interface ReadOnly {
      * The connection to use by default
      */
     String connection() default ConnectionSource.DEFAULT;
+
 }

@@ -24,7 +24,9 @@ import org.grails.datastore.mapping.query.Query;
 public class FunctionCallingCriterion extends Query.PropertyNameCriterion {
 
     private String functionName;
+
     private Query.PropertyCriterion propertyCriterion;
+
     private boolean onValue;
 
     public FunctionCallingCriterion(String functionName, Query.PropertyCriterion propertyCriterion) {
@@ -55,4 +57,5 @@ public class FunctionCallingCriterion extends Query.PropertyNameCriterion {
     public boolean isOnValue() {
         return onValue;
     }
+
 }

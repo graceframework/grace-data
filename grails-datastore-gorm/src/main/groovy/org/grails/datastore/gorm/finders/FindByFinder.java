@@ -33,4 +33,5 @@ public class FindByFinder extends AbstractFindByFinder {
     public FindByFinder(MappingContext mappingContext) {
         super(Pattern.compile(METHOD_PATTERN), mappingContext);
     }
+
 }

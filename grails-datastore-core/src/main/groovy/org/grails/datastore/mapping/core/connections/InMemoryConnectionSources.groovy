@@ -1,12 +1,13 @@
 package org.grails.datastore.mapping.core.connections
 
+import java.util.concurrent.ConcurrentHashMap
+
 import groovy.transform.CompileStatic
 import org.springframework.core.env.PropertyResolver
 
-import java.util.concurrent.ConcurrentHashMap
-
 /**
- * Default implementation of the {@link ConnectionSources} interface. This implementation reads {@link ConnectionSource} implementations from configuration and stores them in-memory
+ * Default implementation of the {@link ConnectionSources} interface.
+ * This implementation reads {@link ConnectionSource} implementations from configuration and stores them in-memory
  *
  * @author Graeme Rocher
  * @since 6.0
@@ -16,14 +17,15 @@ class InMemoryConnectionSources<T, S extends ConnectionSourceSettings> extends A
 
     protected final Map<String, ConnectionSource<T, S>> connectionSourceMap = new ConcurrentHashMap<>()
 
-    InMemoryConnectionSources(ConnectionSource<T, S> defaultConnectionSource, ConnectionSourceFactory<T, S> connectionSourceFactory, PropertyResolver configuration) {
+    InMemoryConnectionSources(ConnectionSource<T, S> defaultConnectionSource, ConnectionSourceFactory<T, S> connectionSourceFactory,
+                              PropertyResolver configuration) {
         super(defaultConnectionSource, connectionSourceFactory, configuration)
         this.connectionSourceMap.put(ConnectionSource.DEFAULT, defaultConnectionSource)
 
-        for(String name : getConnectionSourceNames(connectionSourceFactory, configuration)) {
-            if(name.equals("dataSource")) continue // data source is reserved name for the default
+        for (String name : getConnectionSourceNames(connectionSourceFactory, configuration)) {
+            if (name.equals("dataSource")) continue // data source is reserved name for the default
             ConnectionSource<T, S> connectionSource = connectionSourceFactory.create(name, configuration, defaultConnectionSource.getSettings())
-            if(connectionSource != null) {
+            if (connectionSource != null) {
                 this.connectionSourceMap.put(name, connectionSource)
             }
         }
@@ -41,24 +43,23 @@ class InMemoryConnectionSources<T, S extends ConnectionSourceSettings> extends A
 
     @Override
     ConnectionSource<T, S> addConnectionSource(String name, PropertyResolver configuration) {
-        if(name == null) {
+        if (name == null) {
             throw new IllegalArgumentException("Argument [name] cannot be null")
         }
-        if(configuration == null) {
+        if (configuration == null) {
             throw new IllegalArgumentException("Argument [configuration] cannot be null")
         }
 
-        ConnectionSource<T, S> connectionSource = connectionSourceFactory.createRuntime(name, configuration, (S)this.defaultConnectionSource.getSettings())
-        if(connectionSource == null) {
+        ConnectionSource<T, S> connectionSource = connectionSourceFactory.createRuntime(name, configuration, (S) this.defaultConnectionSource.getSettings())
+        if (connectionSource == null) {
             throw new IllegalStateException("ConnectionSource factory returned null")
         }
         this.connectionSourceMap.put(name, connectionSource)
 
-        for(listener in listeners) {
+        for (listener in listeners) {
             listener.newConnectionSource(connectionSource)
         }
         return connectionSource
     }
-
 
 }

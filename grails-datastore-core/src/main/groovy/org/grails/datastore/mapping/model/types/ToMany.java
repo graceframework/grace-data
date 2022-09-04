@@ -15,12 +15,13 @@
  */
 package org.grails.datastore.mapping.model.types;
 
+import java.beans.PropertyDescriptor;
+
+import javax.persistence.FetchType;
+
 import org.grails.datastore.mapping.config.Property;
 import org.grails.datastore.mapping.model.MappingContext;
 import org.grails.datastore.mapping.model.PersistentEntity;
-
-import javax.persistence.FetchType;
-import java.beans.PropertyDescriptor;
 
 /**
  * Shared super class inherited by both {@link OneToMany} and {@link ManyToMany}

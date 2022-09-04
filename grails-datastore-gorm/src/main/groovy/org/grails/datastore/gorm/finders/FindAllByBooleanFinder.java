@@ -32,8 +32,10 @@ import org.grails.datastore.mapping.model.MappingContext;
  * @author Jeff Brown
  * @author Graeme Rocher
  */
-public class FindAllByBooleanFinder extends FindAllByFinder{
+public class FindAllByBooleanFinder extends FindAllByFinder {
+
     public static final String METHOD_PATTERN = "(findAll)((\\w+)(By)([A-Z]\\w*)|(\\w+))";
+
     public FindAllByBooleanFinder(Datastore datastore) {
         super(datastore);
         setPattern(METHOD_PATTERN);
@@ -48,4 +50,5 @@ public class FindAllByBooleanFinder extends FindAllByFinder{
     public boolean firstExpressionIsRequiredBoolean() {
         return true;
     }
+
 }

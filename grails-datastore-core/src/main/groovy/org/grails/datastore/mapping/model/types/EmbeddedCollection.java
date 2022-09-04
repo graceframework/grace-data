@@ -36,4 +36,5 @@ public abstract class EmbeddedCollection<T extends Property> extends Association
     public boolean isOwningSide() {
         return true; // embedded instances are always owned
     }
+
 }

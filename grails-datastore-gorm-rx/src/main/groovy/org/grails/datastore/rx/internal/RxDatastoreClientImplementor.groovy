@@ -1,6 +1,9 @@
 package org.grails.datastore.rx.internal
 
+import rx.Observable
+
 import grails.gorm.rx.proxy.ObservableProxy
+
 import org.grails.datastore.mapping.model.PersistentEntity
 import org.grails.datastore.mapping.query.Query
 import org.grails.datastore.rx.RxDatastoreClient
@@ -8,7 +11,6 @@ import org.grails.datastore.rx.query.QueryState
 import org.grails.gorm.rx.api.RxGormInstanceApi
 import org.grails.gorm.rx.api.RxGormStaticApi
 import org.grails.gorm.rx.api.RxGormValidationApi
-import rx.Observable
 
 /**
  * Internal non-client methods implemented by the implementor
@@ -22,6 +24,7 @@ interface RxDatastoreClientImplementor<T> extends RxDatastoreClient<T> {
      * @return Whether blocking operations are allowed by the implementation
      */
     boolean isAllowBlockingOperations()
+
     /**
      * Obtain an instance passing the query state
      *

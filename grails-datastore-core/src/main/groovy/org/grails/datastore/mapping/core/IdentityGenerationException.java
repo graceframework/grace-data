@@ -27,4 +27,5 @@ public class IdentityGenerationException extends RuntimeException {
     public IdentityGenerationException(String msg) {
         super(msg);
     }
+
 }

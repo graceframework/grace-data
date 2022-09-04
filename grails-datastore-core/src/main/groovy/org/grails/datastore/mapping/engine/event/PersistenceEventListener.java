@@ -20,5 +20,7 @@ import org.springframework.context.event.SmartApplicationListener;
  * @author Burt Beckwith
  */
 public interface PersistenceEventListener extends SmartApplicationListener {
+
     int DEFAULT_ORDER = Integer.MAX_VALUE / 2;
+
 }

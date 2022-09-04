@@ -31,4 +31,5 @@ public class EntityCreationException extends RuntimeException {
     public EntityCreationException(String msg, Throwable throwable) {
         super(msg, throwable);
     }
+
 }

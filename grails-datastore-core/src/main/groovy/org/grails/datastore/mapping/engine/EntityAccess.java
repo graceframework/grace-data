@@ -9,6 +9,7 @@ import org.grails.datastore.mapping.model.PersistentEntity;
  *
  */
 public interface EntityAccess {
+
     /**
      * @return The entity being persisted
      */
@@ -81,4 +82,5 @@ public interface EntityAccess {
      * @param value The value
      */
     void setPropertyNoConversion(String name, Object value);
+
 }

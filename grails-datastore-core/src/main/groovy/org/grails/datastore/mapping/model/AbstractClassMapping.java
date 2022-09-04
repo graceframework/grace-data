@@ -24,8 +24,11 @@ import org.grails.datastore.mapping.config.Entity;
  */
 @SuppressWarnings("rawtypes")
 public abstract class AbstractClassMapping<T extends Entity> implements ClassMapping {
+
     protected PersistentEntity entity;
+
     protected MappingContext context;
+
     private IdentityMapping identifierMapping;
 
     public AbstractClassMapping(PersistentEntity entity, MappingContext context) {
@@ -44,4 +47,5 @@ public abstract class AbstractClassMapping<T extends Entity> implements ClassMap
     public IdentityMapping getIdentifier() {
         return identifierMapping;
     }
+
 }

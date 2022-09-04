@@ -11,7 +11,8 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class DirtyCheckingList extends DirtyCheckingCollection implements List {
 
-    @Delegate List target
+    @Delegate
+    List target
 
     DirtyCheckingList(List target, DirtyCheckable parent, String property) {
         super(target, parent, property)
@@ -36,10 +37,10 @@ class DirtyCheckingList extends DirtyCheckingCollection implements List {
         target.add(index, element)
     }
 
-
     @Override
     Object remove(int index) {
         parent.markDirty(property)
-        target.remove((int)index)
+        target.remove((int) index)
     }
+
 }

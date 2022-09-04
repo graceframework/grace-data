@@ -20,4 +20,5 @@ public class SessionCreationEvent extends ApplicationEvent {
     public Session getSession() {
         return session;
     }
+
 }

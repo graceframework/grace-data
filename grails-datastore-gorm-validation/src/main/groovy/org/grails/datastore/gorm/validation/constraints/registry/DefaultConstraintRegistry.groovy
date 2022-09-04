@@ -1,7 +1,13 @@
 package org.grails.datastore.gorm.validation.constraints.registry
 
-import grails.gorm.validation.Constraint
+import java.util.concurrent.ConcurrentHashMap
+
 import groovy.transform.CompileStatic
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.MessageSource
+
+import grails.gorm.validation.Constraint
+
 import org.grails.datastore.gorm.validation.constraints.BlankConstraint
 import org.grails.datastore.gorm.validation.constraints.CreditCardConstraint
 import org.grails.datastore.gorm.validation.constraints.EmailConstraint
@@ -20,11 +26,6 @@ import org.grails.datastore.gorm.validation.constraints.UrlConstraint
 import org.grails.datastore.gorm.validation.constraints.ValidatorConstraint
 import org.grails.datastore.gorm.validation.constraints.factory.ConstraintFactory
 import org.grails.datastore.gorm.validation.constraints.factory.DefaultConstraintFactory
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.MessageSource
-
-import java.util.concurrent.ConcurrentHashMap
-
 
 /**
  * Default implementation of the {@link ConstraintRegistry} interface. Provides lookup and registration of constraints
@@ -46,7 +47,6 @@ class DefaultConstraintRegistry implements ConstraintRegistry {
 
     DefaultConstraintRegistry(MessageSource messageSource) {
         this.messageSource = messageSource
-
 
         def charSequenceType = [CharSequence]
         def comparableNumberType = [Comparable, Number]
@@ -72,15 +72,15 @@ class DefaultConstraintRegistry implements ConstraintRegistry {
 
     @Autowired(required = false)
     void setConstraintFactories(ConstraintFactory... constraintFactories) {
-        for(factory in constraintFactories) {
+        for (factory in constraintFactories) {
             addConstraintFactory(factory)
         }
     }
 
     @Override
     void addConstraintFactory(ConstraintFactory factory) {
-        factoriesByType.get( factory.type ).add(factory)
-        factoriesByName.get( factory.name).add(factory)
+        factoriesByType.get(factory.type).add(factory)
+        factoriesByName.get(factory.name).add(factory)
     }
 
     @Override
@@ -97,4 +97,5 @@ class DefaultConstraintRegistry implements ConstraintRegistry {
     def <T extends Constraint> List<ConstraintFactory<T>> findConstraintFactories(Class<T> constraintType) {
         return factoriesByType.get(constraintType)
     }
+
 }

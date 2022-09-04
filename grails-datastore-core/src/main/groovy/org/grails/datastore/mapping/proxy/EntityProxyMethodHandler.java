@@ -15,9 +15,9 @@
  */
 package org.grails.datastore.mapping.proxy;
 
-import org.grails.datastore.mapping.model.config.GormProperties;
-
 import java.lang.reflect.Method;
+
+import org.grails.datastore.mapping.model.config.GormProperties;
 
 /**
  * Base class for entity proxy handlers that are aware of Groovy
@@ -30,14 +30,23 @@ import java.lang.reflect.Method;
 public abstract class EntityProxyMethodHandler extends GroovyObjectMethodHandler {
 
     public static final String PROXY_PROPERTY = "proxy";
+
     public static final String PROXY_KEY_PROPERTY = "proxyKey";
+
     public static final String INITIALIZED_PROPERTY = "initialized";
+
     public static final String TARGET_PROPERTY = "target";
+
     public static final String IS_PROXY_METHOD = "isProxy";
+
     public static final String GET_PROXY_KEY_METHOD = "getProxyKey";
+
     public static final String GET_ID_METHOD = "getId";
+
     public static final String IS_INITIALIZED_METHOD = "isInitialized";
+
     public static final String INITIALIZE_METHOD = "initialize";
+
     public static final String GET_TARGET_METHOD = "getTarget";
 
     public EntityProxyMethodHandler(Class<?> proxyClass) {
@@ -48,33 +57,38 @@ public abstract class EntityProxyMethodHandler extends GroovyObjectMethodHandler
     protected Object getPropertyBeforeResolving(Object self, String property) {
         if (property.equals(PROXY_PROPERTY)) {
             return true;
-        } else if (property.equals(PROXY_KEY_PROPERTY) || property.equals(GormProperties.IDENTITY)) {
+        }
+        else if (property.equals(PROXY_KEY_PROPERTY) || property.equals(GormProperties.IDENTITY)) {
             return getProxyKey(self);
-        } else if (property.equals(INITIALIZED_PROPERTY)) {
+        }
+        else if (property.equals(INITIALIZED_PROPERTY)) {
             return isProxyInitiated(self);
-        } else if (property.equals(TARGET_PROPERTY)) {
+        }
+        else if (property.equals(TARGET_PROPERTY)) {
             return getProxyTarget(self);
-        } else {
+        }
+        else {
             return super.getPropertyBeforeResolving(self, property);
         }
     }
-    
+
     @Override
     public Object invokeMethodBeforeResolving(Object self, String methodName, Object[] args) {
         Object result = invokeEntityProxyMethods(self, methodName, args);
-        if(!wasHandled(result)) {
+        if (!wasHandled(result)) {
             return super.invokeMethodBeforeResolving(self, methodName, args);
-        } else { 
+        }
+        else {
             return result;
         }
     }
-    
+
     @Override
     public Object handleInvocation(Object self, Method thisMethod, Object[] args) {
         Object result = invokeEntityProxyMethods(self, thisMethod.getName(), args);
-        if(!wasHandled(result)) {
+        if (!wasHandled(result)) {
             result = super.handleInvocation(self, thisMethod, args);
-            if(!wasHandled(result)) {
+            if (!wasHandled(result)) {
                 return handleInvocationFallback(self, thisMethod, args);
             }
         }
@@ -82,22 +96,27 @@ public abstract class EntityProxyMethodHandler extends GroovyObjectMethodHandler
     }
 
     protected Object handleInvocationFallback(Object self, Method thisMethod, Object[] args) {
-       return INVOKE_IMPLEMENTATION;
-    }    
-    
+        return INVOKE_IMPLEMENTATION;
+    }
+
     protected Object invokeEntityProxyMethods(Object self, String methodName, Object[] args) {
         if (methodName.equals(IS_PROXY_METHOD)) {
             return true;
-        } else if (methodName.equals(GET_PROXY_KEY_METHOD) || methodName.equals(GET_ID_METHOD)) {
+        }
+        else if (methodName.equals(GET_PROXY_KEY_METHOD) || methodName.equals(GET_ID_METHOD)) {
             return getProxyKey(self);
-        } else if (methodName.equals(IS_INITIALIZED_METHOD)) {
+        }
+        else if (methodName.equals(IS_INITIALIZED_METHOD)) {
             return isProxyInitiated(self);
-        } else if (methodName.equals(GET_TARGET_METHOD)) {
+        }
+        else if (methodName.equals(GET_TARGET_METHOD)) {
             return getProxyTarget(self);
-        } else if (methodName.equals(INITIALIZE_METHOD)) {
+        }
+        else if (methodName.equals(INITIALIZE_METHOD)) {
             initializeProxyTarget(self);
             return Void.class;
-        } else {
+        }
+        else {
             return INVOKE_IMPLEMENTATION;
         }
     }
@@ -114,4 +133,5 @@ public abstract class EntityProxyMethodHandler extends GroovyObjectMethodHandler
     protected abstract Object isProxyInitiated(Object self);
 
     protected abstract Object getProxyKey(Object self);
+
 }

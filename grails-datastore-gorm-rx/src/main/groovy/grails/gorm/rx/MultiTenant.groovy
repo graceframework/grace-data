@@ -15,6 +15,7 @@ import org.grails.gorm.rx.api.RxGormEnhancer
  */
 @CompileStatic
 trait MultiTenant<D> extends RxEntity<D> {
+
     /**
      * Execute the closure with the given tenantId
      *
@@ -45,4 +46,5 @@ trait MultiTenant<D> extends RxEntity<D> {
     static RxGormAllOperations<D> withTenant(Serializable tenantId) {
         (RxGormAllOperations<D>)RxGormEnhancer.findStaticApi(this).withTenant(tenantId)
     }
+
 }

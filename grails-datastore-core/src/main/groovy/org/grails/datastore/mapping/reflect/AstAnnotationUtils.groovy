@@ -1,5 +1,7 @@
 package org.grails.datastore.mapping.reflect
 
+import java.lang.annotation.Annotation
+
 import groovy.transform.CompileStatic
 import org.codehaus.groovy.ast.AnnotatedNode
 import org.codehaus.groovy.ast.AnnotationNode
@@ -8,9 +10,6 @@ import org.codehaus.groovy.ast.ClassNode
 import org.codehaus.groovy.ast.MethodNode
 import org.codehaus.groovy.ast.expr.ConstantExpression
 import org.codehaus.groovy.ast.expr.Expression
-import org.codehaus.groovy.ast.expr.VariableExpression
-
-import java.lang.annotation.Annotation
 
 /**
  * Utility methods for dealing with annotations in AST transforms
@@ -20,11 +19,12 @@ import java.lang.annotation.Annotation
  */
 @CompileStatic
 class AstAnnotationUtils {
+
     private static final Set<String> JUNIT_ANNOTATION_NAMES = new HashSet<String>(Arrays.asList("org.junit.jupiter.api.BeforeEach", "org.junit.jupiter.api.AfterEach"))
 
     static AnnotationNode findAnnotation(AnnotatedNode classNode, Class<?> type) {
         List<AnnotationNode> annotations = classNode.getAnnotations()
-        return annotations == null ? null : findAnnotation(new ClassNode(type),annotations)
+        return annotations == null ? null : findAnnotation(new ClassNode(type), annotations)
     }
 
     static AnnotationNode findAnnotation(AnnotatedNode annotationClassNode, List<AnnotationNode> annotations) {
@@ -59,7 +59,7 @@ class AstAnnotationUtils {
      */
     static boolean hasJunitAnnotation(MethodNode md) {
         for (AnnotationNode annotation in md.getAnnotations()) {
-            if(JUNIT_ANNOTATION_NAMES.contains(annotation.getClassNode().getName())) {
+            if (JUNIT_ANNOTATION_NAMES.contains(annotation.getClassNode().getName())) {
                 return true
             }
         }
@@ -75,8 +75,8 @@ class AstAnnotationUtils {
      */
     static boolean hasAnnotation(final MethodNode methodNode, String annotationClassName) {
         List<AnnotationNode> annos = methodNode.getAnnotations()
-        for(ann in annos) {
-            if(ann.classNode.name == annotationClassName) return true
+        for (ann in annos) {
+            if (ann.classNode.name == annotationClassName) return true
         }
         return false
     }
@@ -87,7 +87,6 @@ class AstAnnotationUtils {
         }
     }
 
-
     /**
      * @param classNode a ClassNode to search
      * @param annotationsToLookFor Annotations to look for
@@ -95,7 +94,7 @@ class AstAnnotationUtils {
      */
     static boolean hasAnyAnnotations(final ClassNode classNode, final Class<? extends Annotation>... annotationsToLookFor) {
         for (Class<? extends Annotation> annotationClass : annotationsToLookFor) {
-            if(hasAnnotation(classNode, annotationClass)) {
+            if (hasAnnotation(classNode, annotationClass)) {
                 return true
             }
         }
@@ -119,7 +118,7 @@ class AstAnnotationUtils {
      * @param annotationClass The annotation class
      */
     static AnnotationNode addAnnotationOrGetExisting(AnnotatedNode classNode, Class<? extends Annotation> annotationClass) {
-        return addAnnotationOrGetExisting(classNode, annotationClass, Collections.<String, Object>emptyMap())
+        return addAnnotationOrGetExisting(classNode, annotationClass, Collections.<String, Object> emptyMap())
     }
 
     /**
@@ -144,7 +143,7 @@ class AstAnnotationUtils {
     }
 
     static AnnotationNode addAnnotationOrGetExisting(AnnotatedNode annotatedNode, ClassNode annotationClassNode) {
-        return addAnnotationOrGetExisting(annotatedNode, annotationClassNode, Collections.<String, Object>emptyMap())
+        return addAnnotationOrGetExisting(annotatedNode, annotationClassNode, Collections.<String, Object> emptyMap())
     }
 
     static AnnotationNode addAnnotationOrGetExisting(AnnotatedNode annotatedNode, ClassNode annotationClassNode, Map<String, Object> members) {
@@ -155,7 +154,7 @@ class AstAnnotationUtils {
         }
         else {
             AnnotationNode existing = findAnnotation(annotationClassNode, annotations)
-            if (existing != null){
+            if (existing != null) {
                 annotationToAdd = existing
             }
             else {
@@ -163,12 +162,13 @@ class AstAnnotationUtils {
             }
         }
 
-        if(members != null && !members.isEmpty()) {
+        if (members != null && !members.isEmpty()) {
             for (Map.Entry<String, Object> memberEntry : members.entrySet()) {
                 Object value = memberEntry.getValue()
-                annotationToAdd.setMember( memberEntry.getKey(), value instanceof Expression ? (Expression)value : new ConstantExpression(value))
+                annotationToAdd.setMember(memberEntry.getKey(), value instanceof Expression ? (Expression) value : new ConstantExpression(value))
             }
         }
         return annotationToAdd
     }
+
 }

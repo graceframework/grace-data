@@ -38,4 +38,5 @@ interface ConstraintFactory<T extends Constraint> {
      * @return A constraint instance
      */
     T build(Class owner, String property, Object constrainingValue)
+
 }

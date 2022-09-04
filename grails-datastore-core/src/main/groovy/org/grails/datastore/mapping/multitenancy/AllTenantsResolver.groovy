@@ -14,4 +14,5 @@ interface AllTenantsResolver extends TenantResolver {
      * @return Resolves all tenant ids
      */
     Iterable<Serializable> resolveTenantIds();
+
 }

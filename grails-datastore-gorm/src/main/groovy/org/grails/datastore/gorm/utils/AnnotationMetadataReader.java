@@ -1,4 +1,3 @@
-package org.grails.datastore.gorm.utils;
 /*
  * Copyright 2016 original authors
  *
@@ -14,6 +13,11 @@ package org.grails.datastore.gorm.utils;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.grails.datastore.gorm.utils;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import org.springframework.asm.AnnotationVisitor;
 import org.springframework.asm.SpringAsmInfo;
@@ -25,10 +29,6 @@ import org.springframework.core.type.ClassMetadata;
 import org.springframework.core.type.classreading.AnnotationMetadataReadingVisitor;
 import org.springframework.core.type.classreading.MetadataReader;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 /**
  * A more limited version of Spring's annotation reader that only reads annotations on classes
  *
@@ -36,6 +36,7 @@ import java.io.InputStream;
  * @since 3.1.13
  */
 public class AnnotationMetadataReader implements MetadataReader {
+
     private final Resource resource;
 
     private final ClassMetadata classMetadata;
@@ -64,10 +65,9 @@ public class AnnotationMetadataReader implements MetadataReader {
             is.close();
         }
 
-
         AnnotationMetadataReadingVisitor visitor;
 
-        if(readAttributeValues) {
+        if (readAttributeValues) {
             visitor = new AnnotationMetadataReadingVisitor(classLoader);
         }
         else {
@@ -87,7 +87,6 @@ public class AnnotationMetadataReader implements MetadataReader {
         this.classMetadata = visitor;
         this.resource = resource;
     }
-
 
     @Override
     public Resource getResource() {
@@ -110,10 +109,11 @@ public class AnnotationMetadataReader implements MetadataReader {
             super(loadAsmVersion());
         }
 
-        private static int loadAsmVersion()  {
+        private static int loadAsmVersion() {
             try {
-                return (int)SpringAsmInfo.class.getField("ASM_VERSION").get(null);
-            } catch (Exception e) {
+                return (int) SpringAsmInfo.class.getField("ASM_VERSION").get(null);
+            }
+            catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
@@ -127,5 +127,7 @@ public class AnnotationMetadataReader implements MetadataReader {
         public AnnotationVisitor visitArray(String name) {
             return this;
         }
+
     }
+
 }

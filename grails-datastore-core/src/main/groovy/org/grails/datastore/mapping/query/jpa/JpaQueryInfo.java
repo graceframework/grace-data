@@ -6,6 +6,7 @@ import java.util.List;
 public class JpaQueryInfo {
 
     String query;
+
     List parameters;
 
     public JpaQueryInfo(String query, List parameters) {
@@ -20,4 +21,5 @@ public class JpaQueryInfo {
     public List getParameters() {
         return parameters;
     }
+
 }

@@ -21,8 +21,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.codehaus.groovy.runtime.MetaClassHelper;
+
 import org.grails.datastore.mapping.model.config.GormProperties;
-import org.springframework.util.CollectionUtils;
 
 /**
  * @author Graeme Rocher
@@ -31,14 +31,17 @@ import org.springframework.util.CollectionUtils;
 public class NameUtils {
 
     private static final String PROPERTY_SET_PREFIX = "set";
+
     private static final String PROPERTY_GET_PREFIX = "get";
+
     private static final String PROPERTY_IS_PREFIX = "is";
 
     private static final Set<String> CONFIGURATIONAL_PROPERTIES;
+
     public static final String DOLLAR_SEPARATOR = "$";
 
     static {
-        Set<String> configurational = new HashSet<String>( Arrays.asList(
+        Set<String> configurational = new HashSet<String>(Arrays.asList(
                 GormProperties.META_CLASS,
                 GormProperties.CLASS,
                 GormProperties.TRANSIENT,
@@ -56,7 +59,8 @@ public class NameUtils {
                 "sessionFactory",
                 "messageSource",
                 "applicationContext",
-                "properties") );
+                "properties"));
+
         CONFIGURATIONAL_PROPERTIES = Collections.unmodifiableSet(configurational);
     }
 
@@ -76,7 +80,7 @@ public class NameUtils {
     public static String getSetterName(String propertyName) {
         return PROPERTY_SET_PREFIX + capitalize(propertyName);
     }
-    
+
     /**
      * Retrieves the name of a setter for the specified property name
      * @param propertyName The property name
@@ -105,7 +109,7 @@ public class NameUtils {
      */
     public static String getClassName(Class clazz) {
         final String sn = clazz.getSimpleName();
-        if(sn.contains(DOLLAR_SEPARATOR)) {
+        if (sn.contains(DOLLAR_SEPARATOR)) {
             return clazz.getSuperclass().getName();
         }
         return clazz.getName();
@@ -121,7 +125,8 @@ public class NameUtils {
 
         if (getterOrSetterName.startsWith(PROPERTY_GET_PREFIX) || getterOrSetterName.startsWith(PROPERTY_SET_PREFIX)) {
             return decapitalize(getterOrSetterName.substring(3));
-        } else if (getterOrSetterName.startsWith(PROPERTY_IS_PREFIX)) {
+        }
+        else if (getterOrSetterName.startsWith(PROPERTY_IS_PREFIX)) {
             return decapitalize(getterOrSetterName.substring(2));
         }
         return null;
@@ -160,4 +165,5 @@ public class NameUtils {
     public static String capitalize(String name) {
         return MetaClassHelper.capitalize(name);
     }
+
 }

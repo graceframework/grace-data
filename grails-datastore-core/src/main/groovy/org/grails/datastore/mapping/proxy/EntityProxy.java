@@ -43,4 +43,5 @@ public interface EntityProxy<T> {
      * @return The identifier
      */
     Serializable getProxyKey();
+
 }

@@ -2,6 +2,7 @@ package grails.gorm.rx.multitenancy
 
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
+
 import org.grails.datastore.mapping.core.connections.ConnectionSource
 import org.grails.datastore.mapping.core.connections.ConnectionSources
 import org.grails.datastore.mapping.multitenancy.AllTenantsResolver
@@ -9,6 +10,7 @@ import org.grails.datastore.mapping.multitenancy.MultiTenancySettings
 import org.grails.datastore.mapping.multitenancy.TenantResolver
 import org.grails.datastore.rx.RxDatastoreClient
 import org.grails.gorm.rx.api.RxGormEnhancer
+
 /**
  * Tenants implementation for RxGORM
  *
@@ -46,7 +48,7 @@ class Tenants extends grails.gorm.multitenancy.Tenants {
     static Serializable currentId() {
         RxDatastoreClient datastoreClient = RxGormEnhancer.findSingleDatastoreClient()
         def tenantId = grails.gorm.multitenancy.Tenants.CurrentTenant.get()
-        if(tenantId != null) {
+        if (tenantId != null) {
             return tenantId
         }
         else {
@@ -60,7 +62,7 @@ class Tenants extends grails.gorm.multitenancy.Tenants {
     static Serializable currentId(Class<? extends RxDatastoreClient> datastoreClass) {
         RxDatastoreClient datastore = RxGormEnhancer.findDatastoreClientByType(datastoreClass)
         def tenantId = grails.gorm.multitenancy.Tenants.CurrentTenant.get()
-        if(tenantId != null) {
+        if (tenantId != null) {
             log.debug "Found tenant id [$tenantId] bound to thread local"
             return tenantId
         }
@@ -95,7 +97,6 @@ class Tenants extends grails.gorm.multitenancy.Tenants {
         RxDatastoreClient datastoreClient = RxGormEnhancer.findDatastoreClientByType(datastoreClass)
         def tenantIdentifier = datastoreClient.getTenantResolver().resolveTenantIdentifier()
         return withTenantIdInternal(datastoreClient, tenantIdentifier, callable)
-
     }
 
     /**
@@ -108,6 +109,7 @@ class Tenants extends grails.gorm.multitenancy.Tenants {
         RxDatastoreClient datastoreClient = RxGormEnhancer.findSingleDatastoreClient()
         return withTenantIdInternal(datastoreClient, tenantId, callable)
     }
+
     /**
      * Execute the given closure with given tenant id
      * @param tenantId The tenant id
@@ -146,17 +148,21 @@ class Tenants extends grails.gorm.multitenancy.Tenants {
                     withTenantIdInternal(datastoreClient, tenantId, callable)
                 }
             }
-        } else if (multiTenancyMode.isSharedConnection()) {
+        }
+        else if (multiTenancyMode.isSharedConnection()) {
             TenantResolver tenantResolver = datastoreClient.tenantResolver
             if (tenantResolver instanceof AllTenantsResolver) {
                 for (tenantId in ((AllTenantsResolver) tenantResolver).resolveTenantIds()) {
                     withTenantIdInternal(datastoreClient, tenantId, callable)
                 }
-            } else {
+            }
+            else {
                 throw new UnsupportedOperationException("Multi tenancy mode $multiTenancyMode is configured, but the configured TenantResolver does not implement the [org.grails.datastore.mapping.multitenancy.AllTenantsResolver] interface")
             }
-        } else {
+        }
+        else {
             throw new UnsupportedOperationException("Method not supported in multi tenancy mode $multiTenancyMode")
         }
     }
+
 }

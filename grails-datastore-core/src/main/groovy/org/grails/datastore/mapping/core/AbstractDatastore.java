@@ -14,10 +14,22 @@
  */
 package org.grails.datastore.mapping.core;
 
+import java.util.Map;
+
+import javax.annotation.PreDestroy;
+
 import groovy.lang.Closure;
 import groovy.lang.GroovySystem;
 import groovy.lang.MetaClassRegistry;
-import groovy.util.ConfigObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.convert.converter.ConverterRegistry;
+import org.springframework.core.env.PropertyResolver;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
+
 import org.grails.datastore.mapping.cache.TPCacheAdapterRepository;
 import org.grails.datastore.mapping.config.Property;
 import org.grails.datastore.mapping.model.MappingContext;
@@ -25,26 +37,12 @@ import org.grails.datastore.mapping.model.PersistentEntity;
 import org.grails.datastore.mapping.model.PersistentProperty;
 import org.grails.datastore.mapping.model.PropertyMapping;
 import org.grails.datastore.mapping.model.types.BasicTypeConverterRegistrar;
-import org.grails.datastore.mapping.reflect.ClassPropertyFetcher;
 import org.grails.datastore.mapping.reflect.FieldEntityAccess;
 import org.grails.datastore.mapping.services.DefaultServiceRegistry;
 import org.grails.datastore.mapping.services.Service;
 import org.grails.datastore.mapping.services.ServiceNotFoundException;
 import org.grails.datastore.mapping.services.ServiceRegistry;
 import org.grails.datastore.mapping.transactions.SessionHolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.convert.converter.ConverterRegistry;
-import org.springframework.core.env.MapPropertySource;
-import org.springframework.core.env.PropertyResolver;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
-
-import javax.annotation.PreDestroy;
-import java.util.Map;
 
 /**
  * Abstract Datastore implementation that deals with binding the Session to thread locale upon creation.
@@ -52,33 +50,38 @@ import java.util.Map;
  * @author Graeme Rocher
  * @since 1.0
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public abstract class AbstractDatastore implements Datastore, StatelessDatastore, ServiceRegistry {
+
     protected static final Logger LOG = LoggerFactory.getLogger(AbstractDatastore.class);
+
     private ApplicationContext applicationContext;
 
     protected final MappingContext mappingContext;
+
     protected final ServiceRegistry serviceRegistry;
+
     protected final PropertyResolver connectionDetails;
+
     protected final TPCacheAdapterRepository cacheAdapterRepository;
 
 
     public AbstractDatastore(MappingContext mappingContext) {
-        this(mappingContext,(PropertyResolver) null, null);
+        this(mappingContext, (PropertyResolver) null, null);
     }
 
     public AbstractDatastore(MappingContext mappingContext, Map<String, Object> connectionDetails,
-              ConfigurableApplicationContext ctx) {
-        this(mappingContext, connectionDetails,  ctx, null);
+            ConfigurableApplicationContext ctx) {
+        this(mappingContext, connectionDetails, ctx, null);
     }
 
     public AbstractDatastore(MappingContext mappingContext, PropertyResolver connectionDetails,
-                             ConfigurableApplicationContext ctx) {
-        this(mappingContext, connectionDetails,  ctx, null);
+            ConfigurableApplicationContext ctx) {
+        this(mappingContext, connectionDetails, ctx, null);
     }
 
     public AbstractDatastore(MappingContext mappingContext, PropertyResolver connectionDetails,
-                             ConfigurableApplicationContext ctx, TPCacheAdapterRepository cacheAdapterRepository) {
+            ConfigurableApplicationContext ctx, TPCacheAdapterRepository cacheAdapterRepository) {
         this.mappingContext = mappingContext;
         this.connectionDetails = connectionDetails;
         setApplicationContext(ctx);
@@ -89,11 +92,11 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
     }
 
     public AbstractDatastore(MappingContext mappingContext, Map<String, Object> connectionDetails,
-              ConfigurableApplicationContext ctx, TPCacheAdapterRepository cacheAdapterRepository) {
+            ConfigurableApplicationContext ctx, TPCacheAdapterRepository cacheAdapterRepository) {
         this(mappingContext, mapToPropertyResolver(connectionDetails), ctx, cacheAdapterRepository);
     }
 
-    protected static PropertyResolver mapToPropertyResolver(Map<String,Object> connectionDetails) {
+    protected static PropertyResolver mapToPropertyResolver(Map<String, Object> connectionDetails) {
         return DatastoreUtils.createPropertyResolver(connectionDetails);
     }
 
@@ -115,8 +118,9 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
             final Class cls = persistentEntity.getJavaClass();
             try {
                 registry.removeMetaClass(cls);
-            } catch (Exception e) {
-                LOG.error("There was an error shutting down GORM for entity ["+cls.getName()+"]: " + e.getMessage(), e);
+            }
+            catch (Exception e) {
+                LOG.error("There was an error shutting down GORM for entity [" + cls.getName() + "]: " + e.getMessage(), e);
             }
         }
     }
@@ -137,7 +141,7 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
 
     private void publishSessionCreationEvent(Session session) {
         ApplicationEventPublisher applicationEventPublisher = getApplicationEventPublisher();
-        if(applicationEventPublisher != null) {
+        if (applicationEventPublisher != null) {
             applicationEventPublisher.publishEvent(new SessionCreationEvent(session));
         }
     }
@@ -148,7 +152,6 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
         publishSessionCreationEvent(session);
         return session;
     }
-
 
     /**
      * Creates the native session
@@ -167,7 +170,6 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
     protected Session createStatelessSession(PropertyResolver connectionDetails) {
         return createSession(connectionDetails);
     }
-
 
     public Session getCurrentSession() throws ConnectionNotFoundException {
         return DatastoreUtils.doGetSession(this, false);
@@ -218,18 +220,16 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
     }
 
     /**
-     * @deprecated  Deprecated, will be removed in a future version of GORM
+     * @deprecated Deprecated, will be removed in a future version of GORM
      */
     @Deprecated
     public ConfigurableApplicationContext getApplicationContext() {
-        return (ConfigurableApplicationContext)applicationContext;
+        return (ConfigurableApplicationContext) applicationContext;
     }
-
 
     public ApplicationEventPublisher getApplicationEventPublisher() {
         return getApplicationContext();
     }
-
 
     protected void initializeConverters(MappingContext mappingContext) {
         final ConverterRegistry conversionService = mappingContext.getConverterRegistry();
@@ -247,7 +247,6 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
         return false;
     }
 
-
     @Override
     public <T> T withSession(final Closure<T> callable) {
         return DatastoreUtils.execute(this, new SessionCallback<T>() {
@@ -257,4 +256,5 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
             }
         });
     }
+
 }

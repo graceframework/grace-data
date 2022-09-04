@@ -9,7 +9,8 @@ import org.codehaus.groovy.ast.MethodNode
  * @author Graeme Rocher
  * @since 6.1.1
  */
-interface IterableProjectionServiceImplementer extends IterableServiceImplementer  {
+interface IterableProjectionServiceImplementer extends IterableServiceImplementer {
+
     /**
      * Is the return type compatible with the projection query
      *

@@ -15,11 +15,11 @@
  */
 package org.grails.datastore.mapping.services;
 
-import groovy.transform.Internal;
-
 import java.util.Optional;
 import java.util.ServiceConfigurationError;
 import java.util.function.Supplier;
+
+import groovy.transform.Internal;
 
 /**
  * Default implementation of {@link ServiceDefinition}.
@@ -30,7 +30,9 @@ import java.util.function.Supplier;
  */
 @Internal
 class DefaultServiceDefinition<S> implements ServiceDefinition<S> {
+
     private final String name;
+
     private final Optional<Class<S>> loadedClass;
 
     /**
@@ -48,7 +50,9 @@ class DefaultServiceDefinition<S> implements ServiceDefinition<S> {
     }
 
     @Override
-    public Class<S> getType() { return loadedClass.orElseThrow(() -> new ServiceConfigurationError("Call to load() when class '" + name + "' is not present")); }
+    public Class<S> getType() {
+        return loadedClass.orElseThrow(() -> new ServiceConfigurationError("Call to load() when class '" + name + "' is not present"));
+    }
 
     @Override
     public boolean isPresent() {
@@ -60,7 +64,8 @@ class DefaultServiceDefinition<S> implements ServiceDefinition<S> {
         final Class<S> type = loadedClass.orElseThrow(exceptionSupplier);
         try {
             return type.newInstance();
-        } catch (Throwable e) {
+        }
+        catch (Throwable e) {
             throw exceptionSupplier.get();
         }
     }
@@ -70,9 +75,11 @@ class DefaultServiceDefinition<S> implements ServiceDefinition<S> {
         return loadedClass.map(aClass -> {
             try {
                 return aClass.newInstance();
-            } catch (Throwable e) {
+            }
+            catch (Throwable e) {
                 throw new ServiceConfigurationError("Error loading service [" + aClass.getName() + "]: " + e.getMessage(), e);
             }
         }).orElseThrow(() -> new ServiceConfigurationError("Call to load() when class '" + name + "' is not present"));
     }
+
 }

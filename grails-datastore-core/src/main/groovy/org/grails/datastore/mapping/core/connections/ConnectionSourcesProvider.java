@@ -11,5 +11,6 @@ public interface ConnectionSourcesProvider<T, S extends ConnectionSourceSettings
     /**
      * @return The {@link ConnectionSources}
      */
-    public ConnectionSources<T, S> getConnectionSources();
+    ConnectionSources<T, S> getConnectionSources();
+
 }

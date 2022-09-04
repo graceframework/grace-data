@@ -22,10 +22,11 @@ package org.grails.datastore.mapping.query.api;
  * @since 1.0
  */
 public interface ProjectionList {
+
     /**
-      * A Projection that obtains the id of an object
-      * @return The projection list
-      */
+     * A Projection that obtains the id of an object
+     * @return The projection list
+     */
     ProjectionList id();
 
     /**
@@ -110,4 +111,5 @@ public interface ProjectionList {
      * @return The PropertyProjection instance
      */
     ProjectionList avg(String name);
+
 }

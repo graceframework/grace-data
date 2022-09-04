@@ -14,10 +14,10 @@
  */
 package org.grails.datastore.mapping.query.api;
 
+import java.util.List;
+
 import org.grails.datastore.mapping.model.types.Association;
 import org.grails.datastore.mapping.query.Query;
-
-import java.util.List;
 
 /**
  * Interface for criteria related to an association
@@ -31,4 +31,5 @@ public interface AssociationCriteria {
     Association getAssociation();
 
     List<Query.Criterion> getCriteria();
+
 }

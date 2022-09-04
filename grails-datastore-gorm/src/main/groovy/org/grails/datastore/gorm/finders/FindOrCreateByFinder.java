@@ -14,18 +14,18 @@
  */
 package org.grails.datastore.gorm.finders;
 
-import groovy.lang.GroovySystem;
-import groovy.lang.MetaClass;
-import groovy.lang.MissingMethodException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import groovy.lang.GroovySystem;
+import groovy.lang.MetaClass;
+import groovy.lang.MissingMethodException;
+import org.springframework.core.convert.ConversionException;
+
 import org.grails.datastore.mapping.core.Datastore;
 import org.grails.datastore.mapping.model.MappingContext;
-import org.springframework.core.convert.ConversionException;
 
 /**
  * Finder used to return a single result
@@ -42,7 +42,6 @@ public class FindOrCreateByFinder extends AbstractFindByFinder {
         this(METHOD_PATTERN, datastore);
     }
 
-
     public FindOrCreateByFinder(MappingContext mappingContext) {
         super(Pattern.compile(METHOD_PATTERN), mappingContext);
     }
@@ -53,9 +52,8 @@ public class FindOrCreateByFinder extends AbstractFindByFinder {
 
 
     @Override
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     protected Object doInvokeInternal(final DynamicFinderInvocation invocation) {
-
         if (OPERATOR_OR.equals(invocation.getOperator())) {
             throw new MissingMethodException(invocation.getMethodName(), invocation.getJavaClass(), invocation.getArguments());
         }
@@ -63,7 +61,8 @@ public class FindOrCreateByFinder extends AbstractFindByFinder {
         Object result;
         try {
             result = super.doInvokeInternal(invocation);
-        } catch (ConversionException e) { // TODO this is not the right place to deal with this...
+        }
+        catch (ConversionException e) { // TODO this is not the right place to deal with this...
             throw new MissingMethodException(invocation.getMethodName(), invocation.getJavaClass(), invocation.getArguments());
         }
         if (result == null) {
@@ -78,7 +77,7 @@ public class FindOrCreateByFinder extends AbstractFindByFinder {
                 m.put(propertyName, arguments[0]);
             }
             MetaClass metaClass = GroovySystem.getMetaClassRegistry().getMetaClass(invocation.getJavaClass());
-            result = metaClass.invokeConstructor(new Object[]{m});
+            result = metaClass.invokeConstructor(new Object[] { m });
             if (shouldSaveOnCreate()) {
                 metaClass.invokeMethod(result, "save", null);
             }
@@ -89,4 +88,5 @@ public class FindOrCreateByFinder extends AbstractFindByFinder {
     protected boolean shouldSaveOnCreate() {
         return false;
     }
+
 }

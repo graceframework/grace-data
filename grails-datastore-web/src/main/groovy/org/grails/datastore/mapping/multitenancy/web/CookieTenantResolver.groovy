@@ -1,15 +1,15 @@
 package org.grails.datastore.mapping.multitenancy.web
 
+import javax.servlet.http.Cookie
+import javax.servlet.http.HttpServletRequest
+
 import groovy.transform.CompileStatic
-import org.grails.datastore.mapping.core.connections.ConnectionSource
-import org.grails.datastore.mapping.multitenancy.TenantResolver
-import org.grails.datastore.mapping.multitenancy.exceptions.TenantNotFoundException
 import org.springframework.web.context.request.RequestAttributes
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletWebRequest
 
-import javax.servlet.http.Cookie
-import javax.servlet.http.HttpServletRequest
+import org.grails.datastore.mapping.multitenancy.TenantResolver
+import org.grails.datastore.mapping.multitenancy.exceptions.TenantNotFoundException
 
 /**
  * Resolves the tenant id from a cookie
@@ -30,14 +30,12 @@ class CookieTenantResolver implements TenantResolver {
     @Override
     Serializable resolveTenantIdentifier() throws TenantNotFoundException {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes()
-        if(requestAttributes instanceof ServletWebRequest) {
-
+        if (requestAttributes instanceof ServletWebRequest) {
             HttpServletRequest servletRequest = ((ServletWebRequest) requestAttributes).getRequest()
             Cookie[] cookies = servletRequest.getCookies()
-            if(cookies != null) {
-
+            if (cookies != null) {
                 for (Cookie cookie : cookies) {
-                    if( cookieName.equals( cookie.name ) ) {
+                    if (cookieName.equals(cookie.name)) {
                         return cookie.getValue()
                     }
                 }
@@ -46,4 +44,5 @@ class CookieTenantResolver implements TenantResolver {
         }
         throw new TenantNotFoundException("Tenant could not be resolved outside a web request")
     }
+
 }

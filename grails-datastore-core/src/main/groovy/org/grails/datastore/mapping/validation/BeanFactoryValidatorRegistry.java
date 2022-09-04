@@ -1,10 +1,11 @@
 package org.grails.datastore.mapping.validation;
 
-import org.grails.datastore.mapping.model.PersistentEntity;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.StaticMessageSource;
 import org.springframework.validation.Validator;
+
+import org.grails.datastore.mapping.model.PersistentEntity;
 
 /**
  * Looks up validators from Spring
@@ -13,6 +14,7 @@ import org.springframework.validation.Validator;
  * @since 6.0
  */
 public class BeanFactoryValidatorRegistry implements ValidatorRegistry {
+
     private final BeanFactory beanFactory;
 
     public BeanFactoryValidatorRegistry(BeanFactory beanFactory) {
@@ -32,8 +34,10 @@ public class BeanFactoryValidatorRegistry implements ValidatorRegistry {
     public MessageSource getMessageSource() {
         if (beanFactory instanceof MessageSource) {
             return (MessageSource) beanFactory;
-        } else {
+        }
+        else {
             return new StaticMessageSource();
         }
     }
+
 }

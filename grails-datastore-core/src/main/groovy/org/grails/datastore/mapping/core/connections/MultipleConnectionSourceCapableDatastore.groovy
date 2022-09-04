@@ -17,4 +17,5 @@ interface MultipleConnectionSourceCapableDatastore extends Datastore {
      * @return The {@link Datastore}
      */
     Datastore getDatastoreForConnection(String connectionName)
+
 }

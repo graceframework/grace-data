@@ -10,6 +10,7 @@ import java.util.List;
  * @since 6.0
  */
 public interface RxUnidirectionalCollection {
+
     /**
      * @return The association keys in the case of unidirectional one-to-many
      */

@@ -27,4 +27,5 @@ public class InstantiationException extends RuntimeException {
     public InstantiationException(String s, Throwable throwable) {
         super(s, throwable);
     }
+
 }

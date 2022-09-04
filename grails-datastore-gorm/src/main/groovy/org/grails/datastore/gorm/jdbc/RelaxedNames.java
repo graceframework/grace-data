@@ -1,5 +1,3 @@
-package org.grails.datastore.gorm.jdbc;
-
 /*
  * Copyright 2012-2015 the original author or authors.
  *
@@ -15,9 +13,7 @@ package org.grails.datastore.gorm.jdbc;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import org.springframework.util.StringUtils;
-
+package org.grails.datastore.gorm.jdbc;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -25,6 +21,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.util.StringUtils;
 
 /**
  * Generates relaxed name variations from a given source.
@@ -182,7 +179,7 @@ final class RelaxedNames implements Iterable<String> {
         public abstract String apply(String value);
 
         private static String separatedToCamelCase(String value,
-                                                   boolean caseInsensitive) {
+                boolean caseInsensitive) {
             StringBuilder builder = new StringBuilder();
             for (String field : SEPARATED_TO_CAMEL_CASE_PATTERN.split(value)) {
                 field = (caseInsensitive ? field.toLowerCase() : field);
@@ -195,9 +192,7 @@ final class RelaxedNames implements Iterable<String> {
                 }
             }
             return builder.toString();
-
         }
     }
-
 
 }

@@ -66,4 +66,5 @@ public interface PropertyValueIndexer<K> {
      * @param primaryKey The key
      */
     void deindex(Object value, K primaryKey);
+
 }

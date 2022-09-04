@@ -14,8 +14,9 @@
  */
 package org.grails.datastore.mapping.transactions
 
-import org.grails.datastore.mapping.core.Datastore
 import org.springframework.transaction.PlatformTransactionManager
+
+import org.grails.datastore.mapping.core.Datastore
 
 /**
  * An interface for {@link Datastore} implementations that support transaction management
@@ -29,4 +30,5 @@ interface TransactionCapableDatastore extends Datastore {
      * @return The transaction manager for this datastore
      */
     PlatformTransactionManager getTransactionManager()
+
 }

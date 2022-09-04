@@ -34,4 +34,5 @@ public interface IdentityMapping extends PropertyMapping {
      * @return The type of value generated used
      */
     ValueGenerator getGenerator();
+
 }

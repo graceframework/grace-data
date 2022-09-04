@@ -56,4 +56,5 @@ public interface AssociationIndexer<K, T> extends AssociationQueryExecutor<K, T>
      * @param foreignKey The foreignKey
      */
     void index(T primaryKey, K foreignKey);
+
 }

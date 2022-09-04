@@ -12,7 +12,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.grails.datastore.gorm.query.criteria
 
 import grails.gorm.DetachedCriteria
@@ -47,4 +46,5 @@ class DetachedAssociationCriteria<T> extends DetachedCriteria<T> implements Crit
         this.association = association
         this.associationPath = associationPath
     }
+
 }

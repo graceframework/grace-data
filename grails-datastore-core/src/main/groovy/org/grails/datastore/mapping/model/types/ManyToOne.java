@@ -27,6 +27,7 @@ import org.grails.datastore.mapping.model.PersistentEntity;
  * @since 1.0
  */
 public abstract class ManyToOne<T extends Property> extends ToOne<T> {
+
     public ManyToOne(PersistentEntity owner, MappingContext context, PropertyDescriptor descriptor) {
         super(owner, context, descriptor);
     }
@@ -34,4 +35,5 @@ public abstract class ManyToOne<T extends Property> extends ToOne<T> {
     public ManyToOne(PersistentEntity owner, MappingContext context, String name, @SuppressWarnings("rawtypes") Class type) {
         super(owner, context, name, type);
     }
+
 }

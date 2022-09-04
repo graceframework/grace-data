@@ -14,12 +14,12 @@
  */
 package org.grails.datastore.mapping.model.types;
 
+import java.beans.PropertyDescriptor;
+
 import org.grails.datastore.mapping.config.Property;
 import org.grails.datastore.mapping.model.AbstractPersistentProperty;
 import org.grails.datastore.mapping.model.MappingContext;
 import org.grails.datastore.mapping.model.PersistentEntity;
-
-import java.beans.PropertyDescriptor;
 
 /**
  * Models a simple property type
@@ -28,6 +28,7 @@ import java.beans.PropertyDescriptor;
  * @since 1.0
  */
 public abstract class Simple<T extends Property> extends AbstractPersistentProperty<T> {
+
     public Simple(PersistentEntity owner, MappingContext context, PropertyDescriptor descriptor) {
         super(owner, context, descriptor);
     }
@@ -35,4 +36,5 @@ public abstract class Simple<T extends Property> extends AbstractPersistentPrope
     public Simple(PersistentEntity owner, MappingContext context, String name, @SuppressWarnings("rawtypes") Class type) {
         super(owner, context, name, type);
     }
+
 }

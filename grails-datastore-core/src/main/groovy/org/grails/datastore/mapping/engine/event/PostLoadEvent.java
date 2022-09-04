@@ -46,4 +46,5 @@ public class PostLoadEvent extends AbstractPersistenceEvent {
     public EventType getEventType() {
         return EventType.PostLoad;
     }
+
 }

@@ -22,9 +22,9 @@ import org.springframework.util.ClassUtils;
 
 /**
  * Default implementation of TimestampProvider
- * 
+ *
  * supports creating timestamps for any class that supports a constructor that accepts a Long or long value.
- * 
+ *
  * "currentTimeMillis" can be overrided in subclasses (useful for testing purposes)
  *
  */
@@ -43,20 +43,24 @@ public class DefaultTimestampProvider implements TimestampProvider {
     @Override
     public <T> T createTimestamp(final Class<T> dateTimeClass) {
         long timestampMillis = currentTimeMillis();
-        if(dateTimeClass == String.class) {
-            return (T)String.valueOf(timestampMillis);
-        } else {
+        if (dateTimeClass == String.class) {
+            return (T) String.valueOf(timestampMillis);
+        }
+        else {
             Class<?> actualDateTimeClass;
-            if(dateTimeClass==Object.class) {
+            if (dateTimeClass == Object.class) {
                 actualDateTimeClass = Date.class;
-            } else {
+            }
+            else {
                 actualDateTimeClass = ClassUtils.resolvePrimitiveIfNecessary(dateTimeClass);
             }
             try {
-                return (T)DefaultGroovyMethods.newInstance(actualDateTimeClass, new Object[] { timestampMillis });
-            } catch (Exception e) {
-                return (T)DefaultGroovyMethods.invokeMethod(actualDateTimeClass, "now", null);
+                return (T) DefaultGroovyMethods.newInstance(actualDateTimeClass, new Object[] { timestampMillis });
+            }
+            catch (Exception e) {
+                return (T) DefaultGroovyMethods.invokeMethod(actualDateTimeClass, "now", null);
             }
         }
     }
+
 }

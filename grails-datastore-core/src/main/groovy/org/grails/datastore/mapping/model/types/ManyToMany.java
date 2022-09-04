@@ -14,11 +14,11 @@
  */
 package org.grails.datastore.mapping.model.types;
 
+import java.beans.PropertyDescriptor;
+
 import org.grails.datastore.mapping.config.Property;
 import org.grails.datastore.mapping.model.MappingContext;
 import org.grails.datastore.mapping.model.PersistentEntity;
-
-import java.beans.PropertyDescriptor;
 
 /**
  * Models a many-to-many association between one class and another
@@ -46,4 +46,5 @@ public abstract class ManyToMany<T extends Property> extends ToMany<T> {
         setReferencedPropertyName(inversePropertyName);
         this.inversePropertyName = inversePropertyName;
     }
+
 }

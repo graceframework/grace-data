@@ -13,10 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.grails.datastore.gorm.jdbc;
-
-
 
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -107,7 +104,6 @@ public enum DatabaseDriver {
     FIREBIRD("Firebird", "org.firebirdsql.jdbc.FBDriver",
             "org.firebirdsql.pool.FBConnectionPoolDataSource",
             "SELECT 1 FROM RDB$DATABASE") {
-
         @Override
         protected boolean matchProductName(String productName) {
             return super.matchProductName(productName)
@@ -120,7 +116,6 @@ public enum DatabaseDriver {
      */
     DB2("DB2", "com.ibm.db2.jcc.DB2Driver", "com.ibm.db2.jcc.DB2XADataSource",
             "SELECT 1 FROM SYSIBM.SYSDUMMY1") {
-
         @Override
         protected boolean matchProductName(String productName) {
             return super.matchProductName(productName)
@@ -134,7 +129,6 @@ public enum DatabaseDriver {
     DB2_AS400("DB2 UDB for AS/400", "com.ibm.as400.access.AS400JDBCDriver",
             "com.ibm.as400.access.AS400JDBCXADataSource",
             "SELECT 1 FROM SYSIBM.SYSDUMMY1") {
-
         @Override
         protected boolean matchProductName(String productName) {
             return super.matchProductName(productName)
@@ -170,7 +164,7 @@ public enum DatabaseDriver {
     }
 
     DatabaseDriver(String productName, String driverClassName,
-                   String xaDataSourceClassName, String validationQuery) {
+            String xaDataSourceClassName, String validationQuery) {
         this.productName = productName;
         this.driverClassName = driverClassName;
         this.xaDataSourceClassName = xaDataSourceClassName;

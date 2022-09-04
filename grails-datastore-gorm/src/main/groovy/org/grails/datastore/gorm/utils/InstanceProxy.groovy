@@ -21,11 +21,12 @@ package org.grails.datastore.gorm.utils
  * @since 1.0
  */
 class InstanceProxy {
+
     def instance
     def target
 
     def invokeMethod(String name, args) {
-      target."$name"(instance, *args)
+        target."$name"(instance, *args)
     }
 
     void setProperty(String name, val) {
@@ -43,4 +44,5 @@ class InstanceProxy {
     def getAt(String name) {
         target."$name"
     }
+
 }

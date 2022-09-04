@@ -50,4 +50,5 @@ public class AssociationQuery extends Query implements Criterion {
     protected List executeQuery(PersistentEntity e, Junction j) {
         throw new UnsupportedOperationException("AssociationQuery instances are not executable and are merely metadata defined to query associations in a primary query");
     }
+
 }

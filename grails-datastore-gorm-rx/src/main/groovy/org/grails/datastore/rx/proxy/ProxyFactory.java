@@ -1,19 +1,19 @@
 package org.grails.datastore.rx.proxy;
 
+import java.io.Serializable;
+
 import grails.gorm.rx.proxy.ObservableProxy;
+
 import org.grails.datastore.mapping.proxy.ProxyHandler;
 import org.grails.datastore.mapping.query.Query;
 import org.grails.datastore.rx.RxDatastoreClient;
 import org.grails.datastore.rx.query.QueryState;
-
-import java.io.Serializable;
 
 /**
  * @author Graeme Rocher
  * @since 6.0
  */
 public interface ProxyFactory extends ProxyHandler {
-
 
     /**
      * Creates a proxy
@@ -37,4 +37,5 @@ public interface ProxyFactory extends ProxyHandler {
      * @return A proxy instance
      */
     ObservableProxy createProxy(RxDatastoreClient client, QueryState queryState, Query query);
+
 }

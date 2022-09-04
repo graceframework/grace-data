@@ -34,4 +34,5 @@ class ConfigurableApplicationContextEventPublisher implements ConfigurableApplic
     void publishEvent(Object event) {
         this.applicationContext.publishEvent(event)
     }
+
 }

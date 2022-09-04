@@ -17,4 +17,5 @@ public interface QueryAliasAwareSession extends Session {
      * @return The query
      */
     Query createQuery(Class type, String alias);
+
 }

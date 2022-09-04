@@ -14,13 +14,13 @@
  */
 package org.grails.datastore.gorm.finders;
 
-import groovy.lang.GroovySystem;
-import groovy.lang.MetaClass;
-import groovy.lang.MissingMethodException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import groovy.lang.GroovySystem;
+import groovy.lang.MetaClass;
+import groovy.lang.MissingMethodException;
 
 import org.grails.datastore.mapping.core.Datastore;
 import org.grails.datastore.mapping.model.MappingContext;
@@ -38,7 +38,7 @@ public class FindOrSaveByFinder extends FindOrCreateByFinder {
     }
 
     @Override
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     protected Object doInvokeInternal(final DynamicFinderInvocation invocation) {
         if (OPERATOR_OR.equals(invocation.getOperator())) {
             throw new MissingMethodException(invocation.getMethodName(), invocation.getJavaClass(), invocation.getArguments());
@@ -57,7 +57,7 @@ public class FindOrSaveByFinder extends FindOrCreateByFinder {
                 m.put(propertyName, arguments[0]);
             }
             MetaClass metaClass = GroovySystem.getMetaClassRegistry().getMetaClass(invocation.getJavaClass());
-            result = metaClass.invokeConstructor(new Object[]{m});
+            result = metaClass.invokeConstructor(new Object[] { m });
         }
         return result;
     }
@@ -66,4 +66,5 @@ public class FindOrSaveByFinder extends FindOrCreateByFinder {
     protected boolean shouldSaveOnCreate() {
         return true;
     }
+
 }

@@ -28,8 +28,11 @@ import org.grails.datastore.mapping.query.Query;
 public class FindAllByFinder extends DynamicFinder {
 
     private static final String OPERATOR_OR = "Or";
+
     private static final String OPERATOR_AND = "And";
+
     private static final String METHOD_PATTERN = "(findAllBy)([A-Z]\\w*)";
+
     private static final String[] OPERATORS = { OPERATOR_AND, OPERATOR_OR };
 
     public FindAllByFinder(final Datastore datastore) {
@@ -83,10 +86,11 @@ public class FindAllByFinder extends DynamicFinder {
         }
         else {
             for (MethodExpression expression : invocation.getExpressions()) {
-                query.add( expression.createCriterion() );
+                query.add(expression.createCriterion());
             }
         }
         query.projections().distinct();
         return query;
     }
+
 }

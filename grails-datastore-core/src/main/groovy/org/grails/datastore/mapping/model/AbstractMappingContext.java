@@ -17,9 +17,24 @@ package org.grails.datastore.mapping.model;
 import java.beans.Introspector;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.core.convert.converter.ConverterRegistry;
+import org.springframework.core.convert.support.GenericConversionService;
+import org.springframework.core.env.PropertyResolver;
+import org.springframework.util.Assert;
+import org.springframework.util.ClassUtils;
+import org.springframework.validation.Validator;
 
 import org.grails.datastore.mapping.config.AbstractGormMappingFactory;
 import org.grails.datastore.mapping.config.ConfigurationUtils;
@@ -34,19 +49,9 @@ import org.grails.datastore.mapping.multitenancy.MultiTenancySettings;
 import org.grails.datastore.mapping.proxy.JavassistProxyFactory;
 import org.grails.datastore.mapping.proxy.ProxyFactory;
 import org.grails.datastore.mapping.proxy.ProxyHandler;
-import org.grails.datastore.mapping.reflect.ClassPropertyFetcher;
 import org.grails.datastore.mapping.reflect.EntityReflector;
 import org.grails.datastore.mapping.reflect.FieldEntityAccess;
 import org.grails.datastore.mapping.validation.ValidatorRegistry;
-import org.springframework.beans.BeanUtils;
-import org.springframework.core.convert.ConversionService;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.core.convert.converter.ConverterRegistry;
-import org.springframework.core.convert.support.GenericConversionService;
-import org.springframework.core.env.PropertyResolver;
-import org.springframework.util.Assert;
-import org.springframework.util.ClassUtils;
-import org.springframework.validation.Validator;
 
 /**
  * Abstract implementation of the MappingContext interface.
@@ -58,19 +63,33 @@ import org.springframework.validation.Validator;
 public abstract class AbstractMappingContext implements MappingContext, Initializable {
 
     public static final String GROOVY_PROXY_FACTORY_NAME = "org.grails.datastore.gorm.proxy.GroovyProxyFactory";
+
     public static final String JAVASIST_PROXY_FACTORY = "javassist.util.proxy.ProxyFactory";
+
     public static final String CONFIGURATION_PREFIX = "grails.gorm.";
+
     protected Collection<PersistentEntity> persistentEntities = new ConcurrentLinkedQueue<>();
-    protected Map<String,PersistentEntity>  persistentEntitiesByName = new ConcurrentHashMap<>();
-    protected Map<PersistentEntity,Map<String,PersistentEntity>>  persistentEntitiesByDiscriminator = new ConcurrentHashMap<>();
-    protected Map<PersistentEntity,Collection<PersistentEntity>>  persistentEntitiesByParent = new ConcurrentHashMap<>();
-    protected Map<PersistentEntity,Validator>  entityValidators = new ConcurrentHashMap<>();
+
+    protected Map<String, PersistentEntity> persistentEntitiesByName = new ConcurrentHashMap<>();
+
+    protected Map<PersistentEntity, Map<String, PersistentEntity>> persistentEntitiesByDiscriminator = new ConcurrentHashMap<>();
+
+    protected Map<PersistentEntity, Collection<PersistentEntity>> persistentEntitiesByParent = new ConcurrentHashMap<>();
+
+    protected Map<PersistentEntity, Validator> entityValidators = new ConcurrentHashMap<>();
+
     protected Collection<Listener> eventListeners = new ConcurrentLinkedQueue<>();
+
     protected GenericConversionService conversionService = new DefaultConversionService();
+
     protected ProxyFactory proxyFactory;
+
     protected ValidatorRegistry validatorRegistry;
+
     private boolean canInitializeEntities = true;
+
     private boolean initialized;
+
     private MultiTenancySettings.MultiTenancyMode multiTenancyMode;
 
     public AbstractMappingContext() {
@@ -94,13 +113,13 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
         MappingFactory mappingFactory = getMappingFactory();
         Iterable<CustomTypeMarshaller> customTypeMarshallers = ConfigurationUtils.findServices(settings.getCustom().getTypes(), CustomTypeMarshaller.class);
         for (CustomTypeMarshaller customTypeMarshaller : customTypeMarshallers) {
-            if(customTypeMarshaller.supports(this)) {
+            if (customTypeMarshaller.supports(this)) {
                 mappingFactory.registerCustomType(customTypeMarshaller);
             }
         }
 
         // default constraints and mapping
-        if(mappingFactory instanceof AbstractGormMappingFactory) {
+        if (mappingFactory instanceof AbstractGormMappingFactory) {
             AbstractGormMappingFactory gormMappingFactory = (AbstractGormMappingFactory) mappingFactory;
             gormMappingFactory.setDefaultConstraints(settings.getDefault().getConstraints());
             gormMappingFactory.setDefaultMapping(settings.getDefault().getMapping());
@@ -122,14 +141,14 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
     public abstract MappingFactory getMappingFactory();
 
     public void configure(PropertyResolver configuration) {
-        if(configuration == null) {
+        if (configuration == null) {
             return;
         }
 
         String simpleName = Introspector.decapitalize(getClass().getSimpleName());
         String suffix = "MappingContext";
 
-        if(simpleName.endsWith(suffix)) {
+        if (simpleName.endsWith(suffix)) {
             simpleName = simpleName.substring(0, simpleName.length() - suffix.length());
         }
 
@@ -138,7 +157,7 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
 
         Iterable<CustomTypeMarshaller> customTypeMarshallers = ConfigurationUtils.findServices(configuration, configurationKey, CustomTypeMarshaller.class);
         for (CustomTypeMarshaller customTypeMarshaller : customTypeMarshallers) {
-            if(customTypeMarshaller.supports(this)) {
+            if (customTypeMarshaller.supports(this)) {
                 getMappingFactory().registerCustomType(customTypeMarshaller);
             }
         }
@@ -158,7 +177,8 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
             else if (ClassUtils.isPresent(GROOVY_PROXY_FACTORY_NAME, classLoader)) {
                 try {
                     proxyFactory = (ProxyFactory) BeanUtils.instantiateClass(ClassUtils.forName(GROOVY_PROXY_FACTORY_NAME, classLoader));
-                } catch (ClassNotFoundException e) {
+                }
+                catch (ClassNotFoundException e) {
                     proxyFactory = DefaultProxyFactoryCreator.create();
                 }
             }
@@ -191,9 +211,11 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
     }
 
     private static class DefaultProxyFactoryCreator {
+
         public static ProxyFactory create() {
             return new JavassistProxyFactory();
         }
+
     }
 
     public void addTypeConverter(Converter converter) {
@@ -210,9 +232,9 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
         if (entity != null) {
 
             Validator validator = entityValidators.get(entity);
-            if(validator == null && validatorRegistry != null) {
+            if (validator == null && validatorRegistry != null) {
                 Validator v = validatorRegistry.getValidator(entity);
-                if(v != null) {
+                if (v != null) {
                     entityValidators.put(entity, v);
                     return v;
                 }
@@ -272,13 +294,13 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
 
         for (Class javaClass : javaClasses) {
             PersistentEntity entity = createPersistentEntity(javaClass);
-            if(entity == null) continue;
+            if (entity == null) continue;
 
             registerEntityWithContext(entity);
             entities.add(entity);
 
         }
-        if(canInitializeEntities) {
+        if (canInitializeEntities) {
             for (PersistentEntity entity : entities) {
                 initializePersistentEntity(entity);
             }
@@ -318,7 +340,7 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
 
         registerEntityWithContext(entity);
 
-        if(isInitialize) {
+        if (isInitialize) {
             initializePersistentEntity(entity);
         }
 
@@ -336,7 +358,7 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
     }
 
     public void initialize() {
-        for(PersistentEntity entity : persistentEntities) {
+        for (PersistentEntity entity : persistentEntities) {
             initializePersistentEntity(entity);
             FieldEntityAccess.getOrIntializeReflector(entity);
         }
@@ -351,7 +373,7 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
         try {
             entity.initialize();
         }
-        catch(IllegalMappingException x) {
+        catch (IllegalMappingException x) {
             persistentEntities.remove(entity);
             persistentEntitiesByName.remove(entity.getName());
             throw x;
@@ -368,7 +390,7 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
             directChildren.add(entity);
 
             while (parent != null) {
-                if(!parent.isInitialized()) {
+                if (!parent.isInitialized()) {
                     parent.initialize();
                 }
 
@@ -406,7 +428,7 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
     @Override
     public Collection<PersistentEntity> getChildEntities(PersistentEntity root) {
         final Map<String, PersistentEntity> children = persistentEntitiesByDiscriminator.get(root);
-        if(children != null) {
+        if (children != null) {
             return Collections.unmodifiableCollection(children.values());
         }
         else {
@@ -417,7 +439,7 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
     @Override
     public Collection<PersistentEntity> getDirectChildEntities(PersistentEntity root) {
         Collection<PersistentEntity> entities = persistentEntitiesByParent.get(root);
-        if(entities == null) {
+        if (entities == null) {
             return Collections.emptyList();
         }
         return Collections.unmodifiableCollection(entities);
@@ -433,27 +455,28 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
 
     protected abstract PersistentEntity createPersistentEntity(Class javaClass);
 
-    protected Object resolveMappingStrategy(Class javaClass){
+    protected Object resolveMappingStrategy(Class javaClass) {
         try {
             Field field = javaClass.getDeclaredField(GormProperties.MAPPING_STRATEGY);
-            if(field != null && Modifier.isStatic(field.getModifiers())) {
+            if (field != null && Modifier.isStatic(field.getModifiers())) {
                 field.setAccessible(true);
                 return field.get(javaClass);
             }
-        } catch (Throwable e) {
+        }
+        catch (Throwable e) {
             return null;
         }
         return null;
     }
 
     protected boolean isValidMappingStrategy(Class javaClass, Object mappingStrategy) {
-        if(mappingStrategy == null) {
+        if (mappingStrategy == null) {
             return true;
         }
 
         String name = getClass().getSimpleName();
         String suffix = MappingContext.class.getSimpleName();
-        if(name.endsWith(suffix)) {
+        if (name.endsWith(suffix)) {
             name = name.substring(0, name.length() - suffix.length()).toLowerCase(Locale.ENGLISH);
             return name.equalsIgnoreCase(mappingStrategy.toString());
         }
@@ -507,8 +530,7 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
     public EntityAccess createEntityAccess(PersistentEntity entity, Object instance) {
         final ProxyFactory proxyFactory = getProxyFactory();
         instance = proxyFactory.unwrap(instance);
-        if(entity != null) {
-
+        if (entity != null) {
             if (entity.getJavaClass() != instance.getClass()) {
                 // try subclass
                 final PersistentEntity subEntity = getPersistentEntity(instance.getClass().getName());
@@ -520,7 +542,7 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
         }
         else {
             EntityReflector reflector = FieldEntityAccess.getReflector(instance.getClass().getName());
-            if(reflector != null) {
+            if (reflector != null) {
                 return new FieldEntityAccess(reflector.getPersitentEntity(), instance, conversionService);
             }
             else {
@@ -528,4 +550,5 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
             }
         }
     }
+
 }

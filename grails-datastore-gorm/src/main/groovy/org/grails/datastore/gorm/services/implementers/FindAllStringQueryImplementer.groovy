@@ -5,6 +5,7 @@ import org.codehaus.groovy.ast.ClassNode
 import org.codehaus.groovy.ast.MethodNode
 import org.codehaus.groovy.ast.expr.Expression
 import org.codehaus.groovy.ast.stmt.Statement
+
 import org.grails.datastore.mapping.reflect.AstUtils
 
 import static org.codehaus.groovy.ast.tools.GeneralUtils.callX
@@ -20,12 +21,14 @@ import static org.grails.datastore.mapping.reflect.AstUtils.implementsInterface
  */
 @CompileStatic
 class FindAllStringQueryImplementer extends AbstractStringQueryImplementer implements IterableServiceImplementer {
+
     @Override
     protected boolean isCompatibleReturnType(ClassNode domainClass, MethodNode methodNode, ClassNode returnType, String prefix) {
         boolean isCompatibleReturnType = false
         if (returnType.name == Iterable.name || implementsInterface(returnType, Iterable.name)) {
             isCompatibleReturnType = true
-        } else if (returnType.isArray()) {
+        }
+        else if (returnType.isArray()) {
             isCompatibleReturnType = true
         }
         return isCompatibleReturnType
@@ -33,10 +36,11 @@ class FindAllStringQueryImplementer extends AbstractStringQueryImplementer imple
 
     @Override
     protected Statement buildQueryReturnStatement(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, Expression args) {
-        ClassNode returnType = (ClassNode)newMethodNode.getNodeMetaData(RETURN_TYPE) ?: abstractMethodNode.returnType
+        ClassNode returnType = (ClassNode) newMethodNode.getNodeMetaData(RETURN_TYPE) ?: abstractMethodNode.returnType
         String methodName = AstUtils.isIterableOrArrayOfDomainClasses(returnType) ? "findAll" : "executeQuery"
         Expression methodCall = callX(findStaticApiForConnectionId(domainClassNode, newMethodNode), methodName, args)
         methodCall = castX(returnType.plainNodeReference, methodCall)
         return returnS(methodCall)
     }
+
 }

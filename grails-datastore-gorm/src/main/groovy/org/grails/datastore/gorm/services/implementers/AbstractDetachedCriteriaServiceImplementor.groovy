@@ -1,7 +1,5 @@
 package org.grails.datastore.gorm.services.implementers
 
-import grails.gorm.DetachedCriteria
-import grails.gorm.services.Join
 import groovy.transform.CompileStatic
 import groovy.transform.PackageScope
 import org.codehaus.groovy.ast.AnnotationNode
@@ -13,10 +11,22 @@ import org.codehaus.groovy.ast.expr.Expression
 import org.codehaus.groovy.ast.expr.PropertyExpression
 import org.codehaus.groovy.ast.expr.VariableExpression
 import org.codehaus.groovy.ast.stmt.BlockStatement
+
+import grails.gorm.DetachedCriteria
+import grails.gorm.services.Join
+
 import org.grails.datastore.mapping.model.config.GormProperties
 import org.grails.datastore.mapping.reflect.AstUtils
 
-import static org.codehaus.groovy.ast.tools.GeneralUtils.*
+import static org.codehaus.groovy.ast.tools.GeneralUtils.args
+import static org.codehaus.groovy.ast.tools.GeneralUtils.assignS
+import static org.codehaus.groovy.ast.tools.GeneralUtils.callX
+import static org.codehaus.groovy.ast.tools.GeneralUtils.classX
+import static org.codehaus.groovy.ast.tools.GeneralUtils.constX
+import static org.codehaus.groovy.ast.tools.GeneralUtils.ctorX
+import static org.codehaus.groovy.ast.tools.GeneralUtils.declS
+import static org.codehaus.groovy.ast.tools.GeneralUtils.stmt
+import static org.codehaus.groovy.ast.tools.GeneralUtils.varX
 
 /**
  * An abstract implementer that builds a detached criteria query from the method arguments
@@ -35,23 +45,23 @@ abstract class AbstractDetachedCriteriaServiceImplementor extends AbstractReadOp
         Parameter[] parameters = newMethodNode.parameters
         int parameterCount = parameters.length
         AnnotationNode joinAnnotation = AstUtils.findAnnotation(abstractMethodNode, Join)
-        if(lookupById() && joinAnnotation == null && parameterCount == 1 && parameters[0].name == GormProperties.IDENTITY) {
+        if (lookupById() && joinAnnotation == null && parameterCount == 1 && parameters[0].name == GormProperties.IDENTITY) {
             // optimize query by id
-            Expression byId = callX( classX(domainClassNode), "get", varX(parameters[0]))
-            implementById(domainClassNode,abstractMethodNode,newMethodNode, targetClassNode, body, byId)
+            Expression byId = callX(classX(domainClassNode), "get", varX(parameters[0]))
+            implementById(domainClassNode, abstractMethodNode, newMethodNode, targetClassNode, body, byId)
         }
         else {
             Expression argsExpression = AstUtils.ZERO_ARGUMENTS
             VariableExpression queryVar = varX('$query')
             // def query = new DetachedCriteria(Foo)
             body.addStatement(
-                declS(queryVar, ctorX(getDetachedCriteriaType(domainClassNode), args(classX(domainClassNode.plainNodeReference))))
+                    declS(queryVar, ctorX(getDetachedCriteriaType(domainClassNode), args(classX(domainClassNode.plainNodeReference))))
             )
             Expression connectionId = findConnectionId(newMethodNode)
 
-            if(connectionId != null) {
+            if (connectionId != null) {
                 body.addStatement(
-                    assignS(queryVar, callX(queryVar, "withConnection", connectionId))
+                        assignS(queryVar, callX(queryVar, "withConnection", connectionId))
                 )
             }
             handleJoinAnnotation(joinAnnotation, body, queryVar)
@@ -59,22 +69,24 @@ abstract class AbstractDetachedCriteriaServiceImplementor extends AbstractReadOp
             if (parameterCount > 0) {
                 for (Parameter parameter in parameters) {
                     String parameterName = parameter.name
-                    if(parameterName == GormProperties.IDENTITY) {
+                    if (parameterName == GormProperties.IDENTITY) {
                         body.addStatement(
-                            stmt(
-                                callX(queryVar, "idEq", varX(parameter))
-                            )
+                                stmt(
+                                        callX(queryVar, "idEq", varX(parameter))
+                                )
                         )
                     }
                     else if (isValidParameter(domainClassNode, parameter, parameterName)) {
                         body.addStatement(
-                            stmt(
-                                callX(queryVar, "eq", args( constX(parameterName), varX(parameter) ))
-                            )
+                                stmt(
+                                        callX(queryVar, "eq", args(constX(parameterName), varX(parameter)))
+                                )
                         )
-                    } else if (parameter.type == ClassHelper.MAP_TYPE && parameterName == 'args') {
+                    }
+                    else if (parameter.type == ClassHelper.MAP_TYPE && parameterName == 'args') {
                         argsExpression = varX(parameter)
-                    } else {
+                    }
+                    else {
                         AstUtils.error(
                                 abstractMethodNode.declaringClass.module.context,
                                 abstractMethodNode,
@@ -102,7 +114,8 @@ abstract class AbstractDetachedCriteriaServiceImplementor extends AbstractReadOp
                     body.addStatement(
                             stmt(callX(queryVar, "join", args(joinValue, joinType)))
                     )
-                } else {
+                }
+                else {
                     body.addStatement(
                             stmt(callX(queryVar, "join", joinValue))
                     )
@@ -118,6 +131,7 @@ abstract class AbstractDetachedCriteriaServiceImplementor extends AbstractReadOp
     protected boolean lookupById() {
         return true
     }
+
     /**
      * Provide an implementation in the case querying for a single instance by id
      *
@@ -142,4 +156,5 @@ abstract class AbstractDetachedCriteriaServiceImplementor extends AbstractReadOp
      * @param queryArgs Any arguments to the query
      */
     abstract void implementWithQuery(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode, BlockStatement body, VariableExpression detachedCriteriaVar, Expression queryArgs)
+
 }

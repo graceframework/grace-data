@@ -24,6 +24,7 @@ import org.codehaus.groovy.ast.GenericsType
 import org.codehaus.groovy.ast.tools.GenericsUtils
 import org.codehaus.groovy.control.SourceUnit
 import org.codehaus.groovy.transform.trait.TraitComposer
+
 import org.grails.datastore.mapping.reflect.AstUtils
 
 /**
@@ -38,15 +39,15 @@ abstract class AbstractTraitApplyingGormASTTransformation extends AbstractGormAS
     @Override
     void visit(SourceUnit source, AnnotationNode annotationNode, AnnotatedNode annotatedNode) {
         this.sourceUnit = source
-        if(annotatedNode instanceof ClassNode) {
-            visit(source, annotationNode, (ClassNode)annotatedNode)
+        if (annotatedNode instanceof ClassNode) {
+            visit(source, annotationNode, (ClassNode) annotatedNode)
         }
     }
 
     void visit(SourceUnit source, AnnotationNode annotationNode, ClassNode classNode) {
         this.sourceUnit = source
         Class traitJavaClass = getTraitClass()
-        if(shouldWeave(annotationNode, classNode)) {
+        if (shouldWeave(annotationNode, classNode)) {
             weaveTrait(classNode, source, traitJavaClass)
         }
         visitAfterTraitApplied(source, annotationNode, classNode)
@@ -84,7 +85,8 @@ abstract class AbstractTraitApplyingGormASTTransformation extends AbstractGormAS
                 for (GenericsType gt in genericsTypes) {
                     if (i < genericArguments.length) {
                         newGenericArguments[i] = genericArguments[i].plainNodeReference
-                    } else {
+                    }
+                    else {
                         newGenericArguments[i] = ClassHelper.OBJECT_TYPE.plainNodeReference
                     }
                     i++
@@ -104,10 +106,10 @@ abstract class AbstractTraitApplyingGormASTTransformation extends AbstractGormAS
                 }
                 classNode.addInterface(AstUtils.replaceGenericsPlaceholders(traitClassNode, parameterNameToParameterValue))
                 classNode.setUsingGenerics(true)
-            } else {
+            }
+            else {
                 classNode.addInterface(traitClassNode.plainNodeReference)
             }
-
         }
     }
 

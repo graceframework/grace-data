@@ -1,6 +1,7 @@
 package org.grails.datastore.gorm.validation.constraints.eval
 
 import grails.gorm.validation.ConstrainedProperty
+
 import org.grails.datastore.gorm.validation.constraints.builder.ConstrainedPropertyBuilder
 import org.grails.datastore.mapping.model.config.GormProperties
 
@@ -11,6 +12,7 @@ import org.grails.datastore.mapping.model.config.GormProperties
  * @since 6.0
  */
 interface ConstraintsEvaluator {
+
     /**
      * The name of the constraints property
      */
@@ -56,4 +58,5 @@ interface ConstraintsEvaluator {
      * @return The builder
      */
     ConstrainedPropertyBuilder newConstrainedPropertyBuilder(Class<?> theClass)
+
 }

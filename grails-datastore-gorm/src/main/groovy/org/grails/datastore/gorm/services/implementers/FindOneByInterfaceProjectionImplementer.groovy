@@ -39,4 +39,5 @@ class FindOneByInterfaceProjectionImplementer extends FindOneByImplementer imple
     protected Statement buildReturnStatement(ClassNode domainClass, MethodNode abstractMethodNode, MethodNode newMethodNode, Expression queryExpression) {
         return buildInterfaceProjection(domainClass, abstractMethodNode, queryExpression, queryExpression, newMethodNode)
     }
+
 }

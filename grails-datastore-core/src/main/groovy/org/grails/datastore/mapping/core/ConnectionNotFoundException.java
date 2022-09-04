@@ -27,4 +27,5 @@ public class ConnectionNotFoundException extends RuntimeException {
     public ConnectionNotFoundException(String s) {
         super(s);
     }
+
 }

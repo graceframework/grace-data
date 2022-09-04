@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.grails.compiler.gorm
-
 
 /**
  * Provides the implementation to use for the GormEntity trait
@@ -31,4 +29,5 @@ interface GormEntityTraitProvider {
      * @return Whether this trait provided is available
      */
     boolean isAvailable()
+
 }

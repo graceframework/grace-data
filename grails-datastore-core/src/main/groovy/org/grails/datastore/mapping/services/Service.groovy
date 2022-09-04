@@ -31,4 +31,5 @@ trait Service<T> {
      * The datastore that this service is related to
      */
     Datastore datastore
+
 }

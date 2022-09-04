@@ -15,22 +15,21 @@
  */
 package grails.gorm.transactions;
 
-import org.codehaus.groovy.transform.GroovyASTTransformationClass;
-import org.grails.datastore.gorm.transactions.transform.TransactionalTransform;
-import org.grails.datastore.gorm.transform.GormASTTransformationClass;
-import org.grails.datastore.mapping.core.Datastore;
-import org.grails.datastore.mapping.core.connections.ConnectionSource;
-import org.grails.datastore.mapping.core.connections.ConnectionSourcesProvider;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import org.codehaus.groovy.transform.GroovyASTTransformationClass;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+
+import org.grails.datastore.gorm.transform.GormASTTransformationClass;
+import org.grails.datastore.mapping.core.connections.ConnectionSource;
+import org.grails.datastore.mapping.core.connections.ConnectionSourcesProvider;
 
 /**
  *
@@ -47,13 +46,12 @@ import java.lang.annotation.Target;
  * <p>For specific information about the semantics of this annotation's attributes,
  * consider the {@link org.springframework.transaction.TransactionDefinition} and
  * {@link org.springframework.transaction.interceptor.TransactionAttribute} javadocs.
-
  * @author Graeme Rocher
  * @author Juergen Hoeller
  *
  * @since 6.1
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented

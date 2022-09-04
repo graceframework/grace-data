@@ -25,5 +25,6 @@ public interface VetoingConstraint extends Constraint {
      * @return True if it valides
      */
     boolean validateWithVetoing(Object target, Object propertyValue, Errors errors);
+
 }
 

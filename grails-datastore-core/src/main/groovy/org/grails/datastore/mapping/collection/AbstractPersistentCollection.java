@@ -14,37 +14,45 @@
  */
 package org.grails.datastore.mapping.collection;
 
-import org.grails.datastore.mapping.core.Session;
-import org.grails.datastore.mapping.engine.AssociationIndexer;
-import org.grails.datastore.mapping.engine.AssociationQueryExecutor;
-import org.grails.datastore.mapping.model.PersistentEntity;
-import org.grails.datastore.mapping.model.types.Association;
-import org.grails.datastore.mapping.query.Query;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
+import org.grails.datastore.mapping.core.Session;
+import org.grails.datastore.mapping.engine.AssociationQueryExecutor;
+import org.grails.datastore.mapping.model.PersistentEntity;
+import org.grails.datastore.mapping.model.types.Association;
+import org.grails.datastore.mapping.query.Query;
 
 /**
  * Abstract base class for persistent collections.
  *
  * @author Burt Beckwith
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public abstract class AbstractPersistentCollection implements PersistentCollection, Serializable {
+
     protected final transient Session session;
+
     protected final transient AssociationQueryExecutor indexer;
+
     protected final transient Class childType;
 
     protected boolean initialized;
+
     protected Object initializing;
+
     protected Serializable associationKey;
+
     protected Collection keys;
+
     protected boolean dirty = false;
 
     protected final Collection collection;
+
     protected int originalSize;
+
     protected boolean proxyEntities = false;
 
     protected AbstractPersistentCollection(Class childType, Session session, Collection collection) {
@@ -87,7 +95,7 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
     }
 
     protected AbstractPersistentCollection(Collection keys, Class childType,
-                                           Session session, Collection collection) {
+            Session session, Collection collection) {
         this.session = session;
         this.keys = keys;
         this.childType = childType;
@@ -96,7 +104,7 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
     }
 
     protected AbstractPersistentCollection(Serializable associationKey, Session session,
-                                           AssociationQueryExecutor indexer, Collection collection) {
+            AssociationQueryExecutor indexer, Collection collection) {
         this.session = session;
         this.associationKey = associationKey;
         this.indexer = indexer;
@@ -271,7 +279,7 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
     }
 
     public void initialize() {
-        if(initializing != null) return;
+        if (initializing != null) return;
 
         setInitializing(Boolean.TRUE);
 
@@ -282,7 +290,8 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
 
             final Session session = this.session;
             if (session == null) {
-                throw new IllegalStateException("PersistentCollection of type " + this.getClass().getName() + " should have been initialized before serialization.");
+                throw new IllegalStateException("PersistentCollection of type " + this.getClass().getName() +
+                        " should have been initialized before serialization.");
             }
 
             initialized = true;
@@ -297,17 +306,16 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
             }
             else {
                 List results = indexer.query(associationKey);
-                if(indexer.doesReturnKeys()) {
-
+                if (indexer.doesReturnKeys()) {
                     PersistentEntity entity = indexer.getIndexedEntity();
 
                     // This should really only happen for unit testing since entities are
                     // mocked selectively and may not always be registered in the indexer. In this
                     // case, there can't be any results to be added to the collection.
-                    if( entity != null ) {
+                    if (entity != null) {
                         loadInverseChildKeys(session, entity.getJavaClass(), results);
                     }
-                    else if(childType != null ){
+                    else if (childType != null) {
                         loadInverseChildKeys(session, childType, results);
                     }
                 }
@@ -316,14 +324,15 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
                 }
             }
             this.originalSize = size();
-        } finally {
+        }
+        finally {
             setInitializing(Boolean.FALSE);
         }
     }
 
     protected void loadInverseChildKeys(Session session, Class childType, Collection keys) {
-        if(!keys.isEmpty()) {
-            if(proxyEntities) {
+        if (!keys.isEmpty()) {
+            if (proxyEntities) {
                 for (Object key : keys) {
                     add(
                             session.proxy(childType, (Serializable) key)
@@ -345,7 +354,7 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
     }
 
     public void markDirty() {
-        if(!currentlyInitializing()) {
+        if (!currentlyInitializing()) {
             dirty = true;
         }
     }
@@ -353,4 +362,5 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
     protected boolean currentlyInitializing() {
         return initializing != null && initializing.equals(Boolean.TRUE);
     }
+
 }

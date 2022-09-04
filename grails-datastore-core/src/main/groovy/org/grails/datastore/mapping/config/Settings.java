@@ -7,34 +7,42 @@ package org.grails.datastore.mapping.config;
  * @since 6.0
  */
 public interface Settings {
+
     /**
      * The default prefix
      */
     String PREFIX = "grails.gorm";
+
     /**
      * Whether to flush the session between each query
      */
     String SETTING_AUTO_FLUSH = PREFIX + '.' + "autoFlush";
+
     /**
      * The default flush mode
      */
     String SETTING_FLUSH_MODE = PREFIX + '.' + "flushMode";
+
     /**
      * Whether to throw an exception on a validation error
      */
     String SETTING_FAIL_ON_ERROR = PREFIX + '.' + "failOnError";
+
     /**
      * Whether to mark the instance as dirty on an explicit save()
      */
     String SETTING_MARK_DIRTY = PREFIX + '.' + "markDirty";
+
     /**
      * The default mapping
      */
     String SETTING_DEFAULT_MAPPING = PREFIX + '.' + "default.mapping";
+
     /**
      * The default constraints
      */
     String SETTING_DEFAULT_CONSTRAINTS = PREFIX + '.' + "default.constraints";
+
     /**
      * The custom types
      */
@@ -54,11 +62,11 @@ public interface Settings {
      * The multi tenancy resolver class
      */
     String SETTING_MULTI_TENANT_RESOLVER = PREFIX + '.' + "multiTenancy.tenantResolver";
+
     /**
      * The data sources setting
      */
     String SETTING_DATASOURCES = "dataSources";
-
 
     /**
      * The data source setting

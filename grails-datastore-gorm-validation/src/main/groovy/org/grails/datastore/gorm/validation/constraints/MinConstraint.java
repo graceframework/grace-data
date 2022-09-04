@@ -1,10 +1,12 @@
 package org.grails.datastore.gorm.validation.constraints;
 
-import grails.gorm.validation.ConstrainedProperty;
-import org.grails.datastore.mapping.reflect.ClassPropertyFetcher;
-import org.grails.datastore.mapping.reflect.ClassUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.validation.Errors;
+
+import grails.gorm.validation.ConstrainedProperty;
+
+import org.grails.datastore.mapping.reflect.ClassPropertyFetcher;
+import org.grails.datastore.mapping.reflect.ClassUtils;
 
 /**
  * Implements a minimum value constraint.
@@ -53,7 +55,7 @@ public class MinConstraint extends AbstractConstraint {
         }
 
         Class<?> propertyClass = ClassPropertyFetcher.getPropertyType(constraintOwningClass, constraintPropertyName);
-        if (!ClassUtils.isAssignableOrConvertibleFrom(constraintParameter.getClass(),propertyClass)) {
+        if (!ClassUtils.isAssignableOrConvertibleFrom(constraintParameter.getClass(), propertyClass)) {
             throw new IllegalArgumentException("Parameter for constraint [" + ConstrainedProperty.MIN_CONSTRAINT +
                     "] of property [" + constraintPropertyName + "] of class [" + constraintOwningClass +
                     "] must be the same type as property: [" + propertyClass.getName() + "]");
@@ -76,5 +78,6 @@ public class MinConstraint extends AbstractConstraint {
         rejectValue(target, errors, ConstrainedProperty.DEFAULT_INVALID_MIN_MESSAGE_CODE,
                 ConstrainedProperty.MIN_CONSTRAINT + ConstrainedProperty.NOTMET_SUFFIX, args);
     }
+
 }
 

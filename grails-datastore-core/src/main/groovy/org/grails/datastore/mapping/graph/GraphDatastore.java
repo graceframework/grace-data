@@ -24,4 +24,6 @@ import org.grails.datastore.mapping.core.Datastore;
  *
  * @since 1.0
  */
-public interface GraphDatastore extends Datastore {}
+public interface GraphDatastore extends Datastore {
+
+}

@@ -1,10 +1,10 @@
 package org.grails.datastore.mapping.cache.impl;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.grails.datastore.mapping.cache.TPCacheAdapter;
 import org.grails.datastore.mapping.cache.TPCacheAdapterRepository;
 import org.grails.datastore.mapping.model.PersistentEntity;
-
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Simple implementation of {@link TPCacheAdapterRepository}
@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Roman Stepanenko
  */
 public class TPCacheAdapterRepositoryImpl<T> implements TPCacheAdapterRepository<T> {
+
     public TPCacheAdapter<T> getTPCacheAdapter(PersistentEntity entity) {
         if (entity == null) {
             return null;
@@ -32,5 +33,6 @@ public class TPCacheAdapterRepositoryImpl<T> implements TPCacheAdapterRepository
         adapters.put(entityJavaClassFQN, cacheAdapter);
     }
 
-    private ConcurrentHashMap<String, TPCacheAdapter<T>> adapters = new ConcurrentHashMap<String, TPCacheAdapter<T>>();
+    private ConcurrentHashMap<String, TPCacheAdapter<T>> adapters = new ConcurrentHashMap<>();
+
 }

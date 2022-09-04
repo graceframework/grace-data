@@ -14,17 +14,15 @@
  */
 package org.grails.datastore.gorm
 
-import groovy.transform.CompileDynamic
-import groovy.transform.CompileStatic
-import groovy.transform.TypeChecked
-import groovy.transform.TypeCheckingMode
-import org.grails.datastore.mapping.model.MappingContext
-
 import java.lang.reflect.Method
 import java.lang.reflect.Modifier
 
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
+
 import org.grails.datastore.gorm.utils.ReflectionUtils
 import org.grails.datastore.mapping.core.Datastore
+import org.grails.datastore.mapping.model.MappingContext
 import org.grails.datastore.mapping.model.PersistentEntity
 
 /**
@@ -38,21 +36,21 @@ import org.grails.datastore.mapping.model.PersistentEntity
 abstract class AbstractGormApi<D> extends AbstractDatastoreApi {
 
     static final List<String> EXCLUDES = [
-        'setProperty',
-        'getProperty',
-        'getMetaClass',
-        'setMetaClass',
-        'invokeMethod',
-        'getMethods',
-        'getExtendedMethods',
-        'wait',
-        'equals',
-        'toString',
-        'hashCode',
-        'getClass',
-        'notify',
-        'notifyAll',
-        'setTransactionManager'
+            'setProperty',
+            'getProperty',
+            'getMetaClass',
+            'setMetaClass',
+            'invokeMethod',
+            'getMethods',
+            'getExtendedMethods',
+            'wait',
+            'equals',
+            'toString',
+            'hashCode',
+            'getClass',
+            'notify',
+            'notifyAll',
+            'setTransactionManager'
     ]
 
     protected Class<D> persistentClass
@@ -82,7 +80,7 @@ abstract class AbstractGormApi<D> extends AbstractDatastoreApi {
             }
             methods.addAll methodsToAdd
             if (clazz != GormStaticApi.class && clazz != GormInstanceApi && clazz != GormValidationApi && clazz != AbstractGormApi) {
-                def extendedMethodsToAdd = methodsToAdd.findAll { Method m -> !ReflectionUtils.isMethodOverriddenFromParent(m)}
+                def extendedMethodsToAdd = methodsToAdd.findAll { Method m -> !ReflectionUtils.isMethodOverriddenFromParent(m) }
                 extendedMethods.addAll extendedMethodsToAdd
             }
             clazz = clazz.getSuperclass()
@@ -91,16 +89,17 @@ abstract class AbstractGormApi<D> extends AbstractDatastoreApi {
     }
 
     List<Method> getMethods() {
-        if(methods == null) {
+        if (methods == null) {
             initializeMethods(getClass())
         }
         return methods
     }
 
     List<Method> getExtendedMethods() {
-        if(extendedMethods == null) {
+        if (extendedMethods == null) {
             initializeMethods(getClass())
         }
         return extendedMethods
     }
+
 }

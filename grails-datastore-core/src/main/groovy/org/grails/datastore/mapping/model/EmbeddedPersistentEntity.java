@@ -22,8 +22,9 @@ import org.grails.datastore.mapping.reflect.FieldEntityAccess;
  * @author Graeme Rocher
  * @since 1.0
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
-public class EmbeddedPersistentEntity extends AbstractPersistentEntity{
+@SuppressWarnings({ "rawtypes", "unchecked" })
+public class EmbeddedPersistentEntity extends AbstractPersistentEntity {
+
     public EmbeddedPersistentEntity(Class type, MappingContext ctx) {
         super(type, ctx);
     }
@@ -38,4 +39,5 @@ public class EmbeddedPersistentEntity extends AbstractPersistentEntity{
         super.initialize();
         FieldEntityAccess.getOrIntializeReflector(this);
     }
+
 }

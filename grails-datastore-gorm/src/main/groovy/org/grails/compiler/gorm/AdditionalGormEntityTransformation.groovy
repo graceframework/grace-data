@@ -25,4 +25,5 @@ interface AdditionalGormEntityTransformation extends ASTTransformation, Compilat
      * @param sourceUnit The source unit
      */
     void visit(ClassNode classNode, SourceUnit sourceUnit)
+
 }

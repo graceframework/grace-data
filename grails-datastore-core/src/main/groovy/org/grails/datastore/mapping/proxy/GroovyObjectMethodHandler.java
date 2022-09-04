@@ -15,12 +15,10 @@
  */
 package org.grails.datastore.mapping.proxy;
 
-import groovy.lang.MetaClass;
-
 import java.lang.reflect.Method;
 
+import groovy.lang.MetaClass;
 import javassist.util.proxy.MethodHandler;
-
 import org.codehaus.groovy.runtime.InvokerHelper;
 
 /**
@@ -32,14 +30,23 @@ import org.codehaus.groovy.runtime.InvokerHelper;
  * @author Graeme Rocher
  */
 public class GroovyObjectMethodHandler implements MethodHandler {
+
     public static final Object INVOKE_IMPLEMENTATION = new Object();
+
     public static final String META_CLASS_PROPERTY = "metaClass";
+
     public static final String GET_META_CLASS = "getMetaClass";
+
     public static final String GET_PROPERTY = "getProperty";
+
     public static final String SET_META_CLASS = "setMetaClass";
+
     public static final String SET_PROPERTY = "setProperty";
+
     public static final String INVOKE_METHOD = "invokeMethod";
+
     protected final Class<?> proxyClass;
+
     protected transient MetaClass metaClass;
 
     public GroovyObjectMethodHandler(Class<?> proxyClass) {
@@ -48,9 +55,10 @@ public class GroovyObjectMethodHandler implements MethodHandler {
 
     public Object getProperty(Object self, String property) {
         Object result = getPropertyBeforeResolving(self, property);
-        if(!wasHandled(result)) {
+        if (!wasHandled(result)) {
             return resolveDelegateAndGetProperty(self, property);
-        } else {
+        }
+        else {
             return result;
         }
     }
@@ -64,7 +72,7 @@ public class GroovyObjectMethodHandler implements MethodHandler {
     }
 
     protected Object getPropertyBeforeResolving(Object self, String property) {
-        if(META_CLASS_PROPERTY.equals(property)) {
+        if (META_CLASS_PROPERTY.equals(property)) {
             return getThisMetaClass();
         }
         return INVOKE_IMPLEMENTATION;
@@ -75,7 +83,7 @@ public class GroovyObjectMethodHandler implements MethodHandler {
     }
 
     public void setProperty(Object self, String property, Object newValue) {
-        if(setPropertyBeforeResolving(self, property, newValue)) {
+        if (setPropertyBeforeResolving(self, property, newValue)) {
             return;
         }
         resolveDelegateAndSetProperty(self, property, newValue);
@@ -86,22 +94,23 @@ public class GroovyObjectMethodHandler implements MethodHandler {
     }
 
     protected boolean setPropertyBeforeResolving(Object self, String property, Object newValue) {
-        if(META_CLASS_PROPERTY.equals(property)) {
-            setThisMetaClass((MetaClass)newValue);
+        if (META_CLASS_PROPERTY.equals(property)) {
+            setThisMetaClass((MetaClass) newValue);
             return true;
         }
         return false;
     }
-    
+
     protected void setPropertyAfterResolving(Object delegate, String property, Object newValue) {
         InvokerHelper.getMetaClass(delegate).setProperty(delegate, property, newValue);
     }
 
     public Object invokeThisMethod(Object self, String name, Object[] args) {
         Object result = invokeMethodBeforeResolving(self, name, args);
-        if(!wasHandled(result)) {
+        if (!wasHandled(result)) {
             return resolveDelegateAndInvokeThisMethod(self, name, args);
-        } else {
+        }
+        else {
             return result;
         }
     }
@@ -115,11 +124,11 @@ public class GroovyObjectMethodHandler implements MethodHandler {
     }
 
     public Object invokeMethodBeforeResolving(Object self, String name, Object[] args) {
-        if(GET_META_CLASS.equals(name) && args.length==0) {
+        if (GET_META_CLASS.equals(name) && args.length == 0) {
             return getThisMetaClass();
         }
-        if(SET_META_CLASS.equals(name) && args.length==1) {
-            setThisMetaClass((MetaClass)args[0]);
+        if (SET_META_CLASS.equals(name) && args.length == 1) {
+            setThisMetaClass((MetaClass) args[0]);
             return Void.class;
         }
         return INVOKE_IMPLEMENTATION;
@@ -139,10 +148,11 @@ public class GroovyObjectMethodHandler implements MethodHandler {
     @Override
     public Object invoke(Object self, Method thisMethod, Method proceed, Object[] args) throws Throwable {
         Object result = handleInvocation(self, thisMethod, args);
-        if(!wasHandled(result)) {
+        if (!wasHandled(result)) {
 
             return proceed.invoke(self, args);
-        } else {
+        }
+        else {
             return result;
         }
     }
@@ -161,13 +171,15 @@ public class GroovyObjectMethodHandler implements MethodHandler {
         else if (args.length == 1) {
             if (GET_PROPERTY.equals(methodName)) {
                 String name = args[0].toString();
-                if(META_CLASS_PROPERTY.equals(name)) {
+                if (META_CLASS_PROPERTY.equals(name)) {
                     return getThisMetaClass();
-                } else {
+                }
+                else {
                     return getProperty(self, name);
                 }
-            } else if (SET_META_CLASS.equals(methodName)) {
-                setThisMetaClass((MetaClass)args[0]);
+            }
+            else if (SET_META_CLASS.equals(methodName)) {
+                setThisMetaClass((MetaClass) args[0]);
                 return Void.class;
             }
         }
@@ -175,16 +187,19 @@ public class GroovyObjectMethodHandler implements MethodHandler {
             if (SET_PROPERTY.equals(methodName)) {
                 String name = args[0].toString();
                 Object value = args[1];
-                if(META_CLASS_PROPERTY.equals(name)) {
-                    setThisMetaClass((MetaClass)value);
-                } else {
+                if (META_CLASS_PROPERTY.equals(name)) {
+                    setThisMetaClass((MetaClass) value);
+                }
+                else {
                     setProperty(self, name, value);
                 }
                 return Void.class;
-            } else if (INVOKE_METHOD.equals(methodName)) {
-                return invokeThisMethod(self, args[0].toString(), (Object[])args[1]);
+            }
+            else if (INVOKE_METHOD.equals(methodName)) {
+                return invokeThisMethod(self, args[0].toString(), (Object[]) args[1]);
             }
         }
         return INVOKE_IMPLEMENTATION;
     }
+
 }

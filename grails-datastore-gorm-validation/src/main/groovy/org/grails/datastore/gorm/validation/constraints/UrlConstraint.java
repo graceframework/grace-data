@@ -1,12 +1,13 @@
 package org.grails.datastore.gorm.validation.constraints;
 
-import grails.gorm.validation.ConstrainedProperty;
+import java.util.List;
+
 import org.apache.commons.validator.routines.RegexValidator;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.context.MessageSource;
 import org.springframework.validation.Errors;
 
-import java.util.List;
+import grails.gorm.validation.ConstrainedProperty;
 
 /**
  * Validates a url.
@@ -68,10 +69,11 @@ public class UrlConstraint extends AbstractConstraint {
     @Override
     protected void processValidate(Object target, Object propertyValue, Errors errors) {
         if (!validator.isValid(propertyValue.toString())) {
-            Object[] args = new Object[]{constraintPropertyName, constraintOwningClass, propertyValue};
+            Object[] args = new Object[] { constraintPropertyName, constraintOwningClass, propertyValue };
             rejectValue(target, errors, ConstrainedProperty.DEFAULT_INVALID_URL_MESSAGE_CODE,
                     ConstrainedProperty.URL_CONSTRAINT + ConstrainedProperty.INVALID_SUFFIX, args);
         }
     }
+
 }
 

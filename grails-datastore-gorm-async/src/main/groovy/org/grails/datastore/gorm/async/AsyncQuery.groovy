@@ -16,6 +16,7 @@ package org.grails.datastore.gorm.async
 
 import grails.async.decorator.PromiseDecorator
 import grails.async.decorator.PromiseDecoratorProvider
+
 import org.grails.datastore.gorm.async.transform.DelegateAsync
 import org.grails.datastore.gorm.query.GormOperations
 
@@ -27,7 +28,8 @@ import org.grails.datastore.gorm.query.GormOperations
  */
 class AsyncQuery<E> implements PromiseDecoratorProvider {
 
-    @DelegateAsync GormOperations<E> gormOperations
+    @DelegateAsync
+    GormOperations<E> gormOperations
 
     /**
      * Wraps each promise in a new persistence session
@@ -40,7 +42,6 @@ class AsyncQuery<E> implements PromiseDecoratorProvider {
         }
     } as PromiseDecorator ]
 
-
     AsyncQuery(GormOperations<E> gormOperations) {
         this.gormOperations = gormOperations
     }
@@ -49,4 +50,5 @@ class AsyncQuery<E> implements PromiseDecoratorProvider {
     List<PromiseDecorator> getDecorators() {
         return decorators
     }
+
 }

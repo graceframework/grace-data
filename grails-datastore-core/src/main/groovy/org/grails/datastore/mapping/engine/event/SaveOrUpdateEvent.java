@@ -24,4 +24,5 @@ public class SaveOrUpdateEvent extends AbstractPersistenceEvent {
     public EventType getEventType() {
         return EventType.SaveOrUpdate;
     }
+
 }

@@ -19,4 +19,6 @@ import org.grails.datastore.mapping.core.Datastore;
 /**
  * @author Guillaume Laforge
  */
-public interface ColumnDatastore extends Datastore {}
+public interface ColumnDatastore extends Datastore {
+
+}

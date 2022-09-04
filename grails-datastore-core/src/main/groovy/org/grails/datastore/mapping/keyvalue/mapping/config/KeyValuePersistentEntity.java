@@ -26,9 +26,11 @@ import org.grails.datastore.mapping.model.types.Embedded;
  * @author Graeme Rocher
  * @since 1.0
  */
-public class KeyValuePersistentEntity extends AbstractPersistentEntity<Family>{
-    private Object mappedForm;
-    private KeyValueClassMapping classMapping;
+public class KeyValuePersistentEntity extends AbstractPersistentEntity<Family> {
+
+    private final Object mappedForm;
+
+    private final KeyValueClassMapping classMapping;
 
     public KeyValuePersistentEntity(@SuppressWarnings("rawtypes") Class javaClass, MappingContext context) {
         super(javaClass, context);
@@ -45,7 +47,7 @@ public class KeyValuePersistentEntity extends AbstractPersistentEntity<Family>{
     @Override
     public PersistentEntity getParentEntity() {
         Class superclass = this.javaClass.getSuperclass();
-        if( superclass != null ) {
+        if (superclass != null) {
             return context.getPersistentEntity(superclass.getName());
         }
 
@@ -54,12 +56,12 @@ public class KeyValuePersistentEntity extends AbstractPersistentEntity<Family>{
 
     @Override
     public PersistentProperty getPropertyByName(String name) {
-        if(name != null && name.contains(".")) {
+        if (name != null && name.contains(".")) {
             String[] props = name.split("\\.");
 
             // Get the embedded property type
             PersistentProperty embeddedProp = super.getPropertyByName(props[0]);
-            if( embeddedProp instanceof Embedded) {
+            if (embeddedProp instanceof Embedded) {
                 PersistentEntity embeddedEntity = ((Embedded) embeddedProp).getAssociatedEntity();
                 return embeddedEntity.getPropertyByName(props[1]);
             }
@@ -72,13 +74,17 @@ public class KeyValuePersistentEntity extends AbstractPersistentEntity<Family>{
     }
 
     public class KeyValueClassMapping extends AbstractClassMapping<Family> {
+
         public KeyValueClassMapping(PersistentEntity entity, MappingContext context) {
             super(entity, context);
 
         }
+
         @Override
         public Family getMappedForm() {
             return (Family) mappedForm;
         }
+
     }
+
 }

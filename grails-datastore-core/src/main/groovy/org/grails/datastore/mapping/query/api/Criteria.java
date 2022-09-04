@@ -14,12 +14,13 @@
  */
 package org.grails.datastore.mapping.query.api;
 
-import groovy.lang.Closure;
-import groovy.lang.DelegatesTo;
-import org.grails.datastore.mapping.query.Query;
-
 import java.util.Collection;
 import java.util.Map;
+
+import groovy.lang.Closure;
+import groovy.lang.DelegatesTo;
+
+import org.grails.datastore.mapping.query.Query;
 
 /**
  * Interface for the implementations that construct of criteria queries.
@@ -28,7 +29,7 @@ import java.util.Map;
  * @since 1.0
  */
 @SuppressWarnings("rawtypes")
-public interface Criteria  {
+public interface Criteria {
 
     /**
      * Executes an exists subquery
@@ -297,13 +298,13 @@ public interface Criteria  {
     Criteria inList(String propertyName, Object[] values);
 
     /**
-      * Creates an "in" Criterion based on the specified property name and list of values
-      *
-      * @param propertyName The property name
-      * @param values The values
-      *
-      * @return The criteria
-      */
+     * Creates an "in" Criterion based on the specified property name and list of values
+     *
+     * @param propertyName The property name
+     * @param values The values
+     *
+     * @return The criteria
+     */
     Criteria in(String propertyName, Object[] values);
 
     /**
@@ -360,7 +361,7 @@ public interface Criteria  {
      *
      * @return This criteria
      */
-    Criteria sizeEq(String propertyName, int size) ;
+    Criteria sizeEq(String propertyName, int size);
 
     /**
      * Creates a Criterion that constrains a collection property to be greater than the given size
@@ -506,6 +507,7 @@ public interface Criteria  {
      * @return This criterion instance
      */
     Criteria ltAll(String propertyName, Closure<?> propertyValue);
+
     /**
      * Creates a subquery criterion that ensures the given property is greater than or equals to all the given returned values
      *
@@ -514,6 +516,7 @@ public interface Criteria  {
      * @return This criterion instance
      */
     Criteria geAll(String propertyName, Closure<?> propertyValue);
+
     /**
      * Creates a subquery criterion that ensures the given property is less than or equal to all the given returned values
      *
@@ -677,4 +680,5 @@ public interface Criteria  {
      * @return This Criteria instance          
      */
     Criteria readOnly(boolean readOnly);
+
 }

@@ -24,6 +24,7 @@ import java.io.Serializable;
  * @since 5.0
  */
 public interface ProxyHandler {
+
     /**
      * Checks whether the specified instance is a proxy
      *
@@ -38,6 +39,7 @@ public interface ProxyHandler {
      * @return True if it is
      */
     boolean isInitialized(Object object);
+
     /**
      * Checks whether the given association name of the given object is initialized
      *
@@ -72,4 +74,5 @@ public interface ProxyHandler {
      * @param o The object to initialize
      */
     void initialize(Object o);
+
 }

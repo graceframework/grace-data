@@ -1,9 +1,9 @@
 package org.grails.datastore.gorm.jdbc
 
+import javax.sql.DataSource
+
 import groovy.transform.CompileStatic
 import groovy.transform.EqualsAndHashCode
-
-import javax.sql.DataSource
 
 /**
  * A data source that wraps a target datasource for multi-tenancy
@@ -15,11 +15,13 @@ import javax.sql.DataSource
 @EqualsAndHashCode(includes = ['tenantId'])
 class MultiTenantDataSource implements DataSource {
 
-    final @Delegate DataSource target
+    final @Delegate
+    DataSource target
     final String tenantId
 
     MultiTenantDataSource(DataSource target, String tenantId) {
         this.target = target
         this.tenantId = tenantId
     }
+
 }

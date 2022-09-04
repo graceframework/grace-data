@@ -1,13 +1,14 @@
 package org.grails.datastore.mapping.multitenancy.web
 
+import javax.servlet.http.HttpServletRequest
+
 import groovy.transform.CompileStatic
-import org.grails.datastore.mapping.multitenancy.TenantResolver
-import org.grails.datastore.mapping.multitenancy.exceptions.TenantNotFoundException
 import org.springframework.web.context.request.RequestAttributes
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletWebRequest
 
-import javax.servlet.http.HttpServletRequest
+import org.grails.datastore.mapping.multitenancy.TenantResolver
+import org.grails.datastore.mapping.multitenancy.exceptions.TenantNotFoundException
 
 /**
  * A tenant resolver that resolves the tenant from the request HTTP Header
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest
  */
 @CompileStatic
 class HttpHeaderTenantResolver implements TenantResolver {
+
     public static final String HEADER_NAME = "gorm.tenantId"
 
     /**
@@ -26,18 +28,17 @@ class HttpHeaderTenantResolver implements TenantResolver {
 
     @Override
     Serializable resolveTenantIdentifier() {
-
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes()
-        if(requestAttributes instanceof ServletWebRequest) {
-
+        if (requestAttributes instanceof ServletWebRequest) {
             HttpServletRequest httpServletRequest = ((ServletWebRequest) requestAttributes).getRequest()
             String tenantId = httpServletRequest.getHeader(headerName.toLowerCase())
 
-            if ( tenantId ) {
+            if (tenantId) {
                 return tenantId
             }
             throw new TenantNotFoundException("Tenant could not be resolved from HTTP Header: ${headerName}")
         }
         throw new TenantNotFoundException("Tenant could not be resolved outside a web request")
     }
+
 }

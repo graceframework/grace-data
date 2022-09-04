@@ -1,8 +1,8 @@
 package grails.gorm.time
 
-import groovy.transform.CompileStatic
-
 import java.time.LocalTime
+
+import groovy.transform.CompileStatic
 
 /**
  * A trait to convert a {@link LocalTime} to and from a long
@@ -21,4 +21,5 @@ trait LocalTimeConverter implements TemporalConverter<LocalTime> {
     LocalTime convert(Long value) {
         LocalTime.ofNanoOfDay(value)
     }
+
 }

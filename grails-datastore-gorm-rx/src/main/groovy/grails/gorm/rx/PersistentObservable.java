@@ -36,4 +36,5 @@ public interface PersistentObservable<T> {
      *         unsubscribe from the Observable
      */
     Subscription subscribe(Subscriber<? super T> subscriber);
+
 }

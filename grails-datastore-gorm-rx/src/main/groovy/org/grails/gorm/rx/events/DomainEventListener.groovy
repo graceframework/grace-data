@@ -1,6 +1,7 @@
 package org.grails.gorm.rx.events
 
 import groovy.transform.CompileStatic
+
 import org.grails.datastore.mapping.engine.event.AbstractPersistenceEvent
 import org.grails.datastore.rx.RxDatastoreClient
 

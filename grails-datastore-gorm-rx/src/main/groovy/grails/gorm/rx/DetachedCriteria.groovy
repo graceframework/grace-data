@@ -1,21 +1,20 @@
 package grails.gorm.rx
 
+import javax.persistence.FetchType
+
 import groovy.transform.CompileStatic
-import groovy.transform.InheritConstructors
+import rx.Observable
+import rx.Subscriber
+import rx.Subscription
+
 import org.grails.datastore.gorm.finders.DynamicFinder
 import org.grails.datastore.gorm.query.criteria.AbstractDetachedCriteria
 import org.grails.datastore.mapping.query.Query
-import org.grails.datastore.mapping.query.api.Criteria
 import org.grails.datastore.mapping.query.api.ProjectionList
 import org.grails.datastore.mapping.query.api.QueryArgumentsAware
 import org.grails.datastore.mapping.query.api.QueryableCriteria
 import org.grails.datastore.rx.query.RxQuery
 import org.grails.gorm.rx.api.RxGormEnhancer
-import rx.Observable
-import rx.Subscriber
-import rx.Subscription
-
-import javax.persistence.FetchType
 
 /**
  * Reactive version of {@link grails.gorm.DetachedCriteria}
@@ -25,6 +24,7 @@ import javax.persistence.FetchType
  */
 @CompileStatic
 class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implements PersistentObservable<T> {
+
     DetachedCriteria(Class<Observable<T>> targetClass, String alias) {
         super(targetClass, alias)
     }
@@ -45,7 +45,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
     Observable<T> find(Map args = Collections.emptyMap(), @DelegatesTo(DetachedCriteria) Closure additionalCriteria = null) {
         Query query = prepareQuery(args, additionalCriteria)
         query.max(1)
-        return ((RxQuery)query).findAll(args)
+        return ((RxQuery) query).findAll(args)
     }
 
     /**
@@ -59,7 +59,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
      */
     Observable<T> findAll(Map args = Collections.emptyMap(), @DelegatesTo(DetachedCriteria) Closure additionalCriteria = null) {
         Query query = prepareQuery(args, additionalCriteria)
-        return ((RxQuery)query).findAll(args)
+        return ((RxQuery) query).findAll(args)
     }
 
     /**
@@ -70,7 +70,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
     Observable<T> get(Map args, @DelegatesTo(DetachedCriteria) Closure additionalCriteria = null) {
         Query query = prepareQuery(args, additionalCriteria)
         query.max(1)
-        return ((RxQuery)query).singleResult(args)
+        return ((RxQuery) query).singleResult(args)
     }
 
     /**
@@ -81,7 +81,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
     Observable<T> get(@DelegatesTo(DetachedCriteria) Closure additionalCriteria = null) {
         Query query = prepareQuery(Collections.emptyMap(), additionalCriteria)
         query.max(1)
-        return ((RxQuery)query).singleResult()
+        return ((RxQuery) query).singleResult()
     }
 
     /**
@@ -93,7 +93,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
      */
     Observable<List<T>> toList(Map args = Collections.emptyMap(), @DelegatesTo(DetachedCriteria) Closure additionalCriteria = null) {
         Query query = prepareQuery(args, additionalCriteria)
-        return ((RxQuery)query).findAll(args).toList()
+        return ((RxQuery) query).findAll(args).toList()
     }
 
     /**
@@ -105,7 +105,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
      */
     Observable<List<T>> list(Map args = Collections.emptyMap(), @DelegatesTo(DetachedCriteria) Closure additionalCriteria = null) {
         Query query = prepareQuery(args, additionalCriteria)
-        return ((RxQuery)query).findAll(args).toList()
+        return ((RxQuery) query).findAll(args).toList()
     }
 
     /**
@@ -118,7 +118,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
     Observable<Number> getCount(Map args = Collections.emptyMap(), @DelegatesTo(DetachedCriteria) Closure additionalCriteria = null) {
         Query query = prepareQuery(args, additionalCriteria)
         query.projections().count()
-        return ((RxQuery)query).singleResult(args)
+        return ((RxQuery) query).singleResult(args)
     }
 
     /**
@@ -139,7 +139,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
      */
     Observable<Number> updateAll(Map propertiesMap) {
         Query query = prepareQuery(Collections.emptyMap(), null)
-        return ((RxQuery)query).updateAll(propertiesMap)
+        return ((RxQuery) query).updateAll(propertiesMap)
     }
 
     /**
@@ -149,7 +149,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
      */
     Observable<Number> deleteAll() {
         Query query = prepareQuery(Collections.emptyMap(), null)
-        return ((RxQuery)query).deleteAll()
+        return ((RxQuery) query).deleteAll()
     }
 
     /**
@@ -174,62 +174,62 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
 
     @Override
     DetachedCriteria<T> build(@DelegatesTo(grails.gorm.DetachedCriteria) Closure callable) {
-        return (DetachedCriteria)super.build(callable)
+        return (DetachedCriteria) super.build(callable)
     }
 
     @Override
     DetachedCriteria<T> buildLazy(@DelegatesTo(grails.gorm.DetachedCriteria) Closure callable) {
-        return (DetachedCriteria)super.buildLazy(callable)
+        return (DetachedCriteria) super.buildLazy(callable)
     }
 
     @Override
     DetachedCriteria<T> max(int max) {
-        return (DetachedCriteria)super.max(max)
+        return (DetachedCriteria) super.max(max)
     }
 
     @Override
     DetachedCriteria<T> offset(int offset) {
-        return (DetachedCriteria)super.offset(offset)
+        return (DetachedCriteria) super.offset(offset)
     }
 
     @Override
     DetachedCriteria<T> sort(String property) {
-        return (DetachedCriteria)super.sort(property)
+        return (DetachedCriteria) super.sort(property)
     }
 
     @Override
     DetachedCriteria<T> sort(String property, String direction) {
-        return (DetachedCriteria)super.sort(property, direction)
+        return (DetachedCriteria) super.sort(property, direction)
     }
 
     @Override
     DetachedCriteria<T> property(String property) {
-        return (DetachedCriteria)super.property(property)
+        return (DetachedCriteria) super.property(property)
     }
 
     @Override
     DetachedCriteria<T> id() {
-        return (DetachedCriteria)super.id()
+        return (DetachedCriteria) super.id()
     }
 
     @Override
     DetachedCriteria<T> avg(String property) {
-        return (DetachedCriteria)super.avg(property)
+        return (DetachedCriteria) super.avg(property)
     }
 
     @Override
     DetachedCriteria<T> sum(String property) {
-        return (DetachedCriteria)super.sum(property)
+        return (DetachedCriteria) super.sum(property)
     }
 
     @Override
     DetachedCriteria<T> min(String property) {
-        return (DetachedCriteria)super.min(property)
+        return (DetachedCriteria) super.min(property)
     }
 
     @Override
     DetachedCriteria<T> max(String property) {
-        return (DetachedCriteria)super.max(property)
+        return (DetachedCriteria) super.max(property)
     }
 
     @Override
@@ -239,17 +239,17 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
 
     @Override
     DetachedCriteria<T> distinct(String property) {
-        return (DetachedCriteria)super.distinct(property)
+        return (DetachedCriteria) super.distinct(property)
     }
 
     @Override
     protected QueryableCriteria buildQueryableCriteria(Closure queryClosure) {
-        return (QueryableCriteria)new DetachedCriteria(targetClass).build(queryClosure)
+        return (QueryableCriteria) new DetachedCriteria(targetClass).build(queryClosure)
     }
 
     @Override
     protected DetachedCriteria<T> clone() {
-        return (DetachedCriteria)super.clone()
+        return (DetachedCriteria) super.clone()
     }
 
     @Override
@@ -259,92 +259,92 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
 
     @Override
     DetachedCriteria<T> join(String property) {
-        return (DetachedCriteria<T>)super.join(property)
+        return (DetachedCriteria<T>) super.join(property)
     }
 
     @Override
     DetachedCriteria<T> select(String property) {
-        return (DetachedCriteria<T>)super.select(property)
+        return (DetachedCriteria<T>) super.select(property)
     }
 
     @Override
     DetachedCriteria<T> projections(@DelegatesTo(ProjectionList) Closure callable) {
-        return (DetachedCriteria<T>)super.projections(callable)
+        return (DetachedCriteria<T>) super.projections(callable)
     }
 
     @Override
     DetachedCriteria<T> and(@DelegatesTo(AbstractDetachedCriteria) Closure callable) {
-        return (DetachedCriteria<T>)super.and(callable)
+        return (DetachedCriteria<T>) super.and(callable)
     }
 
     @Override
     DetachedCriteria<T> or(@DelegatesTo(AbstractDetachedCriteria) Closure callable) {
-        return (DetachedCriteria<T>)super.or(callable)
+        return (DetachedCriteria<T>) super.or(callable)
     }
 
     @Override
     DetachedCriteria<T> not(@DelegatesTo(AbstractDetachedCriteria) Closure callable) {
-        return (DetachedCriteria<T>)super.not(callable)
+        return (DetachedCriteria<T>) super.not(callable)
     }
 
     @Override
     DetachedCriteria<T> "in"(String propertyName, Collection values) {
-        return (DetachedCriteria<T>)super.in(propertyName, values)
+        return (DetachedCriteria<T>) super.in(propertyName, values)
     }
 
     @Override
     DetachedCriteria<T> "in"(String propertyName, QueryableCriteria subquery) {
-        return (DetachedCriteria<T>)super.in(propertyName, subquery)
+        return (DetachedCriteria<T>) super.in(propertyName, subquery)
     }
 
     @Override
     DetachedCriteria<T> inList(String propertyName, QueryableCriteria<?> subquery) {
-        return (DetachedCriteria<T>)super.inList(propertyName, subquery)
+        return (DetachedCriteria<T>) super.inList(propertyName, subquery)
     }
 
     @Override
     DetachedCriteria<T> "in"(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> subquery) {
-        return (DetachedCriteria<T>)super.in(propertyName, subquery)
+        return (DetachedCriteria<T>) super.in(propertyName, subquery)
     }
 
     @Override
     DetachedCriteria<T> inList(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> subquery) {
-        return (DetachedCriteria<T>)super.inList(propertyName, subquery)
+        return (DetachedCriteria<T>) super.inList(propertyName, subquery)
     }
 
     @Override
     DetachedCriteria<T> "in"(String propertyName, Object[] values) {
-        return (DetachedCriteria<T>)super.in(propertyName, values)
+        return (DetachedCriteria<T>) super.in(propertyName, values)
     }
 
     @Override
     DetachedCriteria<T> notIn(String propertyName, QueryableCriteria<?> subquery) {
-        return (DetachedCriteria<T>)super.notIn(propertyName, subquery)
+        return (DetachedCriteria<T>) super.notIn(propertyName, subquery)
     }
 
     @Override
     DetachedCriteria<T> notIn(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> subquery) {
-        return (DetachedCriteria<T>)super.notIn(propertyName, subquery)
+        return (DetachedCriteria<T>) super.notIn(propertyName, subquery)
     }
 
     @Override
     DetachedCriteria<T> order(String propertyName) {
-        return (DetachedCriteria<T>)super.order(propertyName)
+        return (DetachedCriteria<T>) super.order(propertyName)
     }
 
     @Override
     DetachedCriteria<T> order(Query.Order o) {
-        return (DetachedCriteria<T>)super.order(o)
+        return (DetachedCriteria<T>) super.order(o)
     }
 
     @Override
     DetachedCriteria<T> order(String propertyName, String direction) {
-        return (DetachedCriteria<T>)super.order(propertyName, direction)
+        return (DetachedCriteria<T>) super.order(propertyName, direction)
     }
 
     @Override
     DetachedCriteria<T> inList(String propertyName, Collection values) {
-        return (DetachedCriteria<T>)super.inList(propertyName, values)
+        return (DetachedCriteria<T>) super.inList(propertyName, values)
     }
 
     @Override
@@ -354,262 +354,262 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
 
     @Override
     DetachedCriteria<T> inList(String propertyName, Object[] values) {
-        return (DetachedCriteria<T>)super.inList(propertyName, values)
+        return (DetachedCriteria<T>) super.inList(propertyName, values)
     }
 
     @Override
     DetachedCriteria<T> sizeEq(String propertyName, int size) {
-        return (DetachedCriteria<T>)super.sizeEq(propertyName, size)
+        return (DetachedCriteria<T>) super.sizeEq(propertyName, size)
     }
 
     @Override
     DetachedCriteria<T> sizeGt(String propertyName, int size) {
-        return (DetachedCriteria<T>)super.sizeGt(propertyName, size)
+        return (DetachedCriteria<T>) super.sizeGt(propertyName, size)
     }
 
     @Override
     DetachedCriteria<T> sizeGe(String propertyName, int size) {
-        return (DetachedCriteria<T>)super.sizeGe(propertyName, size)
+        return (DetachedCriteria<T>) super.sizeGe(propertyName, size)
     }
 
     @Override
     DetachedCriteria<T> sizeLe(String propertyName, int size) {
-        return (DetachedCriteria<T>)super.sizeLe(propertyName, size)
+        return (DetachedCriteria<T>) super.sizeLe(propertyName, size)
     }
 
     @Override
     DetachedCriteria<T> sizeLt(String propertyName, int size) {
-        return (DetachedCriteria<T>)super.sizeLt(propertyName, size)
+        return (DetachedCriteria<T>) super.sizeLt(propertyName, size)
     }
 
     @Override
     DetachedCriteria<T> sizeNe(String propertyName, int size) {
-        return (DetachedCriteria<T>)super.sizeNe(propertyName, size)
+        return (DetachedCriteria<T>) super.sizeNe(propertyName, size)
     }
 
     @Override
     DetachedCriteria<T> eqProperty(String propertyName, String otherPropertyName) {
-        return (DetachedCriteria<T>)super.eqProperty(propertyName, otherPropertyName)
+        return (DetachedCriteria<T>) super.eqProperty(propertyName, otherPropertyName)
     }
 
     @Override
     DetachedCriteria<T> neProperty(String propertyName, String otherPropertyName) {
-        return (DetachedCriteria<T>)super.neProperty(propertyName, otherPropertyName)
+        return (DetachedCriteria<T>) super.neProperty(propertyName, otherPropertyName)
     }
 
     @Override
     DetachedCriteria<T> allEq(Map<String, Object> propertyValues) {
-        return (DetachedCriteria<T>)super.allEq(propertyValues)
+        return (DetachedCriteria<T>) super.allEq(propertyValues)
     }
 
     @Override
     DetachedCriteria<T> gtProperty(String propertyName, String otherPropertyName) {
-        return (DetachedCriteria<T>)super.gtProperty(propertyName, otherPropertyName)
+        return (DetachedCriteria<T>) super.gtProperty(propertyName, otherPropertyName)
     }
 
     @Override
     DetachedCriteria<T> geProperty(String propertyName, String otherPropertyName) {
-        return (DetachedCriteria<T>)super.geProperty(propertyName, otherPropertyName)
+        return (DetachedCriteria<T>) super.geProperty(propertyName, otherPropertyName)
     }
 
     @Override
     DetachedCriteria<T> ltProperty(String propertyName, String otherPropertyName) {
-        return (DetachedCriteria<T>)super.ltProperty(propertyName, otherPropertyName)
+        return (DetachedCriteria<T>) super.ltProperty(propertyName, otherPropertyName)
     }
 
     @Override
     DetachedCriteria<T> leProperty(String propertyName, String otherPropertyName) {
-        return (DetachedCriteria<T>)super.leProperty(propertyName, otherPropertyName)
+        return (DetachedCriteria<T>) super.leProperty(propertyName, otherPropertyName)
     }
 
     @Override
     DetachedCriteria<T> idEquals(Object value) {
-        return (DetachedCriteria<T>)super.idEquals(value)
+        return (DetachedCriteria<T>) super.idEquals(value)
     }
 
     @Override
     DetachedCriteria<T> exists(QueryableCriteria<?> subquery) {
-        return (DetachedCriteria<T>)super.exists(subquery)
+        return (DetachedCriteria<T>) super.exists(subquery)
     }
 
     @Override
     DetachedCriteria<T> notExists(QueryableCriteria<?> subquery) {
-        return (DetachedCriteria<T>)super.notExists(subquery)
+        return (DetachedCriteria<T>) super.notExists(subquery)
     }
 
     @Override
     DetachedCriteria<T> isEmpty(String propertyName) {
-        return (DetachedCriteria<T>)super.isEmpty(propertyName)
+        return (DetachedCriteria<T>) super.isEmpty(propertyName)
     }
 
     @Override
     DetachedCriteria<T> isNotEmpty(String propertyName) {
-        return (DetachedCriteria<T>)super.isNotEmpty(propertyName)
+        return (DetachedCriteria<T>) super.isNotEmpty(propertyName)
     }
 
     @Override
     DetachedCriteria<T> isNull(String propertyName) {
-        return (DetachedCriteria<T>)super.isNull(propertyName)
+        return (DetachedCriteria<T>) super.isNull(propertyName)
     }
 
     @Override
     DetachedCriteria<T> isNotNull(String propertyName) {
-        return (DetachedCriteria<T>)super.isNotNull(propertyName)
+        return (DetachedCriteria<T>) super.isNotNull(propertyName)
     }
 
     @Override
     DetachedCriteria<T> eq(String propertyName, Object propertyValue) {
-        return (DetachedCriteria<T>)super.eq(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.eq(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> idEq(Object propertyValue) {
-        return (DetachedCriteria<T>)super.idEq(propertyValue)
+        return (DetachedCriteria<T>) super.idEq(propertyValue)
     }
 
     @Override
     DetachedCriteria<T> ne(String propertyName, Object propertyValue) {
-        return (DetachedCriteria<T>)super.ne(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.ne(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> between(String propertyName, Object start, Object finish) {
-        return (DetachedCriteria<T>)super.between(propertyName, start, finish)
+        return (DetachedCriteria<T>) super.between(propertyName, start, finish)
     }
 
     @Override
     DetachedCriteria<T> gte(String property, Object value) {
-        return (DetachedCriteria<T>)super.gte(property, value)
+        return (DetachedCriteria<T>) super.gte(property, value)
     }
 
     @Override
     DetachedCriteria<T> ge(String property, Object value) {
-        return (DetachedCriteria<T>)super.ge(property, value)
+        return (DetachedCriteria<T>) super.ge(property, value)
     }
 
     @Override
     DetachedCriteria<T> gt(String property, Object value) {
-        return (DetachedCriteria<T>)super.gt(property, value)
+        return (DetachedCriteria<T>) super.gt(property, value)
     }
 
     @Override
     DetachedCriteria<T> lte(String property, Object value) {
-        return (DetachedCriteria<T>)super.lte(property, value)
+        return (DetachedCriteria<T>) super.lte(property, value)
     }
 
     @Override
     DetachedCriteria<T> le(String property, Object value) {
-        return (DetachedCriteria<T>)super.le(property, value)
+        return (DetachedCriteria<T>) super.le(property, value)
     }
 
     @Override
     DetachedCriteria<T> lt(String property, Object value) {
-        return (DetachedCriteria<T>)super.lt(property, value)
+        return (DetachedCriteria<T>) super.lt(property, value)
     }
 
     @Override
     DetachedCriteria<T> like(String propertyName, Object propertyValue) {
-        return (DetachedCriteria<T>)super.like(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.like(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> ilike(String propertyName, Object propertyValue) {
-        return (DetachedCriteria<T>)super.ilike(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.ilike(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> rlike(String propertyName, Object propertyValue) {
-        return (DetachedCriteria<T>)super.rlike(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.rlike(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> eqAll(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> propertyValue) {
-        return (DetachedCriteria<T>)super.eqAll(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.eqAll(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> gtAll(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> propertyValue) {
-        return (DetachedCriteria<T>)super.gtAll(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.gtAll(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> ltAll(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> propertyValue) {
-        return (DetachedCriteria<T>)super.ltAll(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.ltAll(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> geAll(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> propertyValue) {
-        return (DetachedCriteria<T>)super.geAll(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.geAll(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> leAll(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> propertyValue) {
-        return (DetachedCriteria<T>)super.leAll(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.leAll(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> eqAll(String propertyName, QueryableCriteria propertyValue) {
-        return (DetachedCriteria<T>)super.eqAll(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.eqAll(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> gtAll(String propertyName, QueryableCriteria propertyValue) {
-        return (DetachedCriteria<T>)super.gtAll(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.gtAll(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> gtSome(String propertyName, QueryableCriteria propertyValue) {
-        return (DetachedCriteria<T>)super.gtSome(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.gtSome(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> gtSome(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> propertyValue) {
-        return (DetachedCriteria<T>)super.gtSome(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.gtSome(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> geSome(String propertyName, QueryableCriteria propertyValue) {
-        return (DetachedCriteria<T>)super.geSome(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.geSome(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> geSome(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> propertyValue) {
-        return (DetachedCriteria<T>)super.geSome(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.geSome(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> ltSome(String propertyName, QueryableCriteria propertyValue) {
-        return (DetachedCriteria<T>)super.ltSome(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.ltSome(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> ltSome(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> propertyValue) {
-        return (DetachedCriteria<T>)super.ltSome(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.ltSome(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> leSome(String propertyName, QueryableCriteria propertyValue) {
-        return (DetachedCriteria<T>)super.leSome(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.leSome(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> leSome(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> propertyValue) {
-        return (DetachedCriteria<T>)super.leSome(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.leSome(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> ltAll(String propertyName, QueryableCriteria propertyValue) {
-        return (DetachedCriteria<T>)super.ltAll(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.ltAll(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> geAll(String propertyName, QueryableCriteria propertyValue) {
-        return (DetachedCriteria<T>)super.geAll(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.geAll(propertyName, propertyValue)
     }
 
     @Override
     DetachedCriteria<T> leAll(String propertyName, QueryableCriteria propertyValue) {
-        return (DetachedCriteria<T>)super.leAll(propertyName, propertyValue)
+        return (DetachedCriteria<T>) super.leAll(propertyName, propertyValue)
     }
 
     protected Query prepareQuery(Map args, Closure additionalCriteria) {
@@ -625,11 +625,11 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
         }
         DynamicFinder.applyDetachedCriteria(query, this)
 
-        for(entry in fetchStrategies) {
-            switch(entry.value) {
+        for (entry in fetchStrategies) {
+            switch (entry.value) {
                 case FetchType.EAGER:
                     query.join(entry.key)
-                break
+                    break
                 default:
                     query.select(entry.key)
             }
@@ -657,4 +657,5 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
     Subscription subscribe(Subscriber<? super T> subscriber) {
         findAll().subscribe(subscriber)
     }
+
 }

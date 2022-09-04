@@ -14,13 +14,13 @@
  */
 package org.grails.datastore.gorm.proxy;
 
-import groovy.lang.DelegatingMetaClass;
-import groovy.lang.MetaClass;
-
 import java.io.Serializable;
 
-import org.grails.datastore.mapping.core.Session;
+import groovy.lang.DelegatingMetaClass;
+import groovy.lang.MetaClass;
 import org.springframework.dao.DataIntegrityViolationException;
+
+import org.grails.datastore.mapping.core.Session;
 
 /**
  * Per-instance metaclass to use for proxied GORM domain objects. It auto-retrieves the associated entity when
@@ -38,14 +38,17 @@ import org.springframework.dao.DataIntegrityViolationException;
  * @author Tom Widmer
  */
 public class ProxyInstanceMetaClass extends DelegatingMetaClass {
+
     /**
      * Session to fetch from, if we need to.
      */
     private Session session;
+
     /**
      * The loaded instance we're proxying, or null if it hasn't been loaded.
      */
     private Object proxyTarget;
+
     /**
      * The key of the object.
      */
@@ -86,18 +89,24 @@ public class ProxyInstanceMetaClass extends DelegatingMetaClass {
         boolean resolveTarget = true;
         if (methodName.equals("isProxy")) {
             return true;
-        } else if (methodName.equals("getId")) {
+        }
+        else if (methodName.equals("getId")) {
             return getKey();
-        } else if (methodName.equals("isInitialized")) {
+        }
+        else if (methodName.equals("isInitialized")) {
             return isProxyInitiated();
-        } else if (methodName.equals("getTarget") || methodName.equals("initialize")) {
+        }
+        else if (methodName.equals("getTarget") || methodName.equals("initialize")) {
             return getProxyTarget();
-        } else if (methodName.equals("getMetaClass")) {
+        }
+        else if (methodName.equals("getMetaClass")) {
             return this;
-        } else if (methodName.equals("getClass") || methodName.equals("getDomainClass")) {
+        }
+        else if (methodName.equals("getClass") || methodName.equals("getDomainClass")) {
             // return correct class only if loaded, otherwise hope for the best
             resolveTarget = isProxyInitiated();
-        } else if (methodName.equals("setMetaClass") && arguments.length == 1 && (arguments[0]==null || arguments[0] instanceof MetaClass)) {
+        }
+        else if (methodName.equals("setMetaClass") && arguments.length == 1 && (arguments[0] == null || arguments[0] instanceof MetaClass)) {
             resolveTarget = false;
         }
         return delegate.invokeMethod(resolveTarget ? getProxyTarget() : o, methodName, arguments);
@@ -115,18 +124,24 @@ public class ProxyInstanceMetaClass extends DelegatingMetaClass {
     public Object getProperty(Object object, String property) {
         if (property.equals("id")) {
             return getKey();
-        } else if (property.equals("proxy")) {
+        }
+        else if (property.equals("proxy")) {
             return true;
-        } else if (property.equals("initialized")) {
+        }
+        else if (property.equals("initialized")) {
             return isProxyInitiated();
-        } else if (property.equals("target")) {
+        }
+        else if (property.equals("target")) {
             return getProxyTarget();
-        } else if (property.equals("metaClass")) {
+        }
+        else if (property.equals("metaClass")) {
             return this;
-        } else if (property.equals("class") || property.equals("domainClass")) {
+        }
+        else if (property.equals("class") || property.equals("domainClass")) {
             // return correct class only if loaded, otherwise hope for the best
             return delegate.getProperty(isProxyInitiated() ? proxyTarget : object, property);
-        } else {
+        }
+        else {
             return delegate.getProperty(getProxyTarget(), property);
         }
     }
@@ -134,9 +149,9 @@ public class ProxyInstanceMetaClass extends DelegatingMetaClass {
     @Override
     public void setProperty(Object object, String property, Object newValue) {
         boolean resolveTarget = true;
-        if(property.equals("metaClass") && (newValue == null || newValue instanceof MetaClass)) {
+        if (property.equals("metaClass") && (newValue == null || newValue instanceof MetaClass)) {
             resolveTarget = false;
-        }        
+        }
         delegate.setProperty(resolveTarget ? getProxyTarget() : object, property, newValue);
     }
 
@@ -144,11 +159,14 @@ public class ProxyInstanceMetaClass extends DelegatingMetaClass {
     public Object getAttribute(Object object, String attribute) {
         if (attribute.equals("id")) {
             return getKey();
-        } else if (attribute.equals("initialized")) {
+        }
+        else if (attribute.equals("initialized")) {
             return isProxyInitiated();
-        } else if (attribute.equals("target")) {
+        }
+        else if (attribute.equals("target")) {
             return getProxyTarget();
-        } else {
+        }
+        else {
             return delegate.getAttribute(getProxyTarget(), attribute);
         }
     }
@@ -157,4 +175,5 @@ public class ProxyInstanceMetaClass extends DelegatingMetaClass {
     public void setAttribute(Object object, String attribute, Object newValue) {
         delegate.setAttribute(getProxyTarget(), attribute, newValue);
     }
+
 }

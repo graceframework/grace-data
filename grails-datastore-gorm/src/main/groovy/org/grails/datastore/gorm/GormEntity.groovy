@@ -15,9 +15,14 @@
  */
 package org.grails.datastore.gorm
 
-import grails.gorm.DetachedCriteria
+import javax.persistence.Transient
+
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
+import org.springframework.transaction.TransactionDefinition
+
+import grails.gorm.DetachedCriteria
+
 import org.grails.datastore.gorm.finders.FinderMethod
 import org.grails.datastore.gorm.query.GormQueryOperations
 import org.grails.datastore.mapping.dirty.checking.DirtyCheckable
@@ -31,9 +36,6 @@ import org.grails.datastore.mapping.model.types.ToOne
 import org.grails.datastore.mapping.query.api.BuildableCriteria
 import org.grails.datastore.mapping.query.api.Criteria
 import org.grails.datastore.mapping.reflect.EntityReflector
-import org.springframework.transaction.TransactionDefinition
-
-import javax.persistence.Transient
 
 /**
  *
@@ -45,7 +47,6 @@ import javax.persistence.Transient
  */
 @CompileStatic
 trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D> {
-
 
     /**
      * Allow access to datasource by name
@@ -260,15 +261,15 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
         MappingContext mappingContext = entity.mappingContext
         EntityReflector entityReflector = mappingContext.getEntityReflector(entity)
         def association = entity.getPropertyByName(associationName)
-        if(association instanceof ToOne) {
+        if (association instanceof ToOne) {
             def proxyHandler = mappingContext.getProxyHandler()
             def value = entityReflector.getProperty(this, associationName)
-            if(proxyHandler.isProxy(value)) {
+            if (proxyHandler.isProxy(value)) {
                 return proxyHandler.getIdentifier(value)
             }
             else {
-                PersistentEntity associatedEntity = ((ToOne)association).getAssociatedEntity()
-                if(associatedEntity != null) {
+                PersistentEntity associatedEntity = ((ToOne) association).getAssociatedEntity()
+                if (associatedEntity != null) {
                     return associatedEntity.getReflector().getIdentifier(value)
                 }
             }
@@ -289,18 +290,18 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
         final MappingContext mappingContext = entity.mappingContext
         final EntityReflector entityReflector = mappingContext.getEntityReflector(entity)
 
-        if(prop instanceof Association) {
-            Association association = (Association)prop
+        if (prop instanceof Association) {
+            Association association = (Association) prop
             Class javaClass = association.associatedEntity?.javaClass
             final boolean isBasic = association instanceof Basic
-            if(isBasic) {
-                javaClass = ((Basic)association).componentType
+            if (isBasic) {
+                javaClass = ((Basic) association).componentType
             }
 
             if (javaClass.isInstance(arg)) {
                 final propertyName = prop.name
 
-                Collection currentValue = (Collection)entityReflector.getProperty(this, propertyName)
+                Collection currentValue = (Collection) entityReflector.getProperty(this, propertyName)
                 currentValue?.remove(arg)
                 markDirty(propertyName)
 
@@ -325,7 +326,7 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
             }
 
         }
-        return (D)this
+        return (D) this
     }
 
     /**
@@ -338,13 +339,12 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
     D addTo(String associationName, Object arg) {
         final PersistentEntity entity = getGormPersistentEntity()
         final def prop = entity.getPropertyByName(associationName)
-        final D targetObject = (D)this
+        final D targetObject = (D) this
 
         final MappingContext mappingContext = entity.mappingContext
         final EntityReflector reflector = mappingContext.getEntityReflector(entity)
-        if(reflector != null && (prop instanceof Association)) {
-
-            final Association association = (Association)prop
+        if (reflector != null && (prop instanceof Association)) {
+            final Association association = (Association) prop
             final propertyName = association.name
 
             def obj
@@ -356,8 +356,8 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
 
             Class javaClass = association.associatedEntity?.javaClass
             final boolean isBasic = association instanceof Basic
-            if(isBasic) {
-                javaClass = ((Basic)association).componentType
+            if (isBasic) {
+                javaClass = ((Basic) association).componentType
             }
 
             if (arg instanceof Map) {
@@ -368,7 +368,7 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
             }
             else {
                 def conversionService = mappingContext.conversionService
-                if(conversionService.canConvert(arg.getClass(), javaClass)) {
+                if (conversionService.canConvert(arg.getClass(), javaClass)) {
                     obj = conversionService.convert(arg, javaClass)
                 }
                 else {
@@ -376,7 +376,7 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
                 }
             }
 
-            def coll = (Collection)currentValue
+            def coll = (Collection) currentValue
             coll.add(obj)
             markDirty(propertyName)
 
@@ -389,22 +389,20 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
                 String name = otherSide.name
                 def associationReflector = mappingContext.getEntityReflector(association.associatedEntity)
                 if (otherSide instanceof OneToMany || otherSide instanceof ManyToMany) {
-
-                    Collection otherSideValue = (Collection)associationReflector.getProperty(obj, name)
+                    Collection otherSideValue = (Collection) associationReflector.getProperty(obj, name)
                     if (otherSideValue == null) {
-                        otherSideValue =  (Collection)( [].asType(otherSide.type) )
+                        otherSideValue = (Collection) ([].asType(otherSide.type))
                         associationReflector.setProperty(obj, name, otherSideValue)
                     }
                     otherSideValue.add(targetObject)
-                    if(obj instanceof DirtyCheckable) {
-                        ((DirtyCheckable)obj).markDirty(name)
+                    if (obj instanceof DirtyCheckable) {
+                        ((DirtyCheckable) obj).markDirty(name)
                     }
                 }
-
                 else {
                     associationReflector?.setProperty(obj, name, targetObject)
-                    if(obj instanceof DirtyCheckable) {
-                        ((DirtyCheckable)obj).markDirty(name)
+                    if (obj instanceof DirtyCheckable) {
+                        ((DirtyCheckable) obj).markDirty(name)
                     }
                 }
             }
@@ -417,7 +415,6 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
     private MappingContext lookupMappingContext() {
         currentGormStaticApi().datastore.mappingContext
     }
-
 
     /**
      * @return The PersistentEntity for this class
@@ -486,7 +483,6 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
     static D find(Closure callable) {
         currentGormStaticApi().find callable
     }
-
 
     /**
      * Saves a list of objects in one go
@@ -786,7 +782,8 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
     static Object staticPropertyMissing(String property) {
         try {
             currentGormStaticApi().propertyMissing(property)
-        } catch (IllegalStateException e) {
+        }
+        catch (IllegalStateException e) {
             throw new MissingPropertyException(property, this)
         }
     }
@@ -801,7 +798,8 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
     static void staticPropertyMissing(String property, value) {
         try {
             currentGormStaticApi().propertyMissing(property, value)
-        } catch (IllegalStateException e) {
+        }
+        catch (IllegalStateException e) {
             throw new MissingPropertyException(property, this)
         }
     }
@@ -1034,7 +1032,6 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
         currentGormStaticApi().withStatelessSession callable
     }
 
-
     /**
      * Executes a query for the given String
      *
@@ -1094,7 +1091,7 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
      * @return A list of results
      *
      */
-    static List executeQuery(CharSequence query, Object...params) {
+    static List executeQuery(CharSequence query, Object... params) {
         currentGormStaticApi().executeQuery query, params
     }
 
@@ -1173,7 +1170,7 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
      * @return The number of entities updated
      *
      */
-    static Integer executeUpdate(CharSequence query, Object...params) {
+    static Integer executeUpdate(CharSequence query, Object... params) {
         currentGormStaticApi().executeUpdate query, params
     }
 
@@ -1358,15 +1355,16 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
      * @deprecated Named queries are deprecated, use where queries instead
      */
     @Deprecated
-    static GormQueryOperations<D> getNamedQuery(String queryName, Object...args) {
+    static GormQueryOperations<D> getNamedQuery(String queryName, Object... args) {
         GormEnhancer.createNamedQuery(this, queryName, args)
     }
 
     private GormInstanceApi<D> currentGormInstanceApi() {
-        (GormInstanceApi<D>)GormEnhancer.findInstanceApi(getClass())
+        (GormInstanceApi<D>) GormEnhancer.findInstanceApi(getClass())
     }
 
     private static GormStaticApi<D> currentGormStaticApi() {
-        (GormStaticApi<D>)GormEnhancer.findStaticApi(this)
+        (GormStaticApi<D>) GormEnhancer.findStaticApi(this)
     }
+
 }

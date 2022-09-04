@@ -28,9 +28,11 @@ import org.grails.datastore.mapping.query.Query;
 public class CountByFinder extends DynamicFinder implements QueryBuildingFinder {
 
     private static final String OPERATOR_OR = "Or";
+
     private static final String OPERATOR_AND = "And";
 
     private static final Pattern METHOD_PATTERN = Pattern.compile("(countBy)(\\w+)");
+
     private static final String[] OPERATORS = { OPERATOR_AND, OPERATOR_OR };
 
     public CountByFinder(final Datastore datastore) {
@@ -75,11 +77,12 @@ public class CountByFinder extends DynamicFinder implements QueryBuildingFinder 
         }
         else {
             for (MethodExpression expression : invocation.getExpressions()) {
-                q.add( expression.createCriterion() );
+                q.add(expression.createCriterion());
             }
         }
 
         q.projections().count();
         return q;
     }
+
 }

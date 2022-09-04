@@ -1,6 +1,7 @@
 package org.grails.datastore.gorm.proxy;
 
 import grails.core.support.proxy.EntityProxyHandler;
+
 import org.grails.datastore.mapping.proxy.ProxyHandler;
 
 /**
@@ -51,4 +52,5 @@ public class ProxyHandlerAdapter implements EntityProxyHandler {
     public boolean isInitialized(Object obj, String associationName) {
         return delegate.isInitialized(obj, associationName);
     }
+
 }

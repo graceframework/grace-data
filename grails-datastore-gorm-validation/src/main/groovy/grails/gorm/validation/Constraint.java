@@ -17,7 +17,7 @@ public interface Constraint {
      * @return true if the constraint can be applied against the specified type
      */
     @SuppressWarnings("rawtypes")
-    boolean  supports(Class type);
+    boolean supports(Class type);
 
     /**
      * Return whether the constraint is valid for the owning class
@@ -35,7 +35,6 @@ public interface Constraint {
      * @param errors The errors instance to record errors against
      */
     void validate(Object target, Object propertyValue, Errors errors);
-
 
     /**
      * @return The parameter to the constraint

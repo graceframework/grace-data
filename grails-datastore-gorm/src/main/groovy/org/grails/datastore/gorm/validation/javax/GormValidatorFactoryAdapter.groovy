@@ -1,7 +1,5 @@
 package org.grails.datastore.gorm.validation.javax
 
-import groovy.transform.CompileStatic
-
 import javax.validation.ClockProvider
 import javax.validation.ConstraintValidatorFactory
 import javax.validation.MessageInterpolator
@@ -12,6 +10,8 @@ import javax.validation.ValidatorContext
 import javax.validation.ValidatorFactory
 import javax.validation.valueextraction.ValueExtractor
 
+import groovy.transform.CompileStatic
+
 /**
  * A ValidatorFactory that creates adapted validators
  *
@@ -19,7 +19,7 @@ import javax.validation.valueextraction.ValueExtractor
  * @since 6.1
  */
 @CompileStatic
-class GormValidatorFactoryAdapter implements ValidatorFactory  {
+class GormValidatorFactoryAdapter implements ValidatorFactory {
 
     final ValidatorFactory factory
 
@@ -74,6 +74,7 @@ class GormValidatorFactoryAdapter implements ValidatorFactory  {
 
     @CompileStatic
     static class GormValidatorContext implements ValidatorContext {
+
         final ValidatorContext delegate
 
         GormValidatorContext(ValidatorContext delegate) {
@@ -118,7 +119,8 @@ class GormValidatorFactoryAdapter implements ValidatorFactory  {
 
         @Override
         Validator getValidator() {
-            return new GormValidatorAdapter( delegate.getValidator() )
+            return new GormValidatorAdapter(delegate.getValidator())
         }
     }
+
 }

@@ -42,4 +42,5 @@ public class PreDeleteEvent extends AbstractPersistenceEvent {
     public EventType getEventType() {
         return EventType.PreDelete;
     }
+
 }

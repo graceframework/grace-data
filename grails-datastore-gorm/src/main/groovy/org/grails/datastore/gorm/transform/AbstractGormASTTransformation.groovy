@@ -33,7 +33,7 @@ import org.codehaus.groovy.transform.AbstractASTTransformation
  * @since 6.1
  */
 @CompileStatic
-abstract class AbstractGormASTTransformation extends AbstractASTTransformation implements CompilationUnitAware,ASTTransformation {
+abstract class AbstractGormASTTransformation extends AbstractASTTransformation implements CompilationUnitAware, ASTTransformation {
 
     CompilationUnit compilationUnit
 
@@ -46,17 +46,16 @@ abstract class AbstractGormASTTransformation extends AbstractASTTransformation i
         AnnotatedNode annotatedNode = (AnnotatedNode) astNodes[1];
         AnnotationNode annotationNode = (AnnotationNode) astNodes[0];
 
-
         if (!isValidAnnotation(annotationNode, annotatedNode)) {
             return
         }
 
         Object appliedMarker = getAppliedMarker()
-        if( annotatedNode.getNodeMetaData(appliedMarker) == appliedMarker) {
+        if (annotatedNode.getNodeMetaData(appliedMarker) == appliedMarker) {
             return
         }
 
-        visit( source, annotationNode, annotatedNode )
+        visit(source, annotationNode, annotatedNode)
 
         annotatedNode.putNodeMetaData(appliedMarker, appliedMarker)
     }

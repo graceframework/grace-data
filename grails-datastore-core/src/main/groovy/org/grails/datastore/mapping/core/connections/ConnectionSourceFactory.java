@@ -1,9 +1,10 @@
 package org.grails.datastore.mapping.core.connections;
 
-import org.grails.datastore.mapping.config.Settings;
+import java.io.Serializable;
+
 import org.springframework.core.env.PropertyResolver;
 
-import java.io.Serializable;
+import org.grails.datastore.mapping.config.Settings;
 
 /**
  * A factory for creating new {@link ConnectionSource} instances
@@ -67,11 +68,13 @@ public interface ConnectionSourceFactory<T, S extends ConnectionSourceSettings> 
     Serializable getConnectionSourcesConfigurationKey();
 
     /**
-     * Creates a connection at runtime. This method differs from the `create` method is that it handles the runtime creation (as oppose to boot time) creation of connection sources
+     * Creates a connection at runtime. This method differs from the `create` method is
+     * that it handles the runtime creation (as opposed to boot time) creation of connection sources
      * @param name The name of the connection source
      * @param configuration The configuration
      * @param fallbackSettings The fallback settings
      * @return The new connection source
      */
-    ConnectionSource<T,S> createRuntime(String name, PropertyResolver configuration, S fallbackSettings);
+    ConnectionSource<T, S> createRuntime(String name, PropertyResolver configuration, S fallbackSettings);
+
 }

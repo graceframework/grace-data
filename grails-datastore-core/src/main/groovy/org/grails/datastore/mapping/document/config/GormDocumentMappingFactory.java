@@ -27,4 +27,5 @@ public class GormDocumentMappingFactory extends AbstractGormMappingFactory<Colle
     protected Class<Collection> getEntityMappedFormType() {
         return Collection.class;
     }
+
 }

@@ -20,12 +20,13 @@ package org.grails.datastore.mapping.core;
  * @author Graeme Rocher
  * @since 2.3
  */
-public interface StatelessDatastore extends Datastore{
+public interface StatelessDatastore extends Datastore {
 
     /**
      * Connect and return a stateless session
      * @return The session
      */
     Session connectStateless();
+
 }
 

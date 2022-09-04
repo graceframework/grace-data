@@ -16,6 +16,7 @@
 package org.grails.datastore.gorm.support;
 
 import grails.persistence.support.PersistenceContextInterceptor;
+
 import org.grails.datastore.mapping.core.Datastore;
 
 /**
@@ -26,7 +27,9 @@ import org.grails.datastore.mapping.core.Datastore;
  */
 
 public class DatastorePersistenceContextInterceptor extends AbstractDatastorePersistenceContextInterceptor implements PersistenceContextInterceptor {
+
     public DatastorePersistenceContextInterceptor(Datastore datastore) {
         super(datastore);
     }
+
 }

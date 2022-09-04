@@ -12,7 +12,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.grails.datastore.mapping.core.impl;
 
 import org.grails.datastore.mapping.model.PersistentEntity;
@@ -23,12 +22,11 @@ import org.grails.datastore.mapping.model.PersistentEntity;
  * @since 5.0.0
  * @author Graeme Rocher
  */
-public abstract class PendingDeleteAdapter<E, K> extends PendingOperationAdapter<E, K> implements PendingDelete<E, K>{
-
+public abstract class PendingDeleteAdapter<E, K> extends PendingOperationAdapter<E, K> implements PendingDelete<E, K> {
 
     private boolean vetoed;
 
-    public PendingDeleteAdapter(PersistentEntity entity, K nativeKey,  E nativeEntry) {
+    public PendingDeleteAdapter(PersistentEntity entity, K nativeKey, E nativeEntry) {
         super(entity, nativeKey, nativeEntry);
     }
 
@@ -44,4 +42,5 @@ public abstract class PendingDeleteAdapter<E, K> extends PendingOperationAdapter
     public Object getObject() {
         return getNativeEntry();
     }
+
 }

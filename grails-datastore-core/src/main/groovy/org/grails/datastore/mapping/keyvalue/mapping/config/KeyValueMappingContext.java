@@ -14,13 +14,14 @@
  */
 package org.grails.datastore.mapping.keyvalue.mapping.config;
 
+import org.springframework.util.Assert;
+
 import org.grails.datastore.mapping.core.connections.ConnectionSourceSettings;
 import org.grails.datastore.mapping.model.AbstractMappingContext;
 import org.grails.datastore.mapping.model.MappingConfigurationStrategy;
 import org.grails.datastore.mapping.model.MappingFactory;
 import org.grails.datastore.mapping.model.PersistentEntity;
 import org.grails.datastore.mapping.model.config.JpaMappingConfigurationStrategy;
-import org.springframework.util.Assert;
 
 /**
  * A MappingContext used to map objects to a Key/Value store
@@ -29,9 +30,13 @@ import org.springframework.util.Assert;
  * @since 1.0
  */
 public class KeyValueMappingContext extends AbstractMappingContext {
+
     protected MappingFactory<Family, KeyValue> mappingFactory;
+
     protected MappingConfigurationStrategy syntaxStrategy;
+
     private String keyspace;
+
     public static final String GROOVY_OBJECT_CLASS = "groovy.lang.GroovyObject";
 
     @Override
@@ -100,4 +105,5 @@ public class KeyValueMappingContext extends AbstractMappingContext {
     protected PersistentEntity createPersistentEntity(Class javaClass, boolean external) {
         return new KeyValuePersistentEntity(javaClass, this);
     }
+
 }

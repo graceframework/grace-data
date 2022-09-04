@@ -12,7 +12,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.grails.datastore.mapping.document.config;
 
 import org.grails.datastore.mapping.model.AbstractClassMapping;
@@ -43,21 +42,24 @@ public class DocumentPersistentEntity extends AbstractPersistentEntity<Collectio
     }
 
     public class DocumentCollectionMapping extends AbstractClassMapping<Collection> {
+
         private final Collection mappedForm;
 
         private IdentityMapping identityMapping;
+
         public DocumentCollectionMapping(PersistentEntity entity, MappingContext context) {
             super(entity, context);
-            if(entity.isExternal()) {
+            if (entity.isExternal()) {
                 this.mappedForm = null;
             }
             else {
                 this.mappedForm = (Collection) context.getMappingFactory().createMappedForm(DocumentPersistentEntity.this);
             }
         }
+
         @Override
         public Collection getMappedForm() {
-            return mappedForm ;
+            return mappedForm;
         }
 
         @Override
@@ -67,5 +69,7 @@ public class DocumentPersistentEntity extends AbstractPersistentEntity<Collectio
             }
             return identityMapping;
         }
+
     }
+
 }

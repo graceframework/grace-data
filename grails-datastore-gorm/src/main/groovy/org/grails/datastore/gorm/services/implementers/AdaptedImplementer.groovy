@@ -9,5 +9,7 @@ import org.grails.datastore.gorm.services.ServiceImplementer
  * @since 6.1.1
  */
 interface AdaptedImplementer {
+
     ServiceImplementer getAdapted()
+
 }

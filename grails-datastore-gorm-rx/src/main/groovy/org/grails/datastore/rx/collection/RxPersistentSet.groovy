@@ -62,7 +62,6 @@ class RxPersistentSet extends PersistentSet implements RxPersistentCollection, R
         this.observable = resolveObservable(initializerQuery)
     }
 
-
     protected Observable resolveObservable() {
         def query = ((RxDatastoreClientImplementor)datastoreClient).createQuery(childType, queryState)
         if(associationKey != null) {

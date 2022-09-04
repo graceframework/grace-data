@@ -14,14 +14,15 @@
  */
 package org.grails.datastore.mapping.engine;
 
+import java.io.Serializable;
+
+import org.springframework.context.ApplicationEventPublisher;
+
 import org.grails.datastore.mapping.cache.TPCacheAdapter;
 import org.grails.datastore.mapping.cache.TPCacheAdapterRepository;
 import org.grails.datastore.mapping.core.Session;
 import org.grails.datastore.mapping.model.MappingContext;
 import org.grails.datastore.mapping.model.PersistentEntity;
-import org.springframework.context.ApplicationEventPublisher;
-
-import java.io.Serializable;
 
 /**
  *
@@ -31,6 +32,7 @@ import java.io.Serializable;
  * @since 4.1
  */
 public abstract class ThirdPartyCacheEntityPersister<T> extends LockableEntityPersister {
+
     protected TPCacheAdapterRepository<T> cacheAdapterRepository;
 
     public ThirdPartyCacheEntityPersister(MappingContext mappingContext, PersistentEntity entity, Session session, ApplicationEventPublisher publisher) {
@@ -64,4 +66,5 @@ public abstract class ThirdPartyCacheEntityPersister<T> extends LockableEntityPe
         }
         return null;
     }
+
 }

@@ -113,4 +113,5 @@ class DelegatingGormEntityApi<D> implements GormEntityApi<D> {
     boolean isDirty() {
         return instanceApi.isDirty(target)
     }
+
 }

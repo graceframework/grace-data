@@ -124,4 +124,5 @@ public interface Persister {
      * @return The id
      */
     Serializable insert(Object o);
+
 }

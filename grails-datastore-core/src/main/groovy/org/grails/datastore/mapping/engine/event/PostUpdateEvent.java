@@ -42,4 +42,5 @@ public class PostUpdateEvent extends AbstractPersistenceEvent {
     public EventType getEventType() {
         return EventType.PostUpdate;
     }
+
 }

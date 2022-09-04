@@ -1,9 +1,10 @@
 package org.grails.datastore.gorm.validation.constraints;
 
-import grails.gorm.validation.ConstrainedProperty;
 import org.springframework.context.MessageSource;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
+
+import grails.gorm.validation.ConstrainedProperty;
 
 /**
  * A Constraint that validates a string is not blank.
@@ -68,4 +69,5 @@ public class BlankConstraint extends AbstractVetoingConstraint {
         }
         return false;
     }
+
 }

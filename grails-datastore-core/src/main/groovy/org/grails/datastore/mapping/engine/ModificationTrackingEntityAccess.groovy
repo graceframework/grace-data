@@ -14,11 +14,13 @@ class ModificationTrackingEntityAccess implements EntityAccess {
     /**
      * The target entity access
      */
-    final @Delegate EntityAccess target
+    final @Delegate
+    EntityAccess target
+
     /**
      * The modified properties
      */
-    final Map<String,Object> modifiedProperties = [:]
+    final Map<String, Object> modifiedProperties = [:]
 
     ModificationTrackingEntityAccess(EntityAccess target) {
         this.target = target
@@ -45,4 +47,5 @@ class ModificationTrackingEntityAccess implements EntityAccess {
     Object getProperty(String name) {
         target.getProperty(name)
     }
+
 }

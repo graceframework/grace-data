@@ -11,4 +11,5 @@ class BlockingOperationException extends RuntimeException {
     BlockingOperationException(String var1) {
         super(var1)
     }
+
 }

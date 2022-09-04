@@ -28,11 +28,11 @@ import org.grails.datastore.mapping.model.PersistentEntity;
  */
 public interface PendingOperation<E, K> extends Runnable {
 
-
     /**
      * @return Whether it was already executed
      */
     boolean wasExecuted();
+
     /**
      * @return Whether the operation has been vetoed
      */
@@ -62,7 +62,7 @@ public interface PendingOperation<E, K> extends Runnable {
      * Operations to be executed directly prior to this operation
      * @return The operations to execute prior
      */
-    List<PendingOperation<E,K>> getPreOperations();
+    List<PendingOperation<E, K>> getPreOperations();
 
     /**
      * Adds an operation to executed prior to other operations
@@ -74,7 +74,7 @@ public interface PendingOperation<E, K> extends Runnable {
      * Operations to be executed directly following this operation
      * @return The operations to cascade to
      */
-    List<PendingOperation<E,K>> getCascadeOperations();
+    List<PendingOperation<E, K>> getCascadeOperations();
 
     /**
      * Adds an operation that should be executed after this operation
@@ -82,4 +82,5 @@ public interface PendingOperation<E, K> extends Runnable {
      * @param pendingOperation The pending operation
      */
     void addCascadeOperation(PendingOperation<E, K> pendingOperation);
+
 }

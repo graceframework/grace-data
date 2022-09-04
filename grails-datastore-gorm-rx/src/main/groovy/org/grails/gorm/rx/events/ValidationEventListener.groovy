@@ -1,13 +1,15 @@
 package org.grails.gorm.rx.events
 
 import groovy.transform.CompileStatic
+import org.springframework.context.ApplicationEvent
+
 import org.grails.datastore.gorm.GormValidateable
 import org.grails.datastore.mapping.engine.event.AbstractPersistenceEvent
 import org.grails.datastore.mapping.engine.event.PersistenceEventListener
 import org.grails.datastore.mapping.engine.event.PreInsertEvent
 import org.grails.datastore.mapping.engine.event.PreUpdateEvent
 import org.grails.datastore.rx.RxDatastoreClient
-import org.springframework.context.ApplicationEvent
+
 /**
  * A validation event listener for RxGORM
  *
@@ -16,6 +18,7 @@ import org.springframework.context.ApplicationEvent
  */
 @CompileStatic
 class ValidationEventListener implements PersistenceEventListener {
+
     @Override
     boolean supportsEventType(Class<? extends ApplicationEvent> eventType) {
         return PreInsertEvent.isAssignableFrom(eventType) || PreUpdateEvent.isAssignableFrom(eventType)
@@ -30,15 +33,15 @@ class ValidationEventListener implements PersistenceEventListener {
     void onApplicationEvent(ApplicationEvent event) {
         def persistenceEvent = (AbstractPersistenceEvent) event
         def entityObject = persistenceEvent.getEntityObject()
-        if(entityObject instanceof GormValidateable) {
+        if (entityObject instanceof GormValidateable) {
             GormValidateable gormValidateable = (GormValidateable) entityObject
-            if(gormValidateable.shouldSkipValidation()) {
-                if( gormValidateable.getErrors()?.hasErrors() )  {
+            if (gormValidateable.shouldSkipValidation()) {
+                if (gormValidateable.getErrors()?.hasErrors()) {
                     persistenceEvent.cancel()
                 }
             }
             else {
-                if( !gormValidateable.validate() ) {
+                if (!gormValidateable.validate()) {
                     persistenceEvent.cancel()
                 }
             }
@@ -49,4 +52,5 @@ class ValidationEventListener implements PersistenceEventListener {
     int getOrder() {
         return 0
     }
+
 }
