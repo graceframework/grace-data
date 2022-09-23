@@ -28,11 +28,11 @@ public interface PersistentProperty<T extends Property> {
     Class<?> getType();
 
     /**
-    * Specifies the mapping between this property and an external form
-    * such as a column, key/value pair etc.
-    *
-    * @return The PropertyMapping instance
-    */
+     * Specifies the mapping between this property and an external form
+     * such as a column, key/value pair etc.
+     *
+     * @return The PropertyMapping instance
+     */
     PropertyMapping<T> getMapping();
 
     /**
@@ -63,4 +63,5 @@ public interface PersistentProperty<T extends Property> {
      * @return The writer for this property
      */
     EntityReflector.PropertyWriter getWriter();
+
 }

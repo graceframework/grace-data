@@ -1,6 +1,5 @@
 package org.grails.datastore.gorm.services.implementers
 
-import grails.gorm.services.Query
 import groovy.transform.CompileStatic
 import org.codehaus.groovy.ast.AnnotationNode
 import org.codehaus.groovy.ast.ClassHelper
@@ -10,6 +9,9 @@ import org.codehaus.groovy.ast.expr.ConstantExpression
 import org.codehaus.groovy.ast.expr.Expression
 import org.codehaus.groovy.ast.expr.GStringExpression
 import org.codehaus.groovy.ast.stmt.Statement
+
+import grails.gorm.services.Query
+
 import org.grails.datastore.gorm.transactions.transform.TransactionalTransform
 import org.grails.datastore.mapping.reflect.AstUtils
 
@@ -43,7 +45,8 @@ class UpdateStringQueryImplementer extends AbstractStringQueryImplementer implem
                 if (queryStem.contains("update") || queryStem.contains('delete')) {
                     return true
                 }
-            } else if (expr instanceof ConstantExpression) {
+            }
+            else if (expr instanceof ConstantExpression) {
                 String queryStem = ((ConstantExpression) expr).text.toLowerCase(Locale.ENGLISH)
                 if (queryStem.contains("update") || queryStem.contains('delete')) {
                     return true
@@ -71,4 +74,5 @@ class UpdateStringQueryImplementer extends AbstractStringQueryImplementer implem
     protected void applyDefaultTransactionHandling(MethodNode newMethodNode) {
         newMethodNode.addAnnotation(new AnnotationNode(TransactionalTransform.MY_TYPE))
     }
+
 }

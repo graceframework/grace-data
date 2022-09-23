@@ -19,7 +19,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.codehaus.groovy.runtime.DefaultGroovyMethods;
-import org.grails.datastore.mapping.engine.EntityAccess;
+
 import org.grails.datastore.mapping.model.PersistentEntity;
 import org.grails.datastore.mapping.query.Query;
 import org.grails.datastore.mapping.query.order.ManualEntityOrdering;
@@ -31,10 +31,11 @@ import org.grails.datastore.mapping.reflect.FieldEntityAccess;
  * NoSQL datastores support projections like SQL min(..), max(..) etc.
  * This class provides support for those that don't.
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class ManualProjections {
 
     PersistentEntity entity;
+
     private ManualEntityOrdering order;
 
     public ManualProjections(PersistentEntity entity) {
@@ -93,7 +94,7 @@ public class ManualProjections {
         }
 
         final List sorted = order.applyOrder(new ArrayList(results), Query.Order.asc(property));
-        final Object o = sorted.get(results.size()-1);
+        final Object o = sorted.get(results.size() - 1);
         if (entity.isInstance(o)) {
             return FieldEntityAccess.getOrIntializeReflector(entity).getProperty(o, property);
         }
@@ -114,7 +115,6 @@ public class ManualProjections {
         }
 
         for (Object o : results) {
-
             EntityReflector ea = FieldEntityAccess.getOrIntializeReflector(entity);
             if (entity.isInstance(o)) {
                 projectedResults.add(ea.getProperty(o, property));
@@ -126,4 +126,5 @@ public class ManualProjections {
 
         return projectedResults;
     }
+
 }

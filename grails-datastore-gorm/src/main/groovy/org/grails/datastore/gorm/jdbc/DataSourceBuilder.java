@@ -15,7 +15,6 @@
  */
 package org.grails.datastore.gorm.jdbc;
 
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -24,11 +23,12 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.grails.datastore.mapping.core.exceptions.ConfigurationException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.util.ClassUtils;
+
+import org.grails.datastore.mapping.core.exceptions.ConfigurationException;
 
 /**
  * NOTE: Forked from Spring Boot logic to avoid hard dependency on Boot.
@@ -53,14 +53,16 @@ public class DataSourceBuilder {
             "com.zaxxer.hikari.HikariDataSource",
             "org.apache.commons.dbcp.BasicDataSource",
             "org.apache.commons.dbcp2.BasicDataSource",
-            "org.springframework.jdbc.datasource.DriverManagerDataSource"};
+            "org.springframework.jdbc.datasource.DriverManagerDataSource" };
 
     private Class<? extends DataSource> type;
 
     private ClassLoader classLoader;
 
     private Map<String, String> properties = new HashMap<>();
+
     private boolean pooled = true;
+
     private boolean readOnly = false;
 
     public static DataSourceBuilder create() {
@@ -94,7 +96,7 @@ public class DataSourceBuilder {
     }
 
     private void bind(DataSource result) {
-        if(properties.containsKey("dbProperties")) {
+        if (properties.containsKey("dbProperties")) {
             coerceDbProperties();
         }
         MutablePropertyValues properties = new MutablePropertyValues(this.properties);
@@ -102,7 +104,7 @@ public class DataSourceBuilder {
                 .withAlias("username", "user").bind(properties);
     }
 
-    public DataSourceBuilder properties( Map<String, String> properties) {
+    public DataSourceBuilder properties(Map<String, String> properties) {
         this.properties.putAll(properties);
         return this;
     }
@@ -110,12 +112,12 @@ public class DataSourceBuilder {
     private void coerceDbProperties() {
         Map propertiesMap = this.properties;
         Object dbPropertiesObject = propertiesMap.get("dbProperties");
-        if(dbPropertiesObject instanceof Map) {
+        if (dbPropertiesObject instanceof Map) {
             Map dbProperties = (Map) dbPropertiesObject;
             Properties properties = new Properties();
             for (Object key : dbProperties.keySet()) {
                 Object value = dbProperties.get(key);
-                if(value != null) {
+                if (value != null) {
                     properties.put(key.toString(), value.toString());
                 }
             }
@@ -150,12 +152,11 @@ public class DataSourceBuilder {
 
     @SuppressWarnings("unchecked")
     public Class<? extends DataSource> findType() {
-
         if (this.type != null) {
             return this.type;
         }
-        else if(!pooled) {
-            if(this.readOnly) {
+        else if (!pooled) {
+            if (this.readOnly) {
                 return ReadOnlyDriverManagerDataSource.class;
             }
             else {
@@ -199,5 +200,7 @@ public class DataSourceBuilder {
             connection.setReadOnly(true);
             return connection;
         }
+
     }
+
 }

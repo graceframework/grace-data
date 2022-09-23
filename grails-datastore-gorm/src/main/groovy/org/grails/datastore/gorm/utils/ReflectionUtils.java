@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
  * @author Graeme Rocher
  * @since 1.0
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class ReflectionUtils {
 
     /**
@@ -42,11 +42,13 @@ public class ReflectionUtils {
                 if (superMethod != null) {
                     return true;
                 }
-            } catch (NoSuchMethodException e) {
+            }
+            catch (NoSuchMethodException e) {
                 // ignore
             }
         }
 
         return false;
     }
+
 }

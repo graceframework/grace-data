@@ -29,12 +29,16 @@
  */
 package org.grails.datastore.gorm.utils;
 
-
-import org.springframework.asm.*;
-
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.springframework.asm.AnnotationVisitor;
+import org.springframework.asm.ClassVisitor;
+import org.springframework.asm.Handle;
+import org.springframework.asm.Label;
+import org.springframework.asm.MethodVisitor;
+import org.springframework.asm.Opcodes;
+import org.springframework.asm.Type;
 
 /**
  * A Java class parser to make a {@link org.springframework.asm.ClassVisitor} visit an existing class.
@@ -46,12 +50,12 @@ import java.io.InputStream;
  * @author Eugene Kuleshov
  */
 class ClassReader {
+
     /**
      * Pseudo access flag to distinguish between the synthetic attribute and the
      * synthetic access flag.
      */
     static final int ACC_SYNTHETIC_ATTRIBUTE = 0x40000;
-
 
     /**
      * The type of CONSTANT_Class constant pool items.
@@ -132,7 +136,6 @@ class ClassReader {
      * True to enable annotations support.
      */
     private static final boolean ANNOTATIONS = true;
-
 
     /**
      * Flag to skip the debug information in the class. If this flag is set the
@@ -310,7 +313,8 @@ class ClassReader {
                     b = c;
                 }
             }
-        } finally {
+        }
+        finally {
             if (close) {
                 is.close();
             }
@@ -351,7 +355,7 @@ class ClassReader {
      *            between the reader and the writer</i>.
      */
     public void accept(final ClassVisitor classVisitor,
-                       final Attribute[] attrs, final int flags) {
+            final Attribute[] attrs, final int flags) {
         int u = header; // current offset in the class file
         char[] c = new char[maxStringLength]; // buffer used to read strings
 
@@ -392,45 +396,57 @@ class ClassReader {
             // (based on frequencies observed on typical classes)
             if ("SourceFile".equals(attrName)) {
                 sourceFile = readUTF8(u + 8, c);
-            } else if ("InnerClasses".equals(attrName)) {
+            }
+            else if ("InnerClasses".equals(attrName)) {
                 innerClasses = u + 8;
-            } else if ("EnclosingMethod".equals(attrName)) {
+            }
+            else if ("EnclosingMethod".equals(attrName)) {
                 enclosingOwner = readClass(u + 8, c);
                 int item = readUnsignedShort(u + 10);
                 if (item != 0) {
                     enclosingName = readUTF8(items[item], c);
                     enclosingDesc = readUTF8(items[item] + 2, c);
                 }
-            } else if (SIGNATURES && "Signature".equals(attrName)) {
+            }
+            else if (SIGNATURES && "Signature".equals(attrName)) {
                 signature = readUTF8(u + 8, c);
-            } else if (ANNOTATIONS
+            }
+            else if (ANNOTATIONS
                     && "RuntimeVisibleAnnotations".equals(attrName)) {
                 anns = u + 8;
-            } else if (ANNOTATIONS
+            }
+            else if (ANNOTATIONS
                     && "RuntimeVisibleTypeAnnotations".equals(attrName)) {
                 tanns = u + 8;
-            } else if ("Deprecated".equals(attrName)) {
+            }
+            else if ("Deprecated".equals(attrName)) {
                 access |= Opcodes.ACC_DEPRECATED;
-            } else if ("Synthetic".equals(attrName)) {
+            }
+            else if ("Synthetic".equals(attrName)) {
                 access |= Opcodes.ACC_SYNTHETIC
                         | ACC_SYNTHETIC_ATTRIBUTE;
-            } else if ("SourceDebugExtension".equals(attrName)) {
+            }
+            else if ("SourceDebugExtension".equals(attrName)) {
                 int len = readInt(u + 4);
                 sourceDebug = readUTF(u + 8, len, new char[len]);
-            } else if (ANNOTATIONS
+            }
+            else if (ANNOTATIONS
                     && "RuntimeInvisibleAnnotations".equals(attrName)) {
                 ianns = u + 8;
-            } else if (ANNOTATIONS
+            }
+            else if (ANNOTATIONS
                     && "RuntimeInvisibleTypeAnnotations".equals(attrName)) {
                 itanns = u + 8;
-            } else if ("BootstrapMethods".equals(attrName)) {
+            }
+            else if ("BootstrapMethods".equals(attrName)) {
                 int[] bootstrapMethods = new int[readUnsignedShort(u + 8)];
                 for (int j = 0, v = u + 10; j < bootstrapMethods.length; j++) {
                     bootstrapMethods[j] = v;
                     v += 2 + readUnsignedShort(v + 2) << 1;
                 }
                 context.bootstrapMethods = bootstrapMethods;
-            } else {
+            }
+            else {
                 Attribute attr = readAttribute(attrs, attrName, u + 8,
                         readInt(u + 4), c, -1, null);
                 if (attr != null) {
@@ -484,7 +500,7 @@ class ClassReader {
      *            values).
      * @param buf
      *            buffer to be used to call {@link #readUTF8 readUTF8},
-     *            {@link #readClass(int,char[]) readClass} or {@link #readConst
+     *            {@link #readClass(int, char[]) readClass} or {@link #readConst
      *            readConst}.
      * @param named
      *            if the annotation values are named or not.
@@ -493,14 +509,15 @@ class ClassReader {
      * @return the end offset of the annotation values.
      */
     private int readAnnotationValues(int v, final char[] buf,
-                                     final boolean named, final AnnotationVisitor av) {
+            final boolean named, final AnnotationVisitor av) {
         int i = readUnsignedShort(v);
         v += 2;
         if (named) {
             for (; i > 0; --i) {
                 v = readAnnotationValue(v + 2, buf, readUTF8(v, buf), av);
             }
-        } else {
+        }
+        else {
             for (; i > 0; --i) {
                 v = readAnnotationValue(v, buf, null, av);
             }
@@ -519,7 +536,7 @@ class ClassReader {
      *            (<i>not including the value name constant pool index</i>).
      * @param buf
      *            buffer to be used to call {@link #readUTF8 readUTF8},
-     *            {@link #readClass(int,char[]) readClass} or {@link #readConst
+     *            {@link #readClass(int, char[]) readClass} or {@link #readConst
      *            readConst}.
      * @param name
      *            the name of the value to be read.
@@ -528,7 +545,7 @@ class ClassReader {
      * @return the end offset of the annotation value.
      */
     private int readAnnotationValue(int v, final char[] buf, final String name,
-                                    final AnnotationVisitor av) {
+            final AnnotationVisitor av) {
         int i;
         if (av == null) {
             switch (b[v] & 0xFF) {
@@ -716,7 +733,7 @@ class ClassReader {
      *            the length of the attribute's content.
      * @param buf
      *            buffer to be used to call {@link #readUTF8 readUTF8},
-     *            {@link #readClass(int,char[]) readClass} or {@link #readConst
+     *            {@link #readClass(int, char[]) readClass} or {@link #readConst
      *            readConst}.
      * @param codeOff
      *            index of the first byte of code's attribute content in
@@ -731,8 +748,8 @@ class ClassReader {
      *         attribute.
      */
     private Attribute readAttribute(final Attribute[] attrs, final String type,
-                                    final int off, final int len, final char[] buf, final int codeOff,
-                                    final Label[] labels) {
+            final int off, final int len, final char[] buf, final int codeOff,
+            final Label[] labels) {
         for (Attribute attr : attrs) {
             if (attr.type.equals(type)) {
                 return attr.read(this, off, len, buf, codeOff, labels);
@@ -851,10 +868,12 @@ class ClassReader {
                     c = c & 0xFF;
                     if (c < 0x80) { // 0xxxxxxx
                         buf[strLen++] = (char) c;
-                    } else if (c < 0xE0 && c > 0xBF) { // 110x xxxx 10xx xxxx
+                    }
+                    else if (c < 0xE0 && c > 0xBF) { // 110x xxxx 10xx xxxx
                         cc = (char) (c & 0x1F);
                         st = 1;
-                    } else { // 1110 xxxx 10xx xxxx 10xx xxxx
+                    }
+                    else { // 1110 xxxx 10xx xxxx 10xx xxxx
                         cc = (char) (c & 0x0F);
                         st = 2;
                     }
@@ -936,4 +955,5 @@ class ClassReader {
                 return new Handle(tag, owner, name, desc, tag == Opcodes.H_INVOKEINTERFACE);
         }
     }
+
 }

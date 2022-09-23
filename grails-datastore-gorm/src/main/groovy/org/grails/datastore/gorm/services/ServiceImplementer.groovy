@@ -52,4 +52,5 @@ interface ServiceImplementer {
      * @param newMethodNode The new method node being implemented
      */
     void implement(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode)
+
 }

@@ -22,18 +22,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.grails.datastore.mapping.core.Datastore;
-import org.grails.datastore.mapping.core.connections.ConnectionSourcesProvider;
-import org.grails.datastore.mapping.dirty.checking.DirtyCheckable;
-import org.grails.datastore.mapping.engine.EntityAccess;
-import org.grails.datastore.mapping.engine.event.*;
-import org.grails.datastore.mapping.model.MappingContext;
-import org.grails.datastore.mapping.model.PersistentEntity;
-import org.grails.datastore.mapping.model.config.GormProperties;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.util.ReflectionUtils;
+
+import org.grails.datastore.mapping.core.Datastore;
+import org.grails.datastore.mapping.core.connections.ConnectionSourcesProvider;
+import org.grails.datastore.mapping.dirty.checking.DirtyCheckable;
+import org.grails.datastore.mapping.engine.EntityAccess;
+import org.grails.datastore.mapping.engine.event.AbstractPersistenceEvent;
+import org.grails.datastore.mapping.engine.event.AbstractPersistenceEventListener;
+import org.grails.datastore.mapping.engine.event.PostDeleteEvent;
+import org.grails.datastore.mapping.engine.event.PostInsertEvent;
+import org.grails.datastore.mapping.engine.event.PostLoadEvent;
+import org.grails.datastore.mapping.engine.event.PostUpdateEvent;
+import org.grails.datastore.mapping.engine.event.PreDeleteEvent;
+import org.grails.datastore.mapping.engine.event.PreInsertEvent;
+import org.grails.datastore.mapping.engine.event.PreLoadEvent;
+import org.grails.datastore.mapping.engine.event.PreUpdateEvent;
+import org.grails.datastore.mapping.model.MappingContext;
+import org.grails.datastore.mapping.model.PersistentEntity;
+import org.grails.datastore.mapping.model.config.GormProperties;
 
 /**
  * An event listener that provides support for GORM domain events.
@@ -42,20 +52,28 @@ import org.springframework.util.ReflectionUtils;
  * @since 1.0
  */
 public class DomainEventListener extends AbstractPersistenceEventListener
-       implements MappingContext.Listener {
+        implements MappingContext.Listener {
 
     private Map<PersistentEntity, Map<String, Method>> entityEvents = new ConcurrentHashMap<PersistentEntity, Map<String, Method>>();
 
     @SuppressWarnings("rawtypes")
     public static final Class[] ZERO_PARAMS = {};
-    public static final String EVENT_BEFORE_INSERT  = "beforeInsert";
+
+    public static final String EVENT_BEFORE_INSERT = "beforeInsert";
+
     private static final String EVENT_BEFORE_UPDATE = "beforeUpdate";
+
     private static final String EVENT_BEFORE_DELETE = "beforeDelete";
-    private static final String EVENT_BEFORE_LOAD   = "beforeLoad";
-    private static final String EVENT_AFTER_INSERT  = "afterInsert";
-    private static final String EVENT_AFTER_UPDATE  = "afterUpdate";
-    private static final String EVENT_AFTER_DELETE  = "afterDelete";
-    private static final String EVENT_AFTER_LOAD    = "afterLoad";
+
+    private static final String EVENT_BEFORE_LOAD = "beforeLoad";
+
+    private static final String EVENT_AFTER_INSERT = "afterInsert";
+
+    private static final String EVENT_AFTER_UPDATE = "afterUpdate";
+
+    private static final String EVENT_AFTER_DELETE = "afterDelete";
+
+    private static final String EVENT_AFTER_LOAD = "afterLoad";
 
     private static final List<String> REFRESH_EVENTS = Arrays.asList(
             EVENT_BEFORE_INSERT, EVENT_BEFORE_UPDATE, EVENT_BEFORE_DELETE);
@@ -70,14 +88,13 @@ public class DomainEventListener extends AbstractPersistenceEventListener
         }
 
         datastore.getMappingContext().addMappingContextListener(this);
-        if(datastore instanceof ConnectionSourcesProvider) {
-            autowireEntities = ((ConnectionSourcesProvider)datastore).getConnectionSources().getDefaultConnectionSource().getSettings().isAutowire();
+        if (datastore instanceof ConnectionSourcesProvider) {
+            autowireEntities = ((ConnectionSourcesProvider) datastore).getConnectionSources().getDefaultConnectionSource().getSettings().isAutowire();
         }
         else {
             autowireEntities = false;
         }
     }
-
 
     protected DomainEventListener(ConnectionSourcesProvider connectionSourcesProvider, final MappingContext mappingContext) {
         super(null);
@@ -89,12 +106,11 @@ public class DomainEventListener extends AbstractPersistenceEventListener
         mappingContext.addMappingContextListener(this);
     }
 
-
     @Override
     protected void onPersistenceEvent(final AbstractPersistenceEvent event) {
-        switch(event.getEventType()) {
+        switch (event.getEventType()) {
             case PreInsert:
-                if( !beforeInsert(event.getEntity(), event.getEntityAccess(), (PreInsertEvent) event) ) {
+                if (!beforeInsert(event.getEntity(), event.getEntityAccess(), (PreInsertEvent) event)) {
                     event.cancel();
                 }
                 break;
@@ -102,7 +118,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
                 afterInsert(event.getEntity(), event.getEntityAccess(), (PostInsertEvent) event);
                 break;
             case PreUpdate:
-                if( !beforeUpdate(event.getEntity(), event.getEntityAccess(), (PreUpdateEvent) event) ) {
+                if (!beforeUpdate(event.getEntity(), event.getEntityAccess(), (PreUpdateEvent) event)) {
                     event.cancel();
                 }
                 break;
@@ -110,7 +126,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
                 afterUpdate(event.getEntity(), event.getEntityAccess(), (PostUpdateEvent) event);
                 break;
             case PreDelete:
-                if( ! beforeDelete(event.getEntity(), event.getEntityAccess(), (PreDeleteEvent) event)  ) {
+                if (!beforeDelete(event.getEntity(), event.getEntityAccess(), (PreDeleteEvent) event)) {
                     event.cancel();
                 }
                 break;
@@ -151,7 +167,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
         }
 
         return invokeEvent(EVENT_BEFORE_INSERT, entity, ea, event);
-    }    
+    }
 
     protected void setVersion(final EntityAccess ea) {
         final Class versionType = ea.getPersistentEntity().getVersion().getType();
@@ -172,7 +188,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
 
     public boolean beforeUpdate(final PersistentEntity entity, final EntityAccess ea, PreUpdateEvent event) {
         return invokeEvent(EVENT_BEFORE_UPDATE, entity, ea, event);
-    }    
+    }
 
     public boolean beforeDelete(final PersistentEntity entity, final EntityAccess ea) {
         return invokeEvent(EVENT_BEFORE_DELETE, entity, ea, null);
@@ -180,7 +196,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
 
     public boolean beforeDelete(final PersistentEntity entity, final EntityAccess ea, PreDeleteEvent event) {
         return invokeEvent(EVENT_BEFORE_DELETE, entity, ea, event);
-    }    
+    }
 
     public void beforeLoad(final PersistentEntity entity, final EntityAccess ea) {
         beforeLoad(entity, ea, null);
@@ -196,7 +212,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
 
     public void afterDelete(final PersistentEntity entity, final EntityAccess ea, PostDeleteEvent event) {
         invokeEvent(EVENT_AFTER_DELETE, entity, ea, event);
-    }    
+    }
 
     public void afterInsert(final PersistentEntity entity, final EntityAccess ea) {
         afterInsert(entity, ea, null);
@@ -209,7 +225,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
 
     private void activateDirtyChecking(EntityAccess ea) {
         Object e = ea.getEntity();
-        if(e instanceof DirtyCheckable) {
+        if (e instanceof DirtyCheckable) {
             ((DirtyCheckable) e).trackChanges();
         }
     }
@@ -229,7 +245,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
 
     public void afterLoad(final PersistentEntity entity, final EntityAccess ea, PostLoadEvent event) {
         activateDirtyChecking(ea);
-        if (autowireEntities || ( entity != null &&  entity.getMapping().getMappedForm().isAutowire() )) {
+        if (autowireEntities || (entity != null && entity.getMapping().getMappedForm().isAutowire())) {
             autowireBeanProperties(ea.getEntity());
         }
         invokeEvent(EVENT_AFTER_LOAD, entity, ea, event);
@@ -237,7 +253,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
 
     protected void autowireBeanProperties(final Object entity) {
         ConfigurableApplicationContext applicationContext = datastore.getApplicationContext();
-        if(applicationContext != null) {
+        if (applicationContext != null) {
             applicationContext.getAutowireCapableBeanFactory().autowireBeanProperties(
                     entity, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, false);
         }
@@ -246,7 +262,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
     /**
      * {@inheritDoc}
      * @see org.grails.datastore.mapping.model.MappingContext.Listener#persistentEntityAdded(
-     *     org.grails.datastore.mapping.model.PersistentEntity)
+     *org.grails.datastore.mapping.model.PersistentEntity)
      */
     public void persistentEntityAdded(PersistentEntity entity) {
         createEventCaches(entity);
@@ -255,7 +271,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
     /**
      * {@inheritDoc}
      * @see org.springframework.context.event.SmartApplicationListener#supportsEventType(
-     *     java.lang.Class)
+     *java.lang.Class)
      */
     public boolean supportsEventType(Class<? extends ApplicationEvent> eventType) {
         return AbstractPersistenceEvent.class.isAssignableFrom(eventType);
@@ -272,9 +288,8 @@ public class DomainEventListener extends AbstractPersistenceEventListener
             return true;
         }
 
-        
         final Object result;
-        if(ea != null) {
+        if (ea != null) {
             final Object o = ea.getEntity();
 
             if (eventMethod.getParameterTypes().length == 1) {
@@ -288,7 +303,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
             result = null;
         }
 
-        boolean booleanResult = (result instanceof Boolean) ? (Boolean)result : true;
+        boolean booleanResult = (result instanceof Boolean) ? (Boolean) result : true;
         if (booleanResult && REFRESH_EVENTS.contains(eventName)) {
             ea.refresh();
         }
@@ -303,11 +318,11 @@ public class DomainEventListener extends AbstractPersistenceEventListener
         findAndCacheEvent(EVENT_BEFORE_INSERT, javaClass, events);
         findAndCacheEvent(EVENT_BEFORE_UPDATE, javaClass, events);
         findAndCacheEvent(EVENT_BEFORE_DELETE, javaClass, events);
-        findAndCacheEvent(EVENT_BEFORE_LOAD,   javaClass, events);
-        findAndCacheEvent(EVENT_AFTER_INSERT,  javaClass, events);
-        findAndCacheEvent(EVENT_AFTER_UPDATE,  javaClass, events);
-        findAndCacheEvent(EVENT_AFTER_DELETE,  javaClass, events);
-        findAndCacheEvent(EVENT_AFTER_LOAD,    javaClass, events);
+        findAndCacheEvent(EVENT_BEFORE_LOAD, javaClass, events);
+        findAndCacheEvent(EVENT_AFTER_INSERT, javaClass, events);
+        findAndCacheEvent(EVENT_AFTER_UPDATE, javaClass, events);
+        findAndCacheEvent(EVENT_AFTER_DELETE, javaClass, events);
+        findAndCacheEvent(EVENT_AFTER_LOAD, javaClass, events);
     }
 
     private void findAndCacheEvent(String event, Class<?> javaClass, Map<String, Method> events) {
@@ -316,4 +331,5 @@ public class DomainEventListener extends AbstractPersistenceEventListener
             events.put(event, method);
         }
     }
+
 }

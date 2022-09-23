@@ -15,7 +15,6 @@
 package org.grails.datastore.mapping.model.types.conversion
 
 import groovy.transform.CompileStatic
-
 import org.springframework.core.convert.converter.Converter
 
 /**
@@ -23,7 +22,9 @@ import org.springframework.core.convert.converter.Converter
  */
 @CompileStatic
 class StringToTimeZoneConverter implements Converter<String, TimeZone> {
+
     TimeZone convert(String source) {
         TimeZone.getTimeZone(source)
     }
+
 }

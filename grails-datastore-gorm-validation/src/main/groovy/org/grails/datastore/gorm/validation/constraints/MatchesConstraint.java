@@ -1,9 +1,9 @@
 package org.grails.datastore.gorm.validation.constraints;
 
-
-import grails.gorm.validation.ConstrainedProperty;
 import org.springframework.context.MessageSource;
 import org.springframework.validation.Errors;
+
+import grails.gorm.validation.ConstrainedProperty;
 
 /**
  * Validates the property against a supplied regular expression.
@@ -59,5 +59,6 @@ public class MatchesConstraint extends AbstractConstraint {
                 ConstrainedProperty.MATCHES_CONSTRAINT + ConstrainedProperty.INVALID_SUFFIX,
                 new Object[] { constraintPropertyName, constraintOwningClass, propertyValue, regex });
     }
+
 }
 

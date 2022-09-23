@@ -15,12 +15,13 @@
  */
 package org.grails.datastore.gorm.proxy;
 
+import java.io.Serializable;
+
 import grails.core.support.proxy.EntityProxyHandler;
+
 import org.grails.datastore.mapping.core.Session;
 import org.grails.datastore.mapping.engine.AssociationQueryExecutor;
 import org.grails.datastore.mapping.proxy.ProxyFactory;
-
-import java.io.Serializable;
 
 /**
  * Adapts the proxy handler interface
@@ -35,7 +36,6 @@ public class EntityProxyHandlerAdapter implements ProxyFactory {
         this.proxyHandler = proxyHandler;
     }
 
-
     @Override
     public boolean isProxy(Object object) {
         return proxyHandler.isProxy(object);
@@ -48,7 +48,7 @@ public class EntityProxyHandlerAdapter implements ProxyFactory {
 
     @Override
     public boolean isInitialized(Object object, String associationName) {
-        return proxyHandler.isInitialized(object,associationName);
+        return proxyHandler.isInitialized(object, associationName);
     }
 
     @Override
@@ -80,4 +80,5 @@ public class EntityProxyHandlerAdapter implements ProxyFactory {
     public <T, K extends Serializable> T createProxy(Session session, AssociationQueryExecutor<K, T> executor, K associationKey) {
         throw new UnsupportedOperationException("Method createProxy is not supported by this implementation");
     }
+
 }

@@ -7,10 +7,12 @@ package org.grails.datastore.rx
  * @since 6.0
  */
 interface RxDatastoreClientAware {
+
     /**
      * Sets the datastore client
      *
      * @param datastoreClient The datastore client
      */
     void setRxDatastoreClient(RxDatastoreClient datastoreClient)
+
 }

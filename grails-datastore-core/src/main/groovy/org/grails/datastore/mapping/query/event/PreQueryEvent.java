@@ -6,6 +6,7 @@ import org.grails.datastore.mapping.query.Query;
  * Event fired immediately before a query is executed.
  */
 public class PreQueryEvent extends AbstractQueryEvent {
+
     public PreQueryEvent(Query query) {
         super(query);
     }
@@ -21,4 +22,5 @@ public class PreQueryEvent extends AbstractQueryEvent {
     public QueryEventType getEventType() {
         return QueryEventType.PreExecution;
     }
+
 }

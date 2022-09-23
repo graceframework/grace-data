@@ -86,6 +86,7 @@ public interface SessionImplementor<T> {
      * @return The cached entry
      */
     T getCachedEntry(PersistentEntity entity, Serializable key);
+
     /**
      * Obtains a cached entry
      * @param entity The entity
@@ -158,4 +159,5 @@ public interface SessionImplementor<T> {
     void registerPending(T obj);
 
     EntityAccess createEntityAccess(PersistentEntity entity, Object instance);
+
 }

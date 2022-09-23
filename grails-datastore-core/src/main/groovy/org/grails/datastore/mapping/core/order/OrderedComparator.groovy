@@ -1,6 +1,7 @@
 package org.grails.datastore.mapping.core.order
 
 import groovy.transform.CompileStatic
+
 import org.grails.datastore.mapping.core.Ordered
 
 /**
@@ -11,7 +12,6 @@ import org.grails.datastore.mapping.core.Ordered
  */
 @CompileStatic
 class OrderedComparator<T> implements Comparator<T> {
-
 
     /**
      * Useful constant for the highest precedence value.
@@ -52,4 +52,5 @@ class OrderedComparator<T> implements Comparator<T> {
     protected Integer findOrder(Object obj) {
         return (obj instanceof Ordered ? ((Ordered) obj).getOrder() : null)
     }
+
 }

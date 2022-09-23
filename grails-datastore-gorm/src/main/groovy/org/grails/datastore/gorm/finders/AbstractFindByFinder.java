@@ -1,6 +1,5 @@
 package org.grails.datastore.gorm.finders;
 
-import java.util.List;
 import java.util.regex.Pattern;
 
 import org.grails.datastore.mapping.core.Datastore;
@@ -10,8 +9,11 @@ import org.grails.datastore.mapping.model.MappingContext;
 import org.grails.datastore.mapping.query.Query;
 
 public abstract class AbstractFindByFinder extends DynamicFinder {
+
     public static final String OPERATOR_OR = "Or";
+
     public static final String OPERATOR_AND = "And";
+
     public static final String[] OPERATORS = { OPERATOR_AND, OPERATOR_OR };
 
     protected AbstractFindByFinder(Pattern pattern, Datastore datastore) {

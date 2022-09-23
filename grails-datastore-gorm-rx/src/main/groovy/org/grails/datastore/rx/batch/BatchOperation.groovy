@@ -2,6 +2,7 @@ package org.grails.datastore.rx.batch
 
 import groovy.transform.Canonical
 import groovy.transform.CompileStatic
+
 import org.grails.datastore.mapping.model.PersistentEntity
 
 /**
@@ -13,6 +14,7 @@ import org.grails.datastore.mapping.model.PersistentEntity
 
 @CompileStatic
 class BatchOperation {
+
     final Map<PersistentEntity, Map<Serializable, EntityOperation>> deletes = [:].withDefault { [:] }
     final Map<PersistentEntity, Map<Serializable, EntityOperation>> updates = [:].withDefault { [:] }
     final Map<PersistentEntity, Map<Serializable, EntityOperation>> inserts = [:].withDefault { [:] }
@@ -71,7 +73,10 @@ class BatchOperation {
 
     @Canonical
     static class EntityOperation {
+
         final Serializable identity
         final Object object
+
     }
+
 }

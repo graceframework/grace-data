@@ -1,12 +1,11 @@
 package org.grails.datastore.mapping.multitenancy.web
 
 import groovy.transform.CompileStatic
-import org.grails.datastore.mapping.core.connections.ConnectionSource
-import org.grails.datastore.mapping.multitenancy.TenantResolver
-import org.grails.datastore.mapping.multitenancy.exceptions.TenantNotFoundException
 import org.springframework.web.context.request.RequestAttributes
 import org.springframework.web.context.request.RequestContextHolder
-import org.springframework.web.context.request.ServletWebRequest
+
+import org.grails.datastore.mapping.multitenancy.TenantResolver
+import org.grails.datastore.mapping.multitenancy.exceptions.TenantNotFoundException
 
 /**
  * Resolves the tenant id from the user HTTP session
@@ -27,7 +26,6 @@ class SessionTenantResolver implements TenantResolver {
     Serializable resolveTenantIdentifier() throws TenantNotFoundException {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes()
         if(requestAttributes != null) {
-
             def tenantId = requestAttributes.getAttribute(attributeName, RequestAttributes.SCOPE_SESSION)
             if(tenantId instanceof Serializable) {
                 return (Serializable)tenantId
@@ -38,4 +36,5 @@ class SessionTenantResolver implements TenantResolver {
         }
         throw new TenantNotFoundException("Tenant could not be resolved outside a web request")
     }
+
 }

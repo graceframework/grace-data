@@ -1,7 +1,6 @@
 package org.grails.datastore.mapping.dirty.checking;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  * @author Graeme Rocher
@@ -35,4 +34,5 @@ public interface DirtyCheckableCollection extends Serializable {
      * @return True if the collection has changed size
      */
     boolean hasChangedSize();
+
 }

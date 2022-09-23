@@ -31,11 +31,17 @@ import org.grails.datastore.mapping.model.PersistentEntity;
 public abstract class PendingOperationAdapter<E, K> implements PendingOperation<E, K> {
 
     protected PersistentEntity entity;
+
     protected K nativeKey;
+
     protected E nativeEntry;
-    private List<PendingOperation<E, K>> pendingOperations = new LinkedList<PendingOperation<E, K>>();
-    private List<PendingOperation<E, K>> preOperations = new LinkedList<PendingOperation<E, K>>();
+
+    private final List<PendingOperation<E, K>> pendingOperations = new LinkedList<PendingOperation<E, K>>();
+
+    private final List<PendingOperation<E, K>> preOperations = new LinkedList<PendingOperation<E, K>>();
+
     private boolean vetoed;
+
     protected boolean executed;
 
     public PendingOperationAdapter(PersistentEntity entity, K nativeKey, E nativeEntry) {
@@ -93,4 +99,5 @@ public abstract class PendingOperationAdapter<E, K> implements PendingOperation<
     public Object getObject() {
         return nativeEntry;
     }
+
 }

@@ -16,7 +16,11 @@
 package org.grails.datastore.gorm.query;
 
 import java.io.Closeable;
-import java.util.*;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * An abstract result list for initializing objects lazily from a cursor
@@ -25,11 +29,17 @@ import java.util.*;
  * @since 5.0
  */
 public abstract class AbstractResultList extends AbstractList implements Closeable {
+
     protected int offset = 0;
+
     protected final List initializedObjects;
+
     private int internalIndex;
+
     private Integer size;
+
     protected boolean initialized = false;
+
     protected Iterator<Object> cursor;
 
     public AbstractResultList(int offset, Iterator<Object> cursor) {
@@ -39,7 +49,7 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
     public AbstractResultList(int offset, Integer size, Iterator<Object> cursor) {
         this.offset = offset;
         boolean hasSize = size != null && size > -1;
-        if(hasSize) {
+        if (hasSize) {
             this.size = size;
         }
         this.cursor = cursor;
@@ -79,13 +89,14 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
         final int initializedSize = initializedObjects.size();
         if (initializedSize > index) {
             return initializedObjects.get(index);
-        } else if (!initialized) {
+        }
+        else if (!initialized) {
             while (cursor.hasNext()) {
                 Object o = convertObject();
                 if (index == internalIndex) {
                     return o;
                 }
-                else if(index < initializedSize) {
+                else if (index < initializedSize) {
                     return initializedObjects.get(index);
                 }
 
@@ -97,7 +108,7 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
 
     protected Object convertObject() {
         final Object next = convertObject(nextDecoded());
-        if(!cursor.hasNext()) {
+        if (!cursor.hasNext()) {
             initialized = true;
         }
         initializedObjects.add(next);
@@ -149,21 +160,22 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
     @Override
     public Iterator iterator() {
         if (initialized || !initializedObjects.isEmpty()) {
-            if(!initialized) {
+            if (!initialized) {
                 initializeFully();
             }
             return initializedObjects.iterator();
         }
 
-
         return new Iterator() {
             int iteratorIndex = 0;
+
             Object current;
+
             public boolean hasNext() {
-                if(iteratorIndex < internalIndex) {
+                if (iteratorIndex < internalIndex) {
                     return true;
                 }
-                else if(!initialized) {
+                else if (!initialized) {
 
                     boolean hasMore = cursor.hasNext();
                     if (!hasMore) {
@@ -176,7 +188,7 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
 
             @SuppressWarnings("unchecked")
             public Object next() {
-                if(iteratorIndex < internalIndex) {
+                if (iteratorIndex < internalIndex) {
                     current = initializedObjects.get(iteratorIndex);
                 }
                 else {
@@ -184,13 +196,14 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
                 }
                 try {
                     return current;
-                } finally {
+                }
+                finally {
                     iteratorIndex++;
                 }
             }
 
             public void remove() {
-                if(current != null) {
+                if (current != null) {
                     initializedObjects.remove(current);
                 }
             }
@@ -208,6 +221,5 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
         }
         return size;
     }
-
 
 }

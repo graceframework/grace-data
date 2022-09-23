@@ -15,6 +15,7 @@
 package org.grails.datastore.mapping.core;
 
 import org.springframework.dao.OptimisticLockingFailureException;
+
 import org.grails.datastore.mapping.model.PersistentEntity;
 
 /**
@@ -28,6 +29,7 @@ public class OptimisticLockingException extends OptimisticLockingFailureExceptio
     private static final long serialVersionUID = 1;
 
     private final Object key;
+
     private final PersistentEntity persistentEntity;
 
     public OptimisticLockingException(final PersistentEntity persistentEntity, final Object key) {
@@ -43,4 +45,5 @@ public class OptimisticLockingException extends OptimisticLockingFailureExceptio
     public Object getKey() {
         return key;
     }
+
 }

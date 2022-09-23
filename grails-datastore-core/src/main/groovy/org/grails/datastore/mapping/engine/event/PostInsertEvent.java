@@ -46,4 +46,5 @@ public class PostInsertEvent extends AbstractPersistenceEvent {
     public EventType getEventType() {
         return EventType.PostInsert;
     }
+
 }

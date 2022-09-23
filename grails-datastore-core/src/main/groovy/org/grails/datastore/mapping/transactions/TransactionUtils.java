@@ -15,9 +15,10 @@
 
 package org.grails.datastore.mapping.transactions;
 
-import org.grails.datastore.mapping.core.Datastore;
 import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+
+import org.grails.datastore.mapping.core.Datastore;
 
 /**
  * Utility methods for Transactions.
@@ -43,4 +44,5 @@ public class TransactionUtils {
         final SessionHolder sessionHolder = (SessionHolder) TransactionSynchronizationManager.getResource(datastore);
         return sessionHolder == null ? null : sessionHolder.getTransaction();
     }
+
 }

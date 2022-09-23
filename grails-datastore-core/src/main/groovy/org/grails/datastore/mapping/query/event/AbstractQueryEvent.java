@@ -1,12 +1,14 @@
 package org.grails.datastore.mapping.query.event;
 
-import org.grails.datastore.mapping.query.Query;
 import org.springframework.context.ApplicationEvent;
+
+import org.grails.datastore.mapping.query.Query;
 
 /**
  * Base class for query events.
  */
 public abstract class AbstractQueryEvent extends ApplicationEvent {
+
     /**
      * The query.
      */
@@ -34,4 +36,5 @@ public abstract class AbstractQueryEvent extends ApplicationEvent {
     public Query getQuery() {
         return query;
     }
+
 }

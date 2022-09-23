@@ -1,7 +1,8 @@
 package org.grails.datastore.gorm.jdbc.schema
 
-import javax.sql.DataSource
 import java.sql.Connection
+
+import javax.sql.DataSource
 
 /**
  * A resolver that helps resolve information about the database schema. Required by multi tenancy support
@@ -30,4 +31,5 @@ interface SchemaHandler {
      * Creates the given schema. Defaults to "CREATE SCHEMA %s"
      */
     void createSchema(Connection connection, String name)
+
 }

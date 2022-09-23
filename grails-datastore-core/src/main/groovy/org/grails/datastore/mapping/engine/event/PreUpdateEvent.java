@@ -42,4 +42,5 @@ public class PreUpdateEvent extends AbstractPersistenceEvent {
     public EventType getEventType() {
         return EventType.PreUpdate;
     }
+
 }

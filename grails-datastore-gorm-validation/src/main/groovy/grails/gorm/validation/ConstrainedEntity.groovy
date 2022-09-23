@@ -12,4 +12,5 @@ interface ConstrainedEntity {
      * @return The constrained property instances
      */
     Map<String, ConstrainedProperty> getConstrainedProperties()
+
 }

@@ -7,6 +7,7 @@ package org.grails.datastore.mapping.query;
  * @since 6.0
  */
 public interface QueryCreator {
+
     /**
      * Creates a query instance for the give type
      *
@@ -19,4 +20,5 @@ public interface QueryCreator {
      * @return Whether schemaless queries are allowed
      */
     boolean isSchemaless();
+
 }

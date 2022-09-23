@@ -27,4 +27,5 @@ public class NonPersistentTypeException extends RuntimeException {
     public NonPersistentTypeException(String s) {
         super(s);
     }
+
 }

@@ -1,10 +1,11 @@
 package org.grails.datastore.rx.collection
 
-import grails.gorm.rx.collection.ObservableCollection
 import groovy.transform.CompileStatic
 import rx.Observable
 import rx.Subscriber
 import rx.Subscription
+
+import grails.gorm.rx.collection.ObservableCollection
 
 /**
  * A trait that can be implemented by collection types to make them observable
@@ -13,7 +14,7 @@ import rx.Subscription
  * @since 6.0
  */
 @CompileStatic
-trait RxCollection implements ObservableCollection{
+trait RxCollection implements ObservableCollection {
 
     /**
      * The underlying observable
@@ -34,4 +35,5 @@ trait RxCollection implements ObservableCollection{
     Subscription subscribe(Subscriber subscriber) {
         return observable.subscribe(subscriber)
     }
+
 }

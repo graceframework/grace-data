@@ -46,4 +46,5 @@ interface ServiceEnhancer extends ServiceImplementer {
      * @param newMethodNode The new method node being implemented
      */
     void enhance(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode)
+
 }

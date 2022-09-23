@@ -19,6 +19,7 @@ import groovy.transform.CompileStatic
 import org.codehaus.groovy.ast.ClassNode
 import org.codehaus.groovy.ast.GenericsType
 import org.codehaus.groovy.ast.MethodNode
+
 import org.grails.datastore.mapping.reflect.AstUtils
 
 /**
@@ -43,10 +44,10 @@ abstract class AbstractArrayOrIterableResultImplementer extends AbstractReadOper
 
     @Override
     final void doImplement(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode) {
-        ClassNode returnType = (ClassNode)newMethodNode.getNodeMetaData(RETURN_TYPE) ?: abstractMethodNode.returnType
+        ClassNode returnType = (ClassNode) newMethodNode.getNodeMetaData(RETURN_TYPE) ?: abstractMethodNode.returnType
         boolean isArray = returnType.isArray()
         ClassNode domainClassForReturnType = resolveDomainClassForReturnType(domainClassNode, isArray, returnType)
-        if(AstUtils.isDomainClass(domainClassForReturnType)) {
+        if (AstUtils.isDomainClass(domainClassForReturnType)) {
             domainClassNode = domainClassForReturnType
         }
         doImplement(domainClassNode, targetClassNode, abstractMethodNode, newMethodNode, isArray)
@@ -61,12 +62,12 @@ abstract class AbstractArrayOrIterableResultImplementer extends AbstractReadOper
      * @return The domain class type
      */
     protected ClassNode resolveDomainClassForReturnType(ClassNode currentDomainClass, boolean isArray, ClassNode returnType) {
-        if(returnType.isArray()) {
+        if (returnType.isArray()) {
             return returnType.componentType
         }
         else {
             GenericsType[] genericTypes = returnType.genericsTypes
-            if(genericTypes) {
+            if (genericTypes) {
                 return genericTypes[0].type
             }
         }
@@ -87,4 +88,5 @@ abstract class AbstractArrayOrIterableResultImplementer extends AbstractReadOper
                               MethodNode abstractMethodNode,
                               MethodNode newMethodNode,
                               boolean isArray)
+
 }

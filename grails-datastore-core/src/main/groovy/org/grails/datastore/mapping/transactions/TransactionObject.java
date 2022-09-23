@@ -14,8 +14,9 @@
  */
 package org.grails.datastore.mapping.transactions;
 
-import org.grails.datastore.mapping.core.Session;
 import org.springframework.transaction.support.SmartTransactionObject;
+
+import org.grails.datastore.mapping.core.Session;
 
 /**
  * A transaction object returned when the transaction is created.
@@ -24,8 +25,11 @@ import org.springframework.transaction.support.SmartTransactionObject;
  * @since 1.0
  */
 public class TransactionObject implements SmartTransactionObject {
+
     private SessionHolder sessionHolder;
+
     private boolean newSessionHolder;
+
     private boolean newSession;
 
     public SessionHolder getSessionHolder() {
@@ -80,4 +84,5 @@ public class TransactionObject implements SmartTransactionObject {
     public void flush() {
         sessionHolder.getSession().flush();
     }
+
 }

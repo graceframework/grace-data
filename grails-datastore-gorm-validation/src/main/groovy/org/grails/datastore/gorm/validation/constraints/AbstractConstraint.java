@@ -6,8 +6,6 @@ import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import grails.gorm.validation.ConstrainedProperty;
-import grails.gorm.validation.Constraint;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -18,6 +16,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
+import grails.gorm.validation.ConstrainedProperty;
+import grails.gorm.validation.Constraint;
+
 /**
  * Abstract class for constraints to extend.
  *
@@ -27,13 +28,21 @@ import org.springframework.validation.FieldError;
 public abstract class AbstractConstraint implements Constraint {
 
     protected final Class<?> constraintOwningClass;
+
     protected final String constraintPropertyName;
+
     protected final Object constraintParameter;
+
     protected final String classShortName;
+
     protected final MessageSource messageSource;
+
     private final String fullQualifiedConstraintErrorCode;
+
     private final String shortNameConstraintErrorCode;
+
     private final String fullQualifiedPrefix;
+
     private final String shortNamePrefix;
 
     public AbstractConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
@@ -102,11 +111,11 @@ public abstract class AbstractConstraint implements Constraint {
         rejectValue(target, errors, defaultMessageCode, new String[] {}, args);
     }
 
-    public void rejectValue(Object target,Errors errors, String defaultMessageCode, String code, Object[] args) {
-        rejectValue(target,errors, defaultMessageCode, new String[] {code}, args);
+    public void rejectValue(Object target, Errors errors, String defaultMessageCode, String code, Object[] args) {
+        rejectValue(target, errors, defaultMessageCode, new String[] { code }, args);
     }
 
-    public void rejectValue(Object target,Errors errors, String defaultMessageCode, String[] codes, Object[] args) {
+    public void rejectValue(Object target, Errors errors, String defaultMessageCode, String[] codes, Object[] args) {
         rejectValueWithDefaultMessage(target, errors, getDefaultMessage(defaultMessageCode), codes, args);
     }
 
@@ -126,7 +135,7 @@ public abstract class AbstractConstraint implements Constraint {
 
                 if (resolvedClassName.equals(fullClassName)) {
                     // try short version
-                    classNameCode = classAsPropertyName+".label";
+                    classNameCode = classAsPropertyName + ".label";
                     resolvedClassName = messageSource.getMessage(classNameCode, null, fullClassName, locale);
                 }
 
@@ -135,7 +144,7 @@ public abstract class AbstractConstraint implements Constraint {
                     args[1] = resolvedClassName;
                 }
 
-                String propertyName = (String)args[0];
+                String propertyName = (String) args[0];
                 String propertyNameCode = fullClassName + '.' + propertyName + ".label";
                 String resolvedPropertyName = messageSource.getMessage(propertyNameCode, null, propertyName, locale);
                 if (resolvedPropertyName.equals(propertyName)) {
@@ -168,7 +177,7 @@ public abstract class AbstractConstraint implements Constraint {
                 newCodes.toArray(new String[newCodes.size()]),
                 args,
                 defaultMessage);
-        ((BindingResult)errors).addError(error);
+        ((BindingResult) errors).addError(error);
     }
 
     private Object getPropertyValue(Errors errors, Object target) {
@@ -190,12 +199,12 @@ public abstract class AbstractConstraint implements Constraint {
 
     // For backward compatibility
     public void rejectValue(Object target, Errors errors, String code, String defaultMessage) {
-        rejectValueWithDefaultMessage(target, errors, defaultMessage, new String[] {code}, null);
+        rejectValueWithDefaultMessage(target, errors, defaultMessage, new String[] { code }, null);
     }
 
     // For backward compatibility
     public void rejectValue(Object target, Errors errors, String code, Object[] args, String defaultMessage) {
-        rejectValueWithDefaultMessage(target, errors, defaultMessage, new String[] {code}, args);
+        rejectValueWithDefaultMessage(target, errors, defaultMessage, new String[] { code }, args);
     }
 
     /**
@@ -235,4 +244,5 @@ public abstract class AbstractConstraint implements Constraint {
     public boolean isValid() {
         return true;
     }
+
 }

@@ -9,7 +9,9 @@ import java.util.Arrays;
  * @since 6.1
  */
 class MethodKey {
+
     private final String name;
+
     private final Class[] parameterTypes;
 
     public MethodKey(String name, Class[] parameterTypes) {
@@ -35,4 +37,5 @@ class MethodKey {
         result = 31 * result + Arrays.hashCode(parameterTypes);
         return result;
     }
+
 }

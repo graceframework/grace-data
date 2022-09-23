@@ -16,7 +16,6 @@ package org.grails.datastore.mapping.model.types;
 
 import java.beans.PropertyDescriptor;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +37,7 @@ import org.grails.datastore.mapping.reflect.ClassPropertyFetcher;
 public abstract class Basic<T extends Property> extends ToMany<T> {
 
     private CustomTypeMarshaller customTypeMarshaller;
+
     private Class componentType;
 
     public Basic(PersistentEntity owner, MappingContext context,
@@ -54,29 +54,29 @@ public abstract class Basic<T extends Property> extends ToMany<T> {
     private void initializeComponentType() {
         final Class type = getType();
         final Class ownerClass = getOwner().getJavaClass();
-        if(Map.class.isAssignableFrom(type)) {
-            this.componentType = MappingUtils.getGenericTypeForMapProperty(ownerClass, getName(), false );
+        if (Map.class.isAssignableFrom(type)) {
+            this.componentType = MappingUtils.getGenericTypeForMapProperty(ownerClass, getName(), false);
         }
-        else if(Collection.class.isAssignableFrom(type)) {
-            this.componentType = MappingUtils.getGenericTypeForProperty(ownerClass, getName() );
+        else if (Collection.class.isAssignableFrom(type)) {
+            this.componentType = MappingUtils.getGenericTypeForProperty(ownerClass, getName());
         }
-        else if(type.isArray()) {
+        else if (type.isArray()) {
             this.componentType = type.getComponentType();
         }
 
-        if(componentType == null) {
+        if (componentType == null) {
             List<Map> maps = ClassPropertyFetcher.getStaticPropertyValuesFromInheritanceHierarchy(ownerClass, GormProperties.HAS_MANY, Map.class);
 
             for (Map map : maps) {
-                if(map.containsKey(getName())) {
+                if (map.containsKey(getName())) {
                     final Object o = map.get(getName());
-                    if(o instanceof Class) {
+                    if (o instanceof Class) {
                         this.componentType = (Class) o;
                         break;
                     }
                 }
             }
-            if(componentType == null) {
+            if (componentType == null) {
                 this.componentType = Object.class;
             }
         }
@@ -118,4 +118,5 @@ public abstract class Basic<T extends Property> extends ToMany<T> {
     public void setCustomTypeMarshaller(CustomTypeMarshaller customTypeMarshaller) {
         this.customTypeMarshaller = customTypeMarshaller;
     }
+
 }

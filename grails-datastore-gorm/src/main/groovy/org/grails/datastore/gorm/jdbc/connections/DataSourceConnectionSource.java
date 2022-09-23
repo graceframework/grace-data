@@ -1,14 +1,16 @@
 package org.grails.datastore.gorm.jdbc.connections;
 
-import org.grails.datastore.mapping.core.connections.DefaultConnectionSource;
+import java.io.IOException;
+import java.lang.reflect.Method;
+
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DelegatingDataSource;
 import org.springframework.util.ReflectionUtils;
 
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.lang.reflect.Method;
+import org.grails.datastore.mapping.core.connections.DefaultConnectionSource;
 
 /**
  * A {@link org.grails.datastore.mapping.core.connections.ConnectionSource} for JDBC {@link DataSource} objects. Attempts to close the pool if a "close" method is provided.
@@ -17,6 +19,7 @@ import java.lang.reflect.Method;
  * @since 6.0
  */
 public class DataSourceConnectionSource extends DefaultConnectionSource<DataSource, DataSourceSettings> {
+
     private static final Logger LOG = LoggerFactory.getLogger(DataSourceConnectionSource.class);
 
     public DataSourceConnectionSource(String name, DataSource source, DataSourceSettings settings) {
@@ -26,8 +29,8 @@ public class DataSourceConnectionSource extends DefaultConnectionSource<DataSour
     @Override
     public void close() throws IOException {
         super.close();
-        if(!closed) {
 
+        if (!closed) {
             DataSource source = getSource();
             Method closeMethod = ReflectionUtils.findMethod(source.getClass(), "close");
 
@@ -36,14 +39,16 @@ public class DataSourceConnectionSource extends DefaultConnectionSource<DataSour
                 closeMethod = ReflectionUtils.findMethod(source.getClass(), "close");
             }
 
-            if(closeMethod != null) {
+            if (closeMethod != null) {
                 try {
                     ReflectionUtils.invokeMethod(closeMethod, source);
                     this.closed = true;
-                } catch (Throwable e) {
+                }
+                catch (Throwable e) {
                     LOG.warn("Error closing JDBC connection [{}]: {}", getName(), e.getMessage());
                 }
             }
         }
     }
+
 }

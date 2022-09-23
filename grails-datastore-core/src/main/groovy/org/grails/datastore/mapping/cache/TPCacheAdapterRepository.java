@@ -8,6 +8,7 @@ import org.grails.datastore.mapping.model.PersistentEntity;
  * @author Roman Stepanenko
  */
 public interface TPCacheAdapterRepository<T> {
+
     /**
      * Returns {@link TPCacheAdapter} for the specified {@link PersistentEntity}.
      * @param entity the entity
@@ -38,4 +39,5 @@ public interface TPCacheAdapterRepository<T> {
      * @param cacheAdapter the adapter
      */
     void setTPCacheAdapter(String entityJavaClassFQN, TPCacheAdapter<T> cacheAdapter);
+
 }

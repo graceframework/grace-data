@@ -24,6 +24,7 @@ import org.springframework.validation.BeanPropertyBindingResult;
  * @since 2.0
  */
 public class ValidationErrors extends BeanPropertyBindingResult {
+
     private static final long serialVersionUID = 1;
 
     /**
@@ -35,6 +36,7 @@ public class ValidationErrors extends BeanPropertyBindingResult {
     public ValidationErrors(Object target, String objectName) {
         super(target, objectName);
     }
+
     /**
      * Creates a new instance of the {@link org.springframework.validation.BeanPropertyBindingResult} class.
      *
@@ -51,4 +53,5 @@ public class ValidationErrors extends BeanPropertyBindingResult {
     public void putAt(String field, String errorCode) {
         rejectValue(field, errorCode);
     }
+
 }

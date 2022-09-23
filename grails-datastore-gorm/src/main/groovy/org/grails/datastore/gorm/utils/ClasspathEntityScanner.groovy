@@ -14,15 +14,17 @@
  */
 package org.grails.datastore.gorm.utils
 
-import grails.gorm.annotation.Entity
+import java.lang.annotation.Annotation
+
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
-import org.grails.datastore.mapping.reflect.ClassUtils
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider
 import org.springframework.core.type.filter.AnnotationTypeFilter
 
-import java.lang.annotation.Annotation
+import grails.gorm.annotation.Entity
+
+import org.grails.datastore.mapping.reflect.ClassUtils
 
 /**
  * Utility class for scanning the classpath for entities
@@ -49,14 +51,16 @@ class ClasspathEntityScanner {
     List<String> ignoredPackages = ['com', 'net', '', 'org', 'java', 'javax', 'groovy']
 
     ClasspathEntityScanner() {
-        if(ClassUtils.isPresent("grails.persistence.Entity")) {
+        if (ClassUtils.isPresent("grails.persistence.Entity")) {
             try {
-                annotations.add((Class<? extends Annotation>)Class.forName("grails.persistence.Entity") )
-            } catch (Throwable e) {
+                annotations.add((Class<? extends Annotation>) Class.forName("grails.persistence.Entity"))
+            }
+            catch (Throwable e) {
                 log.error("Annotation [grails.persistence.Entity] found on classpath, but could not be loaded: ${e.message}", e)
             }
         }
     }
+
     /**
      * Scans the classpath for entities for the given packages
      *
@@ -66,22 +70,26 @@ class ClasspathEntityScanner {
     Class[] scan(Package... packages) {
         ClassPathScanningCandidateComponentProvider componentProvider = new ClassPathScanningCandidateComponentProvider(false)
         componentProvider.setMetadataReaderFactory(new AnnotationMetadataReaderFactory(classLoader))
-        for(ann in annotations) {
+        for (ann in annotations) {
             componentProvider.addIncludeFilter(new AnnotationTypeFilter(ann))
         }
+
         Collection<Class> classes = new HashSet<>()
-        for(Package p in packages) {
+
+        for (Package p in packages) {
             def packageName = p.name
-            if(ignoredPackages.contains(packageName)) {
+            if (ignoredPackages.contains(packageName)) {
                 log.error("Package [$packageName] will not be scanned as it is too generic and will slow down startup time. Use a more specific package")
             }
             else {
                 for (BeanDefinition candidate in componentProvider.findCandidateComponents(packageName)) {
-                    Class persistentEntity = Class.forName(candidate.beanClassName, false, classLoader )
+                    Class persistentEntity = Class.forName(candidate.beanClassName, false, classLoader)
                     classes.add persistentEntity
                 }
             }
         }
+
         return classes as Class[]
     }
+
 }

@@ -1,6 +1,7 @@
 package org.grails.datastore.mapping.multitenancy.resolvers
 
 import groovy.transform.CompileStatic
+
 import org.grails.datastore.mapping.core.connections.ConnectionSource
 import org.grails.datastore.mapping.multitenancy.TenantResolver
 
@@ -22,7 +23,7 @@ class FixedTenantResolver implements TenantResolver {
     }
 
     FixedTenantResolver(Serializable tenantId) {
-        if(tenantId == null) {
+        if (tenantId == null) {
             throw new IllegalArgumentException("Argument [tenantId] cannot be null")
         }
         this.tenantId = tenantId
@@ -32,4 +33,5 @@ class FixedTenantResolver implements TenantResolver {
     Serializable resolveTenantIdentifier() {
         return tenantId
     }
+
 }

@@ -40,4 +40,5 @@ public abstract class Embedded<T extends Property> extends ToOne<T> {
     public boolean isOwningSide() {
         return true; // embedded instances are always owned
     }
+
 }

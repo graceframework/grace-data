@@ -1,6 +1,7 @@
 package org.grails.gorm.rx.finders
 
 import groovy.transform.CompileStatic
+
 import org.grails.datastore.rx.RxDatastoreClient
 
 /**
@@ -10,6 +11,7 @@ import org.grails.datastore.rx.RxDatastoreClient
  */
 @CompileStatic
 class FindByBooleanFinder extends FindByFinder {
+
     FindByBooleanFinder(RxDatastoreClient datastoreClient) {
         super(datastoreClient)
         setPattern(org.grails.datastore.gorm.finders.FindByBooleanFinder.METHOD_PATTERN)

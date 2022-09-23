@@ -1,14 +1,15 @@
 package org.grails.datastore.mapping.core.connections
 
+import javax.persistence.FlushModeType
+
 import groovy.transform.AutoClone
 import groovy.transform.CompileStatic
 import groovy.transform.builder.Builder
 import groovy.transform.builder.SimpleStrategy
+
 import org.grails.datastore.mapping.config.Settings
 import org.grails.datastore.mapping.engine.types.CustomTypeMarshaller
 import org.grails.datastore.mapping.multitenancy.MultiTenancySettings
-
-import javax.persistence.FlushModeType
 
 /**
  * Default settings shared across all implementations
@@ -85,12 +86,12 @@ class ConnectionSourceSettings implements Settings {
         this.defaults = defaults
     }
 
-
     /**
      * Represents the default settings
      */
     @Builder(builderStrategy = SimpleStrategy, prefix = '')
     static class DefaultSettings {
+
         /**
          * The default mapping
          */
@@ -100,6 +101,7 @@ class ConnectionSourceSettings implements Settings {
          * The default constraints
          */
         Closure constraints
+
     }
 
     /**
@@ -107,10 +109,13 @@ class ConnectionSourceSettings implements Settings {
      */
     @Builder(builderStrategy = SimpleStrategy, prefix = '')
     static class CustomSettings {
+
         /**
          * custom types
          */
         List<CustomTypeMarshaller> types = []
+
     }
+
 }
 

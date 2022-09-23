@@ -28,6 +28,7 @@ import org.grails.datastore.mapping.model.PersistentEntity;
  */
 @SuppressWarnings("rawtypes")
 public abstract class OneToMany<T extends Property> extends ToMany<T> {
+
     public OneToMany(PersistentEntity owner, MappingContext context, PropertyDescriptor descriptor) {
         super(owner, context, descriptor);
     }
@@ -38,11 +39,12 @@ public abstract class OneToMany<T extends Property> extends ToMany<T> {
 
     @Override
     public boolean isNullable() {
-        if(isCircular() && !isBidirectional()) {
+        if (isCircular() && !isBidirectional()) {
             return true;
         }
         else {
             return super.isNullable();
         }
     }
+
 }

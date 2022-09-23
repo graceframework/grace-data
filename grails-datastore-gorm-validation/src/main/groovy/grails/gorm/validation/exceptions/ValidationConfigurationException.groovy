@@ -1,7 +1,6 @@
 package grails.gorm.validation.exceptions
 
 import groovy.transform.CompileStatic
-import groovy.transform.InheritConstructors
 
 /**
  * An exception thrown when there is an error configuration validation
@@ -11,6 +10,7 @@ import groovy.transform.InheritConstructors
  */
 @CompileStatic
 class ValidationConfigurationException extends RuntimeException {
+
     ValidationConfigurationException(String var1) {
         super(var1)
     }
@@ -18,4 +18,5 @@ class ValidationConfigurationException extends RuntimeException {
     ValidationConfigurationException(String var1, Throwable var2) {
         super(var1, var2)
     }
+
 }

@@ -1,9 +1,14 @@
 package org.grails.datastore.rx.collection
 
-import grails.gorm.rx.collection.RxPersistentCollection
-import grails.gorm.rx.collection.RxUnidirectionalCollection
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
+import rx.Observable
+import rx.Subscriber
+import rx.Subscription
+
+import grails.gorm.rx.collection.RxPersistentCollection
+import grails.gorm.rx.collection.RxUnidirectionalCollection
+
 import org.grails.datastore.mapping.collection.PersistentSet
 import org.grails.datastore.mapping.model.types.Association
 import org.grails.datastore.mapping.query.Query
@@ -12,9 +17,6 @@ import org.grails.datastore.rx.exceptions.BlockingOperationException
 import org.grails.datastore.rx.internal.RxDatastoreClientImplementor
 import org.grails.datastore.rx.query.QueryState
 import org.grails.datastore.rx.query.RxQuery
-import rx.Observable
-import rx.Subscriber
-import rx.Subscription
 
 /**
  * Represents a reactive sorted set that can be observed in order to allow non-blocking lazy loading of associations
@@ -26,12 +28,13 @@ import rx.Subscription
 @CompileStatic
 @Slf4j
 class RxPersistentSortedSet extends PersistentSet implements SortedSet, RxPersistentCollection, RxUnidirectionalCollection, RxCollection {
+
     final RxDatastoreClient datastoreClient
     final Association association
 
     protected final QueryState queryState
 
-    RxPersistentSortedSet( RxDatastoreClient datastoreClient, Association association, Serializable associationKey, QueryState queryState = null) {
+    RxPersistentSortedSet(RxDatastoreClient datastoreClient, Association association, Serializable associationKey, QueryState queryState = null) {
         super(association, associationKey, null, new TreeSet())
         this.datastoreClient = datastoreClient
         this.association = association
@@ -39,7 +42,7 @@ class RxPersistentSortedSet extends PersistentSet implements SortedSet, RxPersis
         this.observable = resolveObservable()
     }
 
-    RxPersistentSortedSet( RxDatastoreClient datastoreClient, Association association, List<Serializable> entitiesKeys, QueryState queryState = null) {
+    RxPersistentSortedSet(RxDatastoreClient datastoreClient, Association association, List<Serializable> entitiesKeys, QueryState queryState = null) {
         super(entitiesKeys, association.associatedEntity.javaClass, null)
         this.datastoreClient = datastoreClient
         this.association = association
@@ -47,7 +50,7 @@ class RxPersistentSortedSet extends PersistentSet implements SortedSet, RxPersis
         this.observable = resolveObservable()
     }
 
-    RxPersistentSortedSet( RxDatastoreClient datastoreClient, Association association, Query initializerQuery, QueryState queryState = null) {
+    RxPersistentSortedSet(RxDatastoreClient datastoreClient, Association association, Query initializerQuery, QueryState queryState = null) {
         super(association, null, null)
         this.datastoreClient = datastoreClient
         this.association = association
@@ -56,9 +59,9 @@ class RxPersistentSortedSet extends PersistentSet implements SortedSet, RxPersis
     }
 
     protected Observable resolveObservable() {
-        def query = ((RxDatastoreClientImplementor)datastoreClient).createQuery(childType, queryState)
-        if(associationKey != null) {
-            query.eq( association.inverseSide.name, associationKey )
+        def query = ((RxDatastoreClientImplementor) datastoreClient).createQuery(childType, queryState)
+        if (associationKey != null) {
+            query.eq(association.inverseSide.name, associationKey)
         }
         else {
             query.in(association.associatedEntity.identity.name, keys.toList())
@@ -72,14 +75,14 @@ class RxPersistentSortedSet extends PersistentSet implements SortedSet, RxPersis
 
     @Override
     void initialize() {
-        if(initializing != null) return
+        if (initializing != null) return
         initializing = true
 
 
         try {
             def observable = toListObservable()
 
-            if(((RxDatastoreClientImplementor)datastoreClient).isAllowBlockingOperations()) {
+            if (((RxDatastoreClientImplementor) datastoreClient).isAllowBlockingOperations()) {
                 log.warn("Association $association initialised using blocking operation. Consider using subscribe(..) or an eager query instead")
 
                 addAll observable.toBlocking().first()
@@ -100,41 +103,42 @@ class RxPersistentSortedSet extends PersistentSet implements SortedSet, RxPersis
 
     @Override
     Comparator comparator() {
-        return ((SortedSet)collection).comparator()
+        return ((SortedSet) collection).comparator()
     }
 
     @Override
     SortedSet subSet(Object fromElement, Object toElement) {
-        return ((SortedSet)collection).subSet(fromElement, toElement)
+        return ((SortedSet) collection).subSet(fromElement, toElement)
     }
 
     @Override
     SortedSet headSet(Object toElement) {
-        return ((SortedSet)collection).headSet(toElement)
+        return ((SortedSet) collection).headSet(toElement)
     }
 
     @Override
     SortedSet tailSet(Object fromElement) {
-        return ((SortedSet)collection).tailSet(fromElement)
+        return ((SortedSet) collection).tailSet(fromElement)
     }
 
     @Override
     Object first() {
-        return ((SortedSet)collection).first()
+        return ((SortedSet) collection).first()
     }
 
     @Override
     Object last() {
-        return ((SortedSet)collection).last()
+        return ((SortedSet) collection).last()
     }
 
     @Override
     List<Serializable> getAssociationKeys() {
-        if(keys != null) {
+        if (keys != null) {
             return keys.toList()
         }
         else {
             return Collections.emptyList()
         }
     }
+
 }

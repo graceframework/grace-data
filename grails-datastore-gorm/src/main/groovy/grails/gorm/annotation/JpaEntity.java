@@ -15,12 +15,12 @@
  */
 package grails.gorm.annotation;
 
-import org.codehaus.groovy.transform.GroovyASTTransformationClass;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import org.codehaus.groovy.transform.GroovyASTTransformationClass;
 
 /**
  * A class annotation used to make a class into a GORM domain class.
@@ -29,7 +29,8 @@ import java.lang.annotation.Target;
  * @since 6.1
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 @GroovyASTTransformationClass("org.grails.compiler.gorm.JpaGormEntityTransformation")
 public @interface JpaEntity {
+
 }

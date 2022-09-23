@@ -15,12 +15,17 @@
  */
 package grails.gorm.multitenancy;
 
-import org.codehaus.groovy.transform.GroovyASTTransformation;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import org.codehaus.groovy.transform.GroovyASTTransformationClass;
+
 import org.grails.datastore.gorm.transform.GormASTTransformationClass;
 import org.grails.datastore.mapping.core.connections.ConnectionSourcesProvider;
-
-import java.lang.annotation.*;
 
 /**
  * <p>An AST transformation that makes a particular class or method applicable to the tenant id returned by the passed closure. For example:</p>
@@ -37,13 +42,14 @@ import java.lang.annotation.*;
  * @since 6.1
  * @author Graeme Rocher
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 @GroovyASTTransformationClass("org.grails.datastore.gorm.transform.OrderedGormTransformation")
 @GormASTTransformationClass("org.grails.datastore.gorm.multitenancy.transform.TenantTransform")
 public @interface Tenant {
+
     /**
      * The tenant resolver
      *
@@ -57,4 +63,5 @@ public @interface Tenant {
      * @return The type of the datastore
      */
     Class<? extends ConnectionSourcesProvider>[] datastore() default {};
+
 }

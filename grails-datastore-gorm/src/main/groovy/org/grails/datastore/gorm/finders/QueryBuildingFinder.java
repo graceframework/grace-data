@@ -32,4 +32,5 @@ public interface QueryBuildingFinder {
      * @return The query
      */
     Query buildQuery(DynamicFinderInvocation invocation, Session session);
+
 }

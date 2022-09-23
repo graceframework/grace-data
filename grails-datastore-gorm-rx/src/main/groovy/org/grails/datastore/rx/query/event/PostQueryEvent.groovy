@@ -1,10 +1,11 @@
 package org.grails.datastore.rx.query.event
 
 import groovy.transform.CompileStatic
+import rx.Observable
+
 import org.grails.datastore.mapping.query.Query
 import org.grails.datastore.mapping.query.event.AbstractQueryEvent
 import org.grails.datastore.mapping.query.event.QueryEventType
-import rx.Observable
 
 /**
  * Post query event fired by RxGORM
@@ -26,4 +27,5 @@ class PostQueryEvent extends AbstractQueryEvent {
     QueryEventType getEventType() {
         QueryEventType.PostExecution
     }
+
 }

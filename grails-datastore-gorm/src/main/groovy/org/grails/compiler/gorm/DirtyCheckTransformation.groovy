@@ -1,6 +1,5 @@
 package org.grails.compiler.gorm
 
-import grails.gorm.dirty.checking.DirtyCheck
 import groovy.transform.CompilationUnitAware
 import groovy.transform.CompileStatic
 import org.codehaus.groovy.ast.ASTNode
@@ -12,6 +11,8 @@ import org.codehaus.groovy.control.CompilePhase
 import org.codehaus.groovy.control.SourceUnit
 import org.codehaus.groovy.transform.ASTTransformation
 import org.codehaus.groovy.transform.GroovyASTTransformation
+
+import grails.gorm.dirty.checking.DirtyCheck
 
 /**
  * Applies the DirtyCheck transformation
@@ -43,7 +44,6 @@ class DirtyCheckTransformation implements ASTTransformation, CompilationUnitAwar
         }
 
         ClassNode cNode = (ClassNode) parent;
-
 
         def dirtyCheckingTransformer = new DirtyCheckingTransformer()
         dirtyCheckingTransformer.compilationUnit = compilationUnit

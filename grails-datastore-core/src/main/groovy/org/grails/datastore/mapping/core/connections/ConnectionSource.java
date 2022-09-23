@@ -1,6 +1,5 @@
 package org.grails.datastore.mapping.core.connections;
 
-
 import java.io.Closeable;
 
 /**
@@ -10,6 +9,7 @@ import java.io.Closeable;
  * @since 6.0
  */
 public interface ConnectionSource<T, S extends ConnectionSourceSettings> extends Closeable {
+
     /**
      * The name of the default connection source
      */

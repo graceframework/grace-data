@@ -20,5 +20,5 @@ interface SingleResultProjectionServiceImplementer extends SingleResultServiceIm
      * @return True if it is
      */
     boolean isCompatibleReturnType(ClassNode domainClass, MethodNode methodNode, ClassNode returnType, String prefix)
-}
 
+}

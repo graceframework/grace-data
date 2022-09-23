@@ -12,13 +12,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.grails.datastore.gorm.query
 
 import groovy.transform.CompileStatic
-import org.grails.datastore.gorm.finders.FinderMethod
-import org.grails.datastore.mapping.model.PersistentEntity
-import org.grails.datastore.mapping.reflect.NameUtils
+
 /**
  * Handles creation of named queries
  *
@@ -32,7 +29,7 @@ class NamedQueriesBuilder {
 
     @CompileStatic
     Map<String, Closure> evaluate(Closure namedQueriesClosure) {
-        Closure closure = (Closure)namedQueriesClosure.clone()
+        Closure closure = (Closure) namedQueriesClosure.clone()
         closure.resolveStrategy = Closure.DELEGATE_ONLY
         closure.delegate = this
         closure.call()
@@ -42,12 +39,12 @@ class NamedQueriesBuilder {
 
     def methodMissing(String name, args) {
         if (args && args[0] instanceof Closure && !initialized) {
-            Closure criteriaClosure = (Closure)args[0]
+            Closure criteriaClosure = (Closure) args[0]
             namedQueries.put(name, criteriaClosure)
 
             return null
         }
         throw new MissingMethodException(name, NamedQueriesBuilder, args)
     }
-}
 
+}

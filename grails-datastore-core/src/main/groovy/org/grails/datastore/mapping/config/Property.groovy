@@ -14,17 +14,17 @@
  */
 package org.grails.datastore.mapping.config
 
+import javax.persistence.AccessType
+import javax.persistence.CascadeType
+import javax.persistence.EnumType
+import javax.persistence.FetchType
+
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.transform.builder.Builder
 import groovy.transform.builder.SimpleStrategy
 import org.springframework.beans.MutablePropertyValues
 import org.springframework.validation.DataBinder
-
-import javax.persistence.AccessType
-import javax.persistence.CascadeType
-import javax.persistence.EnumType
-import javax.persistence.FetchType
 
 /**
  * Base class for classes returned from {@link org.grails.datastore.mapping.model.PropertyMapping#getMappedForm()}
@@ -40,6 +40,7 @@ class Property implements Cloneable {
      * @return Whether this property is index
      */
     boolean index = false
+
     /**
      * @return Whether the property is nullable
      */
@@ -49,6 +50,7 @@ class Property implements Cloneable {
      * @return Whether this property is a database reference such as a foreign key
      */
     boolean reference = false
+
     /**
      * @return The strategy to use to fetch the property (lazy or eager)
      */
@@ -63,67 +65,82 @@ class Property implements Cloneable {
      * @return Whether to use lazy proxies for collection elements
      */
     Boolean lazy = null
+
     /**
      * The target to map to, could be a database column, document attribute, or hash key
      *
      * @return The target name
      */
     String targetName
+
     /**
      * Set the id generator name or class.
      * @param generator name or class
      */
     String generator
+
     /**
      * @return The maximum size
      */
     Number maxSize = null
+
     /**
      * @return The minimum size
      */
     Number minSize = null
+
     /**
      * @return The maximum value
      */
     Comparable max = null
+
     /**
      * @return The minimum value
      */
     Comparable min = null
+
     /**
      * @return The scale
      */
     int scale = -1
+
     /**
      * @return List of valid values
      */
     List<String> inList = null
+
     /**
      * @return Whether the property is derived or not
      */
     boolean derived
+
     /**
      * Whether an entity of an orphaned association should be removed
      */
     boolean orphanRemoval = false
+
     /**
      * Cascading strategy for this property. Only makes sense if the
      * property is an association or collection.
      */
     String cascade
+
     /**
      * Cascade validation for associations that are not owned by the parent entity. Only makes sense
      * if the property is an association.
      */
     String cascadeValidate
+
     /**
      * For specifying the cascade type using {@link CascadeType}
      */
     List<CascadeType> cascades
+
     /**
      * The formula used to build the property
      */
     String formula
+
     /**
      * @return The default access type to use to read and write property values
      */
@@ -153,7 +170,7 @@ class Property implements Cloneable {
     Property clone() throws CloneNotSupportedException {
         Property cloned = (Property) super.clone()
         cloned.uniquenessGroup = new ArrayList<>(uniquenessGroup)
-        if(inList != null) {
+        if (inList != null) {
             cloned.inList = new ArrayList<>(inList)
         }
 
@@ -203,11 +220,14 @@ class Property implements Cloneable {
     void setFetch(String name) {
         if (FetchType.EAGER.name().equalsIgnoreCase(name)) {
             setFetchStrategy(FetchType.EAGER)
-        } else if ("select".equalsIgnoreCase(name)) {
+        }
+        else if ("select".equalsIgnoreCase(name)) {
             setFetchStrategy(FetchType.LAZY)
-        } else if ("join".equalsIgnoreCase(name)) {
+        }
+        else if ("join".equalsIgnoreCase(name)) {
             setFetchStrategy(FetchType.EAGER)
-        } else {
+        }
+        else {
             setFetchStrategy(FetchType.LAZY)
         }
     }
@@ -306,7 +326,7 @@ class Property implements Cloneable {
      * @param config The configuration
      * @return The new instance
      */
-    static <T extends Property>  T configureExisting(T property, @DelegatesTo(Property) Closure config) {
+    static <T extends Property> T configureExisting(T property, @DelegatesTo(Property) Closure config) {
         config.setDelegate(property)
         config.setResolveStrategy(Closure.DELEGATE_ONLY)
         config.call()
@@ -325,4 +345,5 @@ class Property implements Cloneable {
 
         return property
     }
+
 }

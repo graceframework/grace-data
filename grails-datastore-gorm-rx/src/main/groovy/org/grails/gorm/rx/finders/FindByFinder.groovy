@@ -1,8 +1,8 @@
 package org.grails.gorm.rx.finders
 
 import groovy.transform.CompileStatic
+
 import org.grails.datastore.gorm.finders.DynamicFinderInvocation
-import org.grails.datastore.mapping.model.MappingContext
 import org.grails.datastore.rx.RxDatastoreClient
 
 /**
@@ -28,4 +28,5 @@ class FindByFinder extends org.grails.datastore.gorm.finders.FindByFinder {
         query = buildQuery(invocation, javaClass, query)
         invokeQuery(query)
     }
+
 }

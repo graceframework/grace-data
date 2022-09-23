@@ -1,13 +1,18 @@
 package org.grails.gorm.rx.api
 
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
+import org.springframework.beans.PropertyAccessorFactory
+import rx.Observable
+import rx.Subscriber
+
 import grails.gorm.rx.CriteriaBuilder
 import grails.gorm.rx.DetachedCriteria
 import grails.gorm.rx.RxEntity
 import grails.gorm.rx.api.RxGormAllOperations
 import grails.gorm.rx.multitenancy.Tenants
 import grails.gorm.rx.proxy.ObservableProxy
-import groovy.transform.CompileDynamic
-import groovy.transform.CompileStatic
+
 import org.grails.datastore.gorm.GormValidateable
 import org.grails.datastore.gorm.finders.DynamicFinder
 import org.grails.datastore.gorm.finders.FinderMethod
@@ -27,9 +32,7 @@ import org.grails.gorm.rx.finders.FindByBooleanFinder
 import org.grails.gorm.rx.finders.FindByFinder
 import org.grails.gorm.rx.finders.FindOrCreateByFinder
 import org.grails.gorm.rx.finders.FindOrSaveByFinder
-import org.springframework.beans.PropertyAccessorFactory
-import rx.Observable
-import rx.Subscriber
+
 /**
  * Bridge to the implementation of the static method level operations for RX GORM
  *
@@ -65,7 +68,7 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
      */
     @Override
     D create() {
-        (D)entity.newInstance()
+        (D) entity.newInstance()
     }
 
     @Override
@@ -75,7 +78,7 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
         query.idEq(id)
         query.max(1)
         DynamicFinder.populateArgumentsForCriteria(clazz, query, args)
-        return ((RxQuery<D>)query).singleResult(args)
+        return ((RxQuery<D>) query).singleResult(args)
     }
 
     /**
@@ -86,7 +89,7 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
      * @return A single that will emit the first object, if it exists
      */
     Observable<D> first(String property) {
-        first(sort:property)
+        first(sort: property)
     }
 
     /**
@@ -100,13 +103,12 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
      */
     Observable<D> first(Map params = Collections.emptyMap()) {
         def q = datastoreClient.createQuery(persistentClass, params)
-        Map<String,Object> newParams = new LinkedHashMap<>(params)
+        Map<String, Object> newParams = new LinkedHashMap<>(params)
         newParams.remove('order')
         DynamicFinder.populateArgumentsForCriteria(persistentClass, q, newParams)
         q.max(1)
-        ((RxQuery)q).singleResult(newParams)
+        ((RxQuery) q).singleResult(newParams)
     }
-
 
     /**
      * Finds the last object sorted by propertyName
@@ -116,7 +118,7 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
      * @return A single that will emit the first object, if it exists
      */
     Observable<D> last(String property) {
-        last(sort:property)
+        last(sort: property)
     }
 
     /**
@@ -130,14 +132,14 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
      */
     Observable<D> last(Map params = Collections.emptyMap()) {
         def q = datastoreClient.createQuery(persistentClass, params)
-        Map<String,Object> newParams = new LinkedHashMap<>(params)
+        Map<String, Object> newParams = new LinkedHashMap<>(params)
         newParams.put('order', 'desc')
-        if(!newParams.containsKey('sort')) {
+        if (!newParams.containsKey('sort')) {
             newParams.put('sort', entity.identity.name)
         }
         DynamicFinder.populateArgumentsForCriteria(persistentClass, q, newParams)
         q.max(1)
-        ((RxQuery)q).singleResult(newParams)
+        ((RxQuery) q).singleResult(newParams)
     }
 
     /**
@@ -146,7 +148,7 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
     Observable<Number> count() {
         def query = datastoreClient.createQuery(entity.javaClass)
         query.projections().count()
-        return ((RxQuery)query).singleResult()
+        return ((RxQuery) query).singleResult()
     }
 
     @Override
@@ -173,12 +175,12 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
     @Override
     Observable<List<Serializable>> saveAll(Iterable<D> objects, Map arguments = Collections.emptyMap()) {
         boolean shouldValidate = arguments?.containsKey("validate") ? arguments.validate : true
-        if(shouldValidate) {
+        if (shouldValidate) {
             def firstInvalid = objects.find() {
-                (it instanceof GormValidateable) && !((GormValidateable)it).validate()
+                (it instanceof GormValidateable) && !((GormValidateable) it).validate()
             }
-            if(firstInvalid != null) {
-                throw new ValidationException("Validation error occurred during call to save() for entity [$firstInvalid]", ((GormValidateable)firstInvalid).errors)
+            if (firstInvalid != null) {
+                throw new ValidationException("Validation error occurred during call to save() for entity [$firstInvalid]", ((GormValidateable) firstInvalid).errors)
             }
             else {
                 return datastoreClient.persistAll(objects, arguments)
@@ -197,12 +199,12 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
     @Override
     Observable<List<Serializable>> insertAll(Iterable<D> objects, Map arguments = [:]) {
         boolean shouldValidate = arguments?.containsKey("validate") ? arguments.validate : true
-        if(shouldValidate) {
+        if (shouldValidate) {
             def firstInvalid = objects.find() {
-                (it instanceof GormValidateable) && !((GormValidateable)it).validate()
+                (it instanceof GormValidateable) && !((GormValidateable) it).validate()
             }
-            if(firstInvalid != null) {
-                throw new ValidationException("Validation error occurred during call to save() for entity [$firstInvalid]", ((GormValidateable)firstInvalid).errors)
+            if (firstInvalid != null) {
+                throw new ValidationException("Validation error occurred during call to save() for entity [$firstInvalid]", ((GormValidateable) firstInvalid).errors)
             }
             else {
                 return datastoreClient.insertAll(objects, arguments)
@@ -258,9 +260,8 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
         DynamicFinder.populateArgumentsForCriteria(entity.javaClass, query, args)
         query.allEq(queryMap)
         query.max(1)
-        ((RxQuery<D>)query).singleResult(args)
+        ((RxQuery<D>) query).singleResult(args)
     }
-
 
     /**
      * Finds a single result matching all of the given conditions. Eg. Book.findWhere(author:"Stephen King", title:"The Stand").  If
@@ -271,12 +272,11 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
      */
     Observable<D> findOrCreateWhere(Map queryMap) {
         findWhere(queryMap)
-            .switchIfEmpty(Observable.create({ Subscriber s ->
-            s.onNext(entity.javaClass.newInstance(queryMap))
-            s.onCompleted()
-        } as Observable.OnSubscribe))
+                .switchIfEmpty(Observable.create({ Subscriber s ->
+                    s.onNext(entity.javaClass.newInstance(queryMap))
+                    s.onCompleted()
+                } as Observable.OnSubscribe))
     }
-
 
     /**
      * Finds a single result matching all of the given conditions. Eg. Book.findWhere(author:"Stephen King", title:"The Stand").  If
@@ -285,30 +285,30 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
      * @param queryMap The map of conditions
      * @return A single result
      */
-
     Observable<D> findOrSaveWhere(Map queryMap) {
         findWhere(queryMap)
                 .switchIfEmpty(Observable.create({ Subscriber s ->
-            Thread.start {
-                def instance = entity.javaClass.newInstance(queryMap)
-                ((RxEntity)instance).save().subscribe(new Subscriber() {
-                    @Override
-                    void onCompleted() {
-                        s.onCompleted()
-                    }
+                    Thread.start {
+                        def instance = entity.javaClass.newInstance(queryMap)
+                        ((RxEntity) instance).save().subscribe(new Subscriber() {
 
-                    @Override
-                    void onError(Throwable e) {
-                        s.onError(e)
-                    }
+                            @Override
+                            void onCompleted() {
+                                s.onCompleted()
+                            }
 
-                    @Override
-                    void onNext(Object o) {
-                        s.onNext(o)
+                            @Override
+                            void onError(Throwable e) {
+                                s.onError(e)
+                            }
+
+                            @Override
+                            void onNext(Object o) {
+                                s.onNext(o)
+                            }
+                        })
                     }
-                })
-            }
-        } as Observable.OnSubscribe ))
+                } as Observable.OnSubscribe))
     }
 
     /**
@@ -333,7 +333,7 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
         def query = datastoreClient.createQuery(entity.javaClass, args)
         DynamicFinder.populateArgumentsForCriteria(entity.javaClass, query, args)
         query.allEq(queryMap)
-        ((RxQuery<D>)query).findAll(args)
+        ((RxQuery<D>) query).findAll(args)
     }
 
     /**
@@ -383,9 +383,8 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
      * @return The DetachedCriteria instance
      */
     DetachedCriteria<D> whereAny(Closure callable) {
-        (DetachedCriteria<D>)new DetachedCriteria<D>(persistentClass).or(callable)
+        (DetachedCriteria<D>) new DetachedCriteria<D>(persistentClass).or(callable)
     }
-
 
     /**
      * Creates a criteria builder instance
@@ -397,7 +396,6 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
     /**
      * Creates a criteria builder instance
      */
-
     Observable withCriteria(@DelegatesTo(Criteria) Closure callable) {
         createCriteria().findAll(callable)
     }
@@ -415,7 +413,7 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
             }
         }
 
-        if(builderArgs?.uniqueResult) {
+        if (builderArgs?.uniqueResult) {
             return criteriaBuilder.get(callable)
 
         }
@@ -449,19 +447,19 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
             // FYI... This is relevant to http://jira.grails.org/browse/GRAILS-3463 and may
             // become problematic if http://jira.codehaus.org/browse/GROOVY-5876 is addressed...
             final argumentsForMethod
-            if(varArgs == null) {
+            if (varArgs == null) {
                 argumentsForMethod = [null] as Object[]
             }
             // if the argument component type is not an Object then we have an array passed that is the actual argument
-            else if(varArgs.getClass().componentType != Object) {
+            else if (varArgs.getClass().componentType != Object) {
                 // so we wrap it in an object array
                 argumentsForMethod = [varArgs] as Object[]
             }
             else {
-
-                if(varArgs.length == 1 && varArgs[0].getClass().isArray()) {
+                if (varArgs.length == 1 && varArgs[0].getClass().isArray()) {
                     argumentsForMethod = varArgs[0]
-                } else {
+                }
+                else {
 
                     argumentsForMethod = varArgs
                 }
@@ -471,7 +469,6 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
 
         return method.invoke(persistentClass, methodName, args)
     }
-
 
     /**
      * Property missing handler
@@ -556,8 +553,7 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
 
     @Override
     def <T> T withTenant(Serializable tenantId, @DelegatesTo(RxGormAllOperations) Closure<T> callable) {
-        if(multiTenancyMode == MultiTenancySettings.MultiTenancyMode.DATABASE) {
-
+        if (multiTenancyMode == MultiTenancySettings.MultiTenancyMode.DATABASE) {
             def staticApi = RxGormEnhancer.findStaticApi(persistentClass, tenantId.toString())
             callable.setDelegate(staticApi)
 
@@ -571,8 +567,8 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
                     throw new IllegalArgumentException("Closure accepts too many arguments. Expected 0 or 1, but were $argLength")
             }
         }
-        else if(multiTenancyMode.isSharedConnection()) {
-            Tenants.withId((Class<RxDatastoreClient>)datastoreClient.getClass(), tenantId) {
+        else if (multiTenancyMode.isSharedConnection()) {
+            Tenants.withId((Class<RxDatastoreClient>) datastoreClient.getClass(), tenantId) {
                 def staticApi = RxGormEnhancer.findStaticApi(persistentClass, ConnectionSource.DEFAULT)
                 callable.setDelegate(staticApi)
 
@@ -594,7 +590,7 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
 
     @Override
     RxGormAllOperations<D> eachTenant(@DelegatesTo(RxGormAllOperations) Closure callable) {
-        Tenants.eachTenant((Class<RxDatastoreClient>)datastoreClient.getClass()) { Serializable tenantId ->
+        Tenants.eachTenant((Class<RxDatastoreClient>) datastoreClient.getClass()) { Serializable tenantId ->
             def staticApi = multiTenancyMode == MultiTenancySettings.MultiTenancyMode.DATABASE ? RxGormEnhancer.findStaticApi(persistentClass, tenantId.toString()) : RxGormEnhancer.findStaticApi(persistentClass, ConnectionSource.DEFAULT)
             callable.setDelegate(staticApi)
             callable.call(tenantId)
@@ -604,14 +600,15 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
 
     @Override
     RxGormAllOperations<D> withTenant(Serializable tenantId) {
-        if(multiTenancyMode == MultiTenancySettings.MultiTenancyMode.DATABASE) {
+        if (multiTenancyMode == MultiTenancySettings.MultiTenancyMode.DATABASE) {
             return RxGormEnhancer.findStaticApi(persistentClass, tenantId.toString())
         }
-        else if(multiTenancyMode.isSharedConnection()) {
+        else if (multiTenancyMode.isSharedConnection()) {
             return new TenantDelegatingRxGormOperations<D>(datastoreClient, tenantId, RxGormEnhancer.findStaticApi(persistentClass))
         }
         else {
             throw new UnsupportedOperationException("Method not supported in multi tenancy mode $multiTenancyMode")
         }
     }
+
 }

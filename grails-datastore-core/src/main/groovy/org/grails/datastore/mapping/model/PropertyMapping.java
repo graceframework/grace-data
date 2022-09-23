@@ -23,4 +23,5 @@ public interface PropertyMapping<T extends Property> {
      * @return The mapped representation
      */
     T getMappedForm();
+
 }

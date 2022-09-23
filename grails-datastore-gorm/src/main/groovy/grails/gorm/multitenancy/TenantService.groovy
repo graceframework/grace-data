@@ -31,7 +31,6 @@ interface TenantService {
      */
     void eachTenant(Closure callable)
 
-
     /**
      * @return The current tenant id
      *
@@ -64,4 +63,5 @@ interface TenantService {
      * @return The result of the closure
      */
     public <T> T withId(Serializable tenantId, Closure<T> callable)
+
 }

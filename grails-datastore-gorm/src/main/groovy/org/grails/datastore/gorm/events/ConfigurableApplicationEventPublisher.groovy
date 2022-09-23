@@ -17,4 +17,5 @@ interface ConfigurableApplicationEventPublisher extends ApplicationEventPublishe
      * @param listener The application listener
      */
     void addApplicationListener(ApplicationListener<?> listener)
+
 }

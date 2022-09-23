@@ -1,8 +1,8 @@
 package org.grails.datastore.mapping.cache;
 
-import org.grails.datastore.mapping.cache.exception.CacheException;
-
 import java.io.Serializable;
+
+import org.grails.datastore.mapping.cache.exception.CacheException;
 
 /**
  * <p>
@@ -24,6 +24,7 @@ import java.io.Serializable;
  * @author Roman Stepanenko
  */
 public interface TPCacheAdapter<T> {
+
     /**
      * Stores a cached entry in a <b>synchronous</b> manner.
      * <p>
@@ -49,4 +50,5 @@ public interface TPCacheAdapter<T> {
      * @throws CacheException runtime exception indicating any cache-related problems
      */
     T getCachedEntry(Serializable key) throws CacheException;
+
 }

@@ -1,13 +1,14 @@
 package org.grails.datastore.mapping.query.event;
 
-import org.grails.datastore.mapping.query.Query;
-
 import java.util.List;
+
+import org.grails.datastore.mapping.query.Query;
 
 /**
  * Query fired after a query has run.
  */
 public class PostQueryEvent extends AbstractQueryEvent {
+
     /**
      * The results of the query.
      */
@@ -48,4 +49,5 @@ public class PostQueryEvent extends AbstractQueryEvent {
     public QueryEventType getEventType() {
         return QueryEventType.PostExecution;
     }
+
 }

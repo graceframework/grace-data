@@ -12,7 +12,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.grails.datastore.mapping.core.impl;
 
 import org.grails.datastore.mapping.engine.EntityAccess;
@@ -25,9 +24,11 @@ import org.grails.datastore.mapping.engine.EntityAccess;
  * @author Graeme Rocher
  * @since 1.0
  */
-public interface PendingInsert<E, K> extends Runnable, PendingOperation<E, K>{
+public interface PendingInsert<E, K> extends Runnable, PendingOperation<E, K> {
+
     /**
      * @return The EntityAccess object for the entity to be inserted
      */
     EntityAccess getEntityAccess();
+
 }

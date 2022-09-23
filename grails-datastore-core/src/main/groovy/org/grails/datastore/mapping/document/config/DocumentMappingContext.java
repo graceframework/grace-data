@@ -12,10 +12,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.grails.datastore.mapping.document.config;
 
 import groovy.lang.Closure;
+import org.springframework.util.Assert;
+
 import org.grails.datastore.mapping.config.AbstractGormMappingFactory;
 import org.grails.datastore.mapping.core.connections.ConnectionSourceSettings;
 import org.grails.datastore.mapping.model.AbstractMappingContext;
@@ -23,19 +24,21 @@ import org.grails.datastore.mapping.model.MappingConfigurationStrategy;
 import org.grails.datastore.mapping.model.MappingFactory;
 import org.grails.datastore.mapping.model.PersistentEntity;
 import org.grails.datastore.mapping.model.config.JpaMappingConfigurationStrategy;
-import org.springframework.util.Assert;
 
 /**
  * Models a {@link org.grails.datastore.mapping.model.MappingContext} for a Document store.
  *
  * @author Graeme Rocher
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class DocumentMappingContext extends AbstractMappingContext {
+
     protected String defaultDatabaseName;
+
     protected MappingFactory<Collection, Attribute> mappingFactory;
 
     private MappingConfigurationStrategy syntaxStrategy;
+
     private Closure defaultMapping;
 
     public DocumentMappingContext(String defaultDatabaseName, ConnectionSourceSettings settings) {
@@ -64,9 +67,8 @@ public class DocumentMappingContext extends AbstractMappingContext {
 
     @Override
     protected void initialize(ConnectionSourceSettings settings) {
-
         this.defaultMapping = settings.getDefault().getMapping();
-        AbstractGormMappingFactory documentMappingFactory = (AbstractGormMappingFactory)createDocumentMappingFactory(defaultMapping);
+        AbstractGormMappingFactory documentMappingFactory = (AbstractGormMappingFactory) createDocumentMappingFactory(defaultMapping);
         documentMappingFactory.setDefaultConstraints(settings.getDefault().getConstraints());
 
         mappingFactory = documentMappingFactory;
@@ -106,4 +108,5 @@ public class DocumentMappingContext extends AbstractMappingContext {
     protected PersistentEntity createPersistentEntity(Class javaClass, boolean external) {
         return new DocumentPersistentEntity(javaClass, this, external);
     }
+
 }

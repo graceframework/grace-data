@@ -1,9 +1,9 @@
 package grails.gorm.time
 
-import groovy.transform.CompileStatic
-
 import java.time.Instant
 import java.time.ZonedDateTime
+
+import groovy.transform.CompileStatic
 
 /**
  * A trait to convert a {@link java.time.ZonedDateTime} to and from a long
@@ -22,4 +22,5 @@ trait ZonedDateTimeConverter implements TemporalConverter<ZonedDateTime> {
     ZonedDateTime convert(Long value) {
         ZonedDateTime.ofInstant(Instant.ofEpochMilli(value), systemOffset)
     }
+
 }

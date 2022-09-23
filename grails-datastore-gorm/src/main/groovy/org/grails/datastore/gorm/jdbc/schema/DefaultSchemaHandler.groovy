@@ -1,11 +1,12 @@
 package org.grails.datastore.gorm.jdbc.schema
 
-import groovy.transform.CompileStatic
-import groovy.util.logging.Slf4j
-
-import javax.sql.DataSource
 import java.sql.Connection
 import java.sql.ResultSet
+
+import javax.sql.DataSource
+
+import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 
 /**
  * Resolves the schema names
@@ -63,13 +64,14 @@ class DefaultSchemaHandler implements SchemaHandler {
         try {
             connection = dataSource.getConnection()
             ResultSet schemas = connection.getMetaData().getSchemas()
-            while(schemas.next()) {
+            while (schemas.next()) {
                 schemaNames.add(schemas.getString("TABLE_SCHEM"))
             }
         } finally {
             try {
                 connection?.close()
-            } catch (Throwable e) {
+            }
+            catch (Throwable e) {
                 log.debug("Error closing SQL connection: $e.message", e)
             }
         }

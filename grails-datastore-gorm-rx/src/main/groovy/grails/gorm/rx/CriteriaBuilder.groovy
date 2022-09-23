@@ -1,13 +1,12 @@
 package grails.gorm.rx
 
-import groovy.transform.InheritConstructors
+import rx.Observable
+
 import org.grails.datastore.gorm.query.criteria.AbstractCriteriaBuilder
 import org.grails.datastore.mapping.model.MappingContext
 import org.grails.datastore.mapping.query.Query
 import org.grails.datastore.mapping.query.QueryCreator
-import org.grails.datastore.mapping.query.api.Criteria
 import org.grails.datastore.rx.query.RxQuery
-import rx.Observable
 
 import static org.grails.datastore.gorm.finders.DynamicFinder.populateArgumentsForCriteria
 
@@ -38,7 +37,7 @@ class CriteriaBuilder<T> extends AbstractCriteriaBuilder {
         invokeClosureNode(callable);
 
         uniqueResult = true;
-        return ((RxQuery)query).singleResult()
+        return ((RxQuery) query).singleResult()
     }
 
     /**
@@ -53,7 +52,7 @@ class CriteriaBuilder<T> extends AbstractCriteriaBuilder {
     Observable<T> get() {
         ensureQueryIsInitialized()
         uniqueResult = true
-        return (Observable<T>)query.singleResult()
+        return (Observable<T>) query.singleResult()
     }
 
     /**
@@ -77,7 +76,7 @@ class CriteriaBuilder<T> extends AbstractCriteriaBuilder {
      * @return An observable
      */
     Observable<T> findAll(@DelegatesTo(CriteriaBuilder) Closure additionalCriteria) {
-        findAll (Collections.emptyMap(), additionalCriteria)
+        findAll(Collections.emptyMap(), additionalCriteria)
     }
 
     /**
@@ -110,7 +109,7 @@ class CriteriaBuilder<T> extends AbstractCriteriaBuilder {
      * @param additionalCriteria Any additional criteria
      * @return An observable that emits a list
      */
-    Observable<List<T>> list(@DelegatesTo(CriteriaBuilder) Closure additionalCriteria ) {
+    Observable<List<T>> list(@DelegatesTo(CriteriaBuilder) Closure additionalCriteria) {
         findAll(Collections.emptyMap(), additionalCriteria).toList()
     }
 
@@ -124,9 +123,8 @@ class CriteriaBuilder<T> extends AbstractCriteriaBuilder {
     Observable<Number> count(Map args, @DelegatesTo(CriteriaBuilder) Closure additionalCriteria = null) {
         Query query = prepareQuery(args, additionalCriteria)
         query.projections().count()
-        return ((RxQuery)query).singleResult(args)
+        return ((RxQuery) query).singleResult(args)
     }
-
 
     /**
      * Calculates the total number of matches for the query
@@ -143,13 +141,12 @@ class CriteriaBuilder<T> extends AbstractCriteriaBuilder {
         prepareQuery(args, additionalCriteria)
         query.projections().distinct();
 
-        ((RxQuery)query).findAll(args).toList()
+        ((RxQuery) query).findAll(args).toList()
     }
 
     Observable<List> listDistinct(@DelegatesTo(CriteriaBuilder) Closure callable) {
         listDistinct(Collections.emptyMap(), callable)
     }
-
 
     protected void prepareQuery(Map args, Closure additionalCriteria) {
         ensureQueryIsInitialized()
@@ -162,6 +159,7 @@ class CriteriaBuilder<T> extends AbstractCriteriaBuilder {
 
     @Override
     protected Object invokeList() {
-        return ((RxQuery)query).findAll()
+        return ((RxQuery) query).findAll()
     }
+
 }

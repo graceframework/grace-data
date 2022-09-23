@@ -14,18 +14,19 @@
  */
 package org.grails.datastore.gorm
 
-import grails.gorm.api.GormInstanceOperations
 import groovy.transform.CompileStatic
-
 import org.codehaus.groovy.runtime.InvokerHelper
-import org.grails.datastore.mapping.core.connections.ConnectionSource
-import org.grails.datastore.mapping.core.connections.ConnectionSources
-import org.grails.datastore.mapping.core.connections.ConnectionSourcesProvider
-import org.grails.datastore.mapping.dirty.checking.DirtyCheckingSupport
+
+import grails.gorm.api.GormInstanceOperations
+
 import org.grails.datastore.mapping.core.Datastore
 import org.grails.datastore.mapping.core.Session
 import org.grails.datastore.mapping.core.SessionCallback
+import org.grails.datastore.mapping.core.connections.ConnectionSource
+import org.grails.datastore.mapping.core.connections.ConnectionSources
+import org.grails.datastore.mapping.core.connections.ConnectionSourcesProvider
 import org.grails.datastore.mapping.dirty.checking.DirtyCheckable
+import org.grails.datastore.mapping.dirty.checking.DirtyCheckingSupport
 import org.grails.datastore.mapping.model.PersistentProperty
 import org.grails.datastore.mapping.proxy.EntityProxy
 import org.grails.datastore.mapping.reflect.EntityReflector
@@ -51,10 +52,10 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
 
     Object propertyMissing(D instance, String name) {
         try {
-
             def instanceApi = GormEnhancer.findInstanceApi(persistentClass, name)
             return new DelegatingGormEntityApi(instanceApi, instance)
-        } catch (IllegalStateException ise) {
+        }
+        catch (IllegalStateException ise) {
             throw new MissingPropertyException(name, persistentClass)
         }
     }
@@ -64,7 +65,7 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
      */
     boolean instanceOf(D o, Class cls) {
         if (o instanceof EntityProxy) {
-            o = (D)((EntityProxy)o).getTarget()
+            o = (D) ((EntityProxy) o).getTarget()
         }
         return o in cls
     }
@@ -186,22 +187,22 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
      */
     Serializable ident(D instance) {
         PersistentProperty identity = persistentEntity.getIdentity()
-        if(identity != null) {
-            return (Serializable)instance[identity.name]
+        if (identity != null) {
+            return (Serializable) instance[identity.name]
         }
         else {
             PersistentProperty[] idProperties = persistentEntity.getCompositeIdentity()
-            if(idProperties != null) {
+            if (idProperties != null) {
                 EntityReflector entityReflector = persistentEntity.getReflector()
                 def idInstance = persistentEntity.newInstance()
-                if(idInstance instanceof Serializable) {
-                    for(prop in idProperties) {
+                if (idInstance instanceof Serializable) {
+                    for (prop in idProperties) {
                         String propertName = prop.name
                         entityReflector.setProperty(
                                 idInstance, propertName, entityReflector.getProperty(instance, propertName)
                         )
                     }
-                    return (Serializable)idInstance
+                    return (Serializable) idInstance
                 }
             }
         }
@@ -268,8 +269,8 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
      * @return true if the field is dirty
      */
     boolean isDirty(D instance, String fieldName) {
-        if(instance instanceof DirtyCheckable) {
-            return ((DirtyCheckable)instance).hasChanged(fieldName)
+        if (instance instanceof DirtyCheckable) {
+            return ((DirtyCheckable) instance).hasChanged(fieldName)
         }
         return true
     }
@@ -281,8 +282,8 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
      * @return true if it is dirty
      */
     boolean isDirty(D instance) {
-        if(instance instanceof DirtyCheckable) {
-            return ((DirtyCheckable)instance).hasChanged() || DirtyCheckingSupport.areAssociationsDirty(persistentEntity, instance)
+        if (instance instanceof DirtyCheckable) {
+            return ((DirtyCheckable) instance).hasChanged() || DirtyCheckingSupport.areAssociationsDirty(persistentEntity, instance)
         }
         return true
     }
@@ -294,8 +295,8 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
      * @return A list of property names that are dirty
      */
     List getDirtyPropertyNames(D instance) {
-        if(instance instanceof DirtyCheckable) {
-            return ((DirtyCheckable)instance).listDirtyPropertyNames()
+        if (instance instanceof DirtyCheckable) {
+            return ((DirtyCheckable) instance).listDirtyPropertyNames()
         }
         return []
     }
@@ -307,8 +308,8 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
      * @return The original persisted value
      */
     Object getPersistentValue(D instance, String fieldName) {
-        if(instance instanceof DirtyCheckable) {
-            return ((DirtyCheckable)instance).getOriginalValue(fieldName)
+        if (instance instanceof DirtyCheckable) {
+            return ((DirtyCheckable) instance).getOriginalValue(fieldName)
         }
         return null
     }
@@ -317,17 +318,17 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
         boolean hasErrors = false
         boolean validate = params?.containsKey("validate") ? params.validate : true
         boolean shouldFlush = params?.flush ? params.flush : false
-        if(instance instanceof GormValidateable) {
 
+        if (instance instanceof GormValidateable) {
             def validateable = (GormValidateable) instance
             if (validate) {
                 validateable.skipValidation(false)
-                if(datastore instanceof ConnectionSourcesProvider) {
+                if (datastore instanceof ConnectionSourcesProvider) {
                     ConnectionSources connectionSources = ((ConnectionSourcesProvider) datastore).connectionSources
                     String connectionSourceName = connectionSources.defaultConnectionSource.name
-                    if(connectionSourceName != ConnectionSource.DEFAULT) {
-                        GormValidationApi<D> validationApi = GormEnhancer.findValidationApi((Class<D>)instance.getClass(), connectionSourceName)
-                        hasErrors = !validationApi.validate((D)instance, params)
+                    if (connectionSourceName != ConnectionSource.DEFAULT) {
+                        GormValidationApi<D> validationApi = GormEnhancer.findValidationApi((Class<D>) instance.getClass(), connectionSourceName)
+                        hasErrors = !validationApi.validate((D) instance, params)
                     }
                     else {
                         hasErrors = !validateable.validate(params)
@@ -337,11 +338,11 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
                     hasErrors = !validateable.validate(params)
                 }
                 // don't revalidate
-                if(shouldFlush) {
+                if (shouldFlush) {
                     validateable.skipValidation(true)
                 }
-
-            } else {
+            }
+            else {
                 validateable.skipValidation(true)
                 validateable.clearErrors()
             }
@@ -358,7 +359,7 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
             session.insert(instance)
         }
         else {
-            if(instance instanceof DirtyCheckable && markDirty) {
+            if (instance instanceof DirtyCheckable && markDirty) {
                 // since this is an explicit call to save() we mark the instance as dirty to ensure it happens
                 instance.markDirty()
             }
@@ -369,4 +370,5 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
         }
         return instance
     }
+
 }

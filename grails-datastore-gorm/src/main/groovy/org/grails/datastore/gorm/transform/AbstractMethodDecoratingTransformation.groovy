@@ -15,9 +15,24 @@
  */
 package org.grails.datastore.gorm.transform
 
+import java.beans.Introspector
+import java.lang.reflect.Modifier
+
+import javax.annotation.PostConstruct
+import javax.annotation.PreDestroy
+
 import groovy.transform.CompileStatic
-import org.codehaus.groovy.ast.*
-import org.codehaus.groovy.ast.expr.*
+import org.codehaus.groovy.ast.ASTNode
+import org.codehaus.groovy.ast.AnnotatedNode
+import org.codehaus.groovy.ast.AnnotationNode
+import org.codehaus.groovy.ast.ClassNode
+import org.codehaus.groovy.ast.MethodNode
+import org.codehaus.groovy.ast.Parameter
+import org.codehaus.groovy.ast.VariableScope
+import org.codehaus.groovy.ast.expr.ArgumentListExpression
+import org.codehaus.groovy.ast.expr.ClosureExpression
+import org.codehaus.groovy.ast.expr.Expression
+import org.codehaus.groovy.ast.expr.MethodCallExpression
 import org.codehaus.groovy.ast.stmt.BlockStatement
 import org.codehaus.groovy.ast.stmt.Statement
 import org.codehaus.groovy.ast.tools.GenericsUtils
@@ -26,16 +41,31 @@ import org.codehaus.groovy.control.ErrorCollector
 import org.codehaus.groovy.control.SourceUnit
 import org.codehaus.groovy.transform.sc.StaticCompileTransformation
 import org.codehaus.groovy.transform.trait.Traits
+
 import org.grails.datastore.mapping.reflect.NameUtils
 
-import javax.annotation.PostConstruct
-import javax.annotation.PreDestroy
-import java.beans.Introspector
-import java.lang.reflect.Modifier
-
-import static org.codehaus.groovy.ast.ClassHelper.*
-import static org.grails.datastore.gorm.transform.AstMethodDispatchUtils.*
-import static org.grails.datastore.mapping.reflect.AstUtils.*
+import static org.codehaus.groovy.ast.ClassHelper.VOID_TYPE
+import static org.codehaus.groovy.ast.tools.GeneralUtils.args
+import static org.codehaus.groovy.ast.tools.GeneralUtils.block
+import static org.codehaus.groovy.ast.tools.GeneralUtils.callX
+import static org.codehaus.groovy.ast.tools.GeneralUtils.castX
+import static org.codehaus.groovy.ast.tools.GeneralUtils.closureX
+import static org.codehaus.groovy.ast.tools.GeneralUtils.returnS
+import static org.codehaus.groovy.ast.tools.GeneralUtils.stmt
+import static org.codehaus.groovy.ast.tools.GeneralUtils.varX
+import static org.grails.datastore.gorm.transform.AstMethodDispatchUtils.paramsForArgs
+import static org.grails.datastore.mapping.reflect.AstUtils.COMPILE_STATIC_TYPE
+import static org.grails.datastore.mapping.reflect.AstUtils.EMPTY_CLASS_ARRAY
+import static org.grails.datastore.mapping.reflect.AstUtils.TYPE_CHECKED_TYPE
+import static org.grails.datastore.mapping.reflect.AstUtils.addAnnotationIfNecessary
+import static org.grails.datastore.mapping.reflect.AstUtils.copyParameters
+import static org.grails.datastore.mapping.reflect.AstUtils.findAnnotation
+import static org.grails.datastore.mapping.reflect.AstUtils.hasAnnotation
+import static org.grails.datastore.mapping.reflect.AstUtils.hasJunitAnnotation
+import static org.grails.datastore.mapping.reflect.AstUtils.isGetter
+import static org.grails.datastore.mapping.reflect.AstUtils.isSetter
+import static org.grails.datastore.mapping.reflect.AstUtils.isSpockTest
+import static org.grails.datastore.mapping.reflect.AstUtils.processVariableScopes
 
 /**
  * An abstract implementation for transformations that decorate a method invocation such that
@@ -50,6 +80,7 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
 
     private static final Set<String> METHOD_NAME_EXCLUDES = new HashSet<String>(Arrays.asList("afterPropertiesSet", "destroy"))
     private static final Set<String> ANNOTATION_NAME_EXCLUDES = new HashSet<String>(Arrays.asList(PostConstruct.class.getName(), PreDestroy.class.getName(), "grails.web.controllers.ControllerMethod"))
+
     /**
      * Key used to store within the original method node metadata, all previous decorated methods
      */
@@ -58,19 +89,18 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
     @Override
     void visit(SourceUnit source, AnnotationNode annotationNode, AnnotatedNode annotatedNode) {
 
-        if(annotatedNode instanceof MethodNode) {
-            MethodNode methodNode = (MethodNode)annotatedNode
+        if (annotatedNode instanceof MethodNode) {
+            MethodNode methodNode = (MethodNode) annotatedNode
             Map<String, ClassNode> genericsSpec = GenericsUtils.createGenericsSpec(methodNode.declaringClass)
             weaveNewMethod(source, annotationNode, methodNode.getDeclaringClass(), methodNode, genericsSpec)
         }
-        else if(annotatedNode instanceof ClassNode) {
+        else if (annotatedNode instanceof ClassNode) {
             ClassNode classNode = (ClassNode) annotatedNode
-            if(!classNode.isInterface()) {
-                weaveClassNode( source, annotationNode, classNode)
+            if (!classNode.isInterface()) {
+                weaveClassNode(source, annotationNode, classNode)
             }
         }
     }
-
 
     protected void weaveClassNode(SourceUnit source, AnnotationNode annotationNode, ClassNode classNode) {
         enhanceClassNode(source, annotationNode, classNode)
@@ -119,7 +149,8 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
                 if (hasAnnotation(md, "grails.compiler.DelegatingMethod")) continue
 
                 weaveNewMethod(source, annotationNode, classNode, md, genericsSpec)
-            } else if (isTestSetupOrCleanup(classNode, md)) {
+            }
+            else if (isTestSetupOrCleanup(classNode, md)) {
                 weaveTestSetupMethod(source, annotationNode, classNode, md, genericsSpec)
             }
         }
@@ -159,10 +190,10 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
      */
     protected MethodNode weaveNewMethod(SourceUnit sourceUnit, AnnotationNode annotationNode, ClassNode classNode, MethodNode methodNode, Map<String, ClassNode> genericsSpec) {
         Object appliedMarker = getAppliedMarker()
-        if ( methodNode.getNodeMetaData(appliedMarker) == appliedMarker ) {
+        if (methodNode.getNodeMetaData(appliedMarker) == appliedMarker) {
             return methodNode
         }
-        if( methodNode.isAbstract() ) {
+        if (methodNode.isAbstract()) {
             return methodNode
         }
 
@@ -170,11 +201,10 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
 
         enhanceClassNode(sourceUnit, annotationNode, classNode)
 
-
         // Move the existing logic into a new method called "$tt_methodName()"
         String renamedMethodName
         boolean superMethod = findAnnotation(methodNode, Override) || classNode.getSuperClass()?.getMethod(methodNode.name, methodNode.parameters) != null
-        if(superMethod) {
+        if (superMethod) {
             renamedMethodName = getRenamedMethodPrefix() + Introspector.decapitalize(classNode.nameWithoutPackage) + '_' + methodNode.getName()
         }
         else {
@@ -188,7 +218,6 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
         // Start constructing new method body
         BlockStatement methodBody = block()
 
-
         Expression executeMethodCallExpression = buildDelegatingMethodCall(
                 sourceUnit,
                 annotationNode,
@@ -198,13 +227,14 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
                 methodBody
         )
 
-        if(methodNode.getReturnType() != VOID_TYPE) {
+        if (methodNode.getReturnType() != VOID_TYPE) {
             methodBody.addStatement(
                     returnS(
                             castX(methodNode.getReturnType(), executeMethodCallExpression)
                     )
             )
-        } else {
+        }
+        else {
             methodBody.addStatement(
                     stmt(executeMethodCallExpression)
             )
@@ -212,7 +242,7 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
 
         methodNode.setCode(methodBody)
         processVariableScopes(sourceUnit, classNode, methodNode)
-        if(!isSpockTest(classNode)) {
+        if (!isSpockTest(classNode)) {
             compileMethodStatically(sourceUnit, methodNode)
         }
         return renamedMethod
@@ -253,7 +283,7 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
      * @param originalMethodCall The original method call to delegate to
      * @return The MethodCallExpression
      */
-    protected MethodCallExpression makeDelegatingClosureCall(Expression targetObject, String executeMethodName,  Parameter[] closureParameters, MethodCallExpression originalMethodCall, VariableScope variableScope ) {
+    protected MethodCallExpression makeDelegatingClosureCall(Expression targetObject, String executeMethodName, Parameter[] closureParameters, MethodCallExpression originalMethodCall, VariableScope variableScope) {
         return makeDelegatingClosureCall(targetObject, executeMethodName, new ArgumentListExpression(), closureParameters, originalMethodCall, variableScope)
     }
 
@@ -266,7 +296,7 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
      * @param originalMethodCall The original method call to delegate to
      * @return The MethodCallExpression
      */
-    protected MethodCallExpression makeDelegatingClosureCall(Expression targetObject, String executeMethodName, ArgumentListExpression arguments, Parameter[] closureParameters, MethodCallExpression originalMethodCall, VariableScope variableScope ) {
+    protected MethodCallExpression makeDelegatingClosureCall(Expression targetObject, String executeMethodName, ArgumentListExpression arguments, Parameter[] closureParameters, MethodCallExpression originalMethodCall, VariableScope variableScope) {
         final ClosureExpression closureExpression = closureX(closureParameters, createDelegingMethodBody(closureParameters, originalMethodCall))
         closureExpression.setVariableScope(
                 variableScope
@@ -288,7 +318,6 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
         return stmt(originalMethodCall)
     }
 
-
     protected MethodNode moveOriginalCodeToNewMethod(MethodNode methodNode, String renamedMethodName, Parameter[] newParameters, ClassNode classNode, SourceUnit source, Map<String, ClassNode> genericsSpec) {
         Statement body = methodNode.code
 
@@ -300,13 +329,12 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
                 body
         )
 
-        List<MethodNode> decoratedMethods = (List<MethodNode>)methodNode.getNodeMetaData(DECORATED_METHODS)
-        if(decoratedMethods == null) {
+        List<MethodNode> decoratedMethods = (List<MethodNode>) methodNode.getNodeMetaData(DECORATED_METHODS)
+        if (decoratedMethods == null) {
             decoratedMethods = []
             methodNode.putNodeMetaData(DECORATED_METHODS, decoratedMethods)
         }
         decoratedMethods.add(renamedMethodNode)
-
 
         def newVariableScope = new VariableScope()
         for (p in newParameters) {
@@ -330,7 +358,8 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
         VariableScopeVisitor scopeVisitor = new VariableScopeVisitor(new SourceUnit("dummy", "dummy", source.getConfiguration(), source.getClassLoader(), new ErrorCollector(source.getConfiguration())))
         if (methodNode == null) {
             scopeVisitor.visitClass(classNode)
-        } else {
+        }
+        else {
             scopeVisitor.prepareVisit(classNode)
             scopeVisitor.visitMethod(renamedMethodNode)
         }
@@ -358,7 +387,7 @@ abstract class AbstractMethodDecoratingTransformation extends AbstractGormASTTra
     protected boolean hasExcludedAnnotation(MethodNode md, Set<String> excludes) {
         boolean excludedAnnotation = false
         for (AnnotationNode annotation : md.getAnnotations()) {
-            AnnotationNode gormTransform = findAnnotation( annotation.classNode, GormASTTransformationClass)
+            AnnotationNode gormTransform = findAnnotation(annotation.classNode, GormASTTransformationClass)
             if (gormTransform != null || excludes.contains(annotation.getClassNode().getName())) {
                 excludedAnnotation = true
                 break

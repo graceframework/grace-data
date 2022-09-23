@@ -1,25 +1,34 @@
 package org.grails.datastore.gorm.validation.constraints.builder;
 
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import groovy.lang.GroovySystem;
+import groovy.lang.MetaClass;
+import groovy.lang.MetaProperty;
+import groovy.lang.MissingMethodException;
+import groovy.lang.MissingPropertyException;
+import groovy.util.BuilderSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.InvalidPropertyException;
 
 import grails.gorm.validation.ConstrainedProperty;
 import grails.gorm.validation.Constraint;
-import groovy.lang.*;
-import groovy.util.BuilderSupport;
-import org.grails.datastore.gorm.validation.constraints.registry.ConstraintRegistry;
 import grails.gorm.validation.DefaultConstrainedProperty;
+
 import org.grails.datastore.gorm.validation.constraints.eval.DefaultConstraintEvaluator;
+import org.grails.datastore.gorm.validation.constraints.registry.ConstraintRegistry;
 import org.grails.datastore.mapping.model.MappingContext;
 import org.grails.datastore.mapping.model.PersistentEntity;
 import org.grails.datastore.mapping.model.PersistentProperty;
 import org.grails.datastore.mapping.model.config.GormProperties;
 import org.grails.datastore.mapping.reflect.ClassPropertyFetcher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.InvalidPropertyException;
-
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.Modifier;
-import java.util.*;
 
 /**
  * Builder used as a delegate within the "constraints" closure of GrailsDomainClass instances .
@@ -29,18 +38,31 @@ import java.util.*;
 public class ConstrainedPropertyBuilder extends BuilderSupport {
 
     private static final String SHARED_CONSTRAINT = "shared";
+
     private static final String IMPORT_FROM_CONSTRAINT = "importFrom";
+
     private static final Logger LOG = LoggerFactory.getLogger(ConstrainedPropertyBuilder.class);
+
     private final Map<String, ConstrainedProperty> constrainedProperties = new LinkedHashMap<>();
+
     private final Map<String, String> sharedConstraints = new HashMap<>();
+
     private int order = 1;
+
     private final Class<?> targetClass;
+
     private final ClassPropertyFetcher classPropertyFetcher;
+
     private final MetaClass targetMetaClass;
+
     private final ConstraintRegistry constraintRegistry;
+
     private final MappingContext mappingContext;
+
     private final Map<String, Object> defaultConstraints;
+
     private boolean allowDynamic = false;
+
     private boolean defaultNullable = false;
 
 
@@ -61,7 +83,8 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
     protected Object doInvokeMethod(String methodName, Object name, Object args) {
         try {
             return super.doInvokeMethod(methodName, name, args);
-        } catch (MissingMethodException e) {
+        }
+        catch (MissingMethodException e) {
             return targetMetaClass.invokeMethod(targetClass, methodName, args);
         }
     }
@@ -70,7 +93,8 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
     public Object getProperty(String property) {
         try {
             return super.getProperty(property);
-        } catch (MissingPropertyException e) {
+        }
+        catch (MissingPropertyException e) {
             return targetMetaClass.getProperty(targetClass, property);
         }
     }
@@ -79,10 +103,10 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
     public void setProperty(String property, Object newValue) {
         try {
             super.setProperty(property, newValue);
-        } catch (MissingPropertyException e) {
+        }
+        catch (MissingPropertyException e) {
             targetMetaClass.setProperty(targetClass, property, newValue);
         }
-
     }
 
     protected Class<?> determinePropertyType(String propertyName) {
@@ -108,18 +132,17 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
     @Override
     protected Object createNode(Object name, Map attributes) {
         // we do this so that missing property exception is throw if it doesn't exist
-
         try {
-            String property = (String)name;
+            String property = (String) name;
             DefaultConstrainedProperty cp;
             if (constrainedProperties.containsKey(property)) {
-                cp = (DefaultConstrainedProperty)constrainedProperties.get(property);
+                cp = (DefaultConstrainedProperty) constrainedProperties.get(property);
             }
             else {
                 Class<?> propertyType = determinePropertyType(property);
                 if (propertyType == null) {
-                    if(!allowDynamic) {
-                        throw new MissingMethodException(property, targetClass, new Object[]{attributes}, true);
+                    if (!allowDynamic) {
+                        throw new MissingMethodException(property, targetClass, new Object[] { attributes }, true);
                     }
                     // assume in dynamic use types are strings
                     propertyType = CharSequence.class;
@@ -167,8 +190,8 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
 
             return cp;
         }
-        catch(InvalidPropertyException ipe) {
-            throw new MissingMethodException((String)name,targetClass,new Object[]{ attributes});
+        catch (InvalidPropertyException ipe) {
+            throw new MissingMethodException((String) name, targetClass, new Object[] { attributes });
         }
     }
 
@@ -178,14 +201,14 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
         if (IMPORT_FROM_CONSTRAINT.equals(name) && (value instanceof Class)) {
             return handleImportFrom(attributes, (Class) value);
         }
-        throw new MissingMethodException((String)name,targetClass,new Object[]{ attributes,value});
+        throw new MissingMethodException((String) name, targetClass, new Object[] { attributes, value });
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private Object handleImportFrom(Map attributes, Class importFromClazz) {
 
-        Map importFromConstrainedProperties = new DefaultConstraintEvaluator(constraintRegistry,mappingContext, defaultConstraints )
-                                                        .evaluate(importFromClazz, defaultNullable);
+        Map importFromConstrainedProperties = new DefaultConstraintEvaluator(constraintRegistry, mappingContext, defaultConstraints)
+                .evaluate(importFromClazz, defaultNullable);
 
         List<MetaProperty> metaProperties = classPropertyFetcher.getMetaProperties();
 
@@ -194,7 +217,7 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
 
         List<String> resultingPropertyNames = new ArrayList<>();
         for (MetaProperty metaProperty : metaProperties) {
-            if(Modifier.isStatic(metaProperty.getModifiers())) {
+            if (Modifier.isStatic(metaProperty.getModifiers())) {
                 continue;
             }
             String propertyName = metaProperty.getName();
@@ -229,7 +252,7 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
                 }
                 //add any metaContraints
                 importFromConstrainedPropertyAttributes.putAll(importFromConstrainedProperty.getMetaConstraints());
-                
+
                 createNode(targetPropertyName, importFromConstrainedPropertyAttributes);
             }
         }
@@ -240,7 +263,7 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
     private boolean isListOfRegexpsContainsString(List<String> listOfStrings, String stringToMatch) {
         boolean result = false;
 
-        for (String listElement:listOfStrings) {
+        for (String listElement : listOfStrings) {
             if (stringToMatch.matches(listElement)) {
                 result = true;
                 break;
@@ -262,7 +285,7 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
 
     @Override
     protected Object createNode(Object name, Object value) {
-        return createNode(name,Collections.EMPTY_MAP,value);
+        return createNode(name, Collections.EMPTY_MAP, value);
     }
 
     public Map<String, ConstrainedProperty> getConstrainedProperties() {
@@ -276,4 +299,5 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
     public void setDefaultNullable(boolean defaultNullable) {
         this.defaultNullable = defaultNullable;
     }
+
 }

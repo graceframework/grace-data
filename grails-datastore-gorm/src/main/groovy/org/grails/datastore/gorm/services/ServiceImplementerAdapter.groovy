@@ -14,4 +14,5 @@ interface ServiceImplementerAdapter {
      * @return The adapted implementer or null
      */
     ServiceImplementer adapt(ServiceImplementer implementer)
+
 }

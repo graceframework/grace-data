@@ -20,6 +20,7 @@ package org.grails.datastore.gorm.timestamp;
  *
  */
 public interface TimestampProvider {
+
     /**
      * Whether a timestamp can be created for the given type
      *
@@ -36,4 +37,5 @@ public interface TimestampProvider {
      * @return An instance of the timestamp
      */
     <T> T createTimestamp(Class<T> dateTimeClass);
+
 }

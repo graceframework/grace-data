@@ -1,6 +1,7 @@
 package org.grails.datastore.mapping.multitenancy.resolvers
 
 import groovy.transform.CompileStatic
+
 import org.grails.datastore.mapping.multitenancy.TenantResolver
 import org.grails.datastore.mapping.multitenancy.exceptions.TenantNotFoundException
 
@@ -12,8 +13,10 @@ import org.grails.datastore.mapping.multitenancy.exceptions.TenantNotFoundExcept
  */
 @CompileStatic
 class NoTenantResolver implements TenantResolver {
+
     @Override
     Serializable resolveTenantIdentifier() {
         throw new TenantNotFoundException()
     }
+
 }

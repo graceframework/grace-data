@@ -2,8 +2,9 @@ package org.grails.datastore.mapping.core.connections
 
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
-import org.grails.datastore.mapping.core.DatastoreUtils
 import org.springframework.core.env.PropertyResolver
+
+import org.grails.datastore.mapping.core.DatastoreUtils
 
 /**
  * Abstract implementation of the {@link ConnectionSources} interface
@@ -12,21 +13,22 @@ import org.springframework.core.env.PropertyResolver
  * @since 6.0
  */
 @CompileStatic
-abstract class AbstractConnectionSources <T, S extends ConnectionSourceSettings> implements ConnectionSources<T, S> {
+abstract class AbstractConnectionSources<T, S extends ConnectionSourceSettings> implements ConnectionSources<T, S> {
 
     protected final ConnectionSource<T, S> defaultConnectionSource;
     protected final ConnectionSourceFactory<T, S> connectionSourceFactory;
     protected final PropertyResolver configuration;
-    protected final Collection<ConnectionSourcesListener<T,S>> listeners = []
+    protected final Collection<ConnectionSourcesListener<T, S>> listeners = []
 
-    AbstractConnectionSources(ConnectionSource<T, S> defaultConnectionSource, ConnectionSourceFactory<T, S> connectionSourceFactory, PropertyResolver configuration) {
-        if(connectionSourceFactory == null) {
+    AbstractConnectionSources(ConnectionSource<T, S> defaultConnectionSource, ConnectionSourceFactory<T, S> connectionSourceFactory,
+                              PropertyResolver configuration) {
+        if (connectionSourceFactory == null) {
             throw new IllegalArgumentException("Argument [connectionSourceFactory] cannot be null");
         }
-        if(defaultConnectionSource == null) {
+        if (defaultConnectionSource == null) {
             throw new IllegalStateException("The default ConnectionSource cannot be null!");
         }
-        if(configuration == null) {
+        if (configuration == null) {
             this.configuration = DatastoreUtils.createPropertyResolver(Collections.emptyMap());
         }
         else {
@@ -49,17 +51,19 @@ abstract class AbstractConnectionSources <T, S extends ConnectionSourceSettings>
      * @return An iterable of connection source names. Should never return null.
      */
     protected Iterable<String> getConnectionSourceNames(ConnectionSourceFactory<T, S> connectionSourceFactory, PropertyResolver configuration) {
-        Map<String, Object> allConnectionSources = configuration.getProperty(connectionSourceFactory.getConnectionSourcesConfigurationKey().toString(), Map.class, Collections.emptyMap());
+        Map<String, Object> allConnectionSources = configuration.getProperty(
+                connectionSourceFactory.getConnectionSourcesConfigurationKey().toString(),
+                Map.class, Collections.emptyMap());
         return toValidConnectionSourceNames(allConnectionSources);
     }
 
-    public static Set<String> toValidConnectionSourceNames(Map<String, Object> allConnectionSources) {
+    static Set<String> toValidConnectionSourceNames(Map<String, Object> allConnectionSources) {
         Set<String> names = allConnectionSources.keySet();
         Set<String> newNames = new LinkedHashSet<>();
         for (String name : names) {
             int i = name.indexOf('.');
-            if(i > -1) {
-                newNames.add( name.substring(0,i) );
+            if (i > -1) {
+                newNames.add(name.substring(0, i));
             }
             else {
                 newNames.add(name);
@@ -79,8 +83,8 @@ abstract class AbstractConnectionSources <T, S extends ConnectionSourceSettings>
     }
 
     @Override
-    public void close() throws IOException {
-        for(ConnectionSource connectionSource : allConnectionSources) {
+    void close() throws IOException {
+        for (ConnectionSource connectionSource : allConnectionSources) {
             connectionSource.close()
         }
     }
@@ -101,4 +105,5 @@ abstract class AbstractConnectionSources <T, S extends ConnectionSourceSettings>
         listeners.add(listener)
         return this
     }
+
 }

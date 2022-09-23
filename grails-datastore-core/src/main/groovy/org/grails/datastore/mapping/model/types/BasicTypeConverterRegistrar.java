@@ -58,10 +58,10 @@ public class BasicTypeConverterRegistrar {
         });
 
         registry.addConverter(new Converter<Long, Integer>() {
-             public Integer convert(Long longValue) {
-                 return longValue.intValue();
-             }
-         });
+            public Integer convert(Long longValue) {
+                return longValue.intValue();
+            }
+        });
 
         registry.addConverter(new Converter<Integer, Double>() {
             public Double convert(Integer integer) {
@@ -74,7 +74,8 @@ public class BasicTypeConverterRegistrar {
                 try {
                     final Long time = Long.valueOf(s.toString());
                     return new Date(time);
-                } catch (NumberFormatException e) {
+                }
+                catch (NumberFormatException e) {
                     throw new IllegalArgumentException(e);
                 }
             }
@@ -84,7 +85,8 @@ public class BasicTypeConverterRegistrar {
             public Double convert(CharSequence s) {
                 try {
                     return Double.valueOf(s.toString());
-                } catch (NumberFormatException e) {
+                }
+                catch (NumberFormatException e) {
                     throw new IllegalArgumentException(e);
                 }
             }
@@ -94,7 +96,8 @@ public class BasicTypeConverterRegistrar {
             public Integer convert(CharSequence s) {
                 try {
                     return Integer.valueOf(s.toString());
-                } catch (NumberFormatException e) {
+                }
+                catch (NumberFormatException e) {
                     throw new IllegalArgumentException(e);
                 }
             }
@@ -104,7 +107,8 @@ public class BasicTypeConverterRegistrar {
             public Long convert(CharSequence s) {
                 try {
                     return Long.valueOf(s.toString());
-                } catch (NumberFormatException e) {
+                }
+                catch (NumberFormatException e) {
                     throw new IllegalArgumentException(e);
                 }
             }
@@ -129,10 +133,12 @@ public class BasicTypeConverterRegistrar {
                     Calendar c = new GregorianCalendar();
                     c.setTime(date);
                     return c;
-                } catch (NumberFormatException e) {
+                }
+                catch (NumberFormatException e) {
                     throw new IllegalArgumentException(e);
                 }
             }
         });
     }
+
 }

@@ -1,9 +1,10 @@
 package org.grails.datastore.gorm.validation.constraints;
 
-import grails.gorm.validation.ConstrainedProperty;
 import org.apache.commons.validator.routines.CreditCardValidator;
 import org.springframework.context.MessageSource;
 import org.springframework.validation.Errors;
+
+import grails.gorm.validation.ConstrainedProperty;
 
 /**
  * Validates a credit card number.
@@ -46,7 +47,6 @@ public class CreditCardConstraint extends AbstractConstraint {
         return constraintParameter;
     }
 
-
     public String getName() {
         return ConstrainedProperty.CREDIT_CARD_CONSTRAINT;
     }
@@ -55,4 +55,5 @@ public class CreditCardConstraint extends AbstractConstraint {
     public boolean supports(Class type) {
         return type != null && String.class.isAssignableFrom(type);
     }
+
 }

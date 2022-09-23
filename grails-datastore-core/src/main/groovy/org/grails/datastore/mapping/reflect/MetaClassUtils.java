@@ -15,18 +15,17 @@
  */
 package org.grails.datastore.mapping.reflect;
 
+import groovy.lang.ExpandoMetaClass;
+import groovy.lang.GroovySystem;
+import groovy.lang.MetaClass;
+import groovy.lang.MetaClassRegistry;
+
 /**
  * Utility methods for manipulating meta classes
  *
  * @author Graeme Rocher
  * @since 5.0
  */
-
-import groovy.lang.ExpandoMetaClass;
-import groovy.lang.GroovySystem;
-import groovy.lang.MetaClass;
-import groovy.lang.MetaClassRegistry;
-
 public class MetaClassUtils {
 
     public static ExpandoMetaClass getExpandoMetaClass(Class<?> aClass) {
@@ -42,7 +41,7 @@ public class MetaClassUtils {
         registry.removeMetaClass(aClass);
         mc = registry.getMetaClass(aClass);
         if (mc instanceof ExpandoMetaClass) {
-            return (ExpandoMetaClass)mc;
+            return (ExpandoMetaClass) mc;
         }
 
         ExpandoMetaClass emc = new ExpandoMetaClass(aClass, true, true);

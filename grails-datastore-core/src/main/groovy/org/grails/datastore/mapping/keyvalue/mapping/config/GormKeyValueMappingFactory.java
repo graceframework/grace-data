@@ -79,8 +79,10 @@ public class GormKeyValueMappingFactory extends AbstractGormMappingFactory<Famil
     protected IdentityMapping getIdentityMappedForm(final ClassMapping classMapping, KeyValue property) {
         if (property != null) {
             return createDefaultIdentityMapping(classMapping, property);
-        } else {
+        }
+        else {
             return super.getIdentityMappedForm(classMapping, null);
         }
     }
+
 }

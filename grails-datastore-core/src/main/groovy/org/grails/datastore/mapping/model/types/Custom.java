@@ -12,15 +12,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.grails.datastore.mapping.model.types;
+
+import java.beans.PropertyDescriptor;
 
 import org.grails.datastore.mapping.engine.types.CustomTypeMarshaller;
 import org.grails.datastore.mapping.model.AbstractPersistentProperty;
 import org.grails.datastore.mapping.model.MappingContext;
 import org.grails.datastore.mapping.model.PersistentEntity;
-
-import java.beans.PropertyDescriptor;
 
 /**
  * Represents a custom type ie. a type whose database read/write semantics are specified by the user.
@@ -29,16 +28,17 @@ import java.beans.PropertyDescriptor;
  * @since 1.0
  */
 public abstract class Custom<T> extends AbstractPersistentProperty {
+
     private CustomTypeMarshaller<?, ?, ?> customTypeMarshaller;
 
     public Custom(PersistentEntity owner, MappingContext context, PropertyDescriptor descriptor,
-             CustomTypeMarshaller<?, ?, ?> customTypeMarshaller) {
+            CustomTypeMarshaller<?, ?, ?> customTypeMarshaller) {
         super(owner, context, descriptor);
         this.customTypeMarshaller = customTypeMarshaller;
     }
 
     protected Custom(PersistentEntity owner, MappingContext context, String name, Class<?> type,
-             CustomTypeMarshaller<?, ?, ?> customTypeMarshaller) {
+            CustomTypeMarshaller<?, ?, ?> customTypeMarshaller) {
         super(owner, context, name, type);
         this.customTypeMarshaller = customTypeMarshaller;
     }
@@ -47,7 +47,8 @@ public abstract class Custom<T> extends AbstractPersistentProperty {
      * @return The type converter for this custom type
      */
     @SuppressWarnings("rawtypes")
-    public CustomTypeMarshaller<Object,T,T> getCustomTypeMarshaller() {
+    public CustomTypeMarshaller<Object, T, T> getCustomTypeMarshaller() {
         return (CustomTypeMarshaller<Object, T, T>) customTypeMarshaller;
     }
+
 }

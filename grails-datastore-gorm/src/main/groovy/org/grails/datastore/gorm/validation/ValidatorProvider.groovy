@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.grails.datastore.gorm.validation
 
 import org.springframework.validation.Validator
-
 
 /**
  * A class that provides a validator
@@ -26,8 +24,10 @@ import org.springframework.validation.Validator
  * @since 5.0
  */
 interface ValidatorProvider {
+
     /**
      * @return The validator
      */
     Validator getValidator()
+
 }

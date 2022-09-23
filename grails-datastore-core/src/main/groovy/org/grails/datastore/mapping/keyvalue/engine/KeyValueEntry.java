@@ -24,7 +24,7 @@ public class KeyValueEntry extends HashMap<String, Object> {
 
     private static final long serialVersionUID = 1;
 
-    private String family;
+    private final String family;
 
     public KeyValueEntry(String family) {
         this.family = family;
@@ -33,4 +33,5 @@ public class KeyValueEntry extends HashMap<String, Object> {
     public String getFamily() {
         return family;
     }
+
 }

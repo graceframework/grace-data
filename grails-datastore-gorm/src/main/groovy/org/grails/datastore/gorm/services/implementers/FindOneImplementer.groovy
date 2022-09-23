@@ -23,9 +23,13 @@ import org.codehaus.groovy.ast.expr.MethodCallExpression
 import org.codehaus.groovy.ast.expr.VariableExpression
 import org.codehaus.groovy.ast.stmt.BlockStatement
 import org.codehaus.groovy.ast.stmt.Statement
+
 import org.grails.datastore.gorm.GormEntity
 import org.grails.datastore.mapping.reflect.AstUtils
-import static org.codehaus.groovy.ast.tools.GeneralUtils.*
+
+import static org.codehaus.groovy.ast.tools.GeneralUtils.callX
+import static org.codehaus.groovy.ast.tools.GeneralUtils.returnS
+
 /**
  * An implementer that implements logic for finding a single entity
  *
@@ -34,7 +38,8 @@ import static org.codehaus.groovy.ast.tools.GeneralUtils.*
  */
 @CompileStatic
 class FindOneImplementer extends AbstractDetachedCriteriaServiceImplementor implements SingleResultServiceImplementer<GormEntity> {
-    static final List<String> HANDLED_PREFIXES = ['retrieve','get', 'find', 'read']
+
+    static final List<String> HANDLED_PREFIXES = ['retrieve', 'get', 'find', 'read']
 
     @Override
     protected boolean isCompatibleReturnType(ClassNode domainClass, MethodNode methodNode, ClassNode returnType, String prefix) {
@@ -54,7 +59,7 @@ class FindOneImplementer extends AbstractDetachedCriteriaServiceImplementor impl
     @Override
     void implementById(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode, BlockStatement body, Expression byIdLookup) {
         body.addStatement(
-            buildReturnStatement(domainClassNode, abstractMethodNode, byIdLookup, null, newMethodNode)
+                buildReturnStatement(domainClassNode, abstractMethodNode, byIdLookup, null, newMethodNode)
         )
     }
 
@@ -63,7 +68,7 @@ class FindOneImplementer extends AbstractDetachedCriteriaServiceImplementor impl
         String findMethod = findMethodToInvoke(domainClassNode, newMethodNode)
         MethodCallExpression findCall = queryArgs != null ? callX(detachedCriteriaVar, findMethod, queryArgs) : callX(detachedCriteriaVar, findMethod)
         body.addStatement(
-            buildReturnStatement(domainClassNode, abstractMethodNode, findCall, queryArgs, newMethodNode)
+                buildReturnStatement(domainClassNode, abstractMethodNode, findCall, queryArgs, newMethodNode)
         )
     }
 
@@ -73,7 +78,8 @@ class FindOneImplementer extends AbstractDetachedCriteriaServiceImplementor impl
 
     protected Statement buildReturnStatement(ClassNode targetDomainClass, MethodNode abstractMethodNode, Expression queryMethodCall, Expression args, MethodNode newMethodNode) {
         returnS(
-            queryMethodCall
+                queryMethodCall
         )
     }
+
 }

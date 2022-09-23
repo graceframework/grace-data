@@ -19,14 +19,15 @@ import groovy.transform.CompileStatic
 import groovy.transform.builder.Builder
 import groovy.transform.builder.SimpleStrategy
 import groovy.util.logging.Slf4j
-import org.grails.datastore.mapping.core.exceptions.ConfigurationException
-import org.grails.datastore.mapping.reflect.NameUtils
 import org.springframework.core.convert.ConversionFailedException
 import org.springframework.core.env.PropertyResolver
 import org.springframework.util.ReflectionUtils
 
 import java.lang.reflect.Method
 import java.lang.reflect.Modifier
+
+import org.grails.datastore.mapping.core.exceptions.ConfigurationException
+import org.grails.datastore.mapping.reflect.NameUtils
 
 /**
  * A generic configuration builder that implementers can implement to construct the configuration from the source {@link PropertyResolver}
@@ -39,6 +40,7 @@ import java.lang.reflect.Modifier
 @CompileStatic
 @Slf4j
 abstract class ConfigurationBuilder<B, C> {
+
     private static final Set<String> IGNORE_METHODS = ['seProperty', 'propertyMissing'] as Set
     final PropertyResolver propertyResolver
     final String configurationPrefix
@@ -67,15 +69,17 @@ abstract class ConfigurationBuilder<B, C> {
      * @param fallBackConfiguration An object to read the fallback configuration from
      */
     @CompileDynamic
-    ConfigurationBuilder(PropertyResolver propertyResolver, String configurationPrefix, Object fallBackConfiguration = null, String builderMethodPrefix = null) {
+    ConfigurationBuilder(PropertyResolver propertyResolver, String configurationPrefix, Object fallBackConfiguration = null,
+                         String builderMethodPrefix = null) {
         this.propertyResolver = propertyResolver
         this.configurationPrefix = configurationPrefix
         this.builderMethodPrefix = builderMethodPrefix
-        if(fallBackConfiguration != null) {
+        if (fallBackConfiguration != null) {
             def cloned
             try {
                 cloned = fallBackConfiguration.clone()
-            } catch (CloneNotSupportedException e) {
+            }
+            catch (CloneNotSupportedException e) {
                 cloned = fallBackConfiguration
             }
             this.fallBackConfiguration = cloned
@@ -84,8 +88,6 @@ abstract class ConfigurationBuilder<B, C> {
             this.fallBackConfiguration = null
         }
     }
-
-
 
     C build() {
         rootBuilder = createBuilder()
@@ -115,9 +117,9 @@ abstract class ConfigurationBuilder<B, C> {
 
     private List<Class> toHierarchy(Class cls) {
         List<Class> classes = [cls]
-        while(cls != Object) {
+        while (cls != Object) {
             def superClass = cls.getSuperclass()
-            if(superClass == Object || superClass == LinkedHashMap) break
+            if (superClass == Object || superClass == LinkedHashMap) break
 
             classes.add(superClass)
             cls = superClass
@@ -129,17 +131,15 @@ abstract class ConfigurationBuilder<B, C> {
      * @deprecated use {@link ConfigurationBuilder#buildRecurse(Object, List, Object, String)} instead
      */
     protected void buildRecurse(Object builder, Object fallBackConfig, String startingPrefix) {
-       buildRecurse(builder, new ArrayList<Class>(), fallBackConfig, startingPrefix)
+        buildRecurse(builder, new ArrayList<Class>(), fallBackConfig, startingPrefix)
     }
 
     protected void buildRecurse(Object builder, List<Class> builderQueue, Object fallBackConfig, String startingPrefix) {
-
         List<Class> hierarchy = toHierarchy(builder.getClass())
 
         startBuild(builder, startingPrefix)
 
-        for(Class builderClass in hierarchy) {
-
+        for (Class builderClass in hierarchy) {
             def methods = builderClass.declaredMethods
             for (method in methods) {
                 def methodName = method.name
@@ -162,7 +162,8 @@ abstract class ConfigurationBuilder<B, C> {
                     continue
                 }
                 else if (!hasBuilderPrefix &&
-                        ((org.grails.datastore.mapping.reflect.ReflectionUtils.isGetter(methodName, parameterTypes) && method.returnType.getAnnotation(Builder) == null) ||
+                        ((org.grails.datastore.mapping.reflect.ReflectionUtils.isGetter(methodName, parameterTypes) &&
+                                method.returnType.getAnnotation(Builder) == null) ||
                                 org.grails.datastore.mapping.reflect.ReflectionUtils.isSetter(methodName, parameterTypes))) {
                     // don't process getters or setters, unless the getter returns a builder
                     continue
@@ -201,10 +202,12 @@ abstract class ConfigurationBuilder<B, C> {
                                 if (buildMethod != null) {
                                     try {
                                         method.invoke(builder, buildMethod.invoke(newBuilder))
-                                    } catch (Throwable e) {
+                                    }
+                                    catch (Throwable e) {
                                         log.error("build method threw exception", e)
                                     }
-                                } else {
+                                }
+                                else {
                                     method.invoke(builder, newBuilder)
                                 }
                             }
@@ -274,29 +277,29 @@ abstract class ConfigurationBuilder<B, C> {
                                 newBuilder = (ConfigurationBuilder) existingGetter.invoke(builder)
                             }
                             if (newBuilder == null) {
-
                                 if (fallBackConfig != null && builderClass.isInstance(fallBackConfig)) {
-
                                     ConfigurationBuilder fallbackBuilder = (ConfigurationBuilder) existingGetter.invoke(fallBackConfig)
                                     if (fallbackBuilder != null) {
                                         newBuilder = (ConfigurationBuilder) argType.newInstance(this.propertyResolver, propertyPath, fallbackBuilder.build())
-                                    } else {
+                                    }
+                                    else {
                                         newBuilder = (ConfigurationBuilder) argType.newInstance(this.propertyResolver, propertyPath)
                                     }
-                                } else {
+                                }
+                                else {
                                     newBuilder = (ConfigurationBuilder) argType.newInstance(this.propertyResolver, propertyPath)
                                 }
-
-
                             }
                             newChildBuilder(newBuilder, propertyPath)
                             method.invoke(builder, newBuilder)
-                        } catch (Throwable e) {
+                        }
+                        catch (Throwable e) {
                             throw new ConfigurationException("Cannot read configuration for path $propertyPath: $e.message", e)
                         }
                         continue
                     }
-                } else if (methodName.startsWith("get") && parameterTypes.length == 0) {
+                }
+                else if (methodName.startsWith("get") && parameterTypes.length == 0) {
                     if (method.returnType.getAnnotation(Builder)) {
                         def childBuilder = method.invoke(builder)
                         if (childBuilder != null) {
@@ -308,7 +311,10 @@ abstract class ConfigurationBuilder<B, C> {
                                 }
                             }
 
-                            String getterPropertyPath = startingPrefix ? "${startingPrefix}.${NameUtils.getPropertyNameForGetterOrSetter(methodName)}" : NameUtils.getPropertyNameForGetterOrSetter(methodName)
+                            String getterPropertyPath = startingPrefix
+                                    ? "${startingPrefix}.${NameUtils.getPropertyNameForGetterOrSetter(methodName)}"
+                                    : NameUtils.getPropertyNameForGetterOrSetter(methodName)
+
                             if (!builderQueue.contains(childBuilder.class)) {
                                 builderQueue.add(childBuilder.class)
                                 buildRecurse(childBuilder, builderQueue, fallBackChildConfig, getterPropertyPath)
@@ -317,12 +323,14 @@ abstract class ConfigurationBuilder<B, C> {
                             continue
                         }
                     }
-                } else if (parameterTypes.length == 0) {
+                }
+                else if (parameterTypes.length == 0) {
                     def value = propertyResolver.getProperty(propertyPath, Boolean, false)
                     if (value) {
                         try {
                             method.invoke(builder)
-                        } catch (Throwable e) {
+                        }
+                        catch (Throwable e) {
                             throw new ConfigurationException("Error executing method for path $propertyPath: $e.message", e)
                         }
                     }
@@ -334,7 +342,7 @@ abstract class ConfigurationBuilder<B, C> {
                 boolean appendArgName = parameterTypes.length > 1
                 int argIndex = 0
 
-                for (Class argType: parameterTypes) {
+                for (Class argType : parameterTypes) {
                     String propertyPathForArg = propertyPath
                     if (appendArgName) {
                         propertyPathForArg += ".arg${argIndex}"
@@ -348,7 +356,8 @@ abstract class ConfigurationBuilder<B, C> {
                                 def converted = valueOfMethod.invoke(argType, value)
                                 args.add(converted)
                             }
-                        } catch (Throwable e) {
+                        }
+                        catch (Throwable e) {
                             throw new ConfigurationException("Cannot read configuration for path $propertyPathForArg: $e.message", e)
                         }
                     }
@@ -358,13 +367,15 @@ abstract class ConfigurationBuilder<B, C> {
                         def value
                         try {
                             value = propertyResolver.getProperty(propertyPathForArg, argType, fallBackValue)
-                        } catch (ConversionFailedException e) {
-                            if(argType.isEnum()) {
+                        }
+                        catch (ConversionFailedException e) {
+                            if (argType.isEnum()) {
                                 value = propertyResolver.getProperty(propertyPathForArg, String)
                                 if (value != null) {
                                     try {
-                                        value = Enum.valueOf((Class)argType, value.toUpperCase())
-                                    } catch (Throwable e2) {
+                                        value = Enum.valueOf((Class) argType, value.toUpperCase())
+                                    }
+                                    catch (Throwable e2) {
                                         // ignore e2 and throw original
                                         throw new ConfigurationException("Invalid value for setting [$propertyPathForArg]: $e.message", e)
                                     }
@@ -429,4 +440,5 @@ abstract class ConfigurationBuilder<B, C> {
     protected void startBuild(Object builder, String configurationPath) {
         // no-op
     }
+
 }

@@ -15,10 +15,9 @@
  */
 package org.grails.datastore.gorm.support;
 
-import grails.persistence.support.PersistenceContextInterceptor;
-
 import java.util.List;
 
+import grails.persistence.support.PersistenceContextInterceptor;
 
 /**
  * @author Graeme Rocher
@@ -58,7 +57,8 @@ public class AggregatePersistenceContextInterceptor implements PersistenceContex
                 if (interceptor.isOpen()) {
                     interceptor.destroy();
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 // ignore exception
             }
         }
@@ -99,4 +99,5 @@ public class AggregatePersistenceContextInterceptor implements PersistenceContex
             interceptor.setReadWrite();
         }
     }
+
 }

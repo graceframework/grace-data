@@ -15,9 +15,10 @@
  */
 package org.grails.compiler.gorm
 
+import groovy.transform.CompileStatic
+
 import grails.compiler.traits.TraitInjector
 import grails.gorm.Entity
-import groovy.transform.CompileStatic
 
 import org.grails.core.artefact.DomainClassArtefactHandler
 
@@ -38,4 +39,5 @@ class EntityTraitInjector implements TraitInjector {
     String[] getArtefactTypes() {
         [DomainClassArtefactHandler.TYPE] as String[]
     }
+
 }

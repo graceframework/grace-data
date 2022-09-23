@@ -28,10 +28,13 @@ import org.grails.datastore.mapping.model.PersistentEntity;
  * @since 1.0
  */
 public abstract class Identity<T extends Property> extends AbstractPersistentProperty<T> {
+
     public Identity(PersistentEntity owner, MappingContext context, PropertyDescriptor descriptor) {
         super(owner, context, descriptor);
     }
+
     public Identity(PersistentEntity owner, MappingContext context, String name, @SuppressWarnings("rawtypes") Class type) {
         super(owner, context, name, type);
     }
+
 }

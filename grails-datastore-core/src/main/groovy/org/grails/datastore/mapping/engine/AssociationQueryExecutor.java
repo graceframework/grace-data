@@ -15,9 +15,9 @@
  */
 package org.grails.datastore.mapping.engine;
 
-import org.grails.datastore.mapping.model.PersistentEntity;
-
 import java.util.List;
+
+import org.grails.datastore.mapping.model.PersistentEntity;
 
 /**
  * An interface for classes that know how to query an association
@@ -44,4 +44,5 @@ public interface AssociationQueryExecutor<K, T> {
      * @return Whether the query returns the keys for the entities or the enities themselves
      */
     boolean doesReturnKeys();
+
 }

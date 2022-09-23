@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.grails.datastore.mapping.query;
+
 import org.grails.datastore.mapping.core.DatastoreException;
 
 /**
@@ -23,6 +24,7 @@ import org.grails.datastore.mapping.core.DatastoreException;
  * @since 5.0
  */
 public class QueryException extends DatastoreException {
+
     public QueryException(String s) {
         super(s);
     }
@@ -30,4 +32,5 @@ public class QueryException extends DatastoreException {
     public QueryException(String s, Throwable throwable) {
         super(s, throwable);
     }
+
 }

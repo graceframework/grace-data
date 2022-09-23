@@ -32,7 +32,9 @@ import org.grails.datastore.mapping.core.Session;
 public class SessionOnlyTransaction<T> implements Transaction<T> {
 
     private T nativeInterface;
+
     private Session session;
+
     private boolean active = true;
 
     public SessionOnlyTransaction(T nativeInterface, Session session) {
@@ -73,4 +75,5 @@ public class SessionOnlyTransaction<T> implements Transaction<T> {
     public void setTimeout(int timeout) {
         // do nothing
     }
+
 }

@@ -18,8 +18,6 @@ package org.grails.datastore.mapping.config.utils
 import groovy.transform.CompileStatic
 import org.springframework.core.env.PropertyResolver
 
-
-
 /**
  * Adapts a property resolver to the Map<String,String> interface
  *
@@ -29,7 +27,9 @@ import org.springframework.core.env.PropertyResolver
 @CompileStatic
 @Deprecated
 class PropertyResolverMap implements Map<String, Object>, PropertyResolver {
-    @Delegate final PropertyResolver propertyResolver
+
+    @Delegate
+    final PropertyResolver propertyResolver
 
     PropertyResolverMap(PropertyResolver propertyResolver) {
         this.propertyResolver = propertyResolver

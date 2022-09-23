@@ -18,6 +18,7 @@ package org.grails.datastore.mapping.validation;
  * Defines a set of cascade validation options that are propagated to the associated entity.
  */
 public enum CascadeValidateType {
+
     /** By default, cascade for any owned association or with a JPA cascade of PERSIST or MERGE **/
     DEFAULT,
 
@@ -33,4 +34,5 @@ public enum CascadeValidateType {
     public static CascadeValidateType fromMappedName(String name) {
         return CascadeValidateType.valueOf(name.toUpperCase());
     }
+
 }

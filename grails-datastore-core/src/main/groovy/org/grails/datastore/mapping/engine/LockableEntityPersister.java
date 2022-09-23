@@ -16,12 +16,13 @@ package org.grails.datastore.mapping.engine;
 
 import java.io.Serializable;
 
-import org.grails.datastore.mapping.model.PersistentProperty;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.CannotAcquireLockException;
+
 import org.grails.datastore.mapping.core.Session;
 import org.grails.datastore.mapping.model.MappingContext;
 import org.grails.datastore.mapping.model.PersistentEntity;
+import org.grails.datastore.mapping.model.PersistentProperty;
 
 /**
  * Abstract base class for entity persisters that support locking.
@@ -34,7 +35,7 @@ public abstract class LockableEntityPersister extends EntityPersister {
     public static int DEFAULT_TIMEOUT = 30;
 
     public LockableEntityPersister(MappingContext mappingContext, PersistentEntity entity,
-               Session session, ApplicationEventPublisher publisher) {
+            Session session, ApplicationEventPublisher publisher) {
         super(mappingContext, entity, session, publisher);
     }
 
@@ -59,7 +60,7 @@ public abstract class LockableEntityPersister extends EntityPersister {
     /**
      * Return whether an object is locked or not
      * @param o The object
-     * @return  True if it is locked
+     * @return True if it is locked
      */
     public abstract boolean isLocked(Object o);
 
@@ -74,9 +75,10 @@ public abstract class LockableEntityPersister extends EntityPersister {
     public Object proxy(Serializable key) {
         PersistentEntity entity = getPersistentEntity();
         PersistentProperty identity = entity.getIdentity();
-        if(identity != null) {
+        if (identity != null) {
             key = (Serializable) getMappingContext().getConversionService().convert(key, identity.getType());
         }
         return getProxyFactory().createProxy(session, entity.getJavaClass(), key);
     }
+
 }

@@ -14,9 +14,9 @@
  */
 package org.grails.datastore.mapping.collection;
 
-import org.grails.datastore.mapping.dirty.checking.DirtyCheckableCollection;
-
 import java.util.Collection;
+
+import org.grails.datastore.mapping.dirty.checking.DirtyCheckableCollection;
 
 /**
  * A lazy loaded collection.
@@ -53,4 +53,5 @@ public interface PersistentCollection extends Collection, DirtyCheckableCollecti
      * Mark the collection as dirty.
      */
     void markDirty();
+
 }

@@ -1,6 +1,7 @@
 package org.grails.gorm.rx.finders
 
 import groovy.transform.CompileStatic
+
 import org.grails.datastore.rx.RxDatastoreClient
 
 /**
@@ -10,6 +11,7 @@ import org.grails.datastore.rx.RxDatastoreClient
  */
 @CompileStatic
 class FindAllByBooleanFinder extends FindAllByFinder {
+
     FindAllByBooleanFinder(RxDatastoreClient datastoreClient) {
         super(datastoreClient)
         setPattern(org.grails.datastore.gorm.finders.FindAllByBooleanFinder.METHOD_PATTERN)
@@ -19,4 +21,5 @@ class FindAllByBooleanFinder extends FindAllByFinder {
     public boolean firstExpressionIsRequiredBoolean() {
         return true;
     }
+
 }

@@ -81,7 +81,7 @@ class Attribute {
      *            the length of the attribute's content.
      * @param buf
      *            buffer to be used to call {@link ClassReader#readUTF8
-     *            readUTF8}, {@link ClassReader#readClass(int,char[]) readClass}
+     *            readUTF8}, {@link ClassReader#readClass(int, char[]) readClass}
      *            or {@link ClassReader#readConst readConst}.
      * @param codeOff
      *            index of the first byte of code's attribute content in
@@ -96,8 +96,8 @@ class Attribute {
      *         bytes.
      */
     protected Attribute read(final ClassReader cr, final int off,
-                             final int len, final char[] buf, final int codeOff,
-                             final Label[] labels) {
+            final int len, final char[] buf, final int codeOff,
+            final Label[] labels) {
         Attribute attr = new Attribute(type);
         attr.value = new byte[len];
         System.arraycopy(cr.b, off, attr.value, 0, len);

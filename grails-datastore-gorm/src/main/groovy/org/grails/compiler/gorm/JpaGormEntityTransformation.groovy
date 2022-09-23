@@ -1,17 +1,15 @@
 package org.grails.compiler.gorm
 
-import grails.gorm.annotation.Entity
-import grails.gorm.annotation.JpaEntity
 import groovy.transform.CompileStatic
 import org.codehaus.groovy.ast.ASTNode
 import org.codehaus.groovy.ast.AnnotatedNode
 import org.codehaus.groovy.ast.AnnotationNode
-import org.codehaus.groovy.ast.ClassHelper
 import org.codehaus.groovy.ast.ClassNode
 import org.codehaus.groovy.control.CompilePhase
 import org.codehaus.groovy.control.SourceUnit
 import org.codehaus.groovy.transform.GroovyASTTransformation
-import org.grails.datastore.mapping.reflect.AstUtils
+
+import grails.gorm.annotation.JpaEntity
 
 /**
  * Enhanced GORM entity annotated with JPA annotations
@@ -22,6 +20,7 @@ import org.grails.datastore.mapping.reflect.AstUtils
 @CompileStatic
 @GroovyASTTransformation(phase = CompilePhase.CANONICALIZATION)
 class JpaGormEntityTransformation extends GormEntityTransformation {
+
     private static final ClassNode MY_TYPE = new ClassNode(JpaEntity.class);
 
     @Override
@@ -44,7 +43,7 @@ class JpaGormEntityTransformation extends GormEntityTransformation {
 
     @Override
     void visit(ClassNode classNode, SourceUnit sourceUnit) {
-        if(!hasAnnotation(classNode, JPA_ENTITY_CLASS_NODE)) {
+        if (!hasAnnotation(classNode, JPA_ENTITY_CLASS_NODE)) {
             classNode.addAnnotation(JPA_ENTITY_ANNOTATION_NODE)
         }
         super.visit(classNode, sourceUnit)

@@ -18,10 +18,6 @@ import javax.persistence.FlushModeType;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
-import org.grails.datastore.mapping.core.ConnectionNotFoundException;
-import org.grails.datastore.mapping.core.Datastore;
-import org.grails.datastore.mapping.core.DatastoreUtils;
-import org.grails.datastore.mapping.core.Session;
 import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionException;
@@ -30,6 +26,11 @@ import org.springframework.transaction.support.AbstractPlatformTransactionManage
 import org.springframework.transaction.support.DefaultTransactionStatus;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.Assert;
+
+import org.grails.datastore.mapping.core.ConnectionNotFoundException;
+import org.grails.datastore.mapping.core.Datastore;
+import org.grails.datastore.mapping.core.DatastoreUtils;
+import org.grails.datastore.mapping.core.Session;
 
 /**
  * A {@link org.springframework.transaction.PlatformTransactionManager} instance that
@@ -42,6 +43,7 @@ import org.springframework.util.Assert;
 public class DatastoreTransactionManager extends AbstractPlatformTransactionManager {
 
     private Datastore datastore;
+
     private boolean datastoreManagedSession;
 
     public void setDatastore(Datastore datastore) {
@@ -75,7 +77,7 @@ public class DatastoreTransactionManager extends AbstractPlatformTransactionMana
         TransactionObject txObject = new TransactionObject();
 
         SessionHolder sessionHolder =
-            (SessionHolder) TransactionSynchronizationManager.getResource(getDatastore());
+                (SessionHolder) TransactionSynchronizationManager.getResource(getDatastore());
         if (sessionHolder != null) {
             if (logger.isDebugEnabled()) {
                 logger.debug("Found thread-bound Session [" +
@@ -136,7 +138,7 @@ public class DatastoreTransactionManager extends AbstractPlatformTransactionMana
                 try {
                     if (session != null) {
                         Transaction transaction = session.getTransaction();
-                        if(transaction != null && transaction.isActive()) {
+                        if (transaction != null && transaction.isActive()) {
                             transaction.rollback();
                         }
                     }
@@ -158,9 +160,9 @@ public class DatastoreTransactionManager extends AbstractPlatformTransactionMana
         final SessionHolder sessionHolder = txObject.getSessionHolder();
         try {
             Transaction<?> transaction = txObject.getTransaction();
-            if(transaction != null && transaction.isActive() ) {
+            if (transaction != null && transaction.isActive()) {
                 Session session = sessionHolder.getSession();
-                if(!status.isReadOnly()) {
+                if (!status.isReadOnly()) {
                     if (session != null) {
                         if (status.isDebug()) {
                             logger.debug("Flushing Session prior to transaction commit [" + session + "]");
@@ -185,7 +187,7 @@ public class DatastoreTransactionManager extends AbstractPlatformTransactionMana
         final SessionHolder sessionHolder = txObject.getSessionHolder();
         try {
             Transaction<?> transaction = txObject.getTransaction();
-            if(transaction != null && transaction.isActive()) {
+            if (transaction != null && transaction.isActive()) {
                 if (status.isDebug()) {
                     logger.debug("Rolling back Datastore transaction on Session [" +
                             sessionHolder.getSession() + "]");
@@ -221,6 +223,6 @@ public class DatastoreTransactionManager extends AbstractPlatformTransactionMana
             DatastoreUtils.closeSession(txObject.getSessionHolder().getSession());
         }
         txObject.getSessionHolder().setSynchronizedWithTransaction(false);
-
     }
+
 }

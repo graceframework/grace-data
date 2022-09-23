@@ -1,6 +1,7 @@
 package org.grails.datastore.gorm.validation.constraints.registry
 
 import grails.gorm.validation.Constraint
+
 import org.grails.datastore.gorm.validation.constraints.factory.ConstraintFactory
 
 /**
@@ -51,4 +52,5 @@ interface ConstraintRegistry {
      * @return The constraint
      */
     public <T extends Constraint> List<ConstraintFactory<T>> findConstraintFactories(Class<T> constraintType)
+
 }

@@ -1,6 +1,5 @@
 package grails.gorm.rx.collection;
 
-
 import grails.gorm.rx.PersistentObservable;
 import rx.Observable;
 
@@ -11,7 +10,6 @@ import java.util.List;
  * @since 6.0
  */
 public interface ObservableCollection<T> extends PersistentObservable<T> {
-
 
     /**
      * Returns an Observable for the operation

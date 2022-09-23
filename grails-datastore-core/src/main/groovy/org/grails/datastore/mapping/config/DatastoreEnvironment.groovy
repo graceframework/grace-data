@@ -27,4 +27,5 @@ import org.springframework.core.env.StandardEnvironment
 @CompileStatic
 @InheritConstructors
 class DatastoreEnvironment extends StandardEnvironment {
+
 }

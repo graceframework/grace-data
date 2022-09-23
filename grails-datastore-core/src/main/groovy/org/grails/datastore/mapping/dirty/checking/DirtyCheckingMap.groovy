@@ -11,7 +11,9 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class DirtyCheckingMap implements Map, DirtyCheckableCollection {
 
-    final @Delegate Map target
+    @Delegate
+    final Map target
+
     final DirtyCheckable parent
     final String property
     final int originalSize
@@ -65,4 +67,5 @@ class DirtyCheckingMap implements Map, DirtyCheckableCollection {
         parent.markDirty(property)
         target.clear()
     }
+
 }

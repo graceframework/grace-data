@@ -15,18 +15,25 @@
  */
 package org.grails.datastore.mapping.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.helpers.NOPLogger;
-import org.springframework.util.ClassUtils;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.ServiceConfigurationError;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.NOPLogger;
+import org.springframework.util.ClassUtils;
 
 /**
  * <p>Variation of {@link java.util.ServiceLoader} that allows soft loading and conditional loading of
@@ -37,23 +44,28 @@ import java.util.stream.Collectors;
  * @since 1.0
  */
 public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>> {
+
     public static final String PROPERTY_GRAILS_CLASSLOADER_LOGGING = "grails.classloader.logging";
+
     public static final String META_INF_SERVICES = "META-INF/services";
+
     public static final Logger REFLECTION_LOGGER;
 
     private static final boolean ENABLE_CLASS_LOADER_LOGGING = Boolean.getBoolean(PROPERTY_GRAILS_CLASSLOADER_LOGGING);
 
-
     private final Class<S> serviceType;
+
     private final ClassLoader classLoader;
+
     private final Map<String, ServiceDefinition<S>> loadedServices = new LinkedHashMap<>();
+
     private final Iterator<ServiceDefinition<S>> unloadedServices;
+
     private final Predicate<String> condition;
 
     static {
         REFLECTION_LOGGER = getLogger(ClassUtils.class);
     }
-
 
     private SoftServiceLoader(Class<S> serviceType, ClassLoader classLoader) {
         this(serviceType, classLoader, (String name) -> true);
@@ -75,7 +87,8 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
     public static Logger getLogger(Class type) {
         if (ENABLE_CLASS_LOADER_LOGGING) {
             return LoggerFactory.getLogger(type);
-        } else {
+        }
+        else {
             return NOPLogger.NOP_LOGGER;
         }
     }
@@ -100,7 +113,7 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
      * @return A new service loader
      */
     public static <S> SoftServiceLoader<S> load(Class<S> service,
-                                                ClassLoader loader) {
+            ClassLoader loader) {
         return new SoftServiceLoader<>(service, loader);
     }
 
@@ -114,8 +127,8 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
      * @return A new service loader
      */
     public static <S> SoftServiceLoader<S> load(Class<S> service,
-                                                ClassLoader loader,
-                                                Predicate<String> condition) {
+            ClassLoader loader,
+            Predicate<String> condition) {
         return new SoftServiceLoader<>(service, loader, condition);
     }
 
@@ -144,7 +157,8 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
         Optional<Class> alternativeClass = Optional.empty();
         try {
             alternativeClass = Optional.of(ClassUtils.forName(alternative, classLoader));
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e) {
             if (REFLECTION_LOGGER.isDebugEnabled()) {
                 REFLECTION_LOGGER.debug("Class {} is not present", alternative);
             }
@@ -208,7 +222,9 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
      * A service loader iterator implementation.
      */
     private final class ServiceLoaderIterator implements Iterator<ServiceDefinition<S>> {
+
         private Enumeration<URL> serviceConfigs = null;
+
         private Iterator<String> unprocessed = null;
 
         @Override
@@ -218,7 +234,8 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
                 String name = serviceType.getName();
                 try {
                     serviceConfigs = classLoader.getResources(META_INF_SERVICES + '/' + name);
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     throw new ServiceConfigurationError("Failed to load resources for service: " + name, e);
                 }
             }
@@ -243,7 +260,8 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
                         unprocessed = lines.iterator();
 
                     }
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     // ignore, can't do anything here and can't log because class used in compiler
                 }
             }
@@ -260,9 +278,12 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
             try {
                 final Class<?> loadedClass = Class.forName(nextName, false, classLoader);
                 return newService(nextName, Optional.of(loadedClass));
-            } catch (NoClassDefFoundError | ClassNotFoundException e) {
+            }
+            catch (NoClassDefFoundError | ClassNotFoundException e) {
                 return newService(nextName, Optional.empty());
             }
         }
+
     }
+
 }

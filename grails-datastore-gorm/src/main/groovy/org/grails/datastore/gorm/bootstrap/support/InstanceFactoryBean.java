@@ -23,9 +23,10 @@ import org.springframework.beans.factory.FactoryBean;
  * mainly useful in unit tests
  *
  */
-
 public class InstanceFactoryBean<T> implements FactoryBean<T> {
+
     T object;
+
     Class<?> objectType;
 
     public InstanceFactoryBean() {
@@ -65,4 +66,5 @@ public class InstanceFactoryBean<T> implements FactoryBean<T> {
     public void setObjectType(Class<?> objectType) {
         this.objectType = objectType;
     }
+
 }

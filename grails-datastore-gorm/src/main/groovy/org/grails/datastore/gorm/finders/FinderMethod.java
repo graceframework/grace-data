@@ -52,4 +52,5 @@ public interface FinderMethod {
      * @return true if it does
      */
     boolean isMethodMatch(String methodName);
+
 }

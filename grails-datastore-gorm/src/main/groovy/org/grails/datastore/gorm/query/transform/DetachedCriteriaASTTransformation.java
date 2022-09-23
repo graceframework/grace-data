@@ -45,4 +45,5 @@ public class DetachedCriteriaASTTransformation implements ASTTransformation{
         ClassNode cNode = (ClassNode) parent;
         transformer.visitClass(cNode);
     }
+
 }

@@ -14,13 +14,12 @@
  */
 package org.grails.datastore.mapping.keyvalue.mapping.config;
 
+import java.beans.PropertyDescriptor;
+
 import org.grails.datastore.mapping.model.MappingContext;
 import org.grails.datastore.mapping.model.MappingFactory;
 import org.grails.datastore.mapping.model.PersistentEntity;
 import org.grails.datastore.mapping.model.PersistentProperty;
-import org.grails.datastore.mapping.model.types.TenantId;
-
-import java.beans.PropertyDescriptor;
 
 /**
  * @author Graeme Rocher
@@ -48,4 +47,5 @@ public class KeyValueMappingFactory extends MappingFactory<Family, KeyValue> {
     public boolean isTenantId(PersistentEntity entity, MappingContext context, PropertyDescriptor descriptor) {
         return false;
     }
+
 }

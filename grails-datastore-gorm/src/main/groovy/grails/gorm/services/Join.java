@@ -1,10 +1,11 @@
 package grails.gorm.services;
 
-import javax.persistence.criteria.JoinType;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import javax.persistence.criteria.JoinType;
 
 /**
  * Allow specifying the join to services
@@ -13,8 +14,9 @@ import java.lang.annotation.Target;
  * @since 6.1
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 public @interface Join {
+
     /**
      * @return The property name to join on
      */
@@ -24,4 +26,5 @@ public @interface Join {
      * @return The join type
      */
     JoinType[] type() default {};
+
 }

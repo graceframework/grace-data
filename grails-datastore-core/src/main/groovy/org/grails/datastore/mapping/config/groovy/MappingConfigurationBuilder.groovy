@@ -18,7 +18,6 @@ package org.grails.datastore.mapping.config.groovy
 import org.grails.datastore.mapping.config.Entity
 import org.grails.datastore.mapping.config.Property
 
-
 /**
  * Interface for objects that build a mapping configuration
  *
@@ -36,6 +35,7 @@ interface MappingConfigurationBuilder<E extends Entity, P extends Property> {
      * @return The mapping object
      */
     E evaluate(Closure mappingClosure)
+
     /**
      * Evaluates the configuration for the given closure
      *
@@ -50,4 +50,5 @@ interface MappingConfigurationBuilder<E extends Entity, P extends Property> {
      * @return The build property definitions
      */
     Map<String, P> getProperties()
+
 }

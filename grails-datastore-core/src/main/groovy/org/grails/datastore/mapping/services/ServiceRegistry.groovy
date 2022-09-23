@@ -19,4 +19,5 @@ interface ServiceRegistry {
      * @return
      */
     public <T> T getService(Class<T> interfaceType) throws ServiceNotFoundException
+
 }

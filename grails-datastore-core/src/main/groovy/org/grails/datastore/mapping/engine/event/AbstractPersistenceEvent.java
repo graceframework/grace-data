@@ -18,10 +18,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.ApplicationEvent;
+
+import org.grails.datastore.mapping.core.Datastore;
 import org.grails.datastore.mapping.engine.EntityAccess;
 import org.grails.datastore.mapping.model.MappingContext;
-import org.springframework.context.ApplicationEvent;
-import org.grails.datastore.mapping.core.Datastore;
 import org.grails.datastore.mapping.model.PersistentEntity;
 
 /**
@@ -31,34 +32,48 @@ import org.grails.datastore.mapping.model.PersistentEntity;
 public abstract class AbstractPersistenceEvent extends ApplicationEvent {
 
     public static final String ONLOAD_EVENT = "onLoad";
+
     public static final String ONLOAD_SAVE = "onSave";
+
     public static final String BEFORE_LOAD_EVENT = "beforeLoad";
+
     public static final String BEFORE_INSERT_EVENT = "beforeInsert";
+
     public static final String AFTER_INSERT_EVENT = "afterInsert";
+
     public static final String BEFORE_UPDATE_EVENT = "beforeUpdate";
+
     public static final String AFTER_UPDATE_EVENT = "afterUpdate";
+
     public static final String BEFORE_DELETE_EVENT = "beforeDelete";
+
     public static final String AFTER_DELETE_EVENT = "afterDelete";
+
     public static final String AFTER_LOAD_EVENT = "afterLoad";
 
     private final PersistentEntity entity;
+
     private final Object entityObject;
+
     private final EntityAccess entityAccess;
+
     private boolean cancelled;
-    private List<String> excludedListenerNames = new ArrayList<String>();
+
+    private final List<String> excludedListenerNames = new ArrayList<String>();
+
     private Serializable nativeEvent;
 
     protected AbstractPersistenceEvent(final Datastore source, final PersistentEntity entity,
             final EntityAccess entityAccess) {
-        this((Object)source, entity, entityAccess);
+        this((Object) source, entity, entityAccess);
     }
 
     protected AbstractPersistenceEvent(final Object source, final PersistentEntity entity,
-                                       final EntityAccess entityAccess) {
+            final EntityAccess entityAccess) {
         super(source);
         this.entity = entity;
         this.entityAccess = entityAccess;
-        if(entityAccess != null) {
+        if (entityAccess != null) {
             this.entityObject = entityAccess.getEntity();
         }
         else {
@@ -75,7 +90,7 @@ public abstract class AbstractPersistenceEvent extends ApplicationEvent {
         MappingContext mappingContext = source.getMappingContext();
         entityObject = mappingContext.getProxyHandler().unwrap(entity);
         this.entity = mappingContext.getPersistentEntity(entityObject.getClass().getName());
-        if(this.entity != null) {
+        if (this.entity != null) {
             this.entityAccess = mappingContext.createEntityAccess(this.entity, entityObject);
         }
         else {
@@ -120,4 +135,5 @@ public abstract class AbstractPersistenceEvent extends ApplicationEvent {
     }
 
     public abstract EventType getEventType();
+
 }

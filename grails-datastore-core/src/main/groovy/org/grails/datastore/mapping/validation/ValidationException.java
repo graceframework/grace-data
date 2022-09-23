@@ -18,7 +18,6 @@ package org.grails.datastore.mapping.validation;
 import org.codehaus.groovy.runtime.DefaultGroovyMethods;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.util.ClassUtils;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 
@@ -35,11 +34,12 @@ public class ValidationException extends DataIntegrityViolationException {
 
     static {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        if(ClassUtils.isPresent("grails.validation.ValidationException", cl)) {
+        if (ClassUtils.isPresent("grails.validation.ValidationException", cl)) {
             Class<? extends RuntimeException> validationExceptionType;
             try {
                 validationExceptionType = (Class<? extends RuntimeException>) ClassUtils.forName("grails.validation.ValidationException", cl);
-            } catch (Throwable e) {
+            }
+            catch (Throwable e) {
                 validationExceptionType = ValidationException.class;
             }
 
@@ -52,6 +52,7 @@ public class ValidationException extends DataIntegrityViolationException {
 
 
     private final String fullMessage;
+
     private final Errors errors;
 
     public ValidationException(String msg, Errors errors) {
@@ -73,7 +74,7 @@ public class ValidationException extends DataIntegrityViolationException {
         return fullMessage;
     }
 
-    public static String formatErrors(Errors errors, String msg ) {
+    public static String formatErrors(Errors errors, String msg) {
         String ls = System.getProperty("line.separator");
         StringBuilder b = new StringBuilder();
         if (msg != null) {
@@ -82,14 +83,15 @@ public class ValidationException extends DataIntegrityViolationException {
 
         for (ObjectError error : errors.getAllErrors()) {
             b.append(ls)
-             .append(" - ")
-             .append(error)
-             .append(ls);
+                    .append(" - ")
+                    .append(error)
+                    .append(ls);
         }
         return b.toString();
     }
 
     public static RuntimeException newInstance(String message, Errors errors) {
-        return DefaultGroovyMethods.newInstance(VALIDATION_EXCEPTION_TYPE, new Object[]{ message, errors });
+        return DefaultGroovyMethods.newInstance(VALIDATION_EXCEPTION_TYPE, new Object[] { message, errors });
     }
+
 }

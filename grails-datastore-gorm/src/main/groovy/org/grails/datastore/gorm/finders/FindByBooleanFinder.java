@@ -18,7 +18,7 @@ import org.grails.datastore.mapping.core.Datastore;
 import org.grails.datastore.mapping.model.MappingContext;
 
 /**
- * 
+ *
  * <p>The "find&lt;booleanProperty&gt;By*" static persistent method. This method allows querying for
  * instances of grails domain classes based on a boolean property and any other arbitrary
  * properties. This method returns the first result of the query.</p>
@@ -36,7 +36,8 @@ import org.grails.datastore.mapping.model.MappingContext;
  * @author Graeme Rocher
  * @author Jeff Brown
  */
-public class FindByBooleanFinder extends FindByFinder{
+public class FindByBooleanFinder extends FindByFinder {
+
     public static final String METHOD_PATTERN = "(find)((\\w+)(By)([A-Z]\\w*)|(\\w++))";
 
     public FindByBooleanFinder(Datastore datastore) {
@@ -53,4 +54,5 @@ public class FindByBooleanFinder extends FindByFinder{
     public boolean firstExpressionIsRequiredBoolean() {
         return true;
     }
+
 }

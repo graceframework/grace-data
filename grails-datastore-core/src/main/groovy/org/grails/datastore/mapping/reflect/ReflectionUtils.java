@@ -24,9 +24,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.grails.datastore.mapping.model.DatastoreConfigurationException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
+
+import org.grails.datastore.mapping.model.DatastoreConfigurationException;
 
 /**
  * Provides methods to help with reflective operations
@@ -37,6 +38,7 @@ import org.springframework.util.StringUtils;
 public class ReflectionUtils {
 
     public static final Map<Class<?>, Class<?>> PRIMITIVE_TYPE_COMPATIBLE_CLASSES = new HashMap<Class<?>, Class<?>>();
+
     @SuppressWarnings("rawtypes")
     private static final Class[] EMPTY_CLASS_ARRAY = {};
 
@@ -61,22 +63,22 @@ public class ReflectionUtils {
         registerPrimitiveClassPair(Double.class, double.class);
     }
 
-   /**
-    * Make the given field accessible, explicitly setting it accessible if necessary.
-    * The <code>setAccessible(true)</code> method is only called when actually necessary,
-    * to avoid unnecessary conflicts with a JVM SecurityManager (if active).
-    *
-    * Based on the same method in Spring core.
-    *
-    * @param field the field to make accessible
-    * @see java.lang.reflect.Field#setAccessible
-    */
-   public static void makeAccessible(Field field) {
-       if (!Modifier.isPublic(field.getModifiers()) ||
-               !Modifier.isPublic(field.getDeclaringClass().getModifiers())) {
-           field.setAccessible(true);
-       }
-   }
+    /**
+     * Make the given field accessible, explicitly setting it accessible if necessary.
+     * The <code>setAccessible(true)</code> method is only called when actually necessary,
+     * to avoid unnecessary conflicts with a JVM SecurityManager (if active).
+     *
+     * Based on the same method in Spring core.
+     *
+     * @param field the field to make accessible
+     * @see java.lang.reflect.Field#setAccessible
+     */
+    public static void makeAccessible(Field field) {
+        if (!Modifier.isPublic(field.getModifiers()) ||
+                !Modifier.isPublic(field.getDeclaringClass().getModifiers())) {
+            field.setAccessible(true);
+        }
+    }
 
     /**
      * Make the given method accessible, explicitly setting it accessible if necessary.
@@ -152,14 +154,18 @@ public class ReflectionUtils {
         if (clazz == null) return null;
         try {
             return clazz.getConstructor(EMPTY_CLASS_ARRAY).newInstance();
-        } catch (IllegalAccessException e) {
-            throw new InstantiationException(e.getClass().getName() + " error creating instance of class ["+e.getMessage()+"]: " + e.getMessage(), e);
-        } catch (InvocationTargetException e) {
-            throw new InstantiationException(e.getClass().getName() + " error creating instance of class ["+e.getMessage()+"]: " + e.getMessage(), e);
-        } catch (NoSuchMethodException e) {
-            throw new InstantiationException(e.getClass().getName() + " error creating instance of class ["+e.getMessage()+"]: " + e.getMessage(), e);
-        } catch (java.lang.InstantiationException e) {
-            throw new InstantiationException(e.getClass().getName() + " error creating instance of class ["+e.getMessage()+"]: " + e.getMessage(), e);
+        }
+        catch (IllegalAccessException e) {
+            throw new InstantiationException(e.getClass().getName() + " error creating instance of class [" + e.getMessage() + "]: " + e.getMessage(), e);
+        }
+        catch (InvocationTargetException e) {
+            throw new InstantiationException(e.getClass().getName() + " error creating instance of class [" + e.getMessage() + "]: " + e.getMessage(), e);
+        }
+        catch (NoSuchMethodException e) {
+            throw new InstantiationException(e.getClass().getName() + " error creating instance of class [" + e.getMessage() + "]: " + e.getMessage(), e);
+        }
+        catch (java.lang.InstantiationException e) {
+            throw new InstantiationException(e.getClass().getName() + " error creating instance of class [" + e.getMessage() + "]: " + e.getMessage(), e);
         }
     }
 
@@ -204,8 +210,8 @@ public class ReflectionUtils {
      * @return true if it is a javabean property method
      */
     public static boolean isGetter(String name, Class<?>[] args) {
-        if (!StringUtils.hasText(name) || args == null)return false;
-        if (args.length != 0)return false;
+        if (!StringUtils.hasText(name) || args == null) return false;
+        if (args.length != 0) return false;
 
         if (name.startsWith("get")) {
             name = name.substring(3);
@@ -220,7 +226,7 @@ public class ReflectionUtils {
 
     @SuppressWarnings("rawtypes")
     public static boolean isSetter(String name, Class[] args) {
-        if (!StringUtils.hasText(name) || args == null)return false;
+        if (!StringUtils.hasText(name) || args == null) return false;
 
         if (name.startsWith("set")) {
             if (args.length != 1) return false;
@@ -234,8 +240,10 @@ public class ReflectionUtils {
     public static Class forName(String className, ClassLoader classLoader) {
         try {
             return Class.forName(className, false, classLoader);
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e) {
             throw new DatastoreConfigurationException("Class not found loading GORM: " + e.getMessage(), e);
         }
     }
+
 }

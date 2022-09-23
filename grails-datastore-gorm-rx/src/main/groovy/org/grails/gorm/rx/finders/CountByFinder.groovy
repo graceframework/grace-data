@@ -1,8 +1,10 @@
 package org.grails.gorm.rx.finders
 
 import groovy.transform.CompileStatic
+
 import org.grails.datastore.gorm.finders.DynamicFinderInvocation
 import org.grails.datastore.rx.RxDatastoreClient
+
 /**
  * Implementation of countBy* dynamic finder for RxGORM
  *
@@ -11,7 +13,9 @@ import org.grails.datastore.rx.RxDatastoreClient
  */
 @CompileStatic
 class CountByFinder extends org.grails.datastore.gorm.finders.CountByFinder {
+
     final RxDatastoreClient datastoreClient
+
     CountByFinder(RxDatastoreClient datastoreClient) {
         super(datastoreClient.mappingContext)
         this.datastoreClient = datastoreClient
@@ -24,4 +28,5 @@ class CountByFinder extends org.grails.datastore.gorm.finders.CountByFinder {
         query = buildQuery(invocation, javaClass, query)
         query.singleResult()
     }
+
 }

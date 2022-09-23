@@ -1,21 +1,5 @@
 package org.grails.datastore.gorm.validation.javax
 
-import groovy.transform.CompileStatic
-import org.grails.datastore.gorm.validation.constraints.registry.DefaultValidatorRegistry
-import org.grails.datastore.mapping.core.connections.ConnectionSourceSettings
-import org.grails.datastore.mapping.model.MappingContext
-import org.grails.datastore.mapping.model.PersistentEntity
-import org.grails.datastore.mapping.reflect.ClassUtils
-import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory
-import org.springframework.context.ApplicationContext
-import org.springframework.context.MessageSource
-import org.springframework.context.support.StaticMessageSource
-import org.springframework.validation.Validator
-import org.springframework.validation.annotation.Validated
-import org.springframework.validation.beanvalidation.MessageSourceResourceBundleLocator
-import org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory
-
 import javax.validation.ClockProvider
 import javax.validation.Configuration
 import javax.validation.ConstraintValidatorFactory
@@ -25,6 +9,22 @@ import javax.validation.TraversableResolver
 import javax.validation.Validation
 import javax.validation.ValidatorContext
 import javax.validation.ValidatorFactory
+
+import groovy.transform.CompileStatic
+import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator
+import org.springframework.context.ApplicationContext
+import org.springframework.context.MessageSource
+import org.springframework.context.support.StaticMessageSource
+import org.springframework.validation.Validator
+import org.springframework.validation.annotation.Validated
+import org.springframework.validation.beanvalidation.MessageSourceResourceBundleLocator
+import org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory
+
+import org.grails.datastore.gorm.validation.constraints.registry.DefaultValidatorRegistry
+import org.grails.datastore.mapping.core.connections.ConnectionSourceSettings
+import org.grails.datastore.mapping.model.MappingContext
+import org.grails.datastore.mapping.model.PersistentEntity
+import org.grails.datastore.mapping.reflect.ClassUtils
 
 /**
  * A validator registry that creates validators
@@ -94,10 +94,10 @@ class JavaxValidatorRegistry extends DefaultValidatorRegistry implements Validat
     @Override
     Validator getValidator(PersistentEntity entity) {
         def ann = entity.javaClass.getAnnotation(Validated)
-        if(ann != null && isAvailable()) {
+        if (ann != null && isAvailable()) {
             def validator = validatorFactory.getValidator()
-            if(validator instanceof GormValidatorAdapter) {
-                return (Validator)validator
+            if (validator instanceof GormValidatorAdapter) {
+                return (Validator) validator
             }
             else {
                 return new GormValidatorAdapter(validator)
@@ -159,4 +159,5 @@ class JavaxValidatorRegistry extends DefaultValidatorRegistry implements Validat
     static boolean isAvailable() {
         ClassUtils.isPresent("javax.validation.Validation")
     }
+
 }

@@ -1,11 +1,13 @@
 package org.grails.gorm.rx.transform
 
-import grails.gorm.rx.DetachedCriteria
-import grails.gorm.rx.RxEntity
 import groovy.transform.CompileStatic
 import org.codehaus.groovy.ast.ClassHelper
 import org.codehaus.groovy.ast.ClassNode
 import org.codehaus.groovy.ast.GenericsType
+
+import grails.gorm.rx.DetachedCriteria
+import grails.gorm.rx.RxEntity
+
 import org.grails.datastore.mapping.reflect.AstUtils
 
 /**
@@ -22,6 +24,7 @@ class RxAstUtils extends AstUtils {
     static final ClassNode RX_ENTITY = ClassHelper.make(RxEntity).plainNodeReference
 
     static final ClassNode RX_DETACHED_CRITERIA = ClassHelper.make(DetachedCriteria).plainNodeReference
+
     /**
      * Whether the class node is an rx entity
      *
@@ -38,9 +41,9 @@ class RxAstUtils extends AstUtils {
      * @return True if it is
      */
     static boolean isObservableOfDomainClass(ClassNode cls) {
-        if(isObservable(cls)) {
+        if (isObservable(cls)) {
             GenericsType[] genericsTypes = cls.genericsTypes
-            if(genericsTypes != null && genericsTypes.length == 1) {
+            if (genericsTypes != null && genericsTypes.length == 1) {
                 ClassNode type = genericsTypes[0].type
                 return type != null && isDomainClass(type)
             }
@@ -55,9 +58,9 @@ class RxAstUtils extends AstUtils {
      * @return True if it is
      */
     static boolean isSingleOfDomainClass(ClassNode cls) {
-        if(isSingle(cls)) {
+        if (isSingle(cls)) {
             GenericsType[] genericsTypes = cls.genericsTypes
-            if(genericsTypes != null && genericsTypes.length == 1) {
+            if (genericsTypes != null && genericsTypes.length == 1) {
                 ClassNode type = genericsTypes[0].type
                 return type != null && isDomainClass(type)
             }
@@ -72,15 +75,16 @@ class RxAstUtils extends AstUtils {
      * @return True if it is
      */
     static boolean isObservableOf(ClassNode cls, ClassNode parent) {
-        if(isObservable(cls) || isSingle(cls)) {
+        if (isObservable(cls) || isSingle(cls)) {
             GenericsType[] genericsTypes = cls.genericsTypes
-            if(genericsTypes != null && genericsTypes.length == 1) {
+            if (genericsTypes != null && genericsTypes.length == 1) {
                 ClassNode type = genericsTypes[0].type
                 return type != null && isSubclassOfOrImplementsInterface(type, parent)
             }
         }
         return false
     }
+
     /**
      * Return if the given class is an Observable of domain class
      *
@@ -88,15 +92,16 @@ class RxAstUtils extends AstUtils {
      * @return True if it is
      */
     static boolean isSingleOf(ClassNode cls, Class parent) {
-        if(isSingle(cls)) {
+        if (isSingle(cls)) {
             GenericsType[] genericsTypes = cls.genericsTypes
-            if(genericsTypes != null && genericsTypes.length == 1) {
+            if (genericsTypes != null && genericsTypes.length == 1) {
                 ClassNode type = genericsTypes[0].type
                 return type != null && isSubclassOfOrImplementsInterface(type, parent.name)
             }
         }
         return false
     }
+
     /**
      * Return if the given class is an Observable of domain class
      *
@@ -104,15 +109,16 @@ class RxAstUtils extends AstUtils {
      * @return True if it is
      */
     static boolean isObservableOf(ClassNode cls, Class parent) {
-        if(isObservable(cls)) {
+        if (isObservable(cls)) {
             GenericsType[] genericsTypes = cls.genericsTypes
-            if(genericsTypes != null && genericsTypes.length == 1) {
+            if (genericsTypes != null && genericsTypes.length == 1) {
                 ClassNode type = genericsTypes[0].type
                 return type != null && isSubclassOfOrImplementsInterface(type, parent.name)
             }
         }
         return false
     }
+
     /**
      * Is the given class a {@link rx.Single}
      *
@@ -132,4 +138,5 @@ class RxAstUtils extends AstUtils {
     static boolean isObservable(ClassNode cls) {
         return isSubclassOf(cls, "rx.Observable")
     }
+
 }

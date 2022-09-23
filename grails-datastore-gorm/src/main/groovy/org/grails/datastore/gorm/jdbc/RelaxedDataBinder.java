@@ -1,4 +1,3 @@
-package org.grails.datastore.gorm.jdbc;
 /*
  * Copyright 2012-2016 the original author or authors.
  *
@@ -14,16 +13,29 @@ package org.grails.datastore.gorm.jdbc;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.grails.datastore.gorm.jdbc;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
-import org.springframework.beans.*;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.InvalidPropertyException;
+import org.springframework.beans.MutablePropertyValues;
+import org.springframework.beans.PropertyValue;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.DataBinder;
-
-import java.util.*;
 
 /**
  * Binder implementation that allows caller to bind to maps and also allows property names
@@ -82,7 +94,7 @@ class RelaxedDataBinder extends DataBinder {
      * @return modified property values
      */
     private MutablePropertyValues modifyProperties(MutablePropertyValues propertyValues,
-                                                   Object target) {
+            Object target) {
         propertyValues = getPropertyValuesForNamePrefix(propertyValues);
         if (target instanceof MapHolder) {
             propertyValues = addMapPrefix(propertyValues);
@@ -179,7 +191,7 @@ class RelaxedDataBinder extends DataBinder {
     }
 
     private PropertyValue modifyProperty(BeanWrapper target,
-                                         PropertyValue propertyValue) {
+            PropertyValue propertyValue) {
         String name = propertyValue.getName();
         String normalizedName = normalizePath(target, name);
         if (!normalizedName.equals(name)) {
@@ -271,7 +283,7 @@ class RelaxedDataBinder extends DataBinder {
     }
 
     private void extendCollectionIfNecessary(BeanWrapper wrapper, BeanPath path,
-                                             int index) {
+            int index) {
         String name = path.prefix(index);
         TypeDescriptor elementDescriptor = wrapper.getPropertyTypeDescriptor(name)
                 .getElementTypeDescriptor();
@@ -327,7 +339,7 @@ class RelaxedDataBinder extends DataBinder {
     }
 
     private String resolveNestedPropertyName(BeanWrapper target, String prefix,
-                                             String name) {
+            String name) {
         StringBuilder candidate = new StringBuilder();
         for (String field : name.split("[_\\-\\.]")) {
             candidate.append(candidate.length() > 0 ? "." : "");
@@ -588,4 +600,5 @@ class RelaxedDataBinder extends DataBinder {
         }
 
     }
+
 }

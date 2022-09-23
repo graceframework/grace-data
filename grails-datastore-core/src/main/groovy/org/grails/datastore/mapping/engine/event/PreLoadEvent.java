@@ -46,4 +46,5 @@ public class PreLoadEvent extends AbstractPersistenceEvent {
     public EventType getEventType() {
         return EventType.PreLoad;
     }
+
 }

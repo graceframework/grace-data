@@ -27,4 +27,5 @@ public interface DatastoreAware {
      * @param datastore The datastore
      */
     void setDatastore(Datastore datastore);
+
 }

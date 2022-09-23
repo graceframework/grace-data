@@ -1,12 +1,14 @@
 package org.grails.datastore.mapping.collection;
 
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import org.grails.datastore.mapping.core.Session;
-import org.grails.datastore.mapping.engine.AssociationIndexer;
 import org.grails.datastore.mapping.engine.AssociationQueryExecutor;
 import org.grails.datastore.mapping.model.types.Association;
-
-import java.io.Serializable;
-import java.util.*;
 
 /**
  * A lazy loaded sorted set.
@@ -16,6 +18,7 @@ import java.util.*;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class PersistentSortedSet extends AbstractPersistentCollection implements SortedSet {
+
     public PersistentSortedSet(Association association, Serializable associationKey, Session session) {
         super(association, associationKey, session, new TreeSet());
     }
@@ -38,11 +41,11 @@ public class PersistentSortedSet extends AbstractPersistentCollection implements
 
     private SortedSet getSortedSet() {
         initialize();
-        return ((SortedSet)collection);
+        return ((SortedSet) collection);
     }
 
     public SortedSet subSet(Object o, Object o1) {
-        return getSortedSet().subSet(o,o1);
+        return getSortedSet().subSet(o, o1);
     }
 
     public SortedSet headSet(Object o) {
@@ -60,5 +63,6 @@ public class PersistentSortedSet extends AbstractPersistentCollection implements
     public Object last() {
         return getSortedSet().last();
     }
+
 }
 

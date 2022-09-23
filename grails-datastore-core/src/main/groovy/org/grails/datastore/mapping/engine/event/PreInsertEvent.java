@@ -46,4 +46,5 @@ public class PreInsertEvent extends AbstractPersistenceEvent {
     public EventType getEventType() {
         return EventType.PreInsert;
     }
+
 }

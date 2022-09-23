@@ -11,7 +11,7 @@ import org.codehaus.groovy.control.CompilePhase
 import org.codehaus.groovy.control.SourceUnit
 import org.codehaus.groovy.transform.ASTTransformation
 import org.codehaus.groovy.transform.GroovyASTTransformation
-import org.grails.datastore.gorm.query.transform.DetachedCriteriaTransformer
+
 import org.grails.datastore.mapping.reflect.AstUtils
 
 /**
@@ -23,7 +23,7 @@ import org.grails.datastore.mapping.reflect.AstUtils
  * @since 6.0
  */
 @CompileStatic
-@GroovyASTTransformation(phase= CompilePhase.CANONICALIZATION)
+@GroovyASTTransformation(phase = CompilePhase.CANONICALIZATION)
 class GlobalTraitRepairTransformation implements ASTTransformation {
 
     private static final Object TRANSFORM_APPLIED_MARKER = new Object()
@@ -32,10 +32,11 @@ class GlobalTraitRepairTransformation implements ASTTransformation {
 
     static {
         String groovyVersion = GroovySystem.version
-        if(groovyVersion.startsWith("2.4.")) {
+        if (groovyVersion.startsWith("2.4.")) {
             try {
                 ENABLED = groovyVersion.split(/\./)[2].toInteger() < 7
-            } catch (Throwable e) {
+            }
+            catch (Throwable e) {
                 ENABLED = false
             }
         }
@@ -43,9 +44,10 @@ class GlobalTraitRepairTransformation implements ASTTransformation {
             ENABLED = false
         }
     }
+
     @Override
     void visit(ASTNode[] nodes, SourceUnit source) {
-        if(ENABLED) {
+        if (ENABLED) {
             ModuleNode ast = source.getAST();
             List<ClassNode> classes = ast.getClasses();
             for (ClassNode aClass : classes) {
@@ -56,7 +58,6 @@ class GlobalTraitRepairTransformation implements ASTTransformation {
 
     void visitClass(ClassNode aClass) {
         if (ENABLED && aClass.getNodeMetaData(TRANSFORM_APPLIED_MARKER) == null) {
-
             if (AstUtils.implementsInterface(aClass, "org.grails.datastore.gorm.GormEntity") || AstUtils.implementsInterface(aClass, "grails.gorm.rx.RxEntity")) {
                 aClass.putNodeMetaData(TRANSFORM_APPLIED_MARKER, Boolean.TRUE)
                 def allMethods = aClass.getMethods()
@@ -64,7 +65,8 @@ class GlobalTraitRepairTransformation implements ASTTransformation {
                     for (GenericsType gt in mn.returnType.genericsTypes) {
                         if (gt.name == aClass.name) {
                             gt.setType(ClassHelper.make(aClass.name).getPlainNodeReference())
-                        } else if (gt.name == 'T') {
+                        }
+                        else if (gt.name == 'T') {
                             mn.setReturnType(ClassHelper.make(Object).getPlainNodeReference())
                         }
                     }

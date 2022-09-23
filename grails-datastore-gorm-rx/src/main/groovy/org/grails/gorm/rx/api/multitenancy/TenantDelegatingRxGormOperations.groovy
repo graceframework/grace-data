@@ -1,13 +1,15 @@
 package org.grails.gorm.rx.api.multitenancy
 
+import groovy.transform.CompileStatic
+import rx.Observable
+
 import grails.gorm.rx.CriteriaBuilder
 import grails.gorm.rx.DetachedCriteria
 import grails.gorm.rx.api.RxGormAllOperations
 import grails.gorm.rx.multitenancy.Tenants
 import grails.gorm.rx.proxy.ObservableProxy
-import groovy.transform.CompileStatic
+
 import org.grails.datastore.rx.RxDatastoreClient
-import rx.Observable
 
 /**
  * Delegates to a RxGORM API ensuring the tenant id is correct
@@ -17,6 +19,7 @@ import rx.Observable
  */
 @CompileStatic
 class TenantDelegatingRxGormOperations<D> implements RxGormAllOperations<D> {
+
     final RxDatastoreClient datastoreClient
     final Serializable tenantId
     final RxGormAllOperations<D> delegateOperations
@@ -24,7 +27,7 @@ class TenantDelegatingRxGormOperations<D> implements RxGormAllOperations<D> {
 
     TenantDelegatingRxGormOperations(RxDatastoreClient datastoreClient, Serializable tenantId, RxGormAllOperations<D> delegateOperations) {
         this.datastoreClient = datastoreClient
-        this.datastoreClientClass = (Class<RxDatastoreClient>)datastoreClient.getClass()
+        this.datastoreClientClass = (Class<RxDatastoreClient>) datastoreClient.getClass()
         this.tenantId = tenantId
         this.delegateOperations = delegateOperations
     }
@@ -392,4 +395,5 @@ class TenantDelegatingRxGormOperations<D> implements RxGormAllOperations<D> {
     RxGormAllOperations<D> withTenant(Serializable tenantId) {
         return delegateOperations.withTenant(tenantId)
     }
+
 }

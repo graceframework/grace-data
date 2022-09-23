@@ -1,7 +1,6 @@
 package org.grails.datastore.mapping.multitenancy.exceptions
 
 import groovy.transform.CompileStatic
-import org.grails.datastore.mapping.core.DatastoreException
 
 /**
  * Thrown when the tenant cannot be found
@@ -11,6 +10,7 @@ import org.grails.datastore.mapping.core.DatastoreException
  */
 @CompileStatic
 class TenantNotFoundException extends TenantException {
+
     TenantNotFoundException(String s) {
         super(s)
     }
@@ -22,4 +22,5 @@ class TenantNotFoundException extends TenantException {
     TenantNotFoundException(String s, Throwable throwable) {
         super(s, throwable)
     }
+
 }

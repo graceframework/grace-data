@@ -1,14 +1,13 @@
 package org.grails.datastore.mapping.reflect;
 
-
-import org.grails.datastore.mapping.model.PersistentEntity;
-import org.springframework.cglib.reflect.FastClass;
-
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Map;
+
+import org.springframework.cglib.reflect.FastClass;
+
+import org.grails.datastore.mapping.model.PersistentEntity;
 
 /**
  * Used for reflective data
@@ -27,16 +26,19 @@ public interface EntityReflector {
      * @return Obtains the dirty checking state for the given entity
      */
     Map<String, Object> getDirtyCheckingState(Object entity);
+
     /**
      * @return The fast class
      * @deprecated Do not use
      */
     @Deprecated
     FastClass fastClass();
+
     /**
      * @return The identity type
      */
     Class identifierType();
+
     /**
      * @return The name of the identifier
      */
@@ -132,9 +134,11 @@ public interface EntityReflector {
          * @return The read value
          */
         Object read(Object object);
+
     }
 
     interface PropertyWriter {
+
         /**
          * @return The field or null if the field cannot be resolved
          */
@@ -144,10 +148,12 @@ public interface EntityReflector {
          * @return The getter
          */
         Method setter();
+
         /**
          * @return The property type
          */
         Class propertyType();
+
         /**
          * Writes the property
          *
@@ -155,5 +161,7 @@ public interface EntityReflector {
          * @param value The value
          */
         void write(Object object, Object value);
+
     }
+
 }

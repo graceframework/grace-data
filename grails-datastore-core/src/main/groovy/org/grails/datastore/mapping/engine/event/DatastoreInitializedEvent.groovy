@@ -25,7 +25,9 @@ import org.springframework.context.ApplicationEvent
  * @since 4.0.x
  */
 class DatastoreInitializedEvent extends ApplicationEvent {
+
     DatastoreInitializedEvent(Object source) {
         super(source)
     }
+
 }

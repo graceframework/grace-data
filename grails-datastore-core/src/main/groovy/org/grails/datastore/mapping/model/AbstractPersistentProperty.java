@@ -29,12 +29,19 @@ import org.grails.datastore.mapping.reflect.NameUtils;
  */
 @SuppressWarnings("rawtypes")
 public abstract class AbstractPersistentProperty<T extends Property> implements PersistentProperty<T> {
+
     protected final PersistentEntity owner;
+
     protected final MappingContext context;
+
     protected final String name;
+
     protected final Class type;
+
     protected Boolean inherited;
+
     private EntityReflector.PropertyReader reader;
+
     private EntityReflector.PropertyWriter writer;
 
     public AbstractPersistentProperty(PersistentEntity owner, MappingContext context, PropertyDescriptor descriptor) {
@@ -81,10 +88,10 @@ public abstract class AbstractPersistentProperty<T extends Property> implements 
     @Override
     public boolean isInherited() {
         if (inherited == null) {
-
             if (owner.isRoot()) {
                 inherited = false;
-            } else {
+            }
+            else {
                 PersistentEntity parentEntity = owner.getParentEntity();
                 boolean foundInParent = false;
                 while (parentEntity != null) {
@@ -118,4 +125,5 @@ public abstract class AbstractPersistentProperty<T extends Property> implements 
         }
         return writer;
     }
+
 }

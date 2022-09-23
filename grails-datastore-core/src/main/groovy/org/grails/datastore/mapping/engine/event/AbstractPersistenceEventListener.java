@@ -15,6 +15,7 @@
 package org.grails.datastore.mapping.engine.event;
 
 import org.springframework.context.ApplicationEvent;
+
 import org.grails.datastore.mapping.core.Datastore;
 
 /**
@@ -31,13 +32,13 @@ public abstract class AbstractPersistenceEventListener implements PersistenceEve
     /**
      * {@inheritDoc}
      * @see org.springframework.context.ApplicationListener#onApplicationEvent(
-     *     org.springframework.context.ApplicationEvent)
+     *org.springframework.context.ApplicationEvent)
      */
     public final void onApplicationEvent(ApplicationEvent e) {
-        if(e instanceof AbstractPersistenceEvent) {
+        if (e instanceof AbstractPersistenceEvent) {
 
-            AbstractPersistenceEvent event = (AbstractPersistenceEvent)e;
-            if(!isValidSource(event)) {
+            AbstractPersistenceEvent event = (AbstractPersistenceEvent) e;
+            if (!isValidSource(event)) {
                 return;
             }
 
@@ -68,4 +69,5 @@ public abstract class AbstractPersistenceEventListener implements PersistenceEve
         // ensure that this listener only handles its events (e.g. if Mongo and Redis are both installed)
         return datastore.getClass().isAssignableFrom(sourceType);
     }
+
 }

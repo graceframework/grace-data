@@ -36,4 +36,5 @@ public interface CascadingValidator extends Validator {
      * @see org.springframework.validation.Validator#validate(Object, org.springframework.validation.Errors)
      */
     void validate(Object obj, Errors errors, boolean cascade);
+
 }

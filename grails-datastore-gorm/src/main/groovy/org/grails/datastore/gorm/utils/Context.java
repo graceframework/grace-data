@@ -29,7 +29,6 @@
  */
 package org.grails.datastore.gorm.utils;
 
-
 /**
  * Information about a class being parsed in a {@link ClassReader}.
  *

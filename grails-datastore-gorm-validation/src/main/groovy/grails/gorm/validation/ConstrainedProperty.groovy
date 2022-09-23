@@ -13,7 +13,6 @@ import org.springframework.validation.Errors
 @CompileStatic
 interface ConstrainedProperty extends Constrained {
 
-
     ResourceBundle MESSAGE_BUNDLE = ResourceBundle.getBundle("grails.gorm.validation.DefaultErrorMessages")
 
     String DEFAULT_NULL_MESSAGE_CODE = "default.null.message"
@@ -47,24 +46,25 @@ interface ConstrainedProperty extends Constrained {
     String DEFAULT_NULL_MESSAGE = MESSAGE_BUNDLE.getString(DEFAULT_NULL_MESSAGE_CODE)
     String DEFAULT_INVALID_VALIDATOR_MESSAGE = MESSAGE_BUNDLE.getString(DEFAULT_INVALID_VALIDATOR_MESSAGE_CODE)
 
-    Map<String, String> DEFAULT_MESSAGES = new HashMap<String, String>() {{
-        put(DEFAULT_BLANK_MESSAGE_CODE,DEFAULT_BLANK_MESSAGE)
-        put(DEFAULT_DOESNT_MATCH_MESSAGE_CODE,DEFAULT_DOESNT_MATCH_MESSAGE)
-        put(DEFAULT_INVALID_CREDIT_CARD_MESSAGE_CODE,DEFAULT_INVALID_CREDIT_CARD_MESSAGE)
-        put(DEFAULT_INVALID_EMAIL_MESSAGE_CODE,DEFAULT_INVALID_EMAIL_MESSAGE)
-        put(DEFAULT_INVALID_MAX_MESSAGE_CODE,DEFAULT_INVALID_MAX_MESSAGE)
-        put(DEFAULT_INVALID_MAX_SIZE_MESSAGE_CODE,DEFAULT_INVALID_MAX_SIZE_MESSAGE)
-        put(DEFAULT_INVALID_MIN_MESSAGE_CODE,DEFAULT_INVALID_MIN_MESSAGE)
-        put(DEFAULT_INVALID_MIN_SIZE_MESSAGE_CODE,DEFAULT_INVALID_MIN_SIZE_MESSAGE)
-        put(DEFAULT_INVALID_RANGE_MESSAGE_CODE,DEFAULT_INVALID_RANGE_MESSAGE)
-        put(DEFAULT_INVALID_SIZE_MESSAGE_CODE,DEFAULT_INVALID_SIZE_MESSAGE)
-        put(DEFAULT_INVALID_URL_MESSAGE_CODE,DEFAULT_INVALID_URL_MESSAGE)
-        put(DEFAULT_NOT_EQUAL_MESSAGE_CODE,DEFAULT_NOT_EQUAL_MESSAGE)
-        put(DEFAULT_NOT_INLIST_MESSAGE_CODE,DEFAULT_NOT_IN_LIST_MESSAGE)
-        put(DEFAULT_NULL_MESSAGE_CODE,DEFAULT_NULL_MESSAGE)
-        put(DEFAULT_INVALID_VALIDATOR_MESSAGE_CODE, DEFAULT_INVALID_VALIDATOR_MESSAGE)
-    }}
-
+    Map<String, String> DEFAULT_MESSAGES = new HashMap<String, String>() {
+        {
+            put(DEFAULT_BLANK_MESSAGE_CODE, DEFAULT_BLANK_MESSAGE)
+            put(DEFAULT_DOESNT_MATCH_MESSAGE_CODE, DEFAULT_DOESNT_MATCH_MESSAGE)
+            put(DEFAULT_INVALID_CREDIT_CARD_MESSAGE_CODE, DEFAULT_INVALID_CREDIT_CARD_MESSAGE)
+            put(DEFAULT_INVALID_EMAIL_MESSAGE_CODE, DEFAULT_INVALID_EMAIL_MESSAGE)
+            put(DEFAULT_INVALID_MAX_MESSAGE_CODE, DEFAULT_INVALID_MAX_MESSAGE)
+            put(DEFAULT_INVALID_MAX_SIZE_MESSAGE_CODE, DEFAULT_INVALID_MAX_SIZE_MESSAGE)
+            put(DEFAULT_INVALID_MIN_MESSAGE_CODE, DEFAULT_INVALID_MIN_MESSAGE)
+            put(DEFAULT_INVALID_MIN_SIZE_MESSAGE_CODE, DEFAULT_INVALID_MIN_SIZE_MESSAGE)
+            put(DEFAULT_INVALID_RANGE_MESSAGE_CODE, DEFAULT_INVALID_RANGE_MESSAGE)
+            put(DEFAULT_INVALID_SIZE_MESSAGE_CODE, DEFAULT_INVALID_SIZE_MESSAGE)
+            put(DEFAULT_INVALID_URL_MESSAGE_CODE, DEFAULT_INVALID_URL_MESSAGE)
+            put(DEFAULT_NOT_EQUAL_MESSAGE_CODE, DEFAULT_NOT_EQUAL_MESSAGE)
+            put(DEFAULT_NOT_INLIST_MESSAGE_CODE, DEFAULT_NOT_IN_LIST_MESSAGE)
+            put(DEFAULT_NULL_MESSAGE_CODE, DEFAULT_NULL_MESSAGE)
+            put(DEFAULT_INVALID_VALIDATOR_MESSAGE_CODE, DEFAULT_INVALID_VALIDATOR_MESSAGE)
+        }
+    }
 
     String CREDIT_CARD_CONSTRAINT = "creditCard"
     String EMAIL_CONSTRAINT = "email"
@@ -125,7 +125,6 @@ interface ConstrainedProperty extends Constrained {
      */
     void applyConstraint(String constraintName, Object constrainingValue)
 
-
     /**
      * @return Returns the appliedConstraints.
      */
@@ -138,6 +137,7 @@ interface ConstrainedProperty extends Constrained {
      * @return The constraint or null if it doesn't exist
      */
     Constraint getAppliedConstraint(String name)
+
     /**
      * @return The owner
      */
@@ -151,4 +151,5 @@ interface ConstrainedProperty extends Constrained {
      * @param errors The Errors instances to report errors to
      */
     void validate(Object target, Object propertyValue, Errors errors)
+
 }

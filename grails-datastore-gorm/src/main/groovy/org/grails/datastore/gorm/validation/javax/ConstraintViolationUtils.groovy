@@ -1,13 +1,13 @@
 package org.grails.datastore.gorm.validation.javax
 
-import grails.gorm.services.Service
+import javax.validation.ConstraintViolation
+import javax.validation.ConstraintViolationException
+
 import groovy.transform.CompileStatic
-import org.grails.datastore.mapping.validation.ValidationErrors
 import org.springframework.validation.Errors
 import org.springframework.validation.MapBindingResult
 
-import javax.validation.ConstraintViolation
-import javax.validation.ConstraintViolationException
+import grails.gorm.services.Service
 
 /**
  * Utility methods for handling ConstraintViolationException
@@ -51,4 +51,5 @@ class ConstraintViolationUtils {
         }
         return errors
     }
+
 }

@@ -12,9 +12,10 @@ import org.springframework.core.env.PropertyResolver
 @CompileStatic
 class SingletonConnectionSources<T, S extends ConnectionSourceSettings> extends AbstractConnectionSources<T, S> {
 
-    SingletonConnectionSources(ConnectionSource<T,S> connectionSource, PropertyResolver configuration) {
+    SingletonConnectionSources(ConnectionSource<T, S> connectionSource, PropertyResolver configuration) {
         super(connectionSource, new NullConnectionFactory(), configuration)
     }
+
     @Override
     protected Iterable<String> getConnectionSourceNames(ConnectionSourceFactory<T, S> connectionSourceFactory, PropertyResolver configuration) {
         Arrays.asList(ConnectionSource.DEFAULT)
@@ -35,7 +36,7 @@ class SingletonConnectionSources<T, S extends ConnectionSourceSettings> extends 
         throw new UnsupportedOperationException("Cannot add a connection source it a SingletonConnectionSources")
     }
 
-    static class NullConnectionFactory<T, S extends ConnectionSourceSettings> extends AbstractConnectionSourceFactory<T,S> {
+    static class NullConnectionFactory<T, S extends ConnectionSourceSettings> extends AbstractConnectionSourceFactory<T, S> {
 
         @Override
         protected <F extends ConnectionSourceSettings> S buildSettings(String name, PropertyResolver configuration, F fallbackSettings, boolean isDefaultDataSource) {
@@ -52,4 +53,5 @@ class SingletonConnectionSources<T, S extends ConnectionSourceSettings> extends 
             throw new UnsupportedOperationException("Cannot add a connection source it a SingletonConnectionSources")
         }
     }
+
 }

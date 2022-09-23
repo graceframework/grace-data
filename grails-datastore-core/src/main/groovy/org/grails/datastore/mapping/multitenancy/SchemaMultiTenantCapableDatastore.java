@@ -16,4 +16,5 @@ public interface SchemaMultiTenantCapableDatastore<T, S extends ConnectionSource
      * @param schemaName The schema name
      */
     void addTenantForSchema(String schemaName);
+
 }

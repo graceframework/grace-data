@@ -21,27 +21,51 @@ package org.grails.datastore.mapping.model.config;
  * @since 1.0
  */
 public interface GormProperties {
+
     String IDENTITY = "id";
+
     String PROPERTIES = "properties";
+
     String TENANT_IDENTITY = "tenantId";
+
     String ERRORS = "errors";
+
     String ATTACHED = "attached";
+
     String CLASS = "class";
+
     String META_CLASS = "metaClass";
+
     String DIRTY = "dirty";
+
     String DIRTY_PROPERTY_NAMES = "dirtyPropertyNames";
+
     String VERSION = "version";
+
     String TRANSIENT = "transients";
+
     String MAPPING_STRATEGY = "mapWith";
+
     String MAPPED_BY = "mappedBy";
+
     String BELONGS_TO = "belongsTo";
+
     String HAS_MANY = "hasMany";
+
     String HAS_ONE = "hasOne";
+
     String DATE_CREATED = "dateCreated";
+
     String MAPPING = "mapping";
+
     String NAMED_QUERIES = "namedQueries";
+
     String LAST_UPDATED = "lastUpdated";
+
     String EMBEDDED = "embedded";
+
     String CONSTRAINTS = "constraints";
+
     String DEFAULT_MAPPING_STRATEGY = "GORM";
+
 }

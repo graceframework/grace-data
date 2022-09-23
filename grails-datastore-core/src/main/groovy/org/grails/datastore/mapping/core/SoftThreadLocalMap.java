@@ -19,4 +19,5 @@ public class SoftThreadLocalMap extends InheritableThreadLocal<ConcurrentReferen
     protected ConcurrentReferenceHashMap initialValue() {
         return new ConcurrentReferenceHashMap();
     }
+
 }
