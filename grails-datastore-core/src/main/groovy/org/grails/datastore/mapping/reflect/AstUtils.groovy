@@ -105,11 +105,14 @@ class AstUtils {
     public static final String GRAILS_APP_DIR = "grails-app"
 
     public static final String REGEX_FILE_SEPARATOR = "[\\\\/]" // backslashes need escaping in regexes
+
     /*
      Domain path is always matched against the normalized File representation of an URL and
      can therefore work with slashes as separators.
      */
     public static Pattern DOMAIN_PATH_PATTERN = Pattern.compile(".+" + REGEX_FILE_SEPARATOR + GRAILS_APP_DIR + REGEX_FILE_SEPARATOR + "domain" + REGEX_FILE_SEPARATOR + "(.+)\\.(groovy|java)")
+
+    private static Pattern DOMAIN_PATH_PATTERN_NEW = Pattern.compile(".+" + REGEX_FILE_SEPARATOR + "app" + REGEX_FILE_SEPARATOR + "domain" + REGEX_FILE_SEPARATOR + "(.+)\\.(groovy|java)")
 
     private static final Map<String, ClassNode> emptyGenericsPlaceHoldersMap = Collections.emptyMap()
 
@@ -122,7 +125,7 @@ class AstUtils {
     static boolean isDomainClass(URL url) {
         if (url == null) return false
 
-        return DOMAIN_PATH_PATTERN.matcher(url.getFile()).find()
+        return DOMAIN_PATH_PATTERN.matcher(url.getFile()).find() || DOMAIN_PATH_PATTERN_NEW.matcher(url.getFile()).find()
     }
 
     /**
