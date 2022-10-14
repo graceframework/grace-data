@@ -19,8 +19,6 @@ import java.lang.annotation.Annotation
 import java.lang.reflect.Modifier
 import java.util.regex.Pattern
 
-import javax.persistence.Entity
-
 import groovy.transform.CompileStatic
 import groovy.transform.Memoized
 import groovy.transform.TypeChecked
@@ -83,7 +81,14 @@ class AstUtils {
     public static final ClassNode OBJECT_CLASS_NODE = new ClassNode(Object.class).getPlainNodeReference()
 
     private static final Set<String> TRANSFORMED_CLASSES = new HashSet<String>()
-    private static final Set<String> ENTITY_ANNOTATIONS = ["grails.persistence.Entity", "grails.gorm.annotation.Entity", Entity.class.getName()] as Set<String>
+    private static final Set<String> ENTITY_ANNOTATIONS = ["grails.persistence.Entity", "grails.gorm.annotation.Entity"] as Set<String>
+
+    static {
+        ClassLoader classLoader = AstUtils.getClassLoader()
+        if (ClassUtils.isPresent("javax.persistence.EntityManagerFactory", classLoader)) {
+            ENTITY_ANNOTATIONS.add("javax.persistence.Entity")
+        }
+    }
 
     /**
      * @return The names of the transformed entities for this context
