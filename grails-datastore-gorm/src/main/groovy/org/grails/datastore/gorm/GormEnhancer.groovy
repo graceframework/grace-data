@@ -225,8 +225,8 @@ class GormEnhancer implements Closeable {
      * @return The named query or null if it doesn't exist
      */
     static GormQueryOperations createNamedQuery(Class entity, String queryName, Object... args) {
-        def className = entity.getName()
-        def namedQueries = NAMED_QUERIES.get(className)
+        String className = entity.getName()
+        Map<String, Closure> namedQueries = NAMED_QUERIES.get(className)
         if (namedQueries == null) {
             synchronized (NAMED_QUERIES) {
                 namedQueries = NAMED_QUERIES.get(className)
@@ -240,7 +240,7 @@ class GormEnhancer implements Closeable {
                         NAMED_QUERIES.put(className, namedQueries)
                     }
                     else {
-                        NAMED_QUERIES.put(className, Collections.emptyMap())
+                        NAMED_QUERIES.put(className, Collections.<String, Closure>emptyMap())
                         return null
                     }
                 }
