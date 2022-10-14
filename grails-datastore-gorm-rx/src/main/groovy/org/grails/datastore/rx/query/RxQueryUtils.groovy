@@ -59,7 +59,7 @@ class RxQueryUtils {
                                 if (!toOne.isEmbedded()) {
                                     if (!toOne.isForeignKeyInChild()) {
                                         joinedProperties.add(propertyName)
-                                        observables.add datastoreClient.get(toOne.associatedEntity.javaClass, ((ObservableProxy) currentValue).getProxyKey(), queryState)
+                                        observables.add datastoreClient.get((Class<Observable>) toOne.associatedEntity.javaClass, ((ObservableProxy) currentValue).getProxyKey(), queryState)
                                     }
                                     else {
                                         joinedProperties.add(propertyName)
@@ -97,7 +97,7 @@ class RxQueryUtils {
                                         observables.add(rxQuery.findAll().toList())
                                     }
                                     else {
-                                        observables.add(Observable.just([]))
+                                        observables.add(Observable.just(Collections.<Observable>emptyList()))
                                     }
                                 }
                             }
@@ -112,8 +112,9 @@ class RxQueryUtils {
                         return Arrays.asList(args)
                     }
                 })
-            }.map { List<Object> result ->
+            }.map {
                 // first result is the entity
+                List<Object> result = it as List<Object>
                 def entityInstance = result.get(0)
                 if (result.size() > 1) {
                     int i = 0

@@ -1,4 +1,5 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,6 +44,7 @@ import org.grails.datastore.mapping.core.Session
 import org.grails.datastore.mapping.core.SessionCallback
 import org.grails.datastore.mapping.core.StatelessDatastore
 import org.grails.datastore.mapping.core.connections.ConnectionSource
+import org.grails.datastore.mapping.core.connections.ConnectionSourceSettings
 import org.grails.datastore.mapping.core.connections.ConnectionSources
 import org.grails.datastore.mapping.core.connections.ConnectionSourcesProvider
 import org.grails.datastore.mapping.model.PersistentEntity
@@ -81,7 +83,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
 
         if (datastore instanceof ConnectionSourcesProvider) {
             this.connectionSources = ((ConnectionSourcesProvider) datastore).connectionSources
-            ConnectionSource defaultConnectionSource = connectionSources.defaultConnectionSource
+            ConnectionSource<?, ConnectionSourceSettings> defaultConnectionSource = connectionSources.defaultConnectionSource
             qualifier = defaultConnectionSource.name
             multiTenancyMode = defaultConnectionSource.settings.multiTenancy.mode
 

@@ -17,6 +17,7 @@ import org.grails.datastore.gorm.GormValidateable
 import org.grails.datastore.gorm.finders.DynamicFinder
 import org.grails.datastore.gorm.finders.FinderMethod
 import org.grails.datastore.mapping.core.connections.ConnectionSource
+import org.grails.datastore.mapping.core.connections.ConnectionSourceSettings
 import org.grails.datastore.mapping.core.connections.ConnectionSources
 import org.grails.datastore.mapping.model.PersistentEntity
 import org.grails.datastore.mapping.multitenancy.MultiTenancySettings
@@ -57,7 +58,8 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
         this.datastoreClient = datastoreClient
         this.gormDynamicFinders = createDynamicFinders()
         this.connectionSources = datastoreClient.connectionSources
-        this.multiTenancyMode = connectionSources.defaultConnectionSource.settings.multiTenancy.mode
+        ConnectionSource<?, ConnectionSourceSettings> defaultConnectionSource = connectionSources.defaultConnectionSource
+        this.multiTenancyMode = defaultConnectionSource.settings.multiTenancy.mode
     }
 
     /**
@@ -512,43 +514,43 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
     @Override
     Serializable ident(D instance) {
         String connectionSourceName = datastoreClient.connectionSources.defaultConnectionSource.name
-        RxGormEnhancer.findInstanceApi(persistentClass, connectionSourceName).ident(instance)
+        RxGormEnhancer.<D>findInstanceApi(persistentClass, connectionSourceName).ident(instance)
     }
 
     @Override
     Observable<D> save(D instance) {
         String connectionSourceName = datastoreClient.connectionSources.defaultConnectionSource.name
-        RxGormEnhancer.findInstanceApi(persistentClass, connectionSourceName).save(instance)
+        RxGormEnhancer.<D>findInstanceApi(persistentClass, connectionSourceName).save(instance)
     }
 
     @Override
     Observable<D> save(D instance, Map arguments) {
         String connectionSourceName = datastoreClient.connectionSources.defaultConnectionSource.name
-        RxGormEnhancer.findInstanceApi(persistentClass, connectionSourceName).save(instance, arguments)
+        RxGormEnhancer.<D>findInstanceApi(persistentClass, connectionSourceName).save(instance, arguments)
     }
 
     @Override
     Observable<D> insert(D instance) {
         String connectionSourceName = datastoreClient.connectionSources.defaultConnectionSource.name
-        RxGormEnhancer.findInstanceApi(persistentClass, connectionSourceName).insert(instance)
+        RxGormEnhancer.<D>findInstanceApi(persistentClass, connectionSourceName).insert(instance)
     }
 
     @Override
     Observable<D> insert(D instance, Map arguments) {
         String connectionSourceName = datastoreClient.connectionSources.defaultConnectionSource.name
-        RxGormEnhancer.findInstanceApi(persistentClass, connectionSourceName).save(instance, arguments)
+        RxGormEnhancer.<D>findInstanceApi(persistentClass, connectionSourceName).save(instance, arguments)
     }
 
     @Override
     Observable<Boolean> delete(D instance) {
         String connectionSourceName = datastoreClient.connectionSources.defaultConnectionSource.name
-        RxGormEnhancer.findInstanceApi(persistentClass, connectionSourceName).delete(instance)
+        RxGormEnhancer.<D>findInstanceApi(persistentClass, connectionSourceName).delete(instance)
     }
 
     @Override
     Observable<Boolean> delete(D instance, Map arguments) {
         String connectionSourceName = datastoreClient.connectionSources.defaultConnectionSource.name
-        RxGormEnhancer.findInstanceApi(persistentClass, connectionSourceName).delete(instance, arguments)
+        RxGormEnhancer.<D>findInstanceApi(persistentClass, connectionSourceName).delete(instance, arguments)
     }
 
     @Override
@@ -601,10 +603,10 @@ class RxGormStaticApi<D> implements RxGormAllOperations<D> {
     @Override
     RxGormAllOperations<D> withTenant(Serializable tenantId) {
         if (multiTenancyMode == MultiTenancySettings.MultiTenancyMode.DATABASE) {
-            return RxGormEnhancer.findStaticApi(persistentClass, tenantId.toString())
+            return RxGormEnhancer.<D>findStaticApi(persistentClass, tenantId.toString())
         }
         else if (multiTenancyMode.isSharedConnection()) {
-            return new TenantDelegatingRxGormOperations<D>(datastoreClient, tenantId, RxGormEnhancer.findStaticApi(persistentClass))
+            return new TenantDelegatingRxGormOperations<D>(datastoreClient, tenantId, RxGormEnhancer.<D>findStaticApi(persistentClass))
         }
         else {
             throw new UnsupportedOperationException("Method not supported in multi tenancy mode $multiTenancyMode")
