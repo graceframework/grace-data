@@ -254,7 +254,7 @@ dependencies {
 
 task install(dependsOn: subprojects*.tasks*.withType(PublishToMavenLocal))
 
-apply from: resources.text.fromInsecureUri('http://localhost:9000/common-publishing.gradle')
+apply from: 'https://raw.githubusercontent.com/grails/grails-common-build/master/common-publishing.gradle'
 
 task test(dependsOn: getTasksByName("test", true)) {
      doLast {
