@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 the original author or authors.
+ * Copyright 2017-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,6 +43,7 @@ import org.codehaus.groovy.control.io.URLReaderSource
 import org.codehaus.groovy.transform.ASTTransformation
 import org.codehaus.groovy.transform.GroovyASTTransformation
 import org.codehaus.groovy.transform.trait.TraitComposer
+import org.springframework.asm.Opcodes
 
 import grails.gorm.services.Service
 import grails.gorm.transactions.NotTransactional
@@ -114,7 +115,7 @@ import static org.grails.datastore.mapping.reflect.AstUtils.warning
  */
 @CompileStatic
 @GroovyASTTransformation(phase = CompilePhase.SEMANTIC_ANALYSIS)
-class ServiceTransformation extends AbstractTraitApplyingGormASTTransformation implements CompilationUnitAware, ASTTransformation {
+class ServiceTransformation extends AbstractTraitApplyingGormASTTransformation implements CompilationUnitAware, ASTTransformation, Opcodes {
 
     private static final ClassNode MY_TYPE = new ClassNode(Service.class);
     private static final Object APPLIED_MARKER = new Object()
