@@ -43,7 +43,7 @@ trait ValidatedService<T> extends Service<T> {
     /**
      * @return The validator factory for this service
      */
-    ValidatorFactory getValidatorFactory() {
+    private ValidatorFactory getValidatorFactory() {
         if (validatorFactory == null) {
 
             Configuration configuration
@@ -77,7 +77,7 @@ trait ValidatedService<T> extends Service<T> {
      */
     void javaxValidate(Object instance, Method method, Object... args) throws ConstraintViolationException {
         ExecutableValidator validator = executableValidatorMap.get(method)
-        Set<ConstraintViolation> constraintViolations = validator.validateParameters(instance, method, args)
+        Set<ConstraintViolation<Object>> constraintViolations = validator.validateParameters(instance, method, args)
         if (!constraintViolations.isEmpty()) {
             throw new ConstraintViolationException(constraintViolations)
         }
@@ -94,7 +94,7 @@ trait ValidatedService<T> extends Service<T> {
      */
     void validate(Object instance, Method method, Object... args) throws ValidationException {
         ExecutableValidator validator = executableValidatorMap.get(method)
-        Set<ConstraintViolation> constraintViolations = validator.validateParameters(instance, method, args)
+        Set<ConstraintViolation<Object>> constraintViolations = validator.validateParameters(instance, method, args)
         if (!constraintViolations.isEmpty()) {
             throw ValidationException.newInstance("Validation failed for method: $method.name ", asErrors(instance, constraintViolations))
         }
