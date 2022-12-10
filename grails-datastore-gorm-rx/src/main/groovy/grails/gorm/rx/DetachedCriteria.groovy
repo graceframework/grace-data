@@ -93,7 +93,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
      */
     Observable<List<T>> toList(Map args = Collections.emptyMap(), @DelegatesTo(DetachedCriteria) Closure additionalCriteria = null) {
         Query query = prepareQuery(args, additionalCriteria)
-        return ((RxQuery) query).findAll(args).toList()
+        return ((RxQuery<T>) query).findAll(args).toList()
     }
 
     /**
@@ -105,7 +105,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
      */
     Observable<List<T>> list(Map args = Collections.emptyMap(), @DelegatesTo(DetachedCriteria) Closure additionalCriteria = null) {
         Query query = prepareQuery(args, additionalCriteria)
-        return ((RxQuery) query).findAll(args).toList()
+        return ((RxQuery<T>) query).findAll(args).toList()
     }
 
     /**
@@ -118,7 +118,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<Observable<T>> implem
     Observable<Number> getCount(Map args = Collections.emptyMap(), @DelegatesTo(DetachedCriteria) Closure additionalCriteria = null) {
         Query query = prepareQuery(args, additionalCriteria)
         query.projections().count()
-        return ((RxQuery) query).singleResult(args)
+        return ((RxQuery<Number>) query).singleResult(args)
     }
 
     /**

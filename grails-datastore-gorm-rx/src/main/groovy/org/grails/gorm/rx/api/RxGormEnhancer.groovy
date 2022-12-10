@@ -25,13 +25,13 @@ import org.grails.datastore.rx.internal.RxDatastoreClientImplementor
 @Slf4j
 class RxGormEnhancer {
 
-    private static final Map<String, Map<String, RxGormStaticApi>> STATIC_APIS = new ConcurrentHashMap<String, Map<String, RxGormStaticApi>>().withDefault { String key ->
+    private static final Map<String, ? extends Map<String, RxGormStaticApi>> STATIC_APIS = new ConcurrentHashMap<String, ? extends Map<String, RxGormStaticApi>>().withDefault { String key ->
         return new ConcurrentHashMap<String, RxGormStaticApi>()
     }
-    private static final Map<String, Map<String, RxGormInstanceApi>> INSTANCE_APIS = new ConcurrentHashMap<String, Map<String, RxGormInstanceApi>>().withDefault { String key ->
+    private static final Map<String, ? extends Map<String, RxGormInstanceApi>> INSTANCE_APIS = new ConcurrentHashMap<String, ? extends Map<String, RxGormInstanceApi>>().withDefault { String key ->
         return new ConcurrentHashMap<String, RxGormInstanceApi>()
     }
-    private static final Map<String, Map<String, RxGormValidationApi>> VALIDATION_APIS = new ConcurrentHashMap<String, Map<String, RxGormValidationApi>>().withDefault { String key ->
+    private static final Map<String, ? extends Map<String, RxGormValidationApi>> VALIDATION_APIS = new ConcurrentHashMap<String, ? extends Map<String, RxGormValidationApi>>().withDefault { String key ->
         return new ConcurrentHashMap<String, RxGormValidationApi>()
     }
     private static final Map<Class<? extends RxDatastoreClient>, RxDatastoreClient> DATASTORE_CLIENTS = new ConcurrentHashMap<Class<? extends RxDatastoreClient>, RxDatastoreClient>()

@@ -32,7 +32,7 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
     protected List<Query.Criterion> criteria = []
     protected List<Query.Order> orders = []
     protected List<Query.Projection> projections = []
-    protected Class targetClass
+    protected Class<T> targetClass
     protected List<DynamicFinder> dynamicFinders
     protected Integer defaultOffset
     protected Integer defaultMax

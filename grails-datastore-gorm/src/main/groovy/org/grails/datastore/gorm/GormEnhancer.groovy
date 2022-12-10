@@ -71,19 +71,19 @@ class GormEnhancer implements Closeable {
 
     private static final Map<String, Map<String, Closure>> NAMED_QUERIES = new ConcurrentHashMap<>()
 
-    private static final Map<String, Map<String, GormStaticApi>> STATIC_APIS = new ConcurrentHashMap<String, Map<String, GormStaticApi>>().withDefault { String key ->
+    private static final Map<String, ? extends Map<String, GormStaticApi>> STATIC_APIS = new ConcurrentHashMap<String, ? extends Map<String, GormStaticApi>>().withDefault { String key ->
         return new ConcurrentHashMap<String, GormStaticApi>()
     }
 
-    private static final Map<String, Map<String, GormInstanceApi>> INSTANCE_APIS = new ConcurrentHashMap<String, Map<String, GormInstanceApi>>().withDefault { String key ->
+    private static final Map<String, ? extends Map<String, GormInstanceApi>> INSTANCE_APIS = new ConcurrentHashMap<String, ? extends Map<String, GormInstanceApi>>().withDefault { String key ->
         return new ConcurrentHashMap<String, GormInstanceApi>()
     }
 
-    private static final Map<String, Map<String, GormValidationApi>> VALIDATION_APIS = new ConcurrentHashMap<String, Map<String, GormValidationApi>>().withDefault { String key ->
+    private static final Map<String, ? extends Map<String, GormValidationApi>> VALIDATION_APIS = new ConcurrentHashMap<String, ? extends Map<String, GormValidationApi>>().withDefault { String key ->
         return new ConcurrentHashMap<String, GormValidationApi>()
     }
 
-    private static final Map<String, Map<String, Datastore>> DATASTORES = new ConcurrentHashMap<String, Map<String, Datastore>>().withDefault { String key ->
+    private static final Map<String, ? extends Map<String, Datastore>> DATASTORES = new ConcurrentHashMap<String, ? extends Map<String, Datastore>>().withDefault { String key ->
         return new ConcurrentHashMap<String, Datastore>()
     }
 
@@ -547,9 +547,9 @@ class GormEnhancer implements Closeable {
 
     @CompileStatic
     protected void addStaticMethods(PersistentEntity e, boolean onlyExtendedMethods) {
-        def cls = e.javaClass
+        Class<Object> cls = e.javaClass
         ExpandoMetaClass mc = MetaClassUtils.getExpandoMetaClass(cls)
-        def staticApiProvider = getStaticApi(cls)
+        GormStaticApi<Object> staticApiProvider = getStaticApi(cls)
         for (Method m in (onlyExtendedMethods ? staticApiProvider.extendedMethods : staticApiProvider.methods)) {
             def method = m
             if (method != null) {

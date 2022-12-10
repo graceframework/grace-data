@@ -36,10 +36,10 @@ import org.grails.datastore.gorm.validation.constraints.factory.DefaultConstrain
 @CompileStatic
 class DefaultConstraintRegistry implements ConstraintRegistry {
 
-    protected Map<String, List<ConstraintFactory>> factoriesByName = new ConcurrentHashMap<String, List<ConstraintFactory>>().withDefault { String name ->
+    protected Map<String, ? extends List<ConstraintFactory>> factoriesByName = new ConcurrentHashMap<String, ? extends List<ConstraintFactory>>().withDefault { String name ->
         return []
     }
-    protected Map<Class<? extends Constraint>, List<ConstraintFactory>> factoriesByType = new ConcurrentHashMap<Class<? extends Constraint>, List<ConstraintFactory>>().withDefault { Class<? extends Constraint> type ->
+    protected Map<Class<? extends Constraint>, ? extends List<ConstraintFactory>> factoriesByType = new ConcurrentHashMap<Class<? extends Constraint>, ? extends List<ConstraintFactory>>().withDefault { Class<? extends Constraint> type ->
         return []
     }
 
