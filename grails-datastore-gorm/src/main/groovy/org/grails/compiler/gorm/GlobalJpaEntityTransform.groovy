@@ -15,6 +15,8 @@ import org.codehaus.groovy.transform.ASTTransformation
 import org.codehaus.groovy.transform.AbstractASTTransformation
 import org.codehaus.groovy.transform.GroovyASTTransformation
 
+import org.grails.datastore.mapping.reflect.ClassUtils
+
 /**
  * Makes all entities annotated with @Entity JPA into GORM entities
  *
@@ -25,12 +27,22 @@ import org.codehaus.groovy.transform.GroovyASTTransformation
 @GroovyASTTransformation(phase = CompilePhase.SEMANTIC_ANALYSIS)
 class GlobalJpaEntityTransform extends AbstractASTTransformation implements ASTTransformation, CompilationUnitAware {
 
+    private static final boolean jpaPresent
+
     CompilationUnit compilationUnit
+
+    static {
+        ClassLoader classLoader = GlobalJpaEntityTransform.getClassLoader()
+        jpaPresent = ClassUtils.isPresent("javax.persistence.Entity", classLoader)
+    }
 
     @Override
     void visit(ASTNode[] astNodes, SourceUnit source) {
-        ModuleNode ast = source.getAST();
-        List<ClassNode> classes = ast.getClasses();
+        if (!jpaPresent) {
+            return
+        }
+        ModuleNode ast = source.getAST()
+        List<ClassNode> classes = ast.getClasses()
         for (ClassNode aClass : classes) {
             visitClass(aClass, source)
         }
