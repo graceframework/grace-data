@@ -92,8 +92,8 @@ subprojects {
         apply plugin: "org.gradle.test-retry"
         apply plugin: 'checkstyle'
         apply plugin: 'codenarc'
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
+        sourceCompatibility = 11
+        targetCompatibility = 11
     }
 
     def isGormDatasource = project.name.startsWith("grails-datastore-gorm-") &&
@@ -254,7 +254,7 @@ dependencies {
 
 task install(dependsOn: subprojects*.tasks*.withType(PublishToMavenLocal))
 
-apply from: 'https://raw.githubusercontent.com/grails/grails-common-build/master/common-publishing.gradle'
+apply from: resources.text.fromInsecureUri('http://localhost:9000/common-publishing.gradle')
 
 task test(dependsOn: getTasksByName("test", true)) {
      doLast {
