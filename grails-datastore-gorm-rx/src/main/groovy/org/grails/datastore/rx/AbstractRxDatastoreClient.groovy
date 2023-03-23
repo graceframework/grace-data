@@ -377,7 +377,7 @@ abstract class AbstractRxDatastoreClient<T> implements RxDatastoreClient<T>, RxD
             }
 
             if (batchOperation.hasPendingOperations()) {
-                return batchWrite(batchOperation).map({
+                return (Observable<List>) batchWrite(batchOperation).map({
                     if (eventPublisher != null) {
                         for (event in postEvents) {
                             eventPublisher.publishEvent(event)

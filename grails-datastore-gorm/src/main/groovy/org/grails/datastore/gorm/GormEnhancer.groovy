@@ -588,15 +588,14 @@ class GormEnhancer implements Closeable {
         for (AbstractGormApi apiProvider in getInstanceMethodApiProviders(cls)) {
             for (Method method in (onlyExtendedMethods ? apiProvider.extendedMethods : apiProvider.methods)) {
                 def methodName = method.name
-                Class[] parameterTypes = method.parameterTypes
 
-                if (parameterTypes) {
-                    parameterTypes = parameterTypes.length == 1 ? [] : parameterTypes[1..-1]
+                if (method.parameterTypes) {
+                    List<Class<?>> parameterTypes = method.parameterTypes.length == 1 ? [] : method.parameterTypes[1..-1]
 
-                    boolean realMethodExists = doesRealMethodExist(mc, methodName, parameterTypes, false)
+                    boolean realMethodExists = doesRealMethodExist(mc, methodName, parameterTypes.toArray(new Class[0]), false)
 
                     if (!realMethodExists) {
-                        registerInstanceMethod(cls, mc, apiProvider, methodName, parameterTypes)
+                        registerInstanceMethod(cls, mc, apiProvider, methodName, parameterTypes.toArray(new Class[0]))
                     }
                 }
             }
