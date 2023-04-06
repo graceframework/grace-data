@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenLocal()
         mavenCentral()
         maven { url "https://repo.grails.org/grails/core" }
         maven { url "https://plugins.gradle.org/m2/" }
@@ -38,6 +39,7 @@ apply plugin: 'project-report'
 
 allprojects {
     repositories {
+        mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
         if(isSnapshot) {
             maven { url "https://repo.grails.org/grails/libs-snapshots-local" }
@@ -105,7 +107,7 @@ subprojects {
 
 
     dependencies {
-        api "javax.annotation:javax.annotation-api:$javaAnnotationApiVersion"
+        api "jakarta.annotation:jakarta.annotation-api:$javaAnnotationApiVersion"
 
         if (isStandardGroovyMavenProject) {
             documentation "org.fusesource.jansi:jansi:2.4.0"
