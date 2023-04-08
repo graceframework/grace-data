@@ -1,6 +1,6 @@
 package org.grails.datastore.mapping.multitenancy.web
 
-import javax.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletRequest
 
 import groovy.transform.CompileStatic
 import org.springframework.web.context.request.RequestAttributes

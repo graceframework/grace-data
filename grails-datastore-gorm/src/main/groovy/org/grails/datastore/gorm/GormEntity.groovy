@@ -15,7 +15,7 @@
  */
 package org.grails.datastore.gorm
 
-import javax.persistence.Transient
+import jakarta.persistence.Transient
 
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic

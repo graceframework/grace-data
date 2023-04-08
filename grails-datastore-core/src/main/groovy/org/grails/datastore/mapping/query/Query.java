@@ -23,10 +23,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import javax.persistence.FetchType;
-import javax.persistence.FlushModeType;
-import javax.persistence.LockModeType;
-import javax.persistence.criteria.JoinType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.FlushModeType;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.criteria.JoinType;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;

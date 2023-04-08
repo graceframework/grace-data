@@ -3,9 +3,9 @@ package org.grails.datastore.gorm.validation.javax.services.implementers
 import java.lang.reflect.Method
 import java.lang.reflect.Modifier
 
-import javax.validation.Constraint
-import javax.validation.ConstraintViolationException
-import javax.validation.ParameterNameProvider
+import jakarta.validation.Constraint
+import jakarta.validation.ConstraintViolationException
+import jakarta.validation.ParameterNameProvider
 
 import groovy.transform.CompileStatic
 import org.codehaus.groovy.ast.AnnotationNode
@@ -70,7 +70,7 @@ class MethodValidationImplementer implements ServiceEnhancer {
 
     @Override
     boolean doesEnhance(ClassNode domainClass, MethodNode methodNode) {
-        if (ClassUtils.isPresent("javax.validation.Validation")) {
+        if (ClassUtils.isPresent("jakarta.validation.Validation")) {
             for (Parameter p in methodNode.parameters) {
                 if (p.annotations.any() { AnnotationNode ann ->
                     def constraintAnn = findAnnotation(ann.classNode, Constraint)

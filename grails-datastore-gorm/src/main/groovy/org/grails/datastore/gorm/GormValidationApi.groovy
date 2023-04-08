@@ -14,7 +14,7 @@
  */
 package org.grails.datastore.gorm
 
-import javax.persistence.FlushModeType
+import jakarta.persistence.FlushModeType
 
 import groovy.transform.CompileStatic
 import org.springframework.context.ApplicationEventPublisher

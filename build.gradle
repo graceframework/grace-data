@@ -234,7 +234,7 @@ subprojects {
             options.encoding "UTF-8"
             options.docEncoding "UTF-8"
             options.charSet "UTF-8"
-            options.jFlags "-Xms64M", "-Xmx512M"
+            options.jFlags "-Xms64M", "-Xmx1024M"
         }
 
         configure([groovydoc]) {

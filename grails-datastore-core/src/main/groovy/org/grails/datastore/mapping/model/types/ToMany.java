@@ -17,7 +17,7 @@ package org.grails.datastore.mapping.model.types;
 
 import java.beans.PropertyDescriptor;
 
-import javax.persistence.FetchType;
+import jakarta.persistence.FetchType;
 
 import org.grails.datastore.mapping.config.Property;
 import org.grails.datastore.mapping.model.MappingContext;

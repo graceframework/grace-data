@@ -1,6 +1,6 @@
 package org.grails.datastore.gorm.validation.listener
 
-import javax.persistence.FlushModeType
+import jakarta.persistence.FlushModeType
 
 import groovy.transform.CompileStatic
 import org.springframework.context.ApplicationEvent

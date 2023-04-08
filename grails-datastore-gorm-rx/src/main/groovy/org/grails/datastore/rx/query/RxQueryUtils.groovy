@@ -1,6 +1,6 @@
 package org.grails.datastore.rx.query
 
-import javax.persistence.FetchType
+import jakarta.persistence.FetchType
 
 import groovy.transform.CompileStatic
 import rx.Observable

@@ -1,6 +1,6 @@
 package org.grails.compiler.gorm
 
-import javax.persistence.Entity
+import jakarta.persistence.Entity
 
 import groovy.transform.CompilationUnitAware
 import groovy.transform.CompileStatic
@@ -33,7 +33,7 @@ class GlobalJpaEntityTransform extends AbstractASTTransformation implements ASTT
 
     static {
         ClassLoader classLoader = GlobalJpaEntityTransform.getClassLoader()
-        jpaPresent = ClassUtils.isPresent("javax.persistence.Entity", classLoader)
+        jpaPresent = ClassUtils.isPresent("jakarta.persistence.Entity", classLoader)
     }
 
     @Override

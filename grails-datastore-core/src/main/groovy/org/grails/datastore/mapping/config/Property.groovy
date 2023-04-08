@@ -14,10 +14,10 @@
  */
 package org.grails.datastore.mapping.config
 
-import javax.persistence.AccessType
-import javax.persistence.CascadeType
-import javax.persistence.EnumType
-import javax.persistence.FetchType
+import jakarta.persistence.AccessType
+import jakarta.persistence.CascadeType
+import jakarta.persistence.EnumType
+import jakarta.persistence.FetchType
 
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic

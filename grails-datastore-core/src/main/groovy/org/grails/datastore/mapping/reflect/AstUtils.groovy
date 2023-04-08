@@ -85,8 +85,8 @@ class AstUtils {
 
     static {
         ClassLoader classLoader = AstUtils.getClassLoader()
-        if (ClassUtils.isPresent("javax.persistence.EntityManagerFactory", classLoader)) {
-            ENTITY_ANNOTATIONS.add("javax.persistence.Entity")
+        if (ClassUtils.isPresent("jakarta.persistence.EntityManagerFactory", classLoader)) {
+            ENTITY_ANNOTATIONS.add("jakarta.persistence.Entity")
         }
     }
 

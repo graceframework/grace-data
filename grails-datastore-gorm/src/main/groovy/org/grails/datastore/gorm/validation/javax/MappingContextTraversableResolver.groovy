@@ -2,8 +2,8 @@ package org.grails.datastore.gorm.validation.javax
 
 import java.lang.annotation.ElementType
 
-import javax.validation.Path
-import javax.validation.TraversableResolver
+import jakarta.validation.Path
+import jakarta.validation.TraversableResolver
 
 import groovy.transform.CompileStatic
 

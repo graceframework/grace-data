@@ -1,6 +1,6 @@
 package org.grails.datastore.mapping.dirty.checking
 
-import javax.persistence.Transient
+import jakarta.persistence.Transient
 
 import groovy.transform.CompileStatic
 

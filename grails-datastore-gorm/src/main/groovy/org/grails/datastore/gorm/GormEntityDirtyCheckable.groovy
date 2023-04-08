@@ -17,7 +17,6 @@ package org.grails.datastore.gorm
 
 import groovy.transform.CompileStatic
 import groovy.transform.Generated
-import groovy.util.logging.Slf4j
 import org.grails.datastore.mapping.config.Property
 import org.grails.datastore.mapping.dirty.checking.DirtyCheckable
 import org.grails.datastore.mapping.model.PersistentEntity

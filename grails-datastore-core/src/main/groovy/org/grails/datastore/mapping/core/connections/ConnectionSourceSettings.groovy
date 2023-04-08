@@ -1,6 +1,6 @@
 package org.grails.datastore.mapping.core.connections
 
-import javax.persistence.FlushModeType
+import jakarta.persistence.FlushModeType
 
 import groovy.transform.AutoClone
 import groovy.transform.CompileStatic

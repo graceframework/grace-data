@@ -1,6 +1,6 @@
 package org.grails.datastore.rx
 
-import javax.persistence.CascadeType
+import jakarta.persistence.CascadeType
 
 import groovy.transform.CompileStatic
 import org.springframework.context.ApplicationEvent

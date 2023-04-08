@@ -1,6 +1,6 @@
 package grails.gorm.rx
 
-import javax.persistence.FetchType
+import jakarta.persistence.FetchType
 
 import groovy.transform.CompileStatic
 import rx.Observable

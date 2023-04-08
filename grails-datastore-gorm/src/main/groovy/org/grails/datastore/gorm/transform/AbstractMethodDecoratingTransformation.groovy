@@ -18,8 +18,8 @@ package org.grails.datastore.gorm.transform
 import java.beans.Introspector
 import java.lang.reflect.Modifier
 
-import javax.annotation.PostConstruct
-import javax.annotation.PreDestroy
+import jakarta.annotation.PostConstruct
+import jakarta.annotation.PreDestroy
 
 import groovy.transform.CompileStatic
 import org.codehaus.groovy.ast.ASTNode

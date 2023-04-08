@@ -1,8 +1,8 @@
 package org.grails.datastore.gorm.validation.javax
 
-import javax.validation.ConstraintViolation
-import javax.validation.Validator
-import javax.validation.executable.ExecutableValidator
+import jakarta.validation.ConstraintViolation
+import jakarta.validation.Validator
+import jakarta.validation.executable.ExecutableValidator
 
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic

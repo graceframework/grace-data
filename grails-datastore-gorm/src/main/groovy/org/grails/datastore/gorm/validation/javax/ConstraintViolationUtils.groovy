@@ -1,7 +1,7 @@
 package org.grails.datastore.gorm.validation.javax
 
-import javax.validation.ConstraintViolation
-import javax.validation.ConstraintViolationException
+import jakarta.validation.ConstraintViolation
+import jakarta.validation.ConstraintViolationException
 
 import groovy.transform.CompileStatic
 import org.springframework.validation.Errors

@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
 
 import org.grails.datastore.mapping.config.Property;
 import org.grails.datastore.mapping.dirty.checking.DirtyCheckable;

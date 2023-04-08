@@ -16,7 +16,7 @@ package org.grails.datastore.mapping.core;
 
 import java.util.Map;
 
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PreDestroy;
 
 import groovy.lang.Closure;
 import groovy.lang.GroovySystem;

@@ -15,7 +15,7 @@
 
 package grails.gorm
 
-import javax.persistence.criteria.JoinType
+import jakarta.persistence.criteria.JoinType
 
 import groovy.transform.CompileStatic
 

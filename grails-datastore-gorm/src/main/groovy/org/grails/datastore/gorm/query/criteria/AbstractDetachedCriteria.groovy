@@ -1,7 +1,7 @@
 package org.grails.datastore.gorm.query.criteria
 
-import javax.persistence.FetchType
-import javax.persistence.criteria.JoinType
+import jakarta.persistence.FetchType
+import jakarta.persistence.criteria.JoinType
 
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
