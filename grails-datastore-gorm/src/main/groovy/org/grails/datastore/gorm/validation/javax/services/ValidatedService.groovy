@@ -36,14 +36,12 @@ trait ValidatedService<T> extends Service<T> {
      */
     private ValidatorFactory validatorFactory
 
-    private Map<Method, ExecutableValidator> executableValidatorMap = new LinkedHashMap<Method, ExecutableValidator>().withDefault {
-        getValidatorFactory().getValidator().forExecutables()
-    }
+    private Map<Method, ExecutableValidator> executableValidatorMap = new LinkedHashMap<Method, ExecutableValidator>()
 
     /**
      * @return The validator factory for this service
      */
-    private ValidatorFactory getValidatorFactory() {
+    ValidatorFactory getValidatorFactory() {
         if (validatorFactory == null) {
 
             Configuration configuration
@@ -77,6 +75,7 @@ trait ValidatedService<T> extends Service<T> {
      */
     void javaxValidate(Object instance, Method method, Object... args) throws ConstraintViolationException {
         ExecutableValidator validator = executableValidatorMap.get(method)
+        validator = validator ?: getValidatorFactory().getValidator().forExecutables()
         Set<ConstraintViolation<Object>> constraintViolations = validator.validateParameters(instance, method, args)
         if (!constraintViolations.isEmpty()) {
             throw new ConstraintViolationException(constraintViolations)
@@ -94,6 +93,7 @@ trait ValidatedService<T> extends Service<T> {
      */
     void validate(Object instance, Method method, Object... args) throws ValidationException {
         ExecutableValidator validator = executableValidatorMap.get(method)
+        validator = validator ?: getValidatorFactory().getValidator().forExecutables()
         Set<ConstraintViolation<Object>> constraintViolations = validator.validateParameters(instance, method, args)
         if (!constraintViolations.isEmpty()) {
             throw ValidationException.newInstance("Validation failed for method: $method.name ", asErrors(instance, constraintViolations))

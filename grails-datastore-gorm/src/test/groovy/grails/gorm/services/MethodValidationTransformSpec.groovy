@@ -71,7 +71,7 @@ class Foo {
         instance.findAgain("")
 
         then:
-        def e2 = thrown( ValidationException )
+        def e2 = thrown( grails.validation.ValidationException )
         e2.message
         e2.errors.hasErrors()
         e2.errors.hasFieldErrors('title')
