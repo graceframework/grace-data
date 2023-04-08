@@ -476,6 +476,7 @@ class Parent {
     String name
 }
 
+@DirtyCheck
 @Entity
 class Child {
     String name

@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenLocal()
         mavenCentral()
         maven { url "https://repo.grails.org/grails/core" }
         maven { url "https://plugins.gradle.org/m2/" }
@@ -38,6 +39,7 @@ apply plugin: 'project-report'
 
 allprojects {
     repositories {
+        mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
         if(isSnapshot) {
             maven { url "https://repo.grails.org/grails/libs-snapshots-local" }
@@ -95,7 +97,7 @@ subprojects {
         targetCompatibility = 11
     }
 
-    def isGormDatasource = project.name.startsWith("grails-datastore-gorm-") &&
+    def isGormDatasource = project.name.startsWith("grails-datastore-gorm") &&
                                 !project.name.endsWith("tck") &&
                                 !project.name.endsWith("-support") &&
                                 !project.name.endsWith("-core") &&
