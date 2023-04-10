@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.grails.datastore.gorm.services
+package org.grails.datastore.gorm.services;
 
-import org.codehaus.groovy.ast.ClassNode
-import org.codehaus.groovy.ast.MethodNode
+import org.codehaus.groovy.ast.ClassNode;
+import org.codehaus.groovy.ast.MethodNode;
 
 /**
  * An interface for classes that provide implementations for service methods
@@ -24,33 +24,34 @@ import org.codehaus.groovy.ast.MethodNode
  * @author Graeme Rocher
  * @since 6.1
  */
-interface ServiceImplementer {
+public interface ServiceImplementer {
 
     /**
      * Marker that should be stored on the method node once a method has been implemented
      */
-    String IMPLEMENTED = "IMPLEMENTED"
+    String IMPLEMENTED = "IMPLEMENTED";
 
     /**
      * Used to store the resolved return type when it has been resolved from generics within the ast metadata
      */
-    String RETURN_TYPE = "RETURN_TYPE"
+    String RETURN_TYPE = "RETURN_TYPE";
+
     /**
      * Does this service implement the method
      *
      * @param domainClass The domain class that this implementor applies to. If not known will be equal to ClassHelper.OBJECT_TYPE
-     * @param methodNode The abstract method node
+     * @param methodNode  The abstract method node
      * @return True if it does
      */
-    boolean doesImplement(ClassNode domainClass, MethodNode methodNode)
+    boolean doesImplement(ClassNode domainClass, MethodNode methodNode);
 
     /**
      * Implement the method
      *
-     * @param targetClassNode The target class node
+     * @param targetClassNode    The target class node
      * @param abstractMethodNode The abstract method node to implement
-     * @param newMethodNode The new method node being implemented
+     * @param newMethodNode      The new method node being implemented
      */
-    void implement(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode)
+    void implement(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode);
 
 }

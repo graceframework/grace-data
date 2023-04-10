@@ -1,6 +1,6 @@
-package org.grails.datastore.gorm.services.implementers
+package org.grails.datastore.gorm.services.implementers;
 
-import org.grails.datastore.gorm.services.ServiceImplementer
+import org.grails.datastore.gorm.services.ServiceImplementer;
 
 /**
  * An interface for adapters to return the original implementer
@@ -8,8 +8,8 @@ import org.grails.datastore.gorm.services.ServiceImplementer
  * @author Graeme Rocher
  * @since 6.1.1
  */
-interface AdaptedImplementer {
+public interface AdaptedImplementer {
 
-    ServiceImplementer getAdapted()
+    ServiceImplementer getAdapted();
 
 }

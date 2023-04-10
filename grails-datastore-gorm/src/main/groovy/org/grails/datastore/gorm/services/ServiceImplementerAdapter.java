@@ -1,4 +1,4 @@
-package org.grails.datastore.gorm.services
+package org.grails.datastore.gorm.services;
 
 /**
  * Allows adapting an implementer from one type to another
@@ -6,13 +6,14 @@ package org.grails.datastore.gorm.services
  * @author Graeme Rocher
  * @since 6.1.1
  */
-interface ServiceImplementerAdapter {
+public interface ServiceImplementerAdapter {
+
     /**
      * Adapt the implementer, returning a new implementer if possible, otherwise null
      *
      * @param implementer The implementer
      * @return The adapted implementer or null
      */
-    ServiceImplementer adapt(ServiceImplementer implementer)
+    ServiceImplementer adapt(ServiceImplementer implementer);
 
 }

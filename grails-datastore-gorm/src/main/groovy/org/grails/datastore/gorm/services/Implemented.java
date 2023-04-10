@@ -1,12 +1,14 @@
-package org.grails.datastore.gorm.services
+package org.grails.datastore.gorm.services;
 
-import java.lang.annotation.ElementType
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
-import java.lang.annotation.Target
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import grails.gorm.services.Service;
 
 /**
- * Annotation added by the {@link grails.gorm.services.Service} transformation to know which class implemented
+ * Annotation added by the {@link Service} transformation to know which class implemented
  * a method
  *
  * @author Graeme Rocher
@@ -14,8 +16,8 @@ import java.lang.annotation.Target
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@interface Implemented {
+public @interface Implemented {
 
-    Class by()
+    Class by();
 
 }

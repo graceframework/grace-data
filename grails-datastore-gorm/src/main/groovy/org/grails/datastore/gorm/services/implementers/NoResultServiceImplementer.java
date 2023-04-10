@@ -1,4 +1,4 @@
-package org.grails.datastore.gorm.services.implementers
+package org.grails.datastore.gorm.services.implementers;
 
 /**
  * An implement with a return type of void
@@ -6,5 +6,6 @@ package org.grails.datastore.gorm.services.implementers
  * @author Graeme Rocher
  * @since 6.1.1
  */
-interface NoResultServiceImplementer extends PrefixedServiceImplementer {
+public interface NoResultServiceImplementer extends PrefixedServiceImplementer {
+
 }
