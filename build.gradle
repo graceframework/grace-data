@@ -19,6 +19,7 @@ ext {
 
     nexusUsername = System.getenv("SONATYPE_USERNAME") ?: project.hasProperty("sonatypeOssUsername") ? project.sonatypeOssUsername : ''
     nexusPassword = System.getenv("SONATYPE_PASSWORD") ?: project.hasProperty("sonatypeOssPassword") ? project.sonatypeOssPassword : ''
+    commonBuild = 'https://raw.githubusercontent.com/rainboyan/grails-common-build/22.0.x'
 }
 
 def spockDependency = "org.spockframework:spock-core:$spockVersion"
@@ -255,7 +256,7 @@ dependencies {
 
 task install(dependsOn: subprojects*.tasks*.withType(PublishToMavenLocal))
 
-apply from: resources.text.fromInsecureUri('http://localhost:9000/common-publishing.gradle')
+apply from: "${commonBuild}/common-publishing.gradle"
 
 task test(dependsOn: getTasksByName("test", true)) {
      doLast {
