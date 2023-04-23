@@ -83,13 +83,6 @@ class AstUtils {
     private static final Set<String> TRANSFORMED_CLASSES = new HashSet<String>()
     private static final Set<String> ENTITY_ANNOTATIONS = ["grails.persistence.Entity", "grails.gorm.annotation.Entity"] as Set<String>
 
-    static {
-        ClassLoader classLoader = AstUtils.getClassLoader()
-        if (ClassUtils.isPresent("jakarta.persistence.EntityManagerFactory", classLoader)) {
-            ENTITY_ANNOTATIONS.add("jakarta.persistence.Entity")
-        }
-    }
-
     /**
      * @return The names of the transformed entities for this context
      */

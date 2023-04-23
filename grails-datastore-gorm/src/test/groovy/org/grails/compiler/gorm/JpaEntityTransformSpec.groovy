@@ -1,19 +1,10 @@
 package org.grails.compiler.gorm
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
-import jakarta.persistence.Transient
-import jakarta.validation.constraints.Digits
-
-import org.springframework.validation.annotation.Validated
-import spock.lang.Specification
-
 import org.grails.datastore.gorm.GormEntity
 import org.grails.datastore.mapping.model.config.GormProperties
 import org.grails.datastore.mapping.reflect.ClassPropertyFetcher
+import org.springframework.validation.annotation.Validated
+import spock.lang.Specification
 
 /**
  * Created by graemerocher on 22/12/16.
@@ -22,29 +13,45 @@ class JpaEntityTransformSpec extends Specification {
 
     void "test the JPA entity transform the entity correctly"() {
         given:
-        ClassPropertyFetcher cpf = ClassPropertyFetcher.forClass(Customer)
-        expect:
-        GormEntity.isAssignableFrom(Customer)
-        Customer.getAnnotation(Validated)
-        Customer.getDeclaredMethod("getId").returnType == Long
-        Customer.getDeclaredMethod("getId").getAnnotation(Transient)
-        cpf.getPropertyDescriptor(GormProperties.IDENTITY)
-        Customer.getDeclaredMethod('addToRelated', Object)
-        Customer.getDeclaredMethod('removeFromRelated', Object)
-    }
-}
-
+        GroovyClassLoader gcl = new GroovyClassLoader()
+        Class customerClass = gcl.parseClass('''
+import jakarta.persistence.*
+import jakarta.validation.constraints.Digits
 @Entity
 class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     Long myId
     @Digits
     String firstName;
     String lastName;
-
-    @OneToMany
+    
+    @jakarta.persistence.OneToMany
     Set<Customer> related
 
 }
+
+''')
+        ClassPropertyFetcher cpf = ClassPropertyFetcher.forClass(customerClass)
+        def instance = customerClass.newInstance()
+        instance.myId = 1L
+        expect:
+        !GormEntity.isAssignableFrom(customerClass)
+
+        when:
+        def ann = customerClass.getAnnotation(Validated)
+        def pd = cpf.getPropertyDescriptor(GormProperties.IDENTITY)
+        then:
+        ann == null
+        pd == null
+
+        when:
+        customerClass.getDeclaredMethod("getId")
+        customerClass.getDeclaredMethod('addToRelated', Object)
+        customerClass.getDeclaredMethod('removeFromRelated', Object)
+        then:
+        thrown(NoSuchMethodException)
+    }
+}
+

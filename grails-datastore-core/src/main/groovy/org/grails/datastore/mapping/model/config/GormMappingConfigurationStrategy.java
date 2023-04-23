@@ -29,8 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import jakarta.persistence.Entity;
-
 import groovy.lang.Closure;
 import groovy.lang.MetaProperty;
 import org.springframework.util.StringUtils;
@@ -127,9 +125,6 @@ public class GormMappingConfigurationStrategy implements MappingConfigurationStr
             return false;
         }
         if (Enum.class.isAssignableFrom(clazz)) return false;
-        if (clazz.isAnnotationPresent(Entity.class)) {
-            return true;
-        }
         // this is done so we don't need a statically typed reference to the Grails annotation
         for (Annotation annotation : clazz.getAnnotations()) {
             String annName = annotation.annotationType().getName();

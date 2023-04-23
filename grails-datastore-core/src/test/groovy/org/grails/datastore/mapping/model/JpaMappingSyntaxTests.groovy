@@ -22,7 +22,7 @@ class JpaMappingSyntaxTests extends Specification {
     
     void "test get identity"() {
         given:
-        def context = new TestMappingContext()
+        def context = new TestJpaMappingContext()
         context.addPersistentEntity(JpaTestEntity)
         def strategy = context.mappingSyntaxStrategy
         def id = strategy.getIdentity(JpaTestEntity, context)
@@ -35,7 +35,7 @@ class JpaMappingSyntaxTests extends Specification {
 
 //    void "test get composite identity"() {
 //        given:
-//        def context = new TestMappingContext()
+//        def context = new TestJpaMappingContext()
 //        PersistentEntity entity = context.addPersistentEntity(JpaCompositeIdEntity)
 //
 //        expect:
@@ -48,7 +48,7 @@ class JpaMappingSyntaxTests extends Specification {
     
     void "test get simple persistent properties"() {
         given:
-        def context = new TestMappingContext()
+        def context = new TestJpaMappingContext()
         context.addPersistentEntity(JpaTestEntity)
         context.addPersistentEntity(JpaSecondEntity)
         def strategy = context.mappingSyntaxStrategy
@@ -62,7 +62,7 @@ class JpaMappingSyntaxTests extends Specification {
     
     void "test unidirectional one to one"() {
         given:
-        def context = new TestMappingContext()
+        def context = new TestJpaMappingContext()
         context.addPersistentEntity(JpaTestEntity)
 
         expect:
@@ -86,7 +86,7 @@ class JpaMappingSyntaxTests extends Specification {
 
     void "test bidirectional one to one"() {
         given:
-        def context = new TestMappingContext()
+        def context = new TestJpaMappingContext()
         context.addPersistentEntity(JpaTestEntity)
 
         expect:
@@ -124,7 +124,7 @@ class JpaMappingSyntaxTests extends Specification {
 
     void "test uni-directional one to many"() {
         given:
-        def context = new TestMappingContext()
+        def context = new TestJpaMappingContext()
         context.addPersistentEntity(JpaPublisher)
 
         expect:
@@ -144,7 +144,7 @@ class JpaMappingSyntaxTests extends Specification {
 
     void "test uni-directional many to one"() {
         given:
-        def context = new TestMappingContext()
+        def context = new TestJpaMappingContext()
         context.addPersistentEntity(JpaBook)
 
         expect:
@@ -164,7 +164,7 @@ class JpaMappingSyntaxTests extends Specification {
 
     void "test bidirectional one to many"() {
         given:
-        def context = new TestMappingContext()
+        def context = new TestJpaMappingContext()
         context.addPersistentEntity(JpaBook)
 
         expect:
@@ -195,7 +195,7 @@ class JpaMappingSyntaxTests extends Specification {
 
     void "test many to many"() {
         given:
-        def context = new TestMappingContext()
+        def context = new TestJpaMappingContext()
         context.addPersistentEntity(JpaAuthority)
 
         expect:
@@ -227,7 +227,7 @@ class JpaMappingSyntaxTests extends Specification {
 
     void "test indexed property"() {
         given:
-        def context = new TestMappingContext()
+        def context = new TestJpaMappingContext()
         context.addPersistentEntity(JpaEntityWithIndexedProperty)
 
         expect:
@@ -238,7 +238,7 @@ class JpaMappingSyntaxTests extends Specification {
     
     void "test force unidirectional"() {
         given:
-        def context = new TestMappingContext()
+        def context = new TestJpaMappingContext()
         context.addPersistentEntity(JpaUser)
         
         expect:
