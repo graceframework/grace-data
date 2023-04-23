@@ -1,7 +1,7 @@
 package org.grails.datastore.mapping.model
 
 import grails.gorm.annotation.Entity
-import org.grails.datastore.mapping.model.config.JpaMappingConfigurationStrategy
+import org.grails.datastore.mapping.model.config.GormMappingConfigurationStrategy
 
 import static org.junit.jupiter.api.Assertions.*
 
@@ -21,7 +21,7 @@ class GormMappingSyntaxTests {
     @Test
     void testIsEntity() {
 
-        def strategy = new JpaMappingConfigurationStrategy(new TestMappedPropertyFactory())
+        def strategy = new GormMappingConfigurationStrategy(new TestMappedPropertyFactory())
 
         assert strategy.isPersistentEntity(TestEntity)
         assert strategy.isPersistentEntity(JavaEntity)
