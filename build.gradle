@@ -56,10 +56,10 @@ allprojects {
     configurations {
         all {
             resolutionStrategy {
-                force "org.codehaus.groovy:groovy:$groovyVersion"
-                force "org.codehaus.groovy:groovy-dateutil:$groovyVersion"
-                force "org.codehaus.groovy:groovy-xml:$groovyVersion"
-                force "org.codehaus.groovy:groovy-templates:$groovyVersion"
+                force "org.apache.groovy:groovy:$groovyVersion"
+                force "org.apache.groovy:groovy-dateutil:$groovyVersion"
+                force "org.apache.groovy:groovy-xml:$groovyVersion"
+                force "org.apache.groovy:groovy-templates:$groovyVersion"
             }
         }
     }
@@ -112,12 +112,12 @@ subprojects {
 
         if (isStandardGroovyMavenProject) {
             documentation "org.fusesource.jansi:jansi:2.4.0"
-            documentation "org.codehaus.groovy:groovy-dateutil:$groovyVersion"
+            documentation "org.apache.groovy:groovy-dateutil:$groovyVersion"
             documentation 'info.picocli:picocli:4.6.3'
             documentation ("com.github.javaparser:javaparser-core:$javaParserCoreVersion")
 
-            api "org.codehaus.groovy:groovy:$groovyVersion"
-            testImplementation "org.codehaus.groovy:groovy-test-junit5:$groovyVersion"
+            api "org.apache.groovy:groovy:$groovyVersion"
+            testImplementation "org.apache.groovy:groovy-test-junit5:$groovyVersion"
             testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
             testImplementation "org.junit.platform:junit-platform-runner:$junitJupiterPlatformVersion"
             testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
@@ -126,7 +126,7 @@ subprojects {
         }
 
         if (project.name == "grails-datastore-gorm-tck") {
-            api "org.codehaus.groovy:groovy-test-junit5:$groovyVersion"
+            api "org.apache.groovy:groovy-test-junit5:$groovyVersion"
             api "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
             api "org.junit.platform:junit-platform-runner:$junitJupiterPlatformVersion"
             runtimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
