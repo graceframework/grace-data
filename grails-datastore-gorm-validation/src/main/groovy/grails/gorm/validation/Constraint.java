@@ -10,6 +10,8 @@ import org.springframework.validation.Errors;
  */
 public interface Constraint {
 
+    String CONSTRAINT_SUFFIX = "Constraint";
+
     /**
      * Returns whether the constraint supports being applied against the specified type;
      *
