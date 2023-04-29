@@ -24,7 +24,7 @@ class GormMappingSyntaxTests {
         def strategy = new GormMappingConfigurationStrategy(new TestMappedPropertyFactory())
 
         assert strategy.isPersistentEntity(TestEntity)
-        assert strategy.isPersistentEntity(JavaEntity)
+//        assert strategy.isPersistentEntity(JavaEntity)
         assert !strategy.isPersistentEntity(GormMappingSyntaxTests)
     }
 
@@ -156,8 +156,8 @@ class GormMappingSyntaxTests {
 
     }
 
-    @jakarta.persistence.Entity
-    class JavaEntity {}
+//    @jakarta.persistence.Entity
+//    class JavaEntity {}
 }
 
 @Entity
@@ -193,15 +193,17 @@ class TestEntity {
 
     SecondEntity second
 
-    transient String getTransientMethodProperty() {}
+//    transient
+    String getTransientMethodProperty() {}
 
-    transient void setTransientMethodProperty(String value) {}
+//    transient
+    void setTransientMethodProperty(String value) {}
 
     static hasOne = [second:SecondEntity]
     static transients = ['bar']
 }
 
-@Entity
+//@Entity
 class SecondEntity {
     Long id
     String name

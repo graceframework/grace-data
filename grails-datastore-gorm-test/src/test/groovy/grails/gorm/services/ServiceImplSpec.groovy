@@ -1,5 +1,7 @@
 package grails.gorm.services
 
+import spock.lang.Ignore
+
 import grails.gorm.annotation.Entity
 import grails.gorm.validation.PersistentEntityValidator
 import grails.validation.ValidationException
@@ -16,6 +18,7 @@ import spock.lang.Specification
 /**
  * Created by graemerocher on 06/02/2017.
  */
+@Ignore("https://issues.apache.org/jira/browse/GROOVY-5106")
 class ServiceImplSpec extends Specification {
 
     @AutoCleanup SimpleMapDatastore datastore = new SimpleMapDatastore(

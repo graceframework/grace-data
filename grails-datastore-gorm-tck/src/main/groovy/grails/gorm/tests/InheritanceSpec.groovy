@@ -1,10 +1,13 @@
 package grails.gorm.tests
 
+import spock.lang.Ignore
+
 import grails.persistence.Entity
 
 /**
  * @author graemerocher
  */
+@Ignore("https://issues.apache.org/jira/browse/GROOVY-5106")
 class InheritanceSpec extends GormDatastoreSpec {
 
     @Override
@@ -97,7 +100,7 @@ class Practice implements Serializable {
     static hasMany = [locations: Location]
 }
 
-@Entity
+//@Entity
 class Location implements Serializable {
 //    Long id
     Long version
