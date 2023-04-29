@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.context.MessageSource;
@@ -91,13 +92,13 @@ public class DefaultConstraintRegistry implements ConstraintRegistry {
     @Override
     @SuppressWarnings("unchecked")
     public List<ConstraintFactory<? extends Constraint>> findConstraintFactories(String name) {
-        return this.factoriesByName.get(name);
+        return this.factoriesByName.getOrDefault(name, new ArrayList<>());
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<ConstraintFactory<? extends Constraint>> findConstraintFactories(Class constraintType) {
-        return this.factoriesByType.get(constraintType);
+        return this.factoriesByType.getOrDefault(constraintType, new ArrayList<>());
     }
 
 }

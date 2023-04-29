@@ -616,7 +616,7 @@ class DefaultConstrainedProperty implements ConstrainedProperty {
     @Override
     boolean supportsContraint(String constraintName) {
         List<ConstraintFactory> constraintFactories = constraintRegistry.findConstraintFactories(constraintName)
-        if (constraintFactories.isEmpty()) {
+        if (constraintFactories?.isEmpty()) {
             return PROPERTY_FETCHER.getPropertyDescriptor(constraintName)?.getWriteMethod() != null
         }
 
@@ -646,7 +646,7 @@ class DefaultConstrainedProperty implements ConstrainedProperty {
     void applyConstraint(String constraintName, Object constrainingValue) {
         List<ConstraintFactory> constraintFactories = constraintRegistry.findConstraintFactories(constraintName)
 
-        if (!constraintFactories.isEmpty()) {
+        if (!constraintFactories?.isEmpty()) {
             if (constrainingValue == null) {
                 appliedConstraints.remove(constraintName)
             }
