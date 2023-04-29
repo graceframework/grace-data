@@ -6,11 +6,13 @@ import org.codehaus.groovy.ast.MethodNode
 import org.codehaus.groovy.ast.expr.Expression
 import org.codehaus.groovy.ast.stmt.Statement
 
+import org.grails.datastore.gorm.GormEntity
+
 /**
  * Created by graemerocher on 05/04/2017.
  */
 @CompileStatic
-class FindAllByInterfaceProjectionImplementer extends FindAllByImplementer implements IterableProjectionServiceImplementer, IterableInterfaceProjectionBuilder {
+class FindAllByInterfaceProjectionImplementer extends FindAllByImplementer implements IterableProjectionServiceImplementer<GormEntity>, IterableInterfaceProjectionBuilder {
 
     @Override
     boolean doesImplement(ClassNode domainClass, MethodNode methodNode) {

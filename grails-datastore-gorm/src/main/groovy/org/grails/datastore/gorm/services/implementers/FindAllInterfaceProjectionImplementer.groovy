@@ -7,6 +7,8 @@ import org.codehaus.groovy.ast.expr.Expression
 import org.codehaus.groovy.ast.expr.VariableExpression
 import org.codehaus.groovy.ast.stmt.BlockStatement
 
+import org.grails.datastore.gorm.GormEntity
+
 import static org.codehaus.groovy.ast.tools.GeneralUtils.callX
 import static org.codehaus.groovy.ast.tools.GeneralUtils.castX
 
@@ -14,7 +16,7 @@ import static org.codehaus.groovy.ast.tools.GeneralUtils.castX
  * Used for performing interface projections on
  */
 @CompileStatic
-class FindAllInterfaceProjectionImplementer extends FindAllImplementer implements IterableInterfaceProjectionBuilder, IterableProjectionServiceImplementer {
+class FindAllInterfaceProjectionImplementer extends FindAllImplementer implements IterableInterfaceProjectionBuilder, IterableProjectionServiceImplementer<GormEntity> {
 
     @Override
     protected ClassNode resolveDomainClassFromSignature(ClassNode currentDomainClassNode, MethodNode methodNode) {
