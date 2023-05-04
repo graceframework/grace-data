@@ -1,5 +1,5 @@
 dependencies {
-    api "javax.transaction:jta:$jtaVersion"
+    api "javax.transaction:javax.transaction-api:$jtaVersion"
     api "org.slf4j:slf4j-api:$slf4jVersion"
     api "org.slf4j:jcl-over-slf4j:$slf4jVersion"
     api "javax.persistence:javax.persistence-api:$jpaVersion"
