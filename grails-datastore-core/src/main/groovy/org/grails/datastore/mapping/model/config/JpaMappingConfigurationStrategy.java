@@ -38,6 +38,7 @@ import org.grails.datastore.mapping.model.types.ToOne;
 import org.grails.datastore.mapping.reflect.ClassPropertyFetcher;
 
 @SuppressWarnings({ "rawtypes", "unchecked", "Duplicates" })
+@Deprecated(since = "2022.2.3", forRemoval = true)
 public class JpaMappingConfigurationStrategy extends GormMappingConfigurationStrategy {
 
     public JpaMappingConfigurationStrategy(MappingFactory propertyFactory) {

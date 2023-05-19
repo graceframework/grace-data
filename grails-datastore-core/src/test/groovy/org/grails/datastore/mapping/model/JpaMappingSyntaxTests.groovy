@@ -8,6 +8,7 @@ import javax.persistence.*
 /**
  * Created by jameskleeh on 12/21/16.
  */
+@Deprecated(since = '2022.2.2', forRemoval = true)
 class JpaMappingSyntaxTests extends Specification {
     
     void "test class is entity"() {
