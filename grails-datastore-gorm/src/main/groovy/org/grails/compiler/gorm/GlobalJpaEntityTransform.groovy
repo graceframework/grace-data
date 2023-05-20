@@ -21,10 +21,12 @@ import org.grails.datastore.mapping.reflect.ClassUtils
  * Makes all entities annotated with @Entity JPA into GORM entities
  *
  * @author Graeme Rocher
+ * @deprecated Do not support JPA since 2022.2.2
  * @since 6.1
  */
 @CompileStatic
 @GroovyASTTransformation(phase = CompilePhase.SEMANTIC_ANALYSIS)
+@Deprecated(since = '2022.2.3', forRemoval = true)
 class GlobalJpaEntityTransform extends AbstractASTTransformation implements ASTTransformation, CompilationUnitAware {
 
     private static final boolean jpaPresent
