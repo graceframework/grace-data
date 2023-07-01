@@ -15,6 +15,8 @@
  */
 package org.grails.datastore.mapping.reflect
 
+import org.codehaus.groovy.ast.InnerClassNode
+
 import java.lang.annotation.Annotation
 import java.lang.reflect.Modifier
 import java.util.regex.Pattern
@@ -72,6 +74,7 @@ class AstUtils {
 
     public static final ClassNode COMPILE_STATIC_TYPE = ClassHelper.make(CompileStatic)
     public static final ClassNode TYPE_CHECKED_TYPE = ClassHelper.make(TypeChecked)
+    public static final ClassNode GORM_ENTITY_TYPE = ClassHelper.make("org.grails.datastore.gorm.GormEntity")
     public static final Object TRANSFORM_APPLIED_MARKER = new Object()
     public static final String DOMAIN_TYPE = "Domain"
     public static final Parameter[] ZERO_PARAMETERS = new Parameter[0]
@@ -82,6 +85,18 @@ class AstUtils {
 
     private static final Set<String> TRANSFORMED_CLASSES = new HashSet<String>()
     private static final Set<String> ENTITY_ANNOTATIONS = ["grails.persistence.Entity", "grails.gorm.annotation.Entity"] as Set<String>
+
+    private static Class<?> JPA_ENTITY_ANNOTATION
+    static {
+        ClassLoader classLoader = AstUtils.getClassLoader()
+        if (ClassUtils.isPresent("javax.persistence.EntityManagerFactory", classLoader)) {
+            try {
+                JPA_ENTITY_ANNOTATION = classLoader.loadClass("javax.persistence.Entity");
+            }
+            catch (ClassNotFoundException ignored) {
+            }
+        }
+    }
 
     /**
      * @return The names of the transformed entities for this context
@@ -113,18 +128,6 @@ class AstUtils {
     private static Pattern DOMAIN_PATH_PATTERN_NEW = Pattern.compile(".+" + REGEX_FILE_SEPARATOR + "app" + REGEX_FILE_SEPARATOR + "domain" + REGEX_FILE_SEPARATOR + "(.+)\\.(groovy|java)")
 
     private static final Map<String, ClassNode> emptyGenericsPlaceHoldersMap = Collections.emptyMap()
-
-    /**
-     * Checks whether the file referenced by the given url is a domain class
-     *
-     * @param url The URL instance
-     * @return true if it is a domain class
-     */
-    static boolean isDomainClass(URL url) {
-        if (url == null) return false
-
-        return DOMAIN_PATH_PATTERN.matcher(url.getFile()).find() || DOMAIN_PATH_PATTERN_NEW.matcher(url.getFile()).find()
-    }
 
     /**
      * Finds all the abstract methods for the give class node
@@ -417,32 +420,44 @@ class AstUtils {
         return pn
     }
 
+    /**
+     * Checks whether the file referenced by the given url is a domain class
+     *
+     * @param url The URL instance
+     * @return true if it is a domain class
+     */
+    static boolean isDomainClass(URL url) {
+        if (url == null) return false
+
+        return DOMAIN_PATH_PATTERN.matcher(url.getFile()).find() || DOMAIN_PATH_PATTERN_NEW.matcher(url.getFile()).find()
+    }
+
     @Memoized
     static boolean isDomainClass(ClassNode classNode) {
-        if (classNode == null) return false
-        if (classNode.isArray()) return false
-        if (implementsInterface(classNode, "org.grails.datastore.gorm.GormEntity")) {
+        if (classNode == null || classNode.isArray() || classNode.isEnum() ||
+                classNode.isInterface() || (classNode instanceof InnerClassNode)) {
+            return false
+        }
+        if (classNode.implementsInterface(GORM_ENTITY_TYPE)) {
             return true
         }
-        String filePath = classNode.getModule() != null ? classNode.getModule().getDescription() : null
-        if (filePath != null) {
-            try {
-                if (isDomainClass(new File(filePath).toURI().toURL())) {
-                    return true
-                }
-            }
-            catch (MalformedURLException e) {
-                // ignore
-            }
+        if (JPA_ENTITY_ANNOTATION != null && !classNode.getAnnotations(new ClassNode(JPA_ENTITY_ANNOTATION)).isEmpty()) {
+            return false
         }
+
         List<AnnotationNode> annotations = classNode.getAnnotations()
         if (annotations != null && !annotations.isEmpty()) {
             for (AnnotationNode annotation : annotations) {
                 String className = annotation.getClassNode().getName()
-                if (ENTITY_ANNOTATIONS.any() { String ann -> ann.equals(className) }) {
+                if (ENTITY_ANNOTATIONS.any() { String ann -> (ann == className) }) {
                     return true
                 }
             }
+        }
+        String grailsAppDir = classNode.getModule()?.getContext()?.getAST()?.getNodeMetaData('GRAILS_APP_DIR')
+        String fileName = classNode.getModule() != null ? classNode.getModule().getContext().getName() : null
+        if (grailsAppDir != null && fileName != null && fileName.startsWith(grailsAppDir + File.separatorChar + 'domain')) {
+            return true
         }
         return false
     }
