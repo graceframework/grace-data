@@ -47,7 +47,6 @@ public class GormTransformer implements GrailsArtefactClassInjector {
         return AstUtils.getKnownEntityNames();
     }
 
-
     @Override
     public void performInjection(SourceUnit source, GeneratorContext context, ClassNode classNode) {
         if (GrailsASTUtils.hasAnnotation(classNode, Canonical.class)) {
@@ -64,11 +63,6 @@ public class GormTransformer implements GrailsArtefactClassInjector {
             GrailsASTUtils.error(source, classNode, "Class [" + classNode.getName() + "] is marked with @groovy.transform.Canonical which is not supported for GORM entities.", true);
         }
         new GormEntityTransformation().visit(classNode, source);
-    }
-
-    @Override
-    public void performInjectionOnAnnotatedClass(SourceUnit source, ClassNode classNode) {
-        performInjection(source, classNode);
     }
 
 }
