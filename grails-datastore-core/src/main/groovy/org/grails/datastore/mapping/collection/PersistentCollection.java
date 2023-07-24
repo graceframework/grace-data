@@ -24,8 +24,7 @@ import org.grails.datastore.mapping.dirty.checking.DirtyCheckableCollection;
  * @author Graeme Rocher
  * @since 1.0
  */
-@SuppressWarnings("rawtypes")
-public interface PersistentCollection extends Collection, DirtyCheckableCollection {
+public interface PersistentCollection<E> extends Collection<E>, DirtyCheckableCollection {
 
     /**
      * Check whether the collection has been loaded.

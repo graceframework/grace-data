@@ -27,7 +27,7 @@ import org.grails.datastore.rx.query.RxQuery
 
 @CompileStatic
 @Slf4j
-class RxPersistentSortedSet extends PersistentSet implements SortedSet, RxPersistentCollection, RxUnidirectionalCollection, RxCollection {
+class RxPersistentSortedSet<E> extends PersistentSet<E> implements SortedSet<E>, RxPersistentCollection<E>, RxUnidirectionalCollection, RxCollection<E> {
 
     final RxDatastoreClient datastoreClient
     final Association association
@@ -134,7 +134,7 @@ class RxPersistentSortedSet extends PersistentSet implements SortedSet, RxPersis
     @Override
     List<Serializable> getAssociationKeys() {
         if (keys != null) {
-            return keys.toList()
+            return keys.toList() as List<Serializable>
         }
         else {
             return Collections.emptyList()

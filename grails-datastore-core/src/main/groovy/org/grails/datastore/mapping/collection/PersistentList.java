@@ -31,28 +31,28 @@ import org.grails.datastore.mapping.model.types.Association;
  * @since 1.0
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class PersistentList extends AbstractPersistentCollection implements List {
+public class PersistentList<E> extends AbstractPersistentCollection<E> implements List<E> {
 
-    private final List list;
+    private final List<E> list;
 
-    public PersistentList(Class childType, Session session, List collection) {
+    public PersistentList(Class childType, Session session, List<E> collection) {
         super(childType, session, collection);
         this.list = collection;
     }
 
     public PersistentList(Collection keys, Class childType, Session session) {
         super(keys, childType, session, new ArrayList());
-        list = (List) collection;
+        list = (List<E>) collection;
     }
 
     public PersistentList(Serializable associationKey, Session session, AssociationQueryExecutor indexer) {
         super(associationKey, session, indexer, new ArrayList());
-        list = (List) collection;
+        list = (List<E>) collection;
     }
 
     public PersistentList(Association association, Serializable associationKey, Session session) {
         super(association, associationKey, session, new ArrayList());
-        list = (List) collection;
+        list = (List<E>) collection;
     }
 
     public int indexOf(Object o) {
@@ -65,37 +65,37 @@ public class PersistentList extends AbstractPersistentCollection implements List
         return list.lastIndexOf(o);
     }
 
-    public Object get(int index) {
+    public E get(int index) {
         initialize();
         return list.get(index);
     }
 
-    public Object set(int index, Object element) {
+    public E set(int index, E element) {
         initialize();
-        Object replaced = list.set(index, element);
+        E replaced = list.set(index, element);
         if (replaced != element) {
             markDirty();
         }
         return replaced;
     }
 
-    public void add(int index, Object element) {
+    public void add(int index, E element) {
         initialize();
         list.add(index, element);
         markDirty();
     }
 
-    public Object remove(int index) {
+    public E remove(int index) {
         initialize();
         int size = size();
-        Object removed = list.remove(index);
+        E removed = list.remove(index);
         if (size != size()) {
             markDirty();
         }
         return removed;
     }
 
-    public boolean addAll(int index, Collection c) {
+    public boolean addAll(int index, Collection<? extends E> c) {
         initialize();
         boolean changed = list.addAll(index, c);
         if (changed) {
@@ -104,26 +104,26 @@ public class PersistentList extends AbstractPersistentCollection implements List
         return changed;
     }
 
-    public ListIterator listIterator() {
+    public ListIterator<E> listIterator() {
         initialize();
         return new PersistentListIterator(list.listIterator());
     }
 
-    public ListIterator listIterator(int index) {
+    public ListIterator<E> listIterator(int index) {
         initialize();
         return new PersistentListIterator(list.listIterator(index));
     }
 
-    public List subList(int fromIndex, int toIndex) {
+    public List<E> subList(int fromIndex, int toIndex) {
         initialize();
         return list.subList(fromIndex, toIndex); // not modification-aware
     }
 
-    private class PersistentListIterator implements ListIterator {
+    private class PersistentListIterator<E> implements ListIterator<E> {
 
-        private final ListIterator iterator;
+        private final ListIterator<E> iterator;
 
-        private PersistentListIterator(ListIterator iterator) {
+        private PersistentListIterator(ListIterator<E> iterator) {
             this.iterator = iterator;
         }
 
@@ -131,7 +131,7 @@ public class PersistentList extends AbstractPersistentCollection implements List
             return iterator.hasNext();
         }
 
-        public Object next() {
+        public E next() {
             return iterator.next();
         }
 
@@ -139,7 +139,7 @@ public class PersistentList extends AbstractPersistentCollection implements List
             return iterator.hasPrevious();
         }
 
-        public Object previous() {
+        public E previous() {
             return iterator.previous();
         }
 
@@ -156,12 +156,12 @@ public class PersistentList extends AbstractPersistentCollection implements List
             markDirty();
         }
 
-        public void set(Object e) {
+        public void set(E e) {
             iterator.set(e);
             markDirty(); // assume changed
         }
 
-        public void add(Object e) {
+        public void add(E e) {
             iterator.add(e);
             markDirty();
         }

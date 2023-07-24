@@ -24,7 +24,7 @@ import rx.Subscription
  */
 @CompileStatic
 @Slf4j
-class RxPersistentSet extends PersistentSet implements RxPersistentCollection, RxUnidirectionalCollection, RxCollection {
+class RxPersistentSet<E> extends PersistentSet<E> implements RxPersistentCollection<E>, RxUnidirectionalCollection, RxCollection<E> {
     final RxDatastoreClient datastoreClient
     final Association association
 
@@ -103,7 +103,7 @@ class RxPersistentSet extends PersistentSet implements RxPersistentCollection, R
     @Override
     List<Serializable> getAssociationKeys() {
         if(keys != null) {
-            return keys.toList()
+            return keys.toList() as List<Serializable>
         }
         else {
             return Collections.emptyList()
