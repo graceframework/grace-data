@@ -31,7 +31,7 @@ import org.grails.datastore.mapping.query.Query;
  * @author Burt Beckwith
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public abstract class AbstractPersistentCollection implements PersistentCollection, Serializable {
+public abstract class AbstractPersistentCollection<E> implements PersistentCollection<E>, Serializable {
 
     protected final transient Session session;
 
@@ -49,7 +49,7 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
 
     protected boolean dirty = false;
 
-    protected final Collection collection;
+    protected final Collection<E> collection;
 
     protected int originalSize;
 
@@ -184,7 +184,7 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
         return collection.contains(o);
     }
 
-    public boolean add(Object o) {
+    public boolean add(E o) {
         initialize();
         boolean added = collection.add(o);
         if (added) {
@@ -235,14 +235,16 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
         return changed;
     }
 
+    @Override
     public Object[] toArray() {
         initialize();
         return collection.toArray();
     }
 
-    public Object[] toArray(Object[] a) {
+    @Override
+    public <T> T[] toArray(T[] a) {
         initialize();
-        return collection.toArray(a);
+        return this.collection.toArray(a);
     }
 
     public boolean containsAll(Collection c) {
@@ -335,7 +337,7 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
             if (proxyEntities) {
                 for (Object key : keys) {
                     add(
-                            session.proxy(childType, (Serializable) key)
+                            (E) session.proxy(childType, (Serializable) key)
                     );
                 }
             }

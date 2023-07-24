@@ -30,7 +30,7 @@ import org.grails.datastore.mapping.model.types.Association;
  * @since 1.0
  */
 @SuppressWarnings("rawtypes")
-public class PersistentSet extends AbstractPersistentCollection implements Set {
+public class PersistentSet<E> extends AbstractPersistentCollection<E> implements Set<E> {
 
     public PersistentSet(Association association, Serializable associationKey, Session session) {
         super(association, associationKey, session, createCollection());
@@ -55,5 +55,6 @@ public class PersistentSet extends AbstractPersistentCollection implements Set {
     public PersistentSet(Serializable associationKey, Session session, AssociationQueryExecutor indexer) {
         super(associationKey, session, indexer, createCollection());
     }
+
 
 }

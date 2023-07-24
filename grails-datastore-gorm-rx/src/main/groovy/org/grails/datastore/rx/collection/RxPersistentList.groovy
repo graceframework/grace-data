@@ -23,7 +23,7 @@ import org.grails.datastore.rx.query.RxQuery
  */
 //@CompileStatic
 @Slf4j
-class RxPersistentList extends PersistentList implements RxPersistentCollection, RxUnidirectionalCollection, RxCollection {
+class RxPersistentList<E> extends PersistentList<E> implements RxPersistentCollection<E>, RxUnidirectionalCollection, RxCollection<E> {
 
     final RxDatastoreClient datastoreClient
     final Association association

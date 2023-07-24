@@ -17,7 +17,7 @@ import org.grails.datastore.mapping.model.types.Association;
  * @since 1.0
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class PersistentSortedSet extends AbstractPersistentCollection implements SortedSet {
+public class PersistentSortedSet<E> extends AbstractPersistentCollection<E> implements SortedSet<E> {
 
     public PersistentSortedSet(Association association, Serializable associationKey, Session session) {
         super(association, associationKey, session, new TreeSet());
@@ -39,28 +39,28 @@ public class PersistentSortedSet extends AbstractPersistentCollection implements
         return getSortedSet().comparator();
     }
 
-    private SortedSet getSortedSet() {
+    private SortedSet<E> getSortedSet() {
         initialize();
-        return ((SortedSet) collection);
+        return ((SortedSet<E>) collection);
     }
 
-    public SortedSet subSet(Object o, Object o1) {
+    public SortedSet<E> subSet(E o, E o1) {
         return getSortedSet().subSet(o, o1);
     }
 
-    public SortedSet headSet(Object o) {
+    public SortedSet<E> headSet(E o) {
         return getSortedSet().headSet(o);
     }
 
-    public SortedSet tailSet(Object o) {
+    public SortedSet<E> tailSet(E o) {
         return getSortedSet().tailSet(o);
     }
 
-    public Object first() {
+    public E first() {
         return getSortedSet().first();
     }
 
-    public Object last() {
+    public E last() {
         return getSortedSet().last();
     }
 
