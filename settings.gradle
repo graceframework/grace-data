@@ -1,34 +1,6 @@
-plugins {
-    id "com.gradle.enterprise" version "3.12.3"
-    id 'com.gradle.common-custom-user-data-gradle-plugin' version '1.8.2'
-}
+rootProject.name = "Grails GORM"
 
-gradleEnterprise {
-    server = 'https://ge.grails.org'
-    buildScan {
-        publishAlways()
-        publishIfAuthenticated()
-        uploadInBackground = System.getenv("CI") == null
-        capture {
-            taskInputFiles = true
-        }
-    }
-}
-
-buildCache {
-    local { enabled = System.getenv('CI') != 'true' }
-    remote(HttpBuildCache) {
-        push = System.getenv('CI') == 'true'
-        enabled = true
-        url = 'https://ge.grails.org/cache/'
-        credentials {
-            username = System.getenv('GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER')
-            password = System.getenv('GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY')
-        }
-    }}
-
-
-include ("grails-datastore-core",
+include("grails-datastore-core",
         "grails-datastore-web",
 
         // Core GORM Implementation projects
@@ -39,7 +11,6 @@ include ("grails-datastore-core",
         'grails-datastore-gorm-support',
         'grails-datastore-gorm-tck',
         'grails-datastore-gorm-test',
-
 
         // RX projects
         'grails-datastore-gorm-rx'
