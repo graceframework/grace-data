@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 original authors
+ * Copyright 2015-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -538,11 +538,15 @@ class AstUtils {
     }
 
     static void injectTrait(ClassNode classNode, Class traitClass) {
+        injectTrait(classNode, traitClass, true)
+    }
+
+    static void injectTrait(ClassNode classNode, Class traitClass, boolean usingGeneric) {
         ClassNode traitClassNode = ClassHelper.make(traitClass)
         boolean implementsTrait = false
         boolean traitNotLoaded = false
         try {
-            implementsTrait = classNode.declaresInterface(traitClassNode)
+            implementsTrait = classNode.implementsInterface(traitClassNode)
         }
         catch (Throwable e) {
             // if we reach this point, the trait injector could not be loaded due to missing dependencies (for example missing servlet-api). This is ok, as we want to be able to compile against non-servlet environments.
@@ -551,7 +555,7 @@ class AstUtils {
         if (!implementsTrait && !traitNotLoaded) {
             final GenericsType[] genericsTypes = traitClassNode.getGenericsTypes()
             final Map<String, ClassNode> parameterNameToParameterValue = new LinkedHashMap<String, ClassNode>()
-            if (genericsTypes != null) {
+            if (genericsTypes != null && usingGeneric) {
                 for (GenericsType gt : genericsTypes) {
                     parameterNameToParameterValue.put(gt.getName(), classNode)
                 }
@@ -926,6 +930,25 @@ class AstUtils {
         }
         variableTransformer.visitClosureExpression(closureExpression)
         return closureExpression
+    }
+
+    static void markApplied(ASTNode astNode, Class<?> transformationClass) {
+        resolveRedirect(astNode).setNodeMetaData(appliedTransformationKey(transformationClass), Boolean.TRUE)
+    }
+
+    static boolean isApplied(ASTNode astNode, Class<?> transformationClass) {
+        return resolveRedirect(astNode).getNodeMetaData(appliedTransformationKey(transformationClass)) == Boolean.TRUE
+    }
+
+    private static ASTNode resolveRedirect(ASTNode astNode) {
+        if (astNode instanceof ClassNode) {
+            astNode = ((ClassNode) astNode).redirect()
+        }
+        return astNode
+    }
+
+    private static String appliedTransformationKey(Class<?> transformationClass) {
+        return "APPLIED_" + transformationClass.getName()
     }
 
 }
