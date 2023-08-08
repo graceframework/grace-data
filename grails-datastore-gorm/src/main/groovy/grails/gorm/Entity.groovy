@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 original authors
+ * Copyright 2015-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,6 @@ package grails.gorm
  * @author Graeme Rocher
  * @since 5.0
  */
-trait Entity<D> {
+trait Entity {
 
 }

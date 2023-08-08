@@ -1,13 +1,10 @@
 package org.grails.datastore.gorm
 
-import spock.lang.Ignore
-
 import grails.gorm.tests.GormDatastoreSpec
 import grails.persistence.Entity
 
 import spock.lang.Issue
 
-@Ignore("https://issues.apache.org/jira/browse/GROOVY-5106")
 class InheritanceWithOneToManySpec extends GormDatastoreSpec{
 
     @Issue('GRAILS-9010')
@@ -38,7 +35,7 @@ class Group {
     Collection members
 }
 
-//@Entity
+@Entity
 class Member   {
     Long id
     String name

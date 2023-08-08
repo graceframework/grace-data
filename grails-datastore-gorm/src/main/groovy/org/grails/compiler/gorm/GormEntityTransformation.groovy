@@ -240,7 +240,7 @@ class GormEntityTransformation extends AbstractASTTransformation implements Comp
 
         if (!isRxEntity) {
             def classGormEntityTrait = pickGormEntityTrait(classNode, sourceUnit)
-            AstUtils.injectTrait(classNode, classGormEntityTrait)
+            AstUtils.injectTrait(classNode, classGormEntityTrait, false)
         }
         else {
             addToMethodNode = rxEntityClassNode.getMethods("addTo").get(0)

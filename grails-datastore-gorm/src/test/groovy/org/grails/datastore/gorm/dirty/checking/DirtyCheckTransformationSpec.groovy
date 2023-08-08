@@ -10,7 +10,6 @@ import spock.lang.Issue
 /**
  * @author Graeme Rocher
  */
-@Ignore("https://issues.apache.org/jira/browse/GROOVY-5106")
 class DirtyCheckTransformationSpec extends Specification {
     @Issue('https://github.com/grails/grails-data-mapping/issues/894')
     void "Test transform doesn't make getters require static compilation"() {

@@ -1,9 +1,6 @@
 package org.grails.compiler.gorm
 
-import spock.lang.Ignore
-
 import org.grails.datastore.mapping.keyvalue.mapping.config.KeyValueMappingContext
-import org.grails.datastore.mapping.keyvalue.mapping.config.KeyValuePersistentEntity
 import org.grails.datastore.mapping.model.MappingContext
 import org.grails.datastore.mapping.model.PersistentEntity
 import spock.lang.Specification
@@ -11,7 +8,6 @@ import spock.lang.Specification
 /**
  * Created by graemerocher on 16/09/2016.
  */
-@Ignore("https://issues.apache.org/jira/browse/GROOVY-5106")
 class EntityWithGenericSignaturesSpec extends Specification {
 
     void "Test compile entity with generic signatures"() {
@@ -35,7 +31,7 @@ abstract class WidgetSetting {
      String name
 }
 
-//@Entity
+@Entity
 class HotWidgetSetting extends WidgetSetting {
     Integer temperature
 }
