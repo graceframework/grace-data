@@ -153,7 +153,7 @@ class GormEntityTransformation extends AbstractASTTransformation implements Comp
     }
 
     void visit(ClassNode classNode, SourceUnit sourceUnit) {
-        if (classNode.getNodeMetaData(AstUtils.TRANSFORM_APPLIED_MARKER) == APPLIED_MARKER) {
+        if (AstUtils.isApplied(classNode, getClass())) {
             return
         }
 
@@ -390,7 +390,8 @@ class GormEntityTransformation extends AbstractASTTransformation implements Comp
         if (compilationUnit != null && !isRxEntity) {
             org.codehaus.groovy.transform.trait.TraitComposer.doExtendTraits(classNode, sourceUnit, compilationUnit);
         }
-        classNode.putNodeMetaData(AstUtils.TRANSFORM_APPLIED_MARKER, APPLIED_MARKER)
+
+        AstUtils.markApplied(classNode, getClass())
     }
 
     protected Class pickGormEntityTrait(ClassNode classNode, SourceUnit source) {
