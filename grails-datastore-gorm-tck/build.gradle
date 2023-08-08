@@ -1,11 +1,7 @@
 dependencies {
-    api "org.springframework:spring-expression:$springVersion"
-    api 'commons-lang:commons-lang:2.6'
     api project(":grails-datastore-gorm-async")
     api project(":grails-datastore-gorm-support")
+    api project(":grails-datastore-gorm-validation")
     api("jakarta.servlet:jakarta.servlet-api:$servletApiVersion")
     runtimeOnly "org.apache.groovy:groovy-dateutil:$groovyVersion"
 }
-
-//compileGroovy.groovyOptions.fork = false
-//compileGroovy.groovyOptions.forkOptions.jvmArgs = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']
