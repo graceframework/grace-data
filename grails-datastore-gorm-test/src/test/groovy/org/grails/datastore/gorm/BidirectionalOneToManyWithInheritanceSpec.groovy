@@ -1,14 +1,11 @@
 package org.grails.datastore.gorm
 
-import spock.lang.Ignore
-
 import grails.gorm.tests.GormDatastoreSpec
 import grails.persistence.Entity
 
 /**
  * @author graemerocher
  */
-@Ignore
 class BidirectionalOneToManyWithInheritanceSpec extends GormDatastoreSpec {
 
     void "Test a bidirectional one-to-many association with inheritance"() {
