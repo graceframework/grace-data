@@ -1,14 +1,11 @@
 package org.grails.datastore.gorm
 
-import spock.lang.Ignore
-
 import grails.gorm.tests.GormDatastoreSpec
 import grails.persistence.Entity
 
 /**
  * @author graemerocher
  */
-@Ignore("https://issues.apache.org/jira/browse/GROOVY-5106")
 class BidirectionalOneToManyWithInheritanceSpec extends GormDatastoreSpec {
 
     void "Test a bidirectional one-to-many association with inheritance"() {
@@ -34,7 +31,7 @@ class BidirectionalOneToManyWithInheritanceSpec extends GormDatastoreSpec {
     }
 }
 
-//@Entity
+@Entity
 class ConfigurationItem {
     Long id
     Long version
