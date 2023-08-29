@@ -742,9 +742,9 @@ class ClassReader {
      *            and the length of the attribute, are not taken into account
      *            here.
      * @param labels
-     *            the labels of the method's code, or <tt>null</tt> if the
+     *            the labels of the method's code, or {@code null} if the
      *            attribute to be read is not a code attribute.
-     * @return the attribute that has been read, or <tt>null</tt> to skip this
+     * @return the attribute that has been read, or {@code null} to skip this
      *         attribute.
      */
     private Attribute readAttribute(final Attribute[] attrs, final String type,

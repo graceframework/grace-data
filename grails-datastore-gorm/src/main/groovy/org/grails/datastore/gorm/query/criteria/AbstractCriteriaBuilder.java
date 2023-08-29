@@ -412,7 +412,7 @@ public abstract class AbstractCriteriaBuilder extends GroovyObjectSupport implem
     }
 
     /**
-     * Apply an "equals" constraint to each property in the key set of a <tt>Map</tt>
+     * Apply an "equals" constraint to each property in the key set of a {@code Map}
      *
      * @param propertyValues a map from property names to values
      *
