@@ -42,7 +42,7 @@ public interface ConstraintsEvaluator {
      *
      * @param cls The class to evaluate constraints for
      * @return A map of constrained properties
-     * @oaram defaultNullable Whether to default to allow nullable
+     * @param defaultNullable Whether to default to allow nullable
      */
     Map<String, ConstrainedProperty> evaluate(@SuppressWarnings("rawtypes") Class cls, boolean defaultNullable);
 

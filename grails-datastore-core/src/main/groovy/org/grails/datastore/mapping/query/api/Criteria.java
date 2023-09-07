@@ -468,7 +468,7 @@ public interface Criteria {
     Criteria leProperty(java.lang.String propertyName, java.lang.String otherPropertyName);
 
     /**
-     * Apply an "equals" constraint to each property in the key set of a <tt>Map</tt>
+     * Apply an "equals" constraint to each property in the key set of a {@code Map}
      *
      * @param propertyValues a map from property names to values
      *
