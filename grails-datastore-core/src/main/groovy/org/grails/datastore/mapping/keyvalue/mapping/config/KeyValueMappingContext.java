@@ -29,6 +29,7 @@ import org.grails.datastore.mapping.model.config.JpaMappingConfigurationStrategy
  * @author Graeme Rocher
  * @since 1.0
  */
+@SuppressWarnings("removal")
 public class KeyValueMappingContext extends AbstractMappingContext {
 
     protected MappingFactory<Family, KeyValue> mappingFactory;

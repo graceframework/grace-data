@@ -30,7 +30,7 @@ import org.grails.datastore.mapping.model.config.JpaMappingConfigurationStrategy
  *
  * @author Graeme Rocher
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings({ "rawtypes", "unchecked", "removal" })
 public class DocumentMappingContext extends AbstractMappingContext {
 
     protected String defaultDatabaseName;
