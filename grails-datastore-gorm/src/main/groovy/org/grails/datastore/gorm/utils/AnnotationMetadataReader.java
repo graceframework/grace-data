@@ -1,11 +1,11 @@
 /*
- * Copyright 2016 original authors
+ * Copyright 2016-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,7 +22,6 @@ import java.io.InputStream;
 import org.springframework.asm.AnnotationVisitor;
 import org.springframework.asm.SpringAsmInfo;
 import org.springframework.asm.Type;
-import org.springframework.core.NestedIOException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.ClassMetadata;
@@ -35,6 +34,7 @@ import org.springframework.core.type.classreading.MetadataReader;
  * @author Graeme Rocher
  * @since 3.1.13
  */
+@SuppressWarnings("deprecation")
 public class AnnotationMetadataReader implements MetadataReader {
 
     private final Resource resource;
@@ -49,7 +49,7 @@ public class AnnotationMetadataReader implements MetadataReader {
      * @param resource The resource
      * @param classLoader The classloader
      * @param readAttributeValues Whether to read the attributes in addition or just the annotation class names
-     * @throws IOException
+     * @throws IOException When ClassReader not supported
      */
     AnnotationMetadataReader(Resource resource, ClassLoader classLoader, boolean readAttributeValues) throws IOException {
         InputStream is = new BufferedInputStream(resource.getInputStream());
@@ -58,7 +58,7 @@ public class AnnotationMetadataReader implements MetadataReader {
             classReader = new ClassReader(is);
         }
         catch (IllegalArgumentException ex) {
-            throw new NestedIOException("ASM ClassReader failed to parse class file - " +
+            throw new IOException("ASM ClassReader failed to parse class file - " +
                     "probably due to a new Java class file version that isn't supported yet: " + resource, ex);
         }
         finally {
