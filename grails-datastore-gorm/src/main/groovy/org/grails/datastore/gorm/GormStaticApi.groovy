@@ -473,7 +473,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
     }
 
     @Override
-    def <T> T mutex(D instance, Closure<T> callable) {
+    <T> T mutex(D instance, Closure<T> callable) {
         GormEnhancer.findInstanceApi(persistentClass, defaultQualifier).mutex(instance, callable)
     }
 
@@ -848,7 +848,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
      * @param callable the closure
      * @return The result of the closure
      */
-    public <T> T withSession(Closure<T> callable) {
+    <T> T withSession(Closure<T> callable) {
         execute({ Session session ->
             callable.call session
         } as SessionCallback)
@@ -860,7 +860,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
      * @param callable the closure
      * @return The result of the closure
      */
-    public <T> T withDatastoreSession(Closure<T> callable) {
+    <T> T withDatastoreSession(Closure<T> callable) {
         execute({ Session session ->
             callable.call session
         } as SessionCallback)
@@ -876,12 +876,12 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
      * @see #withNewTransaction(Closure)
      * @see #withNewTransaction(Map, Closure)
      */
-    public <T> T withTransaction(Closure<T> callable) {
+    <T> T withTransaction(Closure<T> callable) {
         withTransaction(new DefaultTransactionDefinition(), callable)
     }
 
     @Override
-    def <T> T withTenant(Serializable tenantId, Closure<T> callable) {
+    <T> T withTenant(Serializable tenantId, Closure<T> callable) {
         if (multiTenancyMode == MultiTenancyMode.DATABASE) {
             Tenants.withId((Class<Datastore>) GormEnhancer.findDatastore(persistentClass, tenantId.toString()).getClass(), tenantId, callable)
         }
@@ -926,7 +926,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
      * @see #withTransaction(Map, Closure)
      * @see #withNewTransaction(Map, Closure)
      */
-    public <T> T withNewTransaction(Closure<T> callable) {
+    <T> T withNewTransaction(Closure<T> callable) {
         withTransaction([propagationBehavior: TransactionDefinition.PROPAGATION_REQUIRES_NEW], callable)
     }
 
@@ -953,7 +953,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
      * @see #withNewTransaction(Map, Closure)
      * @see #withTransaction(Closure)
      */
-    public <T> T withTransaction(Map transactionProperties, Closure<T> callable) {
+    <T> T withTransaction(Map transactionProperties, Closure<T> callable) {
         def transactionDefinition = new DefaultTransactionDefinition()
         transactionProperties.each { k, v ->
             if (v instanceof CharSequence && !(v instanceof String)) {
@@ -995,7 +995,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
      * @see #withTransaction(Closure)
      * @see #withTransaction(Map, Closure)
      */
-    public <T> T withNewTransaction(Map transactionProperties, Closure<T> callable) {
+    <T> T withNewTransaction(Map transactionProperties, Closure<T> callable) {
         def props = new HashMap(transactionProperties)
         props.remove 'propagationName'
         props.propagationBehavior = TransactionDefinition.PROPAGATION_REQUIRES_NEW
@@ -1008,7 +1008,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
      * @param callable The closure to call
      * @return The result of the closure execution
      */
-    public <T> T withTransaction(TransactionDefinition definition, Closure<T> callable) {
+    <T> T withTransaction(TransactionDefinition definition, Closure<T> callable) {
         Assert.notNull transactionManager, "No transactionManager bean configured"
 
         if (!callable) {
@@ -1021,7 +1021,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
     /**
      * Creates and binds a new session for the scope of the given closure
      */
-    public <T> T withNewSession(Closure<T> callable) {
+    <T> T withNewSession(Closure<T> callable) {
         def session = datastore.connect()
         try {
             DatastoreUtils.bindNewSession session
@@ -1035,7 +1035,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
     /**
      * Creates and binds a new session for the scope of the given closure
      */
-    public <T> T withStatelessSession(Closure<T> callable) {
+    <T> T withStatelessSession(Closure<T> callable) {
         if (datastore instanceof StatelessDatastore) {
             def session = datastore.connectStateless()
             try {

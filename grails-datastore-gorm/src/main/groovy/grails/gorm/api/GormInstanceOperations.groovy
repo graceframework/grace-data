@@ -34,7 +34,7 @@ interface GormInstanceOperations<D> {
      * @param callable The closure
      * @return The result of the closure
      */
-    public <T> T mutex(D instance, Closure<T> callable)
+    <T> T mutex(D instance, Closure<T> callable)
 
     /**
      * Refreshes the state of the current instance
@@ -96,7 +96,7 @@ interface GormInstanceOperations<D> {
     Serializable ident(D instance)
 
     /**
-     * Attaches an instance to an existing session. Requries a session-based model
+     * Attaches an instance to an existing session. Requires a session-based model
      * @return
      */
     D attach(D instance)
