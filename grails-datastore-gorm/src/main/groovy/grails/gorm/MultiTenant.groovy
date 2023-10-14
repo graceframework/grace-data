@@ -29,7 +29,7 @@ import org.grails.datastore.mapping.core.connections.ConnectionSource
  * @since 6.0
  */
 @CompileStatic
-trait MultiTenant<D> extends Entity<D> {
+trait MultiTenant<D> extends Entity {
 
     /**
      * Execute the closure with the given tenantId
