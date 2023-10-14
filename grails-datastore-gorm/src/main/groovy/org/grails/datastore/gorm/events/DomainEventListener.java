@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -149,14 +150,14 @@ public class DomainEventListener extends AbstractPersistenceEventListener
     }
 
     /**
-     * @deprecated Use {@link #beforeInsert(org.grails.datastore.mapping.model.PersistentEntity, org.grails.datastore.mapping.engine.EntityAccess, org.grails.datastore.mapping.engine.event.PreInsertEvent)} instead
+     * @deprecated Use {@link #beforeInsert(PersistentEntity, EntityAccess, PreInsertEvent)} instead
      */
+    @Deprecated(forRemoval = true, since = "2022.5.0")
     public boolean beforeInsert(final PersistentEntity entity, final EntityAccess ea) {
         return beforeInsert(entity, ea, null);
     }
 
     public boolean beforeInsert(final PersistentEntity entity, final EntityAccess ea, PreInsertEvent event) {
-
         if (entity.isVersioned()) {
             try {
                 setVersion(ea);
@@ -182,6 +183,10 @@ public class DomainEventListener extends AbstractPersistenceEventListener
         }
     }
 
+    /**
+     * @deprecated Use {@link #beforeUpdate(PersistentEntity, EntityAccess, PreUpdateEvent)} instead
+     */
+    @Deprecated(forRemoval = true, since = "2022.5.0")
     public boolean beforeUpdate(final PersistentEntity entity, final EntityAccess ea) {
         return invokeEvent(EVENT_BEFORE_UPDATE, entity, ea, null);
     }
@@ -190,6 +195,10 @@ public class DomainEventListener extends AbstractPersistenceEventListener
         return invokeEvent(EVENT_BEFORE_UPDATE, entity, ea, event);
     }
 
+    /**
+     * @deprecated Use {@link #beforeDelete(PersistentEntity, EntityAccess, PreDeleteEvent)} instead
+     */
+    @Deprecated(forRemoval = true, since = "2022.5.0")
     public boolean beforeDelete(final PersistentEntity entity, final EntityAccess ea) {
         return invokeEvent(EVENT_BEFORE_DELETE, entity, ea, null);
     }
@@ -198,6 +207,10 @@ public class DomainEventListener extends AbstractPersistenceEventListener
         return invokeEvent(EVENT_BEFORE_DELETE, entity, ea, event);
     }
 
+    /**
+     * @deprecated Use {@link #beforeLoad(PersistentEntity, EntityAccess, PreLoadEvent)} instead
+     */
+    @Deprecated(forRemoval = true, since = "2022.5.0")
     public void beforeLoad(final PersistentEntity entity, final EntityAccess ea) {
         beforeLoad(entity, ea, null);
     }
@@ -206,6 +219,10 @@ public class DomainEventListener extends AbstractPersistenceEventListener
         invokeEvent(EVENT_BEFORE_LOAD, entity, ea, event);
     }
 
+    /**
+     * @deprecated Use {@link #afterDelete(PersistentEntity, EntityAccess, PostDeleteEvent)} instead
+     */
+    @Deprecated(forRemoval = true, since = "2022.5.0")
     public void afterDelete(final PersistentEntity entity, final EntityAccess ea) {
         afterDelete(entity, ea, null);
     }
@@ -214,6 +231,10 @@ public class DomainEventListener extends AbstractPersistenceEventListener
         invokeEvent(EVENT_AFTER_DELETE, entity, ea, event);
     }
 
+    /**
+     * @deprecated Use {@link #afterInsert(PersistentEntity, EntityAccess, PostInsertEvent)} instead
+     */
+    @Deprecated(forRemoval = true, since = "2022.5.0")
     public void afterInsert(final PersistentEntity entity, final EntityAccess ea) {
         afterInsert(entity, ea, null);
     }
@@ -230,6 +251,10 @@ public class DomainEventListener extends AbstractPersistenceEventListener
         }
     }
 
+    /**
+     * @deprecated Use {@link #afterUpdate(PersistentEntity, EntityAccess, PostUpdateEvent)} instead
+     */
+    @Deprecated(forRemoval = true, since = "2022.5.0")
     public void afterUpdate(final PersistentEntity entity, final EntityAccess ea) {
         afterUpdate(entity, ea, null);
     }
@@ -239,6 +264,10 @@ public class DomainEventListener extends AbstractPersistenceEventListener
         invokeEvent(EVENT_AFTER_UPDATE, entity, ea, event);
     }
 
+    /**
+     * @deprecated Use {@link #afterLoad(PersistentEntity, EntityAccess, PostLoadEvent)} instead
+     */
+    @Deprecated(forRemoval = true, since = "2022.5.0")
     public void afterLoad(final PersistentEntity entity, final EntityAccess ea) {
         afterLoad(entity, ea, null);
     }

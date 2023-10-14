@@ -1,10 +1,11 @@
-/* Copyright (C) 2011 SpringSource
+/*
+ * Copyright 2011-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -12,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package grails.gorm
 
 import jakarta.persistence.criteria.JoinType
@@ -91,6 +91,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      * @param callable The callable
      * @return This detached criteria
      */
+    @Override
     DetachedCriteria<T> projections(@DelegatesTo(ProjectionList) Closure callable) {
         callable.delegate = projectionList
         callable.resolveStrategy = Closure.DELEGATE_FIRST
@@ -130,6 +131,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      *
      * @return A list of matching instances
      */
+    @Override
     List<T> list(Map args = Collections.emptyMap(), @DelegatesTo(DetachedCriteria) Closure additionalCriteria = null) {
         (List) withPopulatedQuery(args, additionalCriteria) { Query query ->
             if (args?.max) {
@@ -541,7 +543,6 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      * @param args The arguments
      * @return The count
      */
-
     boolean asBoolean(@DelegatesTo(DetachedCriteria) Closure additionalCriteria = null) {
         (Boolean) withPopulatedQuery(Collections.emptyMap(), additionalCriteria) { Query query ->
             query.projections().count()
@@ -554,6 +555,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      *
      * @return The total number deleted
      */
+    @Override
     Number deleteAll() {
         GormEnhancer.findStaticApi(targetClass, connectionName).withDatastoreSession { Session session ->
             applyLazyCriteria()
@@ -566,6 +568,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      *
      * @return The total number updated
      */
+    @Override
     Number updateAll(Map properties) {
         GormEnhancer.findStaticApi(targetClass, connectionName).withDatastoreSession { Session session ->
             applyLazyCriteria()
@@ -623,6 +626,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      * @param property The property to sort by
      * @return This criteria instance
      */
+    @Override
     DetachedCriteria<T> sort(String property) {
         (DetachedCriteria<T>) super.sort(property)
     }
@@ -634,6 +638,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      * @param direction The direction to sort by
      * @return This criteria instance
      */
+    @Override
     DetachedCriteria<T> sort(String property, String direction) {
         (DetachedCriteria<T>) super.sort(property, direction)
     }
@@ -644,6 +649,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      * @param property The property to project
      * @return This criteria instance
      */
+    @Override
     DetachedCriteria<T> property(String property) {
         (DetachedCriteria<T>) super.property(property)
     }
@@ -654,6 +660,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      * @param property The property to project
      * @return This criteria instance
      */
+    @Override
     DetachedCriteria<T> id() {
         (DetachedCriteria<T>) super.id()
     }
@@ -664,6 +671,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      * @param property The property to avg by
      * @return This criteria instance
      */
+    @Override
     DetachedCriteria<T> avg(String property) {
         (DetachedCriteria<T>) super.avg(property)
     }
@@ -674,6 +682,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      * @param property The property to sum by
      * @return This criteria instance
      */
+    @Override
     DetachedCriteria<T> sum(String property) {
         (DetachedCriteria<T>) super.sum(property)
     }
@@ -684,6 +693,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      * @param property The property to min by
      * @return This criteria instance
      */
+    @Override
     DetachedCriteria<T> min(String property) {
         (DetachedCriteria<T>) super.min(property)
     }
@@ -694,6 +704,7 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      * @param property The property to max by
      * @return This criteria instance
      */
+    @Override
     DetachedCriteria<T> max(String property) {
         (DetachedCriteria<T>) super.max(property)
     }
@@ -704,10 +715,10 @@ class DetachedCriteria<T> extends AbstractDetachedCriteria<T> implements GormOpe
      * @param property The property to obtain the distinct value for
      * @return This criteria instance
      */
+    @Override
     DetachedCriteria<T> distinct(String property) {
         (DetachedCriteria<T>) super.distinct(property)
     }
-
 
     @Override
     protected DetachedCriteria newInstance() {

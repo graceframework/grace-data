@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +33,7 @@ import org.grails.datastore.mapping.query.Query;
  * @author Graeme Rocher
  * @since 1.0
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings({"unchecked"})
 public class PagedResultList<E> implements Serializable, List<E> {
 
     private static final long serialVersionUID = -5820655628956173929L;
@@ -45,7 +46,7 @@ public class PagedResultList<E> implements Serializable, List<E> {
 
     public PagedResultList(Query query) {
         this.query = query;
-        this.resultList = query == null ? Collections.<E>emptyList() : query.list();
+        this.resultList = query == null ? Collections.emptyList() : query.list();
     }
 
     /**
@@ -196,7 +197,6 @@ public class PagedResultList<E> implements Serializable, List<E> {
     }
 
     private void writeObject(ObjectOutputStream out) throws IOException {
-
         // find the total count if it hasn't been done yet so when this is deserialized
         // the null GrailsHibernateTemplate won't be an issue
         getTotalCount();

@@ -1,10 +1,11 @@
-/* Copyright 2016 the original author or authors.
+/*
+ * Copyright 2016-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -149,7 +150,7 @@ abstract class ConfigurationBuilder<B, C> {
                 if (method.declaringClass != builderClass) {
                     continue
                 }
-                def parameterTypes = method.parameterTypes
+                Class<?>[] parameterTypes = method.parameterTypes
 
                 String settingName
 
@@ -342,7 +343,7 @@ abstract class ConfigurationBuilder<B, C> {
                 boolean appendArgName = parameterTypes.length > 1
                 int argIndex = 0
 
-                for (Class argType : parameterTypes) {
+                for (Class<?> argType : parameterTypes) {
                     String propertyPathForArg = propertyPath
                     if (appendArgName) {
                         propertyPathForArg += ".arg${argIndex}"
@@ -364,16 +365,16 @@ abstract class ConfigurationBuilder<B, C> {
                     else {
                         Object fallBackValue = getFallBackValue(fallBackConfig, settingName)
 
-                        def value
+                        Object value
                         try {
-                            value = propertyResolver.getProperty(propertyPathForArg, argType, fallBackValue)
+                            value = propertyResolver.getProperty(propertyPathForArg, argType as Class<Object>, fallBackValue)
                         }
                         catch (ConversionFailedException e) {
                             if (argType.isEnum()) {
                                 value = propertyResolver.getProperty(propertyPathForArg, String)
                                 if (value != null) {
                                     try {
-                                        value = Enum.valueOf((Class) argType, value.toUpperCase())
+                                        value = Enum.valueOf((Class) argType, value.toString().toUpperCase())
                                     }
                                     catch (Throwable e2) {
                                         // ignore e2 and throw original
