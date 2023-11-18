@@ -38,7 +38,7 @@ public abstract class AbstractPersistentCollection<E> implements PersistentColle
 
     protected final transient AssociationQueryExecutor indexer;
 
-    protected final transient Class childType;
+    protected final transient Class<?> childType;
 
     protected boolean initialized;
 
@@ -56,7 +56,7 @@ public abstract class AbstractPersistentCollection<E> implements PersistentColle
 
     protected boolean proxyEntities = false;
 
-    protected AbstractPersistentCollection(Class childType, Session session, Collection collection) {
+    protected AbstractPersistentCollection(Class<?> childType, Session session, Collection<E> collection) {
         this.childType = childType;
         this.collection = collection;
         this.session = session;
@@ -66,7 +66,7 @@ public abstract class AbstractPersistentCollection<E> implements PersistentColle
         markDirty();
     }
 
-    protected AbstractPersistentCollection(final Association association, Serializable associationKey, final Session session, Collection collection) {
+    protected AbstractPersistentCollection(final Association association, Serializable associationKey, final Session session, Collection<E> collection) {
         this.collection = collection;
         this.session = session;
         this.associationKey = associationKey;
@@ -105,7 +105,7 @@ public abstract class AbstractPersistentCollection<E> implements PersistentColle
     }
 
     protected AbstractPersistentCollection(Serializable associationKey, Session session,
-            AssociationQueryExecutor indexer, Collection collection) {
+            AssociationQueryExecutor indexer, Collection<E> collection) {
         this.session = session;
         this.associationKey = associationKey;
         this.indexer = indexer;
@@ -150,10 +150,10 @@ public abstract class AbstractPersistentCollection<E> implements PersistentColle
 
     /* Collection methods */
 
-    public Iterator iterator() {
+    public Iterator<E> iterator() {
         initialize();
 
-        final Iterator iterator = collection.iterator();
+        final Iterator<E> iterator = collection.iterator();
         return new Iterator() {
             public boolean hasNext() {
                 return iterator.hasNext();
@@ -227,7 +227,7 @@ public abstract class AbstractPersistentCollection<E> implements PersistentColle
         return collection.toString();
     }
 
-    public boolean removeAll(Collection c) {
+    public boolean removeAll(Collection<?> c) {
         initialize();
         boolean changed = collection.removeAll(c);
         if (changed) {

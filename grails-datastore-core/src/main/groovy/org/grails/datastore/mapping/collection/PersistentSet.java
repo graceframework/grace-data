@@ -17,7 +17,7 @@ package org.grails.datastore.mapping.collection;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 
 import org.grails.datastore.mapping.core.Session;
@@ -34,27 +34,23 @@ import org.grails.datastore.mapping.model.types.Association;
 public class PersistentSet<E> extends AbstractPersistentCollection<E> implements Set<E> {
 
     public PersistentSet(Association association, Serializable associationKey, Session session) {
-        super(association, associationKey, session, createCollection());
+        super(association, associationKey, session, Collections.emptySet());
     }
 
     public PersistentSet(Association association, Serializable associationKey, Session session, Set collection) {
         super(association, associationKey, session, collection);
     }
 
-    public PersistentSet(Class childType, Session session, Collection collection) {
+    public PersistentSet(Class<?> childType, Session session, Collection<E> collection) {
         super(childType, session, collection);
     }
 
     public PersistentSet(Collection keys, Class childType, Session session) {
-        super(keys, childType, session, createCollection());
-    }
-
-    protected static HashSet createCollection() {
-        return new HashSet();
+        super(keys, childType, session, Collections.emptySet());
     }
 
     public PersistentSet(Serializable associationKey, Session session, AssociationQueryExecutor indexer) {
-        super(associationKey, session, indexer, createCollection());
+        super(associationKey, session, indexer, Collections.emptySet());
     }
 
 
