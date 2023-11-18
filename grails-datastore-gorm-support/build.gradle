@@ -2,17 +2,19 @@ dependencies {
     api project(':grails-datastore-core')
     api project(':grails-datastore-gorm')
     api("org.grails:grails-api:$grailsVersion") {
-        exclude group:'org.codehaus.groovy', module:'groovy'
-        exclude group:'commons-logging', module:'commons-logging'
+        exclude group: 'org.codehaus.groovy', module: 'groovy'
         exclude group: 'org.grails', module: 'grails-datastore-core'
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+        exclude group: 'org.slf4j', module: 'jcl-over-slf4j'
     }
     api("org.grails:grails-core:$grailsVersion") {
-        exclude group:'org.codehaus.groovy', module:'groovy'
-        exclude group:'commons-logging', module:'commons-logging'
+        exclude group: 'org.codehaus.groovy', module:'groovy'
         exclude group: 'org.grails', module: 'grails-datastore-core'
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+        exclude group: 'org.slf4j', module: 'jcl-over-slf4j'
     }
     api("org.grails:grails-bootstrap:$grailsVersion") {
-        exclude group:'org.codehaus.groovy', module:'groovy'
+        exclude group: 'org.codehaus.groovy', module: 'groovy'
     }
 
     compileOnly "org.springframework:spring-orm:$springVersion"
