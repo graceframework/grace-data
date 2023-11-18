@@ -24,7 +24,7 @@ import org.grails.datastore.mapping.model.AbstractMappingContext;
 import org.grails.datastore.mapping.model.MappingConfigurationStrategy;
 import org.grails.datastore.mapping.model.MappingFactory;
 import org.grails.datastore.mapping.model.PersistentEntity;
-import org.grails.datastore.mapping.model.config.JpaMappingConfigurationStrategy;
+import org.grails.datastore.mapping.model.config.GormMappingConfigurationStrategy;
 
 /**
  * Models a {@link org.grails.datastore.mapping.model.MappingContext} for a Document store.
@@ -53,7 +53,7 @@ public class DocumentMappingContext extends AbstractMappingContext {
         Assert.notNull(defaultDatabaseName, "Argument [defaultDatabaseName] cannot be null");
         this.defaultDatabaseName = defaultDatabaseName;
         mappingFactory = createDocumentMappingFactory(null);
-        syntaxStrategy = new JpaMappingConfigurationStrategy(mappingFactory);
+        syntaxStrategy = new GormMappingConfigurationStrategy(mappingFactory);
     }
 
     @Deprecated
@@ -63,7 +63,7 @@ public class DocumentMappingContext extends AbstractMappingContext {
         this.defaultDatabaseName = defaultDatabaseName;
         mappingFactory = createDocumentMappingFactory(defaultMapping);
         this.defaultMapping = defaultMapping;
-        syntaxStrategy = new JpaMappingConfigurationStrategy(mappingFactory);
+        syntaxStrategy = new GormMappingConfigurationStrategy(mappingFactory);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class DocumentMappingContext extends AbstractMappingContext {
         documentMappingFactory.setDefaultConstraints(settings.getDefault().getConstraints());
 
         mappingFactory = documentMappingFactory;
-        syntaxStrategy = new JpaMappingConfigurationStrategy(mappingFactory);
+        syntaxStrategy = new GormMappingConfigurationStrategy(mappingFactory);
         super.initialize(settings);
     }
 
