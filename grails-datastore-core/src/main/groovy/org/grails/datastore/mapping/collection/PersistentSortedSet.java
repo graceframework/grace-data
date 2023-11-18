@@ -38,11 +38,11 @@ public class PersistentSortedSet<E> extends AbstractPersistentCollection<E> impl
         super(association, associationKey, session, new TreeSet());
     }
 
-    public PersistentSortedSet(Class childType, Session session, SortedSet collection) {
+    public PersistentSortedSet(Class<?> childType, Session session, SortedSet<E> collection) {
         super(childType, session, collection);
     }
 
-    public PersistentSortedSet(Collection keys, Class childType, Session session) {
+    public PersistentSortedSet(Collection<E> keys, Class<?> childType, Session session) {
         super(keys, childType, session, new TreeSet());
     }
 
