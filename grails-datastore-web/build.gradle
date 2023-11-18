@@ -1,11 +1,7 @@
 dependencies {
     api project(":grails-datastore-core")
-    api "org.springframework:spring-web:$springVersion", {
-        exclude group:'commons-logging', module:'commons-logging'
-    }
-    api "org.springframework:spring-context:$springVersion", {
-        exclude group:'commons-logging', module:'commons-logging'
-    }
+    api "org.springframework:spring-context:$springVersion"
+    api "org.springframework:spring-web:$springVersion"
     compileOnly("jakarta.servlet:jakarta.servlet-api:$servletApiVersion")
 
     testImplementation("jakarta.servlet:jakarta.servlet-api:$servletApiVersion")
