@@ -36,17 +36,16 @@ import org.grails.datastore.mapping.model.DatastoreConfigurationException;
  * @author Graeme Rocher
  * @since 1.0
  */
-public class ReflectionUtils {
+public final class ReflectionUtils {
 
-    public static final Map<Class<?>, Class<?>> PRIMITIVE_TYPE_COMPATIBLE_CLASSES = new HashMap<Class<?>, Class<?>>();
+    public static final Map<Class<?>, Class<?>> PRIMITIVE_TYPE_COMPATIBLE_CLASSES = new HashMap<>();
 
-    @SuppressWarnings("rawtypes")
-    private static final Class[] EMPTY_CLASS_ARRAY = {};
+    private static final Class<?>[] EMPTY_CLASS_ARRAY = {};
 
     /**
      * Just add two entries to the class compatibility map
-     * @param left
-     * @param right
+     * @param left The left type
+     * @param right The right type
      */
     private static void registerPrimitiveClassPair(Class<?> left, Class<?> right) {
         PRIMITIVE_TYPE_COMPATIBLE_CLASSES.put(left, right);
@@ -68,7 +67,7 @@ public class ReflectionUtils {
      * Make the given field accessible, explicitly setting it accessible if necessary.
      * The <code>setAccessible(true)</code> method is only called when actually necessary,
      * to avoid unnecessary conflicts with a JVM SecurityManager (if active).
-     *
+     * <p>
      * Based on the same method in Spring core.
      *
      * @param field the field to make accessible
@@ -85,7 +84,7 @@ public class ReflectionUtils {
      * Make the given method accessible, explicitly setting it accessible if necessary.
      * The <code>setAccessible(true)</code> method is only called when actually necessary,
      * to avoid unnecessary conflicts with a JVM SecurityManager (if active).
-     *
+     * <p>
      * Based on the same method in Spring core.
      *
      * @param method the method to make accessible
@@ -150,22 +149,12 @@ public class ReflectionUtils {
      * @param clazz The class
      * @return The instantiated object or null if the class parameter was null
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public static <T> T instantiate(Class<T> clazz) {
         if (clazz == null) return null;
         try {
             return clazz.getConstructor(EMPTY_CLASS_ARRAY).newInstance();
         }
-        catch (IllegalAccessException e) {
-            throw new InstantiationException(e.getClass().getName() + " error creating instance of class [" + e.getMessage() + "]: " + e.getMessage(), e);
-        }
-        catch (InvocationTargetException e) {
-            throw new InstantiationException(e.getClass().getName() + " error creating instance of class [" + e.getMessage() + "]: " + e.getMessage(), e);
-        }
-        catch (NoSuchMethodException e) {
-            throw new InstantiationException(e.getClass().getName() + " error creating instance of class [" + e.getMessage() + "]: " + e.getMessage(), e);
-        }
-        catch (java.lang.InstantiationException e) {
+        catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | java.lang.InstantiationException e) {
             throw new InstantiationException(e.getClass().getName() + " error creating instance of class [" + e.getMessage() + "]: " + e.getMessage(), e);
         }
     }
@@ -183,7 +172,7 @@ public class ReflectionUtils {
             return new PropertyDescriptor[0];
         }
 
-        Set<PropertyDescriptor> properties = new HashSet<PropertyDescriptor>();
+        Set<PropertyDescriptor> properties = new HashSet<>();
         try {
             for (PropertyDescriptor descriptor : BeanUtils.getPropertyDescriptors(clazz)) {
                 Class<?> currentPropertyType = descriptor.getPropertyType();
@@ -196,7 +185,7 @@ public class ReflectionUtils {
             // if there are any errors in instantiating just return null for the moment
             return new PropertyDescriptor[0];
         }
-        return properties.toArray(new PropertyDescriptor[properties.size()]);
+        return properties.toArray(new PropertyDescriptor[0]);
     }
 
     private static boolean isTypeInstanceOfPropertyType(Class<?> type, Class<?> propertyType) {
@@ -206,39 +195,52 @@ public class ReflectionUtils {
     /**
      * Returns true if the name of the method specified and the number of arguments make it a javabean property
      *
-     * @param name True if its a Javabean property
+     * @param name True if it's a Javabean property
      * @param args The arguments
      * @return true if it is a javabean property method
      */
     public static boolean isGetter(String name, Class<?>[] args) {
-        if (!StringUtils.hasText(name) || args == null) return false;
-        if (args.length != 0) return false;
+        if (!StringUtils.hasText(name) || args == null) {
+            return false;
+        }
+        if (args.length != 0) {
+            return false;
+        }
 
         if (name.startsWith("get")) {
             name = name.substring(3);
-            if (name.length() > 0 && Character.isUpperCase(name.charAt(0))) return true;
+            if (!name.isEmpty() && Character.isUpperCase(name.charAt(0))) {
+                return true;
+            }
         }
         else if (name.startsWith("is")) {
             name = name.substring(2);
-            if (name.length() > 0 && Character.isUpperCase(name.charAt(0))) return true;
+            if (!name.isEmpty() && Character.isUpperCase(name.charAt(0))) {
+                return true;
+            }
         }
         return false;
     }
 
-    @SuppressWarnings("rawtypes")
-    public static boolean isSetter(String name, Class[] args) {
-        if (!StringUtils.hasText(name) || args == null) return false;
+    public static boolean isSetter(String name, Class<?>[] args) {
+        if (!StringUtils.hasText(name) || args == null) {
+            return false;
+        }
 
         if (name.startsWith("set")) {
-            if (args.length != 1) return false;
+            if (args.length != 1) {
+                return false;
+            }
             name = name.substring(3);
-            if (name.length() > 0 && Character.isUpperCase(name.charAt(0))) return true;
+            if (!name.isEmpty() && Character.isUpperCase(name.charAt(0))) {
+                return true;
+            }
         }
 
         return false;
     }
 
-    public static Class forName(String className, ClassLoader classLoader) {
+    public static Class<?> forName(String className, ClassLoader classLoader) {
         try {
             return Class.forName(className, false, classLoader);
         }
