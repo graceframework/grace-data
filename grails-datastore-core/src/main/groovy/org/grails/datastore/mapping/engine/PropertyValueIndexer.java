@@ -19,7 +19,6 @@ import java.util.List;
 
 /**
  * Responsible for creating indices for property values used in queries.
- *
  * This interface is designed for usage in datastores that don't automatically
  * create indices and require the application to create the indices manually.
  *
