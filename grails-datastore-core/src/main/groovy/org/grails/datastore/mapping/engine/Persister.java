@@ -31,7 +31,7 @@ public interface Persister {
     /**
      * The type this persister persists
      *
-     * @return The class this persisters persists
+     * @return The class this persister persists
      */
     @SuppressWarnings("rawtypes")
     Class getType();

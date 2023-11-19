@@ -47,7 +47,7 @@ public interface EntityAccess {
     /**
      * Obtains a property type
      * @param name The name of the property
-     * @return The type of of the property
+     * @return The type of the property
      */
     Class getPropertyType(String name);
 
