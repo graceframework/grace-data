@@ -9,6 +9,7 @@ dependencies {
     compileOnly("org.hibernate:hibernate-validator:$hibernateValidatorVersion")
     compileOnly("org.springframework:spring-jdbc:$springVersion")
     compileOnly("org.springframework:spring-web:$springVersion")
+    testImplementation("org.graceframework:grace-core:$graceVersion")
     testImplementation("org.springframework:spring-jdbc:$springVersion")
     testImplementation("org.hibernate:hibernate-validator:$hibernateValidatorVersion")
     testRuntimeOnly("com.h2database:h2:$h2Version")
