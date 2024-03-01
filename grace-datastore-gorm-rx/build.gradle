@@ -1,12 +1,12 @@
 dependencies {
     api 'io.reactivex:rxjava:1.3.8'
-    api project(":grails-datastore-gorm"), {
-        exclude group:"org.grails", module:'grails-async'
-        exclude group:"org.grails", module:'grails-datastore-core'
+    api project(":grace-datastore-gorm"), {
+        exclude group:"org.graceframework", module:'grace-async'
+        exclude group:"org.graceframework", module:'grace-datastore-core'
     }
-    api project(":grails-datastore-core")
+    api project(":grace-datastore-core")
     implementation "org.javassist:javassist:$javassistVersion"
     compileOnly("org.hibernate:hibernate-validator:$hibernateValidatorVersion")
     documentation "org.springframework:spring-beans:$springVersion"
-    documentation "org.grails:grails-async:$grailsAsyncVersion"
+    documentation "org.graceframework:grace-async:$graceAsyncVersion"
 }
