@@ -1,5 +1,5 @@
 dependencies {
-    api project(":grails-datastore-core")
+    api project(":grace-datastore-core")
     api "org.springframework:spring-web:$springVersion", {
         exclude group:'commons-logging',module:'commons-logging'
         exclude group:'org.springframework', module:'spring-context'
