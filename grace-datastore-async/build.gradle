@@ -1,6 +1,4 @@
 dependencies {
-    api "org.grails:grails-async:$grailsAsyncVersion", {
-        exclude group:'io.projectreactor',module:'reactor-core'
-        exclude group:'io.projectreactor',module:'reactor-stream'
-    }
+    api "org.graceframework:grace-async:$graceAsyncVersion"
+    api "jakarta.annotation:jakarta.annotation-api:$javaAnnotationApiVersion"
 }

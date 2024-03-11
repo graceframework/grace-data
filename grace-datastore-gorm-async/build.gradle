@@ -1,4 +1,4 @@
 dependencies {
-    api project(":grails-datastore-gorm")
-    api project(":grails-datastore-async")
+    api project(":grace-datastore-gorm")
+    api project(":grace-datastore-async")
 }

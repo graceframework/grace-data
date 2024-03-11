@@ -1,6 +1,6 @@
 dependencies {
-    api project(":grails-datastore-core")
-    api project(":grails-datastore-gorm-validation")
+    api project(":grace-datastore-core")
+    api project(":grace-datastore-gorm-validation")
 
     implementation "org.slf4j:slf4j-api:$slf4jVersion"
     implementation("jakarta.el:jakarta.el-api:$elVersion")
@@ -11,6 +11,7 @@ dependencies {
     compileOnly("org.springframework:spring-core:$springVersion")
     compileOnly("org.springframework:spring-jdbc:$springVersion")
     compileOnly("org.springframework:spring-web:$springVersion")
+    testImplementation("org.graceframework:grace-core:$graceVersion")
     testImplementation("org.springframework:spring-jdbc:$springVersion")
     testImplementation("org.hibernate:hibernate-validator:$hibernateValidatorVersion")
     testImplementation("jakarta.validation:jakarta.validation-api:$jakartaValidationVersion")
