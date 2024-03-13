@@ -1,6 +1,8 @@
 dependencies {
     api project(':grace-datastore-gorm')
-    api("org.graceframework:grace-core:$graceVersion")
+    api "org.graceframework:grace-core:$graceVersion", {
+        exclude group: 'org.graceframework', module: 'grace-datastore-core'
+    }
     api("org.graceframework:grace-bootstrap:$graceVersion")
 
     compileOnly "org.springframework:spring-orm:$springVersion"

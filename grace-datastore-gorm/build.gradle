@@ -11,7 +11,9 @@ dependencies {
     compileOnly("org.springframework:spring-core:$springVersion")
     compileOnly("org.springframework:spring-jdbc:$springVersion")
     compileOnly("org.springframework:spring-web:$springVersion")
-    testImplementation("org.graceframework:grace-core:$graceVersion")
+    testImplementation "org.graceframework:grace-core:$graceVersion", {
+        exclude group: 'org.graceframework', module: 'grace-datastore-core'
+    }
     testImplementation("org.springframework:spring-jdbc:$springVersion")
     testImplementation("org.hibernate:hibernate-validator:$hibernateValidatorVersion")
     testImplementation("jakarta.validation:jakarta.validation-api:$jakartaValidationVersion")
