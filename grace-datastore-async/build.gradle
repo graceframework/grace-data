@@ -1,0 +1,6 @@
+dependencies {
+    api "org.graceframework:grace-async:$graceAsyncVersion", {
+        exclude group: 'org.codehaus.groovy', module: 'groovy'
+    }
+    api "jakarta.annotation:jakarta.annotation-api:$javaAnnotationApiVersion"
+}

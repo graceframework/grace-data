@@ -1,25 +1,9 @@
-[Grails]: http://grails.org/
-[Groovy]: http://groovy-lang.org/
-[Apache License, Version 2.0]: http://www.apache.org/licenses/LICENSE-2.0.html
+[![Grace CI](https://github.com/graceframework/grace-data/actions/workflows/gradle.yml/badge.svg)](https://github.com/graceframework/grace-data/actions/workflows/gradle.yml)
 
-[![Java CI](https://github.com/grails/grails-data-mapping/actions/workflows/gradle.yml/badge.svg)](https://github.com/grails/grails-data-mapping/actions/workflows/gradle.yml)
-[![Release](https://github.com/grails/grails-data-mapping/actions/workflows/release.yml/badge.svg)](https://github.com/grails/grails-data-mapping/actions/workflows/release.yml)
+# Grace Data
 
-GORM (Grails Object Mapping)
-===
+[Grace](https://github.com/graceframework/grace-framework) is a framework used to build web applications with the [Groovy](https://groovy-lang.org/) programming language. This project provides the plumbings for the GORM API both for Hibernate and for new implementations of GORM on top of NoSQL datastores.
 
-[Grails][Grails] is a framework used to build web applications with the [Groovy][Groovy] programming language. This project provides the plumbings for the GORM API both for Hibernate and for new implementations of GORM on top of NoSQL datastores.
+## License
 
-
-Getting Started
----
-
-For further information see the dedicated websites:
- 
-* [Stable Version](http://gorm.grails.org/)
-* [Development Version](http://gorm.grails.org/snapshot/)
-	
-License
----
-
-Grails and Groovy are licensed under the terms of the [Apache License, Version 2.0][Apache License, Version 2.0].
+Grace Data is licensed under the terms of the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.html).
