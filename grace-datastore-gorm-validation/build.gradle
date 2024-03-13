@@ -7,6 +7,6 @@ dependencies {
         exclude group: 'commons-beanutils', module:'commons-beanutils'
     }
 
-    compileOnly("org.hibernate:hibernate-validator:$hibernateValidatorVersion")
-    testImplementation("org.hibernate:hibernate-validator:$hibernateValidatorVersion")
+    compileOnly("org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion")
+    testImplementation("org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion")
 }

@@ -6,7 +6,7 @@ dependencies {
     }
     api project(":grace-datastore-core")
     implementation "org.javassist:javassist:$javassistVersion"
-    compileOnly("org.hibernate:hibernate-validator:$hibernateValidatorVersion")
+    compileOnly("org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion")
     documentation "org.springframework:spring-beans:$springVersion"
     documentation "org.graceframework:grace-async:$graceAsyncVersion"
 }
