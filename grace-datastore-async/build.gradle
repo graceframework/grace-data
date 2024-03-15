@@ -1,4 +1,4 @@
 dependencies {
-    api "org.graceframework:grace-async:$graceAsyncVersion"
+    api "org.graceframework:grace-async-core:$graceAsyncVersion"
     api "jakarta.annotation:jakarta.annotation-api:$javaAnnotationApiVersion"
 }
