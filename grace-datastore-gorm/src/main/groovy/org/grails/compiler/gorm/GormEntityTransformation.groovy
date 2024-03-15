@@ -394,34 +394,28 @@ class GormEntityTransformation extends AbstractASTTransformation implements Comp
         def mapWith = AstUtils.getPropertyFromHierarchy(classNode, GormProperties.MAPPING_STRATEGY)
         String mapWithValue = mapWith?.initialExpression?.text
         Class gormEntityTrait = null
-        boolean isHibernatePresent = isHibernatePresent(classLoader)
-        if (isHibernatePresent && mapWithValue == null) {
+        List<GormEntityTraitProvider> allTraitProviders = findTraitProviders(GormEntityTraitProvider, classLoader)
+        if (allTraitProviders.isEmpty()) {
             gormEntityTrait = GormEntity
         }
         else {
-            List<GormEntityTraitProvider> allTraitProviders = findTraitProviders(GormEntityTraitProvider, classLoader)
-            if (allTraitProviders.isEmpty()) {
-                gormEntityTrait = GormEntity
-            }
-            else {
-                if (mapWithValue == null) {
-                    if (allTraitProviders.size() > 1) {
-                        AstUtils.warning(source, classNode, "There are multiple GORM implementations on the classpath. GORM cannot choose automatically which implementation to use. Please use 'mapWith' on your entity to avoid this conflict and warning.")
-                        gormEntityTrait = GormEntity
-                    }
-                    else {
-                        gormEntityTrait = allTraitProviders.get(0).entityTrait
-                    }
+            if (mapWithValue == null) {
+                if (allTraitProviders.size() > 1) {
+                    AstUtils.warning(source, classNode, "There are multiple GORM implementations on the classpath. GORM cannot choose automatically which implementation to use. Please use 'mapWith' on your entity to avoid this conflict and warning.")
+                    gormEntityTrait = GormEntity
                 }
                 else {
-                    def mapWithDatastore = NameUtils.capitalize(mapWithValue)
-                    def candidate = allTraitProviders.find() { GormEntityTraitProvider provider -> provider.entityTrait?.simpleName?.startsWith(mapWithDatastore) }
-                    if (candidate != null) {
-                        gormEntityTrait = candidate.entityTrait
-                    }
-                    else {
-                        gormEntityTrait = GormEntity
-                    }
+                    gormEntityTrait = allTraitProviders.get(0).entityTrait
+                }
+            }
+            else {
+                def mapWithDatastore = NameUtils.capitalize(mapWithValue)
+                def candidate = allTraitProviders.find() { GormEntityTraitProvider provider -> provider.entityTrait?.simpleName?.startsWith(mapWithDatastore) }
+                if (candidate != null) {
+                    gormEntityTrait = candidate.entityTrait
+                }
+                else {
+                    gormEntityTrait = GormEntity
                 }
             }
         }
@@ -446,16 +440,6 @@ class GormEntityTransformation extends AbstractASTTransformation implements Comp
             }
         }
         return allTraitProviders
-    }
-
-    @Memoized
-    private boolean isHibernatePresent(ClassLoader classLoader) {
-        try {
-            return Class.forName("org.hibernate.Hibernate", false, classLoader) != null
-        }
-        catch (Throwable e) {
-            return false
-        }
     }
 
     protected void injectVersionProperty(ClassNode classNode) {
