@@ -1,0 +1,9 @@
+dependencies {
+    api project(":grace-datastore-core")
+    api "org.springframework:spring-web:$springVersion"
+    api "org.springframework:spring-context:$springVersion"
+    compileOnly("javax.servlet:javax.servlet-api:$servletApiVersion")
+
+    testImplementation("javax.servlet:javax.servlet-api:$servletApiVersion")
+    testImplementation "org.springframework:spring-test:$springVersion"
+}

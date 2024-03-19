@@ -1,0 +1,12 @@
+dependencies {
+    api "io.reactivex:rxjava:$rxJavaVersion"
+    api project(":grace-datastore-gorm"), {
+        exclude group:"org.graceframework", module:'grace-async'
+        exclude group:"org.graceframework", module:'grace-datastore-core'
+    }
+    api project(":grace-datastore-core")
+    implementation "org.javassist:javassist:$javassistVersion"
+    compileOnly("org.hibernate:hibernate-validator:$hibernateValidatorVersion")
+    documentation "org.springframework:spring-beans:$springVersion"
+    documentation "org.graceframework:grace-async:$graceAsyncVersion"
+}

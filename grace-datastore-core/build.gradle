@@ -1,0 +1,18 @@
+dependencies {
+    api "javax.transaction:javax.transaction-api:$jtaVersion"
+    api "org.slf4j:slf4j-api:$slf4jVersion"
+    api "org.slf4j:jcl-over-slf4j:$slf4jVersion"
+    api "javax.annotation:javax.annotation-api:$javaAnnotationApiVersion"
+    api "javax.persistence:javax.persistence-api:$jpaVersion"
+    api "org.springframework:spring-core:$springVersion"
+    api "org.springframework:spring-beans:$springVersion"
+    api "org.springframework:spring-tx:$springVersion"
+    api "org.springframework:spring-context:$springVersion"
+    implementation "com.github.ben-manes.caffeine:caffeine:$caffeineVersion"
+    implementation "org.javassist:javassist:$javassistVersion"
+
+    testImplementation project(":grace-datastore-gorm")
+    // we need the Grails @Entity annotation to test GORM syntax mapping
+    testImplementation("org.springframework:spring-context:$springVersion")
+    testImplementation("org.springframework:spring-web:$springVersion")
+}

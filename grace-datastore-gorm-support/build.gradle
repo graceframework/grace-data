@@ -1,0 +1,17 @@
+dependencies {
+    api project(':grace-datastore-gorm')
+    api("org.graceframework:grace-core:$graceVersion")
+    api("org.graceframework:grace-bootstrap:$graceVersion")
+
+    compileOnly "org.springframework:spring-orm:$springVersion"
+    compileOnly "org.springframework:spring-webmvc:$springVersion"
+    compileOnly "org.graceframework:grace-web-url-mappings:$graceVersion", { transitive = false }
+    compileOnly "org.graceframework:grace-web-common:$graceVersion", { transitive = false }
+    compileOnly "org.hibernate:hibernate-core:${hibernateVersion}", { transitive = false }
+}
+
+project.tasks.withType(Jar) {
+    configure {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+}

@@ -1,0 +1,4 @@
+dependencies {
+    api project(":grace-datastore-gorm")
+    api project(":grace-datastore-async")
+}
