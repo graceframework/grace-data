@@ -4,11 +4,6 @@ dependencies {
         exclude group: 'org.graceframework', module: 'grace-datastore-core'
     }
     api("org.graceframework:grace-bootstrap:$graceVersion")
-
-    compileOnly "org.springframework:spring-orm:$springVersion"
-    compileOnly "org.springframework:spring-webmvc:$springVersion"
-    compileOnly "org.graceframework:grace-web-url-mappings:$graceVersion", { transitive = false }
-    compileOnly "org.graceframework:grace-web-common:$graceVersion", { transitive = false }
 }
 
 project.tasks.withType(Jar) {
