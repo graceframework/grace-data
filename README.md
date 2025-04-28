@@ -3,15 +3,15 @@
 [![Latest version on Maven Central](https://img.shields.io/maven-central/v/org.graceframework/grace-datastore-core.svg?label=Maven%20Central&logo=apache-maven&style=flat)](https://search.maven.org/search?q=g:org.graceframework)
 [![Grace on X](https://img.shields.io/twitter/follow/graceframework?style=social)](https://twitter.com/graceframework)
 
-[![Groovy Version](https://img.shields.io/badge/Groovy-4.0.24-blue?style=flat&color=4298b8)](https://groovy-lang.org/releasenotes/groovy-4.0.html)
-[![Grace Version](https://img.shields.io/badge/Grace-2023.3.0-blue?style=flat&color=f49b06)](https://github.com/graceframework/grace-framework/releases/tag/v2023.3.0-M1)
+[![Groovy Version](https://img.shields.io/badge/Groovy-4.0.26-blue?style=flat&color=4298b8)](https://groovy-lang.org/releasenotes/groovy-4.0.html)
+[![Grace Version](https://img.shields.io/badge/Grace-2023.3.0-blue?style=flat&color=f49b06)](https://github.com/graceframework/grace-framework/releases/tag/v2023.3.0-M2)
 
 # Grace Data
 
 Grace Data(GORM) is the data access toolkit used by Grace and provides a rich set of APIs for accessing relational and non-relational data including implementations for Hibernate (SQL), MongoDB, Neo4j, Cassandra, an in-memory ConcurrentHashMap for testing and an automatic GraphQL schema generator.
 
 > [!IMPORTANT]
-> Currently, there is only one implementation for GORM - [Grace Data Hibernate](https://github.com/graceframework/grace-data-hibernate), as it takes a lot of time to refactor GORM and support the latest Hibernate 6.
+> Currently, there are two implementations for GORM in Grace 2023.3 - [Grace Data Hibernate](https://github.com/graceframework/grace-data-hibernate) and [Grace Data MongoDB](https://github.com/graceframework/grace-data-mongodb), and we will support the latest Hibernate 6.x in Grace 2024.0.x.
 > At the same time, Grace Framework is actively supporting other frameworks such as Spring Data, JOOQ, myBatis, etc.
 
 
