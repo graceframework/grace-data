@@ -2,10 +2,10 @@ dependencies {
     api project(":grace-datastore-gorm"),
             project(":grace-datastore-core")
 
-    implementation "com.github.ben-manes.caffeine:caffeine:$caffeineVersion"
+    implementation "com.github.ben-manes.caffeine:caffeine"
     testImplementation project(":grace-datastore-gorm-tck")
-    testImplementation "org.apache.groovy:groovy-json:$groovyVersion"
-    testRuntimeOnly "org.springframework:spring-aop:$springVersion"
+    testImplementation "org.apache.groovy:groovy-json"
+    testRuntimeOnly "org.springframework:spring-aop"
     testRuntimeOnly "log4j:log4j:1.2.17"
 }
 

@@ -10,6 +10,7 @@ buildscript {
     }
     dependencies {
         classpath "io.github.gradle-nexus:publish-plugin:2.0.0"
+        classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagementPluginVersion"
     }
 }
 
@@ -54,29 +55,40 @@ subprojects {
     apply plugin: "signing"
     apply plugin: "checkstyle"
     apply plugin: "codenarc"
+    apply plugin: "io.spring.dependency-management"
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.graceframework:grace-bom:$graceVersion"
+        }
+        applyMavenExclusions false
+        generatedPomCustomization {
+            enabled = false
+        }
+    }
 
     configurations {
         documentation
     }
 
     dependencies {
-        api "org.apache.groovy:groovy:$groovyVersion"
-        testImplementation "org.apache.groovy:groovy-test-junit5:$groovyVersion"
-        testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
-        testImplementation "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
-        testImplementation "org.junit.platform:junit-platform-runner:$junitJupiterPlatformVersion"
-        testImplementation("org.spockframework:spock-core:$spockVersion") { transitive = false }
+        api "org.apache.groovy:groovy"
+        testImplementation "org.apache.groovy:groovy-test-junit5"
+        testImplementation "org.junit.jupiter:junit-jupiter-api"
+        testImplementation "org.junit.jupiter:junit-jupiter-engine"
+        testImplementation "org.junit.platform:junit-platform-runner"
+        testImplementation("org.spockframework:spock-core") { transitive = false }
 
         if (project.name == "grace-datastore-gorm-tck") {
-            api "org.apache.groovy:groovy-test-junit5:$groovyVersion"
-            api "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
-            api "org.junit.platform:junit-platform-runner:$junitJupiterPlatformVersion"
-            runtimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
-            implementation("org.spockframework:spock-core:$spockVersion") { transitive = false }
+            api "org.apache.groovy:groovy-test-junit5"
+            api "org.junit.jupiter:junit-jupiter-api"
+            api "org.junit.platform:junit-platform-runner"
+            runtimeOnly "org.junit.jupiter:junit-jupiter-engine"
+            implementation("org.spockframework:spock-core") { transitive = false }
         }
 
         documentation "org.fusesource.jansi:jansi:2.4.0"
-        documentation "org.apache.groovy:groovy-dateutil:$groovyVersion"
+        documentation "org.apache.groovy:groovy-dateutil"
         documentation 'info.picocli:picocli:4.6.3'
         documentation ("com.github.javaparser:javaparser-core:$javaParserCoreVersion")
     }

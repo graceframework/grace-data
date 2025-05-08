@@ -2,22 +2,22 @@ dependencies {
     api project(":grace-datastore-core")
     api project(":grace-datastore-gorm-validation")
 
-    implementation "org.slf4j:slf4j-api:$slf4jVersion"
-    compileOnly("jakarta.el:jakarta.el-api:$elApiVersion")
-    compileOnly("jakarta.validation:jakarta.validation-api:$jakartaValidationVersion")
-    compileOnly("org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion")
-    compileOnly("org.springframework:spring-core:$springVersion")
-    compileOnly("org.springframework:spring-jdbc:$springVersion")
-    compileOnly("org.springframework:spring-web:$springVersion")
-    testImplementation "org.graceframework:grace-core:$graceVersion", {
+    implementation "org.slf4j:slf4j-api"
+    compileOnly("jakarta.el:jakarta.el-api")
+    compileOnly("jakarta.validation:jakarta.validation-api")
+    compileOnly("org.hibernate.validator:hibernate-validator")
+    compileOnly("org.springframework:spring-core")
+    compileOnly("org.springframework:spring-jdbc")
+    compileOnly("org.springframework:spring-web")
+    testImplementation "org.graceframework:grace-core", {
         exclude group: 'org.graceframework', module: 'grace-datastore-core'
     }
-    testImplementation("org.springframework:spring-jdbc:$springVersion")
-    testImplementation("org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion")
-    testImplementation("jakarta.el:jakarta.el-api:$elApiVersion")
-    testImplementation("jakarta.validation:jakarta.validation-api:$jakartaValidationVersion")
+    testImplementation("org.springframework:spring-jdbc")
+    testImplementation("org.hibernate.validator:hibernate-validator")
+    testImplementation("jakarta.el:jakarta.el-api")
+    testImplementation("jakarta.validation:jakarta.validation-api")
     testRuntimeOnly("org.glassfish:jakarta.el:$elImplVersion")
-    testRuntimeOnly("com.h2database:h2:$h2Version")
+    testRuntimeOnly("com.h2database:h2")
 }
 
 //compileGroovy.groovyOptions.forkOptions.jvmArgs = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']

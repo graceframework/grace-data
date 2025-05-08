@@ -1,7 +1,7 @@
 dependencies {
     api project(":grace-datastore-gorm-async")
     api project(":grace-datastore-gorm-support")
-    runtimeOnly "org.apache.groovy:groovy-dateutil:$groovyVersion"
+    runtimeOnly "org.apache.groovy:groovy-dateutil"
 }
 
 //compileGroovy.groovyOptions.fork = false

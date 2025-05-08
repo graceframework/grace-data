@@ -1,9 +1,9 @@
 dependencies {
     api project(':grace-datastore-gorm')
-    api "org.graceframework:grace-core:$graceVersion", {
+    api "org.graceframework:grace-core", {
         exclude group: 'org.graceframework', module: 'grace-datastore-core'
     }
-    api("org.graceframework:grace-bootstrap:$graceVersion")
+    api("org.graceframework:grace-bootstrap")
 }
 
 project.tasks.withType(Jar) {
