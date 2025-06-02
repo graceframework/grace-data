@@ -1,0 +1,41 @@
+=== Checking out and Building 
+
+The project is https://github.com/graceframework/grails-data[hosted on GitHub].
+
+You are free to fork the project from there or clone it anonymously using git:
+
+----
+git clone https://github.com/graceframework/grails-data.git
+cd grace-data
+----
+
+The project has a https://gradle.org[Gradle] build.
+
+To build the project you can run the `assemble` task:
+
+[source, bash]
+----
+./gradlew assemble
+----
+
+To install the jar files for the various subprojects into your local Maven repository you can run:
+
+[source, bash]
+----
+./gradlew publishToMavenLocal
+----
+
+=== Project Structure
+
+The project is essentially a multi-project Gradle build. There is a core API and then subprojects that implement that API. The core API subprojects include:
+
+* `grace-datastore-core` - The core API, this provides core interfaces for implementing a GORM provider
+* `grace-datastore-gorm` - The runtime meta-programming and AST transformation infrastructure behind GORM. This also provides end users with APIs like `grails.gorm.CriteriaBuilder` and `grails.gorm.DetachedCriteria`
+* `grace-datastore-gorm-support` - Support classes for easing the writing of a GORM plugin for Grails
+* `grace-datastore-gorm-tck` - The TCK that includes hundreds of Spock specifications that a GORM implementation will need to pass
+* `grace-datastore-web` - Classes required to integrate GORM into a web tier
+
+In addition to this, there are separate projects of GORM implementations for various datastores:
+
+* https://github.com/graceframework/grace-data-hibernate[Grace Data Hibernate]
+* https://github.com/graceframework/grace-data-mongodb[Grace Data MongoDB]

@@ -10,6 +10,7 @@ buildscript {
     }
     dependencies {
         classpath "io.github.gradle-nexus:publish-plugin:2.0.0"
+        classpath "org.graceframework:grace-gradle-plugin:$graceVersion"
         classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagementPluginVersion"
     }
 }
@@ -22,11 +23,13 @@ ext.isReleaseVersion = !projectVersion.endsWith("SNAPSHOT")
 version = project.projectVersion
 group = "org.graceframework"
 
+apply plugin: "groovy"
 apply plugin: "java-library"
 apply plugin: "io.github.gradle-nexus.publish-plugin"
 apply plugin: "maven-publish"
 apply plugin: "signing"
 apply plugin: "idea"
+apply plugin: 'org.graceframework.grace-doc'
 
 allprojects {
     repositories {
@@ -37,15 +40,15 @@ allprojects {
             }
         }
     }
+
+    configurations {
+        documentation
+    }
 }
 
 subprojects {
     version = project.projectVersion
     group = "org.graceframework"
-
-    configurations {
-        documentation
-    }
 
     apply plugin: "groovy"
     apply plugin: "eclipse"
@@ -67,10 +70,6 @@ subprojects {
         }
     }
 
-    configurations {
-        documentation
-    }
-
     dependencies {
         api "org.apache.groovy:groovy"
         testImplementation "org.apache.groovy:groovy-test-junit5"
@@ -86,11 +85,6 @@ subprojects {
             runtimeOnly "org.junit.jupiter:junit-jupiter-engine"
             implementation("org.spockframework:spock-core") { transitive = false }
         }
-
-        documentation "org.fusesource.jansi:jansi:2.4.0"
-        documentation "org.apache.groovy:groovy-dateutil"
-        documentation 'info.picocli:picocli:4.6.3'
-        documentation ("com.github.javaparser:javaparser-core:$javaParserCoreVersion")
     }
 
     if (project.name == "grace-datastore-gorm-async") {
@@ -138,10 +132,6 @@ subprojects {
         options.docEncoding "UTF-8"
         options.charSet "UTF-8"
         options.jFlags "-Xms64M", "-Xmx512M"
-    }
-
-    configure([groovydoc]) {
-        classpath += configurations.documentation
     }
 
     publishing {
@@ -195,6 +185,51 @@ subprojects {
             sign publishing.publications.maven
         }
     }
+}
+
+dependencies {
+    documentation "com.github.javaparser:javaparser-core:$javaParserCoreVersion"
+    documentation "org.apache.groovy:groovy:$groovyVersion"
+    documentation "org.apache.groovy:groovy-ant:$groovyVersion"
+}
+
+def cleanTask = project.tasks.findByName('clean')
+if (cleanTask == null) {
+    task clean(type: Delete) {
+        delete(buildDir)
+    }
+}
+else {
+    cleanTask.doLast {
+        ant.delete(dir: 'build/docs')
+    }
+}
+
+tasks.withType(Groovydoc) {
+    group = 'Documentation'
+    docTitle = "Grace Data - ${project.version}"
+    destinationDir = project.file('build/docs/manual/api')
+    def files = []
+    project.rootProject.subprojects
+            .findAll { !it.name != 'docs' && !it.name.startsWith('examples') }
+            .each { subproject ->
+                if(subproject.file('src/main/groovy').exists()) {
+                    files += subproject.files('src/main/groovy')
+                }
+                if(subproject.file('src/main/java').exists()) {
+                    files += subproject.files('src/main/java')
+                }
+            }
+    if (project.file('src/main/groovy').exists()) {
+        files += project.files('src/main/groovy')
+    }
+    source = files
+    classpath += configurations.documentation
+}
+
+docs {
+    dependsOn groovydoc
+    sourceDir = project.file('src/docs')
 }
 
 project.afterEvaluate {
