@@ -1,0 +1,932 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3 Understanding the GORM API 2023.3.0-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navHeader">
+        
+        <span id="logo">
+            <a href="https://graceframework.org" title="Grace Framework Website">
+                <img src="../img/grace.svg" alt="Grace Framework" />
+            </a>
+        </span>
+        
+        <div class="docHeader">
+            <h1 class="docTitle">Grace Data (GORM)</h1>
+            <h3 class="docSubTitle">The Data Access toolkit provides a rich set of APIs for accessing relational and non-relational data.</h3>
+        </div>
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/understandingApi.html"><strong>3</strong><span>Understanding the GORM API</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/stepByStep.html"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" href="../api/index.html">API Docs</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3 Understanding the GORM API</h1>
+
+                    <p><strong>Version:</strong> 2023.3.0-SNAPSHOT</p>
+                </div>
+
+                
+                <div id="table-of-content">
+                    <h2>Table of Contents</h2>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#datastoreBasics"><strong>3.1</strong><span>Datastore Basics</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#implementingCrud"><strong>3.2</strong><span>Implementing CRUD</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#secondaryIndexes"><strong>3.3</strong><span>Secondary Indexing</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#implementingQueries"><strong>3.4</strong><span>Implementing Querying</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#gormEnhancer"><strong>3.5</strong><span>GORM Enhancer</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#gormApis"><strong>3.6</strong><span>Adding to GORM APIs</span></a>
+                    </div>
+                    
+                </div>
+                
+
+                
+
+<h1 id="understandingApi"><a class="anchor" href="#understandingApi"></a>3 Understanding the GORM API</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect2">
+<h3 id="_introduction">Introduction</h3>
+<div class="paragraph">
+<p>The GORM Developer API is divided into a low-level API that implementors must implement for each specific datastore, and a set of higher-level APIs that enhance domain classes with features visible to regular users, such as dynamic finders, criteria queries, and so on.</p>
+</div>
+<div class="paragraph">
+<p>The low-level API classes are located within the <code>grace-datastore-core</code> subproject, whereas the higher-level APIs used to enhance domain classes can be found in <code>grace-datastore-gorm</code>. In this section, we will discuss the low-level API.</p>
+</div>
+</div>
+
+
+<h2 id="datastoreBasics"><a class="anchor" href="#datastoreBasics"></a>3.1 Datastore Basics</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/datastoreBasics.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect2">
+<h3 id="_the_mappingcontext">The MappingContext</h3>
+<div class="paragraph">
+<p>The <code>org.grails.datastore.mapping.model.MappingContext</code> interface is used to obtain metadata about the classes that are configured for persistence.</p>
+</div>
+<div class="paragraph">
+<p>There are <code>org.grails.datastore.mapping.model.PersistentEntity</code> and <code>org.grails.datastore.mapping.model.PersistentProperty</code> interfaces that represent a class and its properties respectively. These can be obtained and introspected via the <code>MappingContext</code>.</p>
+</div>
+<div class="paragraph">
+<p>There are various concrete implementations of the <code>MappingContext</code> interface such as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>DocumentMappingContext</code> - Used for document stores, subclassed by <code>MongoMappingContext</code></p>
+</li>
+<li>
+<p><code>JpaMappingContext</code> - Used for JPA</p>
+</li>
+<li>
+<p><code>KeyValueMappingContext</code> - Used by key/value stores</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Creating a new <code>MappingContext</code> may be useful because it allows users to configure how a class is mapped to the underlying datastore using GORM&#8217;s <code>mapping</code> block as well as allowing registration of custom type converters and so on. The implementation for Neo4j looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">Neo4jMappingContext</span> <span class="directive">extends</span> AbstractMappingContext {
+
+    MappingFactory&lt;<span class="predefined-type">Collection</span>, <span class="predefined-type">Attribute</span>&gt; mappingFactory
+    MappingConfigurationStrategy syntaxStrategy
+
+    Neo4jMappingContext() {
+        mappingFactory = <span class="keyword">new</span> GraphGormMappingFactory()
+        syntaxStrategy = <span class="keyword">new</span> GormMappingConfigurationStrategy(mappingFactory)
+        <span class="comment">//addTypeConverter(new StringToNumberConverterFactory().getConverter(BigDecimal))</span>
+        addTypeConverter(<span class="keyword">new</span> StringToShortConverter())
+        addTypeConverter(<span class="keyword">new</span> StringToBigIntegerConverter())
+         ...
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">protected</span> PersistentEntity createPersistentEntity(<span class="predefined-type">Class</span> javaClass) {
+        GraphPersistentEntity persistentEntity = <span class="keyword">new</span> GraphPersistentEntity(javaClass, <span class="local-variable">this</span>)
+        mappingFactory.createMappedForm(persistentEntity) <span class="comment">// populates mappingFactory.entityToPropertyMap as a side effect</span>
+        persistentEntity
+    }
+
+    MappingConfigurationStrategy getMappingSyntaxStrategy() {
+        syntaxStrategy
+    }
+
+    MappingFactory getMappingFactory() {
+        mappingFactory
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice how Neo4j provides a custom <code>GraphGormMappingFactory</code> and <code>GraphPersistentEntity</code> to allow the domain class configuration to be changed for a given Neo4j <code>Node</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_datastore_interface">The Datastore Interface</h3>
+<div class="paragraph">
+<p>The <code>org.grails.datastore.mapping.core.Datastore</code> interface is the equivalent of a SQL <code>DataSource</code> where by it provides the necessary capability to create a connection.</p>
+</div>
+<div class="paragraph">
+<p>In most cases one can simply subclass the <code>AbstractDatastore</code> super class and implement the <code>createSession</code> method. The following implementation is from the <code>SimpleMapDatastore</code> which implements GORM ontop of a <code>ConcurrentHashMap</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> Session createSession(PropertyResolver connDetails) {
+    <span class="keyword">return</span> <span class="keyword">new</span> SimpleMapSession(<span class="local-variable">this</span>, getMappingContext(), getApplicationEventPublisher());
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The implementation depends a lot on the underlying datastore. For example for MongoDB the following implementation is used:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> Session createSession(PropertyResolver connDetails) {
+    <span class="keyword">return</span> <span class="keyword">new</span> MongoSession(<span class="local-variable">this</span>, getMappingContext(), getApplicationEventPublisher(), <span class="predefined-constant">false</span>);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that the <code>Datastore</code> also has a reference to the <code>MappingContext</code> discussed in the previous section.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_session_interface">The Session Interface</h3>
+<div class="paragraph">
+<p>The <code>org.grails.datastore.mapping.core.Session</code> interface represents an active connection. It can be either stateful or stateless, depending on the implementation.</p>
+</div>
+<div class="paragraph">
+<p>For example of embedded databases where there is no network connection, a stateful session is not particularly useful, but a datastore that creates network connections you may want to cache returned instances to reduce load.</p>
+</div>
+<div class="paragraph">
+<p>The <code>AbstractSession</code> class provides some support for creating stateful sessions, if you prefer a stateless implementation then simply implement <code>Session</code> or subclass <code>AbstractAttributeStoringSession</code>.</p>
+</div>
+<div class="paragraph">
+<p>In general, if you subclass <code>AbstractSession</code>, the minimum you need to do is implement the <code>createPersister</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">protected</span> Persister createPersister(<span class="predefined-type">Class</span> cls, MappingContext mappingContext) {
+    PersistentEntity entity = mappingContext.getPersistentEntity(cls.getName());
+    <span class="keyword">if</span> (entity == <span class="predefined-constant">null</span>) {
+        <span class="keyword">return</span> <span class="predefined-constant">null</span>;
+    }
+    <span class="keyword">return</span> <span class="keyword">new</span> SimpleMapEntityPersister(mappingContext, entity, <span class="local-variable">this</span>,
+        (SimpleMapDatastore) getDatastore(), publisher);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The example above is from the <code>SimpleMapSession</code> implementation, which creates a <code>SimpleMapEntityPersister</code> instance and returns it. Returning null indicates that the class cannot be persisted and an exception will be thrown.</p>
+</div>
+</div>
+
+
+<h2 id="implementingCrud"><a class="anchor" href="#implementingCrud"></a>3.2 Implementing CRUD</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/implementingCrud.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect2">
+<h3 id="_the_entitypersister_interface">The EntityPersister Interface</h3>
+<div class="paragraph">
+<p>The <code>EntityPersister</code> interface is used to implement the basic Create, Read, Update and Delete (CRUD) operations.</p>
+</div>
+<div class="paragraph">
+<p>There are individual methods to implement such as <code>persistEntity</code>, <code>updateEntity</code>, <code>deleteEntity</code> and so on.</p>
+</div>
+<div class="paragraph">
+<p>In many cases there is a representation of an entity in its "native" form as supplied by the datastore driver. For example in Cassandra this could be a <code>ColumnFamily</code>, or in MongoDB a <code>DBCollection</code>.</p>
+</div>
+<div class="paragraph">
+<p>To support implementing such cases, there is an abstract <code>NativeEntryEntityPersister&lt;T, K&gt;</code> super class that provides the basis for an implementation that maps a native entry, such as a MongoDB <code>DBObject</code> or a Neo4j <code>Node</code>, to a persisted entity and back again.</p>
+</div>
+<div class="paragraph">
+<p>The two generic types of this superclass indicate the native entry type (example <code>DBObject</code> in MongoDB) and the native key type (example <code>ObjectId</code> in MongoDB). The MongoDB implementation looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MongoEntityPersister</span> <span class="directive">extends</span> NativeEntryEntityPersister&lt;DBObject, <span class="predefined-type">Object</span>&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that <code>Object</code> is used for the key since MongoDB also supports Long and String-based identifiers.</p>
+</div>
+<div class="paragraph">
+<p>They key methods that need implementing are defined below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>getEntityFamily()</code> - Defines the name of the entity group or family. This could be a database table, a Cassandra Column Family or a MongoDB collection</p>
+</li>
+<li>
+<p><code>T createNewEntry(String family)</code> - Creates a native entry ready to be inserted</p>
+</li>
+<li>
+<p><code>Object getEntryValue(T nativeEntry, String property)</code> - Retrieves a value of entry and returns its Java object form. For example a "date" property stored as a String in the datastore would need to be returned as a java.util.Date at this point</p>
+</li>
+<li>
+<p><code>setEntryValue(T nativeEntry, String key, Object value)</code> - Sets a value of the native entry, converting any Java objects to the required native format</p>
+</li>
+<li>
+<p><code>deleteEntry(String family, K key, Object entry)</code> - Deletes an entry for the given family, native key and entry</p>
+</li>
+<li>
+<p><code>T retrieveEntry(PersistentEntity persistentEntity, String family, Serializable key)</code> - Retrieves a native entry for the given entity, family and key</p>
+</li>
+<li>
+<p><code>K storeEntry(PersistentEntity persistentEntity, EntityAccess entityAccess, K storeId, T nativeEntry)</code> - Stores a native entry for the given id</p>
+</li>
+<li>
+<p><code>updateEntry(PersistentEntity persistentEntity, EntityAccess entityAccess, K key, T entry)</code> - Updates an entry</p>
+</li>
+<li>
+<p><code>K generateIdentifier(PersistentEntity persistentEntity, T entry)</code> - Generate an identifier for the given native entry</p>
+</li>
+<li>
+<p><code>PropertyValueIndexer getPropertyIndexer(PersistentProperty property)</code> - If the datastore requires manual indexing, you&#8217;ll need to implement a <code>PropertyIndexer</code>, otherwise return null</p>
+</li>
+<li>
+<p><code>AssociationIndexer getAssociationIndexer(T nativeEntry, Association association)</code> - If the datastore requires manual indexing, you&#8217;ll need to implement a <code>AssociationIndexer</code>, otherwise return null</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create">Create</h3>
+<div class="paragraph">
+<p>The <code>createNewEntry</code> method is used to create a native record that will be inserted into the datastore.</p>
+</div>
+<div class="paragraph">
+<p>In MongoDB this is a <code>DBObject</code> whilst in the implementation for <code>ConcurrentHashMap</code> it is another <code>Map</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> DBObject createNewEntry(<span class="predefined-type">String</span> family) {
+    <span class="keyword">return</span> <span class="keyword">new</span> BasicDBObject();
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_read">Read</h3>
+<div class="paragraph">
+<p>The <code>retrieveEntry</code> method is used to retrieve a native record for a given key:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">protected</span> DBObject retrieveEntry(<span class="directive">final</span> PersistentEntity persistentEntity,
+        <span class="predefined-type">String</span> family, <span class="directive">final</span> <span class="predefined-type">Serializable</span> key) {
+    <span class="keyword">return</span> mongoTemplate.execute(<span class="keyword">new</span> DbCallback&lt;DBObject&gt;() {
+        <span class="directive">public</span> DBObject doInDB(DB con) <span class="directive">throws</span> MongoException, DataAccessException {
+            DBCollection dbCollection = con.getCollection(getCollectionName(persistentEntity));
+            <span class="keyword">return</span> dbCollection.findOne(key);
+        }
+    });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here you can see the <code>MongoDB</code> implementation that uses a Spring Data <code>MongoTemplate</code> to find a <code>DBObject</code> for the given key.</p>
+</div>
+<div class="paragraph">
+<p>There is a separate <code>storeEntry</code> method that is used to actually store the native object. In <code>MongoDB</code> this looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> <span class="predefined-type">Object</span> storeEntry(<span class="directive">final</span> PersistentEntity persistentEntity, <span class="directive">final</span> EntityAccess entityAccess,
+                            <span class="directive">final</span> <span class="predefined-type">Object</span> storeId, <span class="directive">final</span> DBObject nativeEntry) {
+    <span class="keyword">return</span> mongoTemplate.execute(<span class="keyword">new</span> DbCallback&lt;<span class="predefined-type">Object</span>&gt;() {
+        <span class="directive">public</span> <span class="predefined-type">Object</span> doInDB(DB con) <span class="directive">throws</span> MongoException, DataAccessException {
+            nativeEntry.put(MONGO_ID_FIELD, storeId);
+            <span class="keyword">return</span> storeId;
+        }
+    });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice it doesn&#8217;t actually do anything native insert into a MongoDB collection. This is because the Datastore API supports the notion of batch insert operations and flushing. In the case of <code>MongoDB</code> the <code>MongoSession</code> implementation overrides the <code>flushPendingInserts</code> method of <code>AbstractSession</code> and performs a batch insert of multiple MongoDB documents (ie <code>DBObject</code>s) at once:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">collection.insert(dbObjects.toArray(DBObject::<span class="keyword">new</span>), writeConcernToUse);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Other datastores that  do not support batch inserts would instead do the insert in the <code>storeEntry</code> method itself.</p>
+</div>
+<div class="paragraph">
+<p>For example the implementation for <code>ConcurrentHashMap</code> looks like <em>(with Groovy)</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="directive">protected</span> storeEntry(PersistentEntity persistentEntity, EntityAccess entityAccess, storeId, <span class="predefined-type">Map</span> nativeEntry) {
+    <span class="keyword">if</span> (!persistentEntity.root) {
+        nativeEntry.discriminator = persistentEntity.discriminator
+    }
+    datastore.put(storeId, nativeEntry)
+    <span class="keyword">return</span> storeId
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update">Update</h3>
+<div class="paragraph">
+<p>The <code>updateEntry</code> method is used to update an entry:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> updateEntry(<span class="directive">final</span> PersistentEntity persistentEntity, <span class="directive">final</span> EntityAccess ea,
+        <span class="directive">final</span> <span class="predefined-type">Object</span> key, <span class="directive">final</span> DBObject entry) {
+    mongoTemplate.execute(<span class="keyword">new</span> DbCallback&lt;<span class="predefined-type">Object</span>&gt;() {
+        <span class="directive">public</span> <span class="predefined-type">Object</span> doInDB(DB con) <span class="directive">throws</span> MongoException, DataAccessException {
+            <span class="predefined-type">String</span> collectionName = getCollectionName(persistentEntity, entry);
+            DBCollection dbCollection = con.getCollection(collectionName);
+            <span class="keyword">if</span> (isVersioned(ea)) {
+                <span class="comment">// TODO this should be done with a CAS approach if possible</span>
+                DBObject previous = dbCollection.findOne(key);
+                checkVersion(ea, previous, persistentEntity, key);
+            }
+
+            MongoSession mongoSession = (MongoSession) session;
+            dbCollection.update(dbo, entry, <span class="predefined-constant">false</span>, <span class="predefined-constant">false</span>, mongoSession.getWriteConcern());
+            <span class="keyword">return</span> <span class="predefined-constant">null</span>;
+        }
+    });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see again the underlying database specific <code>update</code> method is used, in this case the <code>DBCollection</code>'s <code>update</code> method.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_delete">Delete</h3>
+<div class="paragraph">
+<p>The <code>deleteEntry</code> method is used to delete an entry. For example in the <code>ConcurrentHashMap</code> implementation it is simply removed from the map:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="directive">protected</span> <span class="type">void</span> deleteEntry(<span class="predefined-type">String</span> family, key, entry) {
+    datastore.remove(key)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Whilst in <code>MongoDB</code> the <code>DBCollection</code> object&#8217;s <code>remove</code> method is called:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> <span class="type">void</span> deleteEntry(<span class="predefined-type">String</span> family, <span class="directive">final</span> <span class="predefined-type">Object</span> key, <span class="directive">final</span> <span class="predefined-type">Object</span> entry) {
+    mongoTemplate.execute(<span class="keyword">new</span> DbCallback&lt;<span class="predefined-type">Object</span>&gt;() {
+        <span class="directive">public</span> <span class="predefined-type">Object</span> doInDB(DB con) <span class="directive">throws</span> MongoException, DataAccessException {
+            DBCollection dbCollection = getCollection(con);
+
+            MongoSession mongoSession = (MongoSession) session;
+            dbCollection.remove(key, mongoSession.getWriteConcern());
+            <span class="keyword">return</span> <span class="predefined-constant">null</span>;
+        }
+
+        <span class="directive">protected</span> DBCollection getCollection(DB con) {
+            <span class="keyword">return</span> con.getCollection(getCollectionName(getPersistentEntity()));
+        }
+    });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that if the underlying datastore supports batch delete operations you may want override and implement the <code>deleteEntries</code> method which allows for deleting multiple entries in a single operation.</p>
+</div>
+<div class="paragraph">
+<p>The implementation for MongoDB looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">protected</span> <span class="type">void</span> deleteEntries(<span class="predefined-type">String</span> family, <span class="directive">final</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Object</span>&gt; keys) {
+    mongoTemplate.execute(<span class="keyword">new</span> DbCallback&lt;<span class="predefined-type">Object</span>&gt;() {
+        <span class="directive">public</span> <span class="predefined-type">Object</span> doInDB(DB con) <span class="directive">throws</span> MongoException, DataAccessException {
+            <span class="predefined-type">String</span> collectionName = getCollectionName(getPersistentEntity());
+            DBCollection dbCollection = con.getCollection(collectionName);
+
+            MongoSession mongoSession = (MongoSession) getSession();
+            MongoQuery query = mongoSession.createQuery(getPersistentEntity().getJavaClass());
+            query.in(getPersistentEntity().getIdentity().getName(), keys);
+
+            dbCollection.remove(query.getMongoQuery());
+
+            <span class="keyword">return</span> <span class="predefined-constant">null</span>;
+        }
+    });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll notice that this implementation uses a <code>MongoQuery</code> instance. Also, it&#8217;s important to note that when implementing an <code>EntityPersister</code>, you enable basic CRUD operations, but not querying.</p>
+</div>
+<div class="paragraph">
+<p>The latter is a subject we&#8217;ll explore in the following sections. However, before delving into that, we need to cover secondary indices, as they are required for querying.</p>
+</div>
+</div>
+
+
+<h2 id="secondaryIndexes"><a class="anchor" href="#secondaryIndexes"></a>3.3 Secondary Indexing</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/secondaryIndexes.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Many datastores do not support secondary indexing or require you to build your own. In cases like this, you will need to implement a <code>PropertyIndexer</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the underlying datastore supports secondary indexes then it is ok to just return a <code>null</code> <code>PropertyIndexer</code> and let the datastore handle the indexing.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example the <code>ConcurrentHashMap</code> implementation creates secondary indices by populating another <code>Map</code> containing the indices:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> index(value, primaryKey) {
+
+    <span class="keyword">def</span> index = getIndexName(value)
+    <span class="keyword">def</span> indexed = indices[index]
+    <span class="keyword">if</span> (indexed == <span class="predefined-constant">null</span>) {
+        indexed = <span class="type">[]</span>
+        indices[index] = indexed
+    }
+    <span class="keyword">if</span> (!indexed.contains(primaryKey)) {
+        indexed &lt;&lt; primaryKey
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The implementation for Redis is very similar and stores the primary key in a Redis set:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> index(<span class="directive">final</span> <span class="predefined-type">Object</span> value, <span class="directive">final</span> <span class="predefined-type">Long</span> primaryKey) {
+      <span class="keyword">if</span> (value == <span class="predefined-constant">null</span>) {
+          <span class="keyword">return</span>;
+      }
+      <span class="directive">final</span> <span class="predefined-type">String</span> primaryIndex = createRedisKey(value);
+      redisTemplate.sadd(primaryIndex, primaryKey);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An index name is typically built from the entity name, property name and property value. The primary key of the entity is stored in this index for later querying. In fact there is a <code>query</code> method that needs to be implemented on <code>PropertyIndexer</code>. The <code>ConcurrentHashMap</code> implementation looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="predefined-type">List</span> query(value, <span class="type">int</span> offset, <span class="type">int</span> max) {
+    <span class="keyword">def</span> index = getIndexName(value)
+
+    <span class="keyword">def</span> indexed = indices[index]
+    <span class="keyword">if</span> (!indexed) {
+        <span class="keyword">return</span> <span class="predefined-type">Collections</span>.emptyList()
+    }
+    <span class="keyword">return</span> indexed[offset..max]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Depending on the characteristics of the underlying database you may want to do the indexing asynchronously or you may want to index into a search library such as Lucene. For datastores that are eventually consistent for example it makes sense to do all indexing asynchronously.</p>
+</div>
+<div class="paragraph">
+<p>Finally, when an object is deleted it will need to removed from the indices. This can be done with the <code>deindex</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> deindex(value, primaryKey) {
+    <span class="keyword">def</span> index = getIndexName(value)
+    <span class="keyword">def</span> indexed = indices[index]
+    <span class="keyword">if</span> (indexed) {
+        indexed.remove(primaryKey)
+    }
+}</code></pre>
+</div>
+</div>
+
+
+<h2 id="implementingQueries"><a class="anchor" href="#implementingQueries"></a>3.4 Implementing Querying</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/implementingQueries.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect2">
+<h3 id="_introduction">Introduction</h3>
+<div class="paragraph">
+<p>The <code>org.grails.datastore.mapping.query.Query</code> abstract class defines the query model, and it is the job of the GORM implementor to translate this query model into an underlying database query. This is different depending on the implementation and may involve:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Generating a String-based query such as SQL or JPA-QL</p>
+</li>
+<li>
+<p>Creating a query object such as MongoDB&#8217;s use of a <code>Document</code> to define queries</p>
+</li>
+<li>
+<p>Generating for use with manually created Secondary indices as is the case with Redis</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>Query</code> object defines the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>One or many <code>Criterion</code> that define the criteria to query by.</p>
+</li>
+<li>
+<p>Zero or more <code>Projection</code> instances that define what the data you want back will look like.</p>
+</li>
+<li>
+<p>Pagination parameters such as <code>max</code> and <code>offset</code></p>
+</li>
+<li>
+<p>Sorting parameters</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There are many types of <code>Criterion</code> for each specific type of query, examples include <code>Equals</code>, <code>Between</code>, <code>Like</code> etc. Depending on the capabilities of the underlying datastore you may implement only a few of these.</p>
+</div>
+<div class="paragraph">
+<p>There are also many types of <code>Projection</code> such as <code>SumProjection</code>, <code>MaxProjection</code> and <code>CountProjection</code>. Again you may implement only a few of these.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If, for instance, the underlying datastore does not support the calculation of a <code>sum</code> or <code>max</code> for a specific property, you can utilize the <code>ManualProjections</code> class to carry out these operations in memory on the client.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Writing a <code>Query</code> implementation is probably the most complex part of implementing a GORM provider, but starts by subclassing the <code>Query</code> class and implementing the <code>executeQuery</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MongoQuery</span> <span class="directive">extends</span> <span class="predefined-type">Query</span> <span class="directive">implements</span> QueryArgumentsAware {
+     ...
+
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_the_query_model">Using the Query Model</h3>
+<div class="paragraph">
+<p>To implement querying you need to understand the Query model. As discussed, a <code>Query</code> contains a list of <code>Criterion</code>. However, the root <code>Criterion</code> could be a conjunction (an AND query) or a disjunction (an OR query). The <code>Query</code> may also contain a combination of regular criterion (=, !=, LIKE etc.) and junctions (AND, OR or NOT). Implementing a <code>Query</code> therefore requires writing a recursive method. The implementation for <code>ConcurrentHashMap</code> looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="predefined-type">Collection</span> executeSubQueryInternal(criteria, criteriaList) {
+    SimpleMapResultList resultList = <span class="keyword">new</span> SimpleMapResultList(<span class="local-variable">this</span>)
+    <span class="keyword">for</span> (<span class="predefined-type">Query</span>.Criterion criterion <span class="keyword">in</span> criteriaList) {
+        <span class="keyword">if</span> (criterion <span class="keyword">instanceof</span> <span class="predefined-type">Query</span>.Junction) {
+            resultList.results &lt;&lt; executeSubQueryInternal(criterion, criterion.criteria)
+        }
+        <span class="keyword">else</span> {
+            PersistentProperty property = getValidProperty(criterion)
+            <span class="keyword">def</span> handler = handlers[criterion.getClass()]
+
+            <span class="keyword">def</span> results = handler?.call(criterion, property) ?: <span class="type">[]</span>
+            resultList.results &lt;&lt; results
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that if a <code>Junction</code> is encountered (representing AND, OR, or NOT), the method recursively handles the junctions. Otherwise, it obtains and executes a handler for the <code>Criterion</code> class. The <code>handlers</code> map is a map of <code>Criterion</code> class to query handlers. The implementation for <code>Equals</code> appears as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">def</span> handlers = [
+    ...
+    (<span class="predefined-type">Query</span>.Equals): { <span class="predefined-type">Query</span>.Equals equals, PersistentProperty property -&gt;
+        <span class="keyword">def</span> indexer = entityPersister.getPropertyIndexer(property)
+        <span class="directive">final</span> value = subqueryIfNecessary(equals)
+        <span class="keyword">return</span> indexer.query(value)
+    }
+    ...
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This approach simply employs the property indexer to query for all identifiers. However, it&#8217;s worth noting that this is a scenario involving a datastore, such as <code>ConcurrentHashMap</code>, that lacks support for secondary indices. Instead of manually querying secondary indices in this manner, an alternative might be to construct a String-based or native query. For instance, in MongoDB, this process appears as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">queryHandlers.put(Equals.class, <span class="keyword">new</span> QueryHandler&lt;Equals&gt;() {
+    <span class="directive">public</span> <span class="type">void</span> handle(PersistentEntity entity, Equals criterion, <span class="predefined-type">Document</span> query) {
+        <span class="predefined-type">String</span> propertyName = getPropertyName(entity, criterion);
+        <span class="predefined-type">Object</span> value = criterion.getValue();
+        PersistentProperty property = entity.getPropertyByName(criterion.getProperty());
+        MongoEntityPersister.setDBObjectValue(query, propertyName, value, entity.getMappingContext());
+    }
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Observe that in this case, the query takes the form of a <code>DBObject</code>. In the context of Gemfire, the implementation differs as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">queryHandlers.put(Equals.class, <span class="keyword">new</span> QueryHandler() {
+    <span class="directive">public</span> <span class="type">int</span> handle(PersistentEntity entity, Criterion criterion, <span class="predefined-type">StringBuilder</span> q, <span class="predefined-type">List</span> params, <span class="type">int</span> index) {
+        Equals eq = (Equals) criterion;
+        <span class="directive">final</span> <span class="predefined-type">String</span> name = eq.getProperty();
+        validateProperty(entity, name, Equals.class);
+
+        q.append(calculateName(entity, name));
+        <span class="keyword">return</span> appendOrEmbedValue(q, params, index, eq.getValue(), EQUALS);
+    }
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case a <code>StringBuilder</code> is used to construct a OQL query from the <code>Query</code> model.</p>
+</div>
+</div>
+
+
+<h2 id="gormEnhancer"><a class="anchor" href="#gormEnhancer"></a>3.5 GORM Enhancer</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/gormEnhancer.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Once you have implemented the lower-level APIs you can trivially provide a GORM API to a set of Grails domain classes. For example consider the following simple domain class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.persistence.*</span>
+
+<span class="annotation">@Entity</span>
+<span class="type">class</span> <span class="class">Book</span> {
+    <span class="predefined-type">String</span> title
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following setup code can be written to enable GORM for MongoDB:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="comment">// create context</span>
+<span class="keyword">def</span> context = <span class="keyword">new</span> MongoMappingContext(databaseName)
+context.addPersistentEntity(<span class="predefined-type">Book</span>)
+
+<span class="comment">// create datastore</span>
+<span class="keyword">def</span> mongoDatastore = <span class="keyword">new</span> MongoDatastore(context)
+mongoDatastore.afterPropertiesSet()
+
+<span class="comment">// enhance</span>
+<span class="keyword">def</span> enhancer = <span class="keyword">new</span> MongoGormEnhancer(mongoDatastore, <span class="keyword">new</span> DatastoreTransactionManager(<span class="key">datastore</span>: mongoDatastore))
+enhancer.enhance()
+
+<span class="comment">// use GORM!</span>
+<span class="keyword">def</span> books = <span class="predefined-type">Book</span>.list()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The key element for enabling the use of all GORM methods (<code>list()</code>, dynamic finders, etc.) is the utilization of the <code>MongoGormEnhancer</code>.</p>
+</div>
+<div class="paragraph">
+<p>This class is a subclass of <code>org.grails.datastore.gorm.GormEnhancer</code> and offers extensions to GORM specifically tailored for MongoDB.</p>
+</div>
+<div class="paragraph">
+<p>However, a subclass is not mandatory, and if you don&#8217;t need any datastore-specific extensions, you can equally use the standard <code>GormEnhancer</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">def</span> enhancer = <span class="keyword">new</span> GormEnhancer(mongoDatastore, <span class="keyword">new</span> DatastoreTransactionManager(<span class="key">datastore</span>: mongoDatastore))
+enhancer.enhance()</code></pre>
+</div>
+</div>
+
+
+<h2 id="gormApis"><a class="anchor" href="#gormApis"></a>3.6 Adding to GORM APIs</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/gormApis.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>By default, the GORM compiler ensures that all GORM entities implement the <code>GormEntity</code> trait, which provides them with all the default GORM methods.</p>
+</div>
+<div class="paragraph">
+<p>Nevertheless, if there&#8217;s a need to extend GORM functionality to incorporate additional methods tailored to a specific datastore, you can achieve this by extending the <code>GormEntity</code> trait.</p>
+</div>
+<div class="paragraph">
+<p>For example Neo4j adds methods for Cypher querying:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">trait Neo4jEntity&lt;D&gt; <span class="directive">extends</span> GormEntity&lt;D&gt; {
+
+    <span class="directive">static</span> <span class="predefined-type">Result</span> cypherStatic(<span class="predefined-type">String</span> queryString, <span class="predefined-type">Map</span> params ) {
+        <span class="keyword">def</span> session = AbstractDatastore.retrieveSession(Neo4jDatastore)
+        <span class="keyword">def</span> graphDatabaseService = (GraphDatabaseService)session.nativeInterface
+        graphDatabaseService.execute(queryString, params)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With this addition, you need to instruct the GORM compiler to make entities implement this trait. To achieve this, implement a <code>TraitProvider</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.datastore.gorm.neo4j
+
+<span class="keyword">import</span> <span class="include">grails.neo4j.Neo4jEntity</span>
+<span class="keyword">import</span> <span class="include">groovy.transform.CompileStatic</span>
+<span class="keyword">import</span> <span class="include">org.grails.compiler.gorm.GormEntityTraitProvider</span>
+
+<span class="annotation">@CompileStatic</span>
+<span class="type">class</span> <span class="class">Neo4jEntityTraitProvider</span> <span class="directive">implements</span> GormEntityTraitProvider {
+    <span class="directive">final</span> <span class="predefined-type">Class</span> entityTrait = Neo4jEntity
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And then add a <code>src/main/resources/META-INF/services/org.grails.compiler.gorm.GormEntityTraitProvider</code> file specifying the name of your trait provider:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>org.grails.datastore.gorm.neo4j.Neo4jEntityTraitProvider</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GORM will automatically inject the trait into any domain class discovered in <code>app/domain</code> or annotated with the <code>Entity</code> annotation. However, if Hibernate is present on the classpath, you must inform GORM to map the domain class with Neo4j:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="directive">static</span> mapWith = <span class="string"><span class="delimiter">&quot;</span><span class="content">neo4j</span><span class="delimiter">&quot;</span></span></code></pre>
+</div>
+</div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    Copyright &copy; 2022-2025 Michael Yan and the original authors. The content is licensed under a Creative Commons Attribution 4.0 International (CC BY SA 4.0) license.
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

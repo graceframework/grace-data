@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3.5 GORM Enhancer 2023.3.0-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navHeader">
+        
+        <span id="logo">
+            <a href="https://graceframework.org" title="Grace Framework Website">
+                <img src="../img/grace.svg" alt="Grace Framework" />
+            </a>
+        </span>
+        
+        <div class="docHeader">
+            <h1 class="docTitle">Grace Data (GORM)</h1>
+            <h3 class="docSubTitle">The Data Access toolkit provides a rich set of APIs for accessing relational and non-relational data.</h3>
+        </div>
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/understandingApi.html"><strong>3</strong><span>Understanding the GORM API</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/stepByStep.html"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" href="../api/index.html">API Docs</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3.5 GORM Enhancer</h1>
+
+                    <p><strong>Version:</strong> 2023.3.0-SNAPSHOT</p>
+                </div>
+
+                
+
+                
+
+<h2 id="gormEnhancer"><a class="anchor" href="#gormEnhancer"></a>3.5 GORM Enhancer</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/gormEnhancer.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Once you have implemented the lower-level APIs you can trivially provide a GORM API to a set of Grails domain classes. For example consider the following simple domain class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">grails.persistence.*</span>
+
+<span class="annotation">@Entity</span>
+<span class="type">class</span> <span class="class">Book</span> {
+    <span class="predefined-type">String</span> title
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following setup code can be written to enable GORM for MongoDB:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="comment">// create context</span>
+<span class="keyword">def</span> context = <span class="keyword">new</span> MongoMappingContext(databaseName)
+context.addPersistentEntity(<span class="predefined-type">Book</span>)
+
+<span class="comment">// create datastore</span>
+<span class="keyword">def</span> mongoDatastore = <span class="keyword">new</span> MongoDatastore(context)
+mongoDatastore.afterPropertiesSet()
+
+<span class="comment">// enhance</span>
+<span class="keyword">def</span> enhancer = <span class="keyword">new</span> MongoGormEnhancer(mongoDatastore, <span class="keyword">new</span> DatastoreTransactionManager(<span class="key">datastore</span>: mongoDatastore))
+enhancer.enhance()
+
+<span class="comment">// use GORM!</span>
+<span class="keyword">def</span> books = <span class="predefined-type">Book</span>.list()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The key element for enabling the use of all GORM methods (<code>list()</code>, dynamic finders, etc.) is the utilization of the <code>MongoGormEnhancer</code>.</p>
+</div>
+<div class="paragraph">
+<p>This class is a subclass of <code>org.grails.datastore.gorm.GormEnhancer</code> and offers extensions to GORM specifically tailored for MongoDB.</p>
+</div>
+<div class="paragraph">
+<p>However, a subclass is not mandatory, and if you don&#8217;t need any datastore-specific extensions, you can equally use the standard <code>GormEnhancer</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">def</span> enhancer = <span class="keyword">new</span> GormEnhancer(mongoDatastore, <span class="keyword">new</span> DatastoreTransactionManager(<span class="key">datastore</span>: mongoDatastore))
+enhancer.enhance()</code></pre>
+</div>
+</div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    Copyright &copy; 2022-2025 Michael Yan and the original authors. The content is licensed under a Creative Commons Attribution 4.0 International (CC BY SA 4.0) license.
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

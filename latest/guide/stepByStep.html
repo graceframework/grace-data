@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>5 Step-by-Step Guide to Creating an Implementation 2023.3.0-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navHeader">
+        
+        <span id="logo">
+            <a href="https://graceframework.org" title="Grace Framework Website">
+                <img src="../img/grace.svg" alt="Grace Framework" />
+            </a>
+        </span>
+        
+        <div class="docHeader">
+            <h1 class="docTitle">Grace Data (GORM)</h1>
+            <h3 class="docSubTitle">The Data Access toolkit provides a rich set of APIs for accessing relational and non-relational data.</h3>
+        </div>
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/understandingApi.html"><strong>3</strong><span>Understanding the GORM API</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/stepByStep.html"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" href="../api/index.html">API Docs</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/testing.html">&lt;&lt; <strong>4</strong><span>Using the Test Compatibility Kit</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+
+
+                <div class="project">
+                    <h1>5 Step-by-Step Guide to Creating an Implementation</h1>
+
+                    <p><strong>Version:</strong> 2023.3.0-SNAPSHOT</p>
+                </div>
+
+                
+
+                
+
+<h1 id="stepByStep"><a class="anchor" href="#stepByStep"></a>5 Step-by-Step Guide to Creating an Implementation</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/stepByStep.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To get started with a new GORM implementation, the following steps are required:</p>
+</div>
+<div class="sect2">
+<h3 id="_initial_directory_creation">Initial Directory Creation</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">git clone https://github.com/graceframework/grace-data.git
+cd grace-data
+mkdir grace-datastore-gorm-xyz</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setup_gradle_build">Setup Gradle Build</h3>
+<div class="paragraph">
+<p>Create build.gradle:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">vi grace-datastore-gorm-xyz/build.gradle</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With contents:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">dependencies {
+    implementation project(<span class="string"><span class="delimiter">'</span><span class="content">:grace-datastore-gorm</span><span class="delimiter">'</span></span>),
+            project(<span class="string"><span class="delimiter">'</span><span class="content">:grails-datastore-web</span><span class="delimiter">'</span></span>),
+            project(<span class="string"><span class="delimiter">'</span><span class="content">:grace-datastore-gorm-support</span><span class="delimiter">'</span></span>)
+
+    testImplementation project(<span class="string"><span class="delimiter">'</span><span class="content">:grace-datastore-gorm-tck</span><span class="delimiter">'</span></span>)
+    testRuntime <span class="string"><span class="delimiter">&quot;</span><span class="content">javax.servlet:javax.servlet-api:</span><span class="inline"><span class="inline-delimiter">$</span>servletApiVersion</span><span class="delimiter">&quot;</span></span>
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add new project to settings.gradle in root project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>vi settings.gradle</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Changes shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="comment">// GORM Implementations</span>
+<span class="string"><span class="delimiter">'</span><span class="content">grace-datastore-gorm-neo4j</span><span class="delimiter">'</span></span>,
+<span class="string"><span class="delimiter">'</span><span class="content">grace-datastore-gorm-xyz</span><span class="delimiter">'</span></span>,
+...</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_project_source_directories">Create Project Source Directories</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mkdir grace-datastore-gorm-xyz/src/main/groovy
+mkdir grace-datastore-gorm-xyz/src/test/groovy</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_generate_ide_project_files_and_import_into_ide_optional">Generate IDE Project Files and Import into IDE (Optional)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">./gradlew grace-datastore-gorm-xyz:idea</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">./gradlew grace-datastore-gorm-xyz:eclipse</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_implement_required_interfaces">Implement Required Interfaces</h3>
+<div class="paragraph">
+<p>In <code>src/main/groovy</code> create implementations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>org.grails.datastore.xyz.XyzDatastore</code> extends and implements <code>org.grails.datastore.mapping.core.AbstractDatastore</code></p>
+</li>
+<li>
+<p><code>org.grails.datastore.xyz.XyzSession</code> extends and implements <code>org.grails.datastore.mapping.core.AbstractSession</code></p>
+</li>
+<li>
+<p><code>org.grails.datastore.xyz.engine.XyzEntityPersister</code> extends and implements <code>org.grails.datastore.mapping.engine.NativeEntryEntityPersister</code></p>
+</li>
+<li>
+<p><code>org.grails.datastore.xyz.query.XyzQuery</code> extends and implements <code>org.grails.datastore.mapping.query.Query</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_test_suite">Create Test Suite</h3>
+<div class="paragraph">
+<p>In <code>src/test/groovy</code> create <code>org.grails.datastore.gorm.Setup</code> class to configure TCK:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">Setup</span> {
+
+    <span class="directive">static</span> xyz
+    <span class="directive">static</span> destroy() {
+        xyz.disconnect()
+    }
+    <span class="directive">static</span> Session setup(classes) {
+        <span class="keyword">def</span> ctx = <span class="keyword">new</span> GenericApplicationContext()
+        ctx.refresh()
+        xyz = <span class="keyword">new</span> XyzDatastore(ctx)
+        <span class="keyword">for</span> (cls <span class="keyword">in</span> classes) {
+            xyz.mappingContext.addPersistentEntity(cls)
+        }
+
+
+        <span class="keyword">def</span> enhancer = <span class="keyword">new</span> GormEnhancer(xyz, <span class="keyword">new</span> DatastoreTransactionManager(<span class="key">datastore</span>: xyz))
+        enhancer.enhance()
+
+        xyz.mappingContext.addMappingContextListener({ e -&gt; enhancer.enhance e } <span class="keyword">as</span> MappingContext.Listener)
+        xyz.applicationContext.addApplicationListener <span class="keyword">new</span> DomainEventListener(xyz)
+        xyz.applicationContext.addApplicationListener <span class="keyword">new</span> AutoTimestampEventListener(xyz)
+
+        xyz.connect()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then in <code>src/test/groovy</code> create test suite class to allow running tests in IDE (without this you won&#8217;t be able to run TCK tests from the IDE). Example test suite:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.datastore.gorm
+
+<span class="keyword">import</span> <span class="include">org.junit.runners.Suite.SuiteClasses</span>
+<span class="keyword">import</span> <span class="include">org.junit.runners.Suite</span>
+<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>
+<span class="keyword">import</span> <span class="include">grails.gorm.tests.*</span>
+
+<span class="comment">/**
+ * @author graemerocher
+ */</span>
+<span class="annotation">@RunWith</span>(Suite)
+<span class="annotation">@SuiteClasses</span>([
+  FindByMethodSpec,
+  ListOrderBySpec
+])
+<span class="type">class</span> <span class="class">XyzTestSuite</span> {
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_implement_the_tck">Implement the TCK!</h3>
+<div class="paragraph">
+<p>Keep iterating until you have implemented all the tests in the TCK.</p>
+</div>
+</div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/testing.html">&lt;&lt; <strong>4</strong><span>Using the Test Compatibility Kit</span></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    Copyright &copy; 2022-2025 Michael Yan and the original authors. The content is licensed under a Creative Commons Attribution 4.0 International (CC BY SA 4.0) license.
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

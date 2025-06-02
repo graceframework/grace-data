@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3.4 Implementing Querying 2023.3.0-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navHeader">
+        
+        <span id="logo">
+            <a href="https://graceframework.org" title="Grace Framework Website">
+                <img src="../img/grace.svg" alt="Grace Framework" />
+            </a>
+        </span>
+        
+        <div class="docHeader">
+            <h1 class="docTitle">Grace Data (GORM)</h1>
+            <h3 class="docSubTitle">The Data Access toolkit provides a rich set of APIs for accessing relational and non-relational data.</h3>
+        </div>
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/understandingApi.html"><strong>3</strong><span>Understanding the GORM API</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/stepByStep.html"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" href="../api/index.html">API Docs</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3.4 Implementing Querying</h1>
+
+                    <p><strong>Version:</strong> 2023.3.0-SNAPSHOT</p>
+                </div>
+
+                
+
+                
+
+<h2 id="implementingQueries"><a class="anchor" href="#implementingQueries"></a>3.4 Implementing Querying</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/implementingQueries.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect2">
+<h3 id="_introduction">Introduction</h3>
+<div class="paragraph">
+<p>The <code>org.grails.datastore.mapping.query.Query</code> abstract class defines the query model, and it is the job of the GORM implementor to translate this query model into an underlying database query. This is different depending on the implementation and may involve:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Generating a String-based query such as SQL or JPA-QL</p>
+</li>
+<li>
+<p>Creating a query object such as MongoDB&#8217;s use of a <code>Document</code> to define queries</p>
+</li>
+<li>
+<p>Generating for use with manually created Secondary indices as is the case with Redis</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>Query</code> object defines the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>One or many <code>Criterion</code> that define the criteria to query by.</p>
+</li>
+<li>
+<p>Zero or more <code>Projection</code> instances that define what the data you want back will look like.</p>
+</li>
+<li>
+<p>Pagination parameters such as <code>max</code> and <code>offset</code></p>
+</li>
+<li>
+<p>Sorting parameters</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There are many types of <code>Criterion</code> for each specific type of query, examples include <code>Equals</code>, <code>Between</code>, <code>Like</code> etc. Depending on the capabilities of the underlying datastore you may implement only a few of these.</p>
+</div>
+<div class="paragraph">
+<p>There are also many types of <code>Projection</code> such as <code>SumProjection</code>, <code>MaxProjection</code> and <code>CountProjection</code>. Again you may implement only a few of these.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If, for instance, the underlying datastore does not support the calculation of a <code>sum</code> or <code>max</code> for a specific property, you can utilize the <code>ManualProjections</code> class to carry out these operations in memory on the client.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Writing a <code>Query</code> implementation is probably the most complex part of implementing a GORM provider, but starts by subclassing the <code>Query</code> class and implementing the <code>executeQuery</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MongoQuery</span> <span class="directive">extends</span> <span class="predefined-type">Query</span> <span class="directive">implements</span> QueryArgumentsAware {
+     ...
+
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_the_query_model">Using the Query Model</h3>
+<div class="paragraph">
+<p>To implement querying you need to understand the Query model. As discussed, a <code>Query</code> contains a list of <code>Criterion</code>. However, the root <code>Criterion</code> could be a conjunction (an AND query) or a disjunction (an OR query). The <code>Query</code> may also contain a combination of regular criterion (=, !=, LIKE etc.) and junctions (AND, OR or NOT). Implementing a <code>Query</code> therefore requires writing a recursive method. The implementation for <code>ConcurrentHashMap</code> looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="predefined-type">Collection</span> executeSubQueryInternal(criteria, criteriaList) {
+    SimpleMapResultList resultList = <span class="keyword">new</span> SimpleMapResultList(<span class="local-variable">this</span>)
+    <span class="keyword">for</span> (<span class="predefined-type">Query</span>.Criterion criterion <span class="keyword">in</span> criteriaList) {
+        <span class="keyword">if</span> (criterion <span class="keyword">instanceof</span> <span class="predefined-type">Query</span>.Junction) {
+            resultList.results &lt;&lt; executeSubQueryInternal(criterion, criterion.criteria)
+        }
+        <span class="keyword">else</span> {
+            PersistentProperty property = getValidProperty(criterion)
+            <span class="keyword">def</span> handler = handlers[criterion.getClass()]
+
+            <span class="keyword">def</span> results = handler?.call(criterion, property) ?: <span class="type">[]</span>
+            resultList.results &lt;&lt; results
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that if a <code>Junction</code> is encountered (representing AND, OR, or NOT), the method recursively handles the junctions. Otherwise, it obtains and executes a handler for the <code>Criterion</code> class. The <code>handlers</code> map is a map of <code>Criterion</code> class to query handlers. The implementation for <code>Equals</code> appears as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">def</span> handlers = [
+    ...
+    (<span class="predefined-type">Query</span>.Equals): { <span class="predefined-type">Query</span>.Equals equals, PersistentProperty property -&gt;
+        <span class="keyword">def</span> indexer = entityPersister.getPropertyIndexer(property)
+        <span class="directive">final</span> value = subqueryIfNecessary(equals)
+        <span class="keyword">return</span> indexer.query(value)
+    }
+    ...
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This approach simply employs the property indexer to query for all identifiers. However, it&#8217;s worth noting that this is a scenario involving a datastore, such as <code>ConcurrentHashMap</code>, that lacks support for secondary indices. Instead of manually querying secondary indices in this manner, an alternative might be to construct a String-based or native query. For instance, in MongoDB, this process appears as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">queryHandlers.put(Equals.class, <span class="keyword">new</span> QueryHandler&lt;Equals&gt;() {
+    <span class="directive">public</span> <span class="type">void</span> handle(PersistentEntity entity, Equals criterion, <span class="predefined-type">Document</span> query) {
+        <span class="predefined-type">String</span> propertyName = getPropertyName(entity, criterion);
+        <span class="predefined-type">Object</span> value = criterion.getValue();
+        PersistentProperty property = entity.getPropertyByName(criterion.getProperty());
+        MongoEntityPersister.setDBObjectValue(query, propertyName, value, entity.getMappingContext());
+    }
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Observe that in this case, the query takes the form of a <code>DBObject</code>. In the context of Gemfire, the implementation differs as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">queryHandlers.put(Equals.class, <span class="keyword">new</span> QueryHandler() {
+    <span class="directive">public</span> <span class="type">int</span> handle(PersistentEntity entity, Criterion criterion, <span class="predefined-type">StringBuilder</span> q, <span class="predefined-type">List</span> params, <span class="type">int</span> index) {
+        Equals eq = (Equals) criterion;
+        <span class="directive">final</span> <span class="predefined-type">String</span> name = eq.getProperty();
+        validateProperty(entity, name, Equals.class);
+
+        q.append(calculateName(entity, name));
+        <span class="keyword">return</span> appendOrEmbedValue(q, params, index, eq.getValue(), EQUALS);
+    }
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case a <code>StringBuilder</code> is used to construct a OQL query from the <code>Query</code> model.</p>
+</div>
+</div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    Copyright &copy; 2022-2025 Michael Yan and the original authors. The content is licensed under a Creative Commons Attribution 4.0 International (CC BY SA 4.0) license.
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

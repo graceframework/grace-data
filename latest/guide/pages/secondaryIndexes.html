@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3.3 Secondary Indexing 2023.3.0-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navHeader">
+        
+        <span id="logo">
+            <a href="https://graceframework.org" title="Grace Framework Website">
+                <img src="../img/grace.svg" alt="Grace Framework" />
+            </a>
+        </span>
+        
+        <div class="docHeader">
+            <h1 class="docTitle">Grace Data (GORM)</h1>
+            <h3 class="docSubTitle">The Data Access toolkit provides a rich set of APIs for accessing relational and non-relational data.</h3>
+        </div>
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/understandingApi.html"><strong>3</strong><span>Understanding the GORM API</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/stepByStep.html"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" href="../api/index.html">API Docs</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3.3 Secondary Indexing</h1>
+
+                    <p><strong>Version:</strong> 2023.3.0-SNAPSHOT</p>
+                </div>
+
+                
+
+                
+
+<h2 id="secondaryIndexes"><a class="anchor" href="#secondaryIndexes"></a>3.3 Secondary Indexing</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/secondaryIndexes.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>Many datastores do not support secondary indexing or require you to build your own. In cases like this, you will need to implement a <code>PropertyIndexer</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the underlying datastore supports secondary indexes then it is ok to just return a <code>null</code> <code>PropertyIndexer</code> and let the datastore handle the indexing.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example the <code>ConcurrentHashMap</code> implementation creates secondary indices by populating another <code>Map</code> containing the indices:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> index(value, primaryKey) {
+
+    <span class="keyword">def</span> index = getIndexName(value)
+    <span class="keyword">def</span> indexed = indices[index]
+    <span class="keyword">if</span> (indexed == <span class="predefined-constant">null</span>) {
+        indexed = <span class="type">[]</span>
+        indices[index] = indexed
+    }
+    <span class="keyword">if</span> (!indexed.contains(primaryKey)) {
+        indexed &lt;&lt; primaryKey
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The implementation for Redis is very similar and stores the primary key in a Redis set:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> index(<span class="directive">final</span> <span class="predefined-type">Object</span> value, <span class="directive">final</span> <span class="predefined-type">Long</span> primaryKey) {
+      <span class="keyword">if</span> (value == <span class="predefined-constant">null</span>) {
+          <span class="keyword">return</span>;
+      }
+      <span class="directive">final</span> <span class="predefined-type">String</span> primaryIndex = createRedisKey(value);
+      redisTemplate.sadd(primaryIndex, primaryKey);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An index name is typically built from the entity name, property name and property value. The primary key of the entity is stored in this index for later querying. In fact there is a <code>query</code> method that needs to be implemented on <code>PropertyIndexer</code>. The <code>ConcurrentHashMap</code> implementation looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="predefined-type">List</span> query(value, <span class="type">int</span> offset, <span class="type">int</span> max) {
+    <span class="keyword">def</span> index = getIndexName(value)
+
+    <span class="keyword">def</span> indexed = indices[index]
+    <span class="keyword">if</span> (!indexed) {
+        <span class="keyword">return</span> <span class="predefined-type">Collections</span>.emptyList()
+    }
+    <span class="keyword">return</span> indexed[offset..max]
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Depending on the characteristics of the underlying database you may want to do the indexing asynchronously or you may want to index into a search library such as Lucene. For datastores that are eventually consistent for example it makes sense to do all indexing asynchronously.</p>
+</div>
+<div class="paragraph">
+<p>Finally, when an object is deleted it will need to removed from the indices. This can be done with the <code>deindex</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">void</span> deindex(value, primaryKey) {
+    <span class="keyword">def</span> index = getIndexName(value)
+    <span class="keyword">def</span> indexed = indices[index]
+    <span class="keyword">if</span> (indexed) {
+        indexed.remove(primaryKey)
+    }
+}</code></pre>
+</div>
+</div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    Copyright &copy; 2022-2025 Michael Yan and the original authors. The content is licensed under a Creative Commons Attribution 4.0 International (CC BY SA 4.0) license.
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

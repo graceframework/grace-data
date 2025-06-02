@@ -1,0 +1,382 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3.2 Implementing CRUD 2023.3.0-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navHeader">
+        
+        <span id="logo">
+            <a href="https://graceframework.org" title="Grace Framework Website">
+                <img src="../img/grace.svg" alt="Grace Framework" />
+            </a>
+        </span>
+        
+        <div class="docHeader">
+            <h1 class="docTitle">Grace Data (GORM)</h1>
+            <h3 class="docSubTitle">The Data Access toolkit provides a rich set of APIs for accessing relational and non-relational data.</h3>
+        </div>
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/understandingApi.html"><strong>3</strong><span>Understanding the GORM API</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/stepByStep.html"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" href="../api/index.html">API Docs</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3.2 Implementing CRUD</h1>
+
+                    <p><strong>Version:</strong> 2023.3.0-SNAPSHOT</p>
+                </div>
+
+                
+
+                
+
+<h2 id="implementingCrud"><a class="anchor" href="#implementingCrud"></a>3.2 Implementing CRUD</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/implementingCrud.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect2">
+<h3 id="_the_entitypersister_interface">The EntityPersister Interface</h3>
+<div class="paragraph">
+<p>The <code>EntityPersister</code> interface is used to implement the basic Create, Read, Update and Delete (CRUD) operations.</p>
+</div>
+<div class="paragraph">
+<p>There are individual methods to implement such as <code>persistEntity</code>, <code>updateEntity</code>, <code>deleteEntity</code> and so on.</p>
+</div>
+<div class="paragraph">
+<p>In many cases there is a representation of an entity in its "native" form as supplied by the datastore driver. For example in Cassandra this could be a <code>ColumnFamily</code>, or in MongoDB a <code>DBCollection</code>.</p>
+</div>
+<div class="paragraph">
+<p>To support implementing such cases, there is an abstract <code>NativeEntryEntityPersister&lt;T, K&gt;</code> super class that provides the basis for an implementation that maps a native entry, such as a MongoDB <code>DBObject</code> or a Neo4j <code>Node</code>, to a persisted entity and back again.</p>
+</div>
+<div class="paragraph">
+<p>The two generic types of this superclass indicate the native entry type (example <code>DBObject</code> in MongoDB) and the native key type (example <code>ObjectId</code> in MongoDB). The MongoDB implementation looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">class</span> <span class="class">MongoEntityPersister</span> <span class="directive">extends</span> NativeEntryEntityPersister&lt;DBObject, <span class="predefined-type">Object</span>&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that <code>Object</code> is used for the key since MongoDB also supports Long and String-based identifiers.</p>
+</div>
+<div class="paragraph">
+<p>They key methods that need implementing are defined below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>getEntityFamily()</code> - Defines the name of the entity group or family. This could be a database table, a Cassandra Column Family or a MongoDB collection</p>
+</li>
+<li>
+<p><code>T createNewEntry(String family)</code> - Creates a native entry ready to be inserted</p>
+</li>
+<li>
+<p><code>Object getEntryValue(T nativeEntry, String property)</code> - Retrieves a value of entry and returns its Java object form. For example a "date" property stored as a String in the datastore would need to be returned as a java.util.Date at this point</p>
+</li>
+<li>
+<p><code>setEntryValue(T nativeEntry, String key, Object value)</code> - Sets a value of the native entry, converting any Java objects to the required native format</p>
+</li>
+<li>
+<p><code>deleteEntry(String family, K key, Object entry)</code> - Deletes an entry for the given family, native key and entry</p>
+</li>
+<li>
+<p><code>T retrieveEntry(PersistentEntity persistentEntity, String family, Serializable key)</code> - Retrieves a native entry for the given entity, family and key</p>
+</li>
+<li>
+<p><code>K storeEntry(PersistentEntity persistentEntity, EntityAccess entityAccess, K storeId, T nativeEntry)</code> - Stores a native entry for the given id</p>
+</li>
+<li>
+<p><code>updateEntry(PersistentEntity persistentEntity, EntityAccess entityAccess, K key, T entry)</code> - Updates an entry</p>
+</li>
+<li>
+<p><code>K generateIdentifier(PersistentEntity persistentEntity, T entry)</code> - Generate an identifier for the given native entry</p>
+</li>
+<li>
+<p><code>PropertyValueIndexer getPropertyIndexer(PersistentProperty property)</code> - If the datastore requires manual indexing, you&#8217;ll need to implement a <code>PropertyIndexer</code>, otherwise return null</p>
+</li>
+<li>
+<p><code>AssociationIndexer getAssociationIndexer(T nativeEntry, Association association)</code> - If the datastore requires manual indexing, you&#8217;ll need to implement a <code>AssociationIndexer</code>, otherwise return null</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create">Create</h3>
+<div class="paragraph">
+<p>The <code>createNewEntry</code> method is used to create a native record that will be inserted into the datastore.</p>
+</div>
+<div class="paragraph">
+<p>In MongoDB this is a <code>DBObject</code> whilst in the implementation for <code>ConcurrentHashMap</code> it is another <code>Map</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> DBObject createNewEntry(<span class="predefined-type">String</span> family) {
+    <span class="keyword">return</span> <span class="keyword">new</span> BasicDBObject();
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_read">Read</h3>
+<div class="paragraph">
+<p>The <code>retrieveEntry</code> method is used to retrieve a native record for a given key:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">protected</span> DBObject retrieveEntry(<span class="directive">final</span> PersistentEntity persistentEntity,
+        <span class="predefined-type">String</span> family, <span class="directive">final</span> <span class="predefined-type">Serializable</span> key) {
+    <span class="keyword">return</span> mongoTemplate.execute(<span class="keyword">new</span> DbCallback&lt;DBObject&gt;() {
+        <span class="directive">public</span> DBObject doInDB(DB con) <span class="directive">throws</span> MongoException, DataAccessException {
+            DBCollection dbCollection = con.getCollection(getCollectionName(persistentEntity));
+            <span class="keyword">return</span> dbCollection.findOne(key);
+        }
+    });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here you can see the <code>MongoDB</code> implementation that uses a Spring Data <code>MongoTemplate</code> to find a <code>DBObject</code> for the given key.</p>
+</div>
+<div class="paragraph">
+<p>There is a separate <code>storeEntry</code> method that is used to actually store the native object. In <code>MongoDB</code> this looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> <span class="predefined-type">Object</span> storeEntry(<span class="directive">final</span> PersistentEntity persistentEntity, <span class="directive">final</span> EntityAccess entityAccess,
+                            <span class="directive">final</span> <span class="predefined-type">Object</span> storeId, <span class="directive">final</span> DBObject nativeEntry) {
+    <span class="keyword">return</span> mongoTemplate.execute(<span class="keyword">new</span> DbCallback&lt;<span class="predefined-type">Object</span>&gt;() {
+        <span class="directive">public</span> <span class="predefined-type">Object</span> doInDB(DB con) <span class="directive">throws</span> MongoException, DataAccessException {
+            nativeEntry.put(MONGO_ID_FIELD, storeId);
+            <span class="keyword">return</span> storeId;
+        }
+    });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice it doesn&#8217;t actually do anything native insert into a MongoDB collection. This is because the Datastore API supports the notion of batch insert operations and flushing. In the case of <code>MongoDB</code> the <code>MongoSession</code> implementation overrides the <code>flushPendingInserts</code> method of <code>AbstractSession</code> and performs a batch insert of multiple MongoDB documents (ie <code>DBObject</code>s) at once:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">collection.insert(dbObjects.toArray(DBObject::<span class="keyword">new</span>), writeConcernToUse);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Other datastores that  do not support batch inserts would instead do the insert in the <code>storeEntry</code> method itself.</p>
+</div>
+<div class="paragraph">
+<p>For example the implementation for <code>ConcurrentHashMap</code> looks like <em>(with Groovy)</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="directive">protected</span> storeEntry(PersistentEntity persistentEntity, EntityAccess entityAccess, storeId, <span class="predefined-type">Map</span> nativeEntry) {
+    <span class="keyword">if</span> (!persistentEntity.root) {
+        nativeEntry.discriminator = persistentEntity.discriminator
+    }
+    datastore.put(storeId, nativeEntry)
+    <span class="keyword">return</span> storeId
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update">Update</h3>
+<div class="paragraph">
+<p>The <code>updateEntry</code> method is used to update an entry:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> updateEntry(<span class="directive">final</span> PersistentEntity persistentEntity, <span class="directive">final</span> EntityAccess ea,
+        <span class="directive">final</span> <span class="predefined-type">Object</span> key, <span class="directive">final</span> DBObject entry) {
+    mongoTemplate.execute(<span class="keyword">new</span> DbCallback&lt;<span class="predefined-type">Object</span>&gt;() {
+        <span class="directive">public</span> <span class="predefined-type">Object</span> doInDB(DB con) <span class="directive">throws</span> MongoException, DataAccessException {
+            <span class="predefined-type">String</span> collectionName = getCollectionName(persistentEntity, entry);
+            DBCollection dbCollection = con.getCollection(collectionName);
+            <span class="keyword">if</span> (isVersioned(ea)) {
+                <span class="comment">// TODO this should be done with a CAS approach if possible</span>
+                DBObject previous = dbCollection.findOne(key);
+                checkVersion(ea, previous, persistentEntity, key);
+            }
+
+            MongoSession mongoSession = (MongoSession) session;
+            dbCollection.update(dbo, entry, <span class="predefined-constant">false</span>, <span class="predefined-constant">false</span>, mongoSession.getWriteConcern());
+            <span class="keyword">return</span> <span class="predefined-constant">null</span>;
+        }
+    });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see again the underlying database specific <code>update</code> method is used, in this case the <code>DBCollection</code>'s <code>update</code> method.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_delete">Delete</h3>
+<div class="paragraph">
+<p>The <code>deleteEntry</code> method is used to delete an entry. For example in the <code>ConcurrentHashMap</code> implementation it is simply removed from the map:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="directive">protected</span> <span class="type">void</span> deleteEntry(<span class="predefined-type">String</span> family, key, entry) {
+    datastore.remove(key)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Whilst in <code>MongoDB</code> the <code>DBCollection</code> object&#8217;s <code>remove</code> method is called:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> <span class="type">void</span> deleteEntry(<span class="predefined-type">String</span> family, <span class="directive">final</span> <span class="predefined-type">Object</span> key, <span class="directive">final</span> <span class="predefined-type">Object</span> entry) {
+    mongoTemplate.execute(<span class="keyword">new</span> DbCallback&lt;<span class="predefined-type">Object</span>&gt;() {
+        <span class="directive">public</span> <span class="predefined-type">Object</span> doInDB(DB con) <span class="directive">throws</span> MongoException, DataAccessException {
+            DBCollection dbCollection = getCollection(con);
+
+            MongoSession mongoSession = (MongoSession) session;
+            dbCollection.remove(key, mongoSession.getWriteConcern());
+            <span class="keyword">return</span> <span class="predefined-constant">null</span>;
+        }
+
+        <span class="directive">protected</span> DBCollection getCollection(DB con) {
+            <span class="keyword">return</span> con.getCollection(getCollectionName(getPersistentEntity()));
+        }
+    });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that if the underlying datastore supports batch delete operations you may want override and implement the <code>deleteEntries</code> method which allows for deleting multiple entries in a single operation.</p>
+</div>
+<div class="paragraph">
+<p>The implementation for MongoDB looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">protected</span> <span class="type">void</span> deleteEntries(<span class="predefined-type">String</span> family, <span class="directive">final</span> <span class="predefined-type">List</span>&lt;<span class="predefined-type">Object</span>&gt; keys) {
+    mongoTemplate.execute(<span class="keyword">new</span> DbCallback&lt;<span class="predefined-type">Object</span>&gt;() {
+        <span class="directive">public</span> <span class="predefined-type">Object</span> doInDB(DB con) <span class="directive">throws</span> MongoException, DataAccessException {
+            <span class="predefined-type">String</span> collectionName = getCollectionName(getPersistentEntity());
+            DBCollection dbCollection = con.getCollection(collectionName);
+
+            MongoSession mongoSession = (MongoSession) getSession();
+            MongoQuery query = mongoSession.createQuery(getPersistentEntity().getJavaClass());
+            query.in(getPersistentEntity().getIdentity().getName(), keys);
+
+            dbCollection.remove(query.getMongoQuery());
+
+            <span class="keyword">return</span> <span class="predefined-constant">null</span>;
+        }
+    });
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You&#8217;ll notice that this implementation uses a <code>MongoQuery</code> instance. Also, it&#8217;s important to note that when implementing an <code>EntityPersister</code>, you enable basic CRUD operations, but not querying.</p>
+</div>
+<div class="paragraph">
+<p>The latter is a subject we&#8217;ll explore in the following sections. However, before delving into that, we need to cover secondary indices, as they are required for querying.</p>
+</div>
+</div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    Copyright &copy; 2022-2025 Michael Yan and the original authors. The content is licensed under a Creative Commons Attribution 4.0 International (CC BY SA 4.0) license.
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

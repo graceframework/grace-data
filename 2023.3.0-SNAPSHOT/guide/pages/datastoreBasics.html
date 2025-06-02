@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3.1 Datastore Basics 2023.3.0-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navHeader">
+        
+        <span id="logo">
+            <a href="https://graceframework.org" title="Grace Framework Website">
+                <img src="../img/grace.svg" alt="Grace Framework" />
+            </a>
+        </span>
+        
+        <div class="docHeader">
+            <h1 class="docTitle">Grace Data (GORM)</h1>
+            <h3 class="docSubTitle">The Data Access toolkit provides a rich set of APIs for accessing relational and non-relational data.</h3>
+        </div>
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/understandingApi.html"><strong>3</strong><span>Understanding the GORM API</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/stepByStep.html"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" href="../api/index.html">API Docs</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3.1 Datastore Basics</h1>
+
+                    <p><strong>Version:</strong> 2023.3.0-SNAPSHOT</p>
+                </div>
+
+                
+
+                
+
+<h2 id="datastoreBasics"><a class="anchor" href="#datastoreBasics"></a>3.1 Datastore Basics</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/datastoreBasics.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect2">
+<h3 id="_the_mappingcontext">The MappingContext</h3>
+<div class="paragraph">
+<p>The <code>org.grails.datastore.mapping.model.MappingContext</code> interface is used to obtain metadata about the classes that are configured for persistence.</p>
+</div>
+<div class="paragraph">
+<p>There are <code>org.grails.datastore.mapping.model.PersistentEntity</code> and <code>org.grails.datastore.mapping.model.PersistentProperty</code> interfaces that represent a class and its properties respectively. These can be obtained and introspected via the <code>MappingContext</code>.</p>
+</div>
+<div class="paragraph">
+<p>There are various concrete implementations of the <code>MappingContext</code> interface such as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>DocumentMappingContext</code> - Used for document stores, subclassed by <code>MongoMappingContext</code></p>
+</li>
+<li>
+<p><code>JpaMappingContext</code> - Used for JPA</p>
+</li>
+<li>
+<p><code>KeyValueMappingContext</code> - Used by key/value stores</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Creating a new <code>MappingContext</code> may be useful because it allows users to configure how a class is mapped to the underlying datastore using GORM&#8217;s <code>mapping</code> block as well as allowing registration of custom type converters and so on. The implementation for Neo4j looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">Neo4jMappingContext</span> <span class="directive">extends</span> AbstractMappingContext {
+
+    MappingFactory&lt;<span class="predefined-type">Collection</span>, <span class="predefined-type">Attribute</span>&gt; mappingFactory
+    MappingConfigurationStrategy syntaxStrategy
+
+    Neo4jMappingContext() {
+        mappingFactory = <span class="keyword">new</span> GraphGormMappingFactory()
+        syntaxStrategy = <span class="keyword">new</span> GormMappingConfigurationStrategy(mappingFactory)
+        <span class="comment">//addTypeConverter(new StringToNumberConverterFactory().getConverter(BigDecimal))</span>
+        addTypeConverter(<span class="keyword">new</span> StringToShortConverter())
+        addTypeConverter(<span class="keyword">new</span> StringToBigIntegerConverter())
+         ...
+    }
+
+    <span class="annotation">@Override</span>
+    <span class="directive">protected</span> PersistentEntity createPersistentEntity(<span class="predefined-type">Class</span> javaClass) {
+        GraphPersistentEntity persistentEntity = <span class="keyword">new</span> GraphPersistentEntity(javaClass, <span class="local-variable">this</span>)
+        mappingFactory.createMappedForm(persistentEntity) <span class="comment">// populates mappingFactory.entityToPropertyMap as a side effect</span>
+        persistentEntity
+    }
+
+    MappingConfigurationStrategy getMappingSyntaxStrategy() {
+        syntaxStrategy
+    }
+
+    MappingFactory getMappingFactory() {
+        mappingFactory
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice how Neo4j provides a custom <code>GraphGormMappingFactory</code> and <code>GraphPersistentEntity</code> to allow the domain class configuration to be changed for a given Neo4j <code>Node</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_datastore_interface">The Datastore Interface</h3>
+<div class="paragraph">
+<p>The <code>org.grails.datastore.mapping.core.Datastore</code> interface is the equivalent of a SQL <code>DataSource</code> where by it provides the necessary capability to create a connection.</p>
+</div>
+<div class="paragraph">
+<p>In most cases one can simply subclass the <code>AbstractDatastore</code> super class and implement the <code>createSession</code> method. The following implementation is from the <code>SimpleMapDatastore</code> which implements GORM ontop of a <code>ConcurrentHashMap</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> Session createSession(PropertyResolver connDetails) {
+    <span class="keyword">return</span> <span class="keyword">new</span> SimpleMapSession(<span class="local-variable">this</span>, getMappingContext(), getApplicationEventPublisher());
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The implementation depends a lot on the underlying datastore. For example for MongoDB the following implementation is used:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+<span class="directive">protected</span> Session createSession(PropertyResolver connDetails) {
+    <span class="keyword">return</span> <span class="keyword">new</span> MongoSession(<span class="local-variable">this</span>, getMappingContext(), getApplicationEventPublisher(), <span class="predefined-constant">false</span>);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that the <code>Datastore</code> also has a reference to the <code>MappingContext</code> discussed in the previous section.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_session_interface">The Session Interface</h3>
+<div class="paragraph">
+<p>The <code>org.grails.datastore.mapping.core.Session</code> interface represents an active connection. It can be either stateful or stateless, depending on the implementation.</p>
+</div>
+<div class="paragraph">
+<p>For example of embedded databases where there is no network connection, a stateful session is not particularly useful, but a datastore that creates network connections you may want to cache returned instances to reduce load.</p>
+</div>
+<div class="paragraph">
+<p>The <code>AbstractSession</code> class provides some support for creating stateful sessions, if you prefer a stateless implementation then simply implement <code>Session</code> or subclass <code>AbstractAttributeStoringSession</code>.</p>
+</div>
+<div class="paragraph">
+<p>In general, if you subclass <code>AbstractSession</code>, the minimum you need to do is implement the <code>createPersister</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">protected</span> Persister createPersister(<span class="predefined-type">Class</span> cls, MappingContext mappingContext) {
+    PersistentEntity entity = mappingContext.getPersistentEntity(cls.getName());
+    <span class="keyword">if</span> (entity == <span class="predefined-constant">null</span>) {
+        <span class="keyword">return</span> <span class="predefined-constant">null</span>;
+    }
+    <span class="keyword">return</span> <span class="keyword">new</span> SimpleMapEntityPersister(mappingContext, entity, <span class="local-variable">this</span>,
+        (SimpleMapDatastore) getDatastore(), publisher);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The example above is from the <code>SimpleMapSession</code> implementation, which creates a <code>SimpleMapEntityPersister</code> instance and returns it. Returning null indicates that the class cannot be persisted and an exception will be thrown.</p>
+</div>
+</div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    Copyright &copy; 2022-2025 Michael Yan and the original authors. The content is licensed under a Creative Commons Attribution 4.0 International (CC BY SA 4.0) license.
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

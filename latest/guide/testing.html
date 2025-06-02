@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>4 Using the Test Compatibility Kit 2023.3.0-SNAPSHOT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navHeader">
+        
+        <span id="logo">
+            <a href="https://graceframework.org" title="Grace Framework Website">
+                <img src="../img/grace.svg" alt="Grace Framework" />
+            </a>
+        </span>
+        
+        <div class="docHeader">
+            <h1 class="docTitle">Grace Data (GORM)</h1>
+            <h3 class="docSubTitle">The Data Access toolkit provides a rich set of APIs for accessing relational and non-relational data.</h3>
+        </div>
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/understandingApi.html"><strong>3</strong><span>Understanding the GORM API</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/stepByStep.html"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" href="../api/index.html">API Docs</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/understandingApi.html">&lt;&lt; <strong>3</strong><span>Understanding the GORM API</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/stepByStep.html"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>4 Using the Test Compatibility Kit</h1>
+
+                    <p><strong>Version:</strong> 2023.3.0-SNAPSHOT</p>
+                </div>
+
+                
+
+                
+
+<h1 id="testing"><a class="anchor" href="#testing"></a>4 Using the Test Compatibility Kit</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/testing.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The <code>grace-datastore-gorm-tck</code> project provides several hundred tests to guarantee that a particular GORM implementation is compliant. To use the TCK you need to define a dependency on the TCK in the subprojects <code>build.gradle</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">testCompile project(<span class="string"><span class="delimiter">'</span><span class="content">:grace-datastore-gorm-tck</span><span class="delimiter">'</span></span>)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then create a <code>Setup.groovy</code> file that sets up your custom datastore in your implementation.</p>
+</div>
+<div class="paragraph">
+<p>For example the <code>ConcurrentHashMap</code> implementation has one defined in <code>grace-datastore-gorm-test/src/test/groovy/org/grails/datastore/gorm/Setup.groovy</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">Setup</span> {
+
+    <span class="directive">static</span> destroy() {
+        <span class="comment">// noop</span>
+    }
+    <span class="directive">static</span> Session setup(classes) {
+
+        <span class="keyword">def</span> ctx = <span class="keyword">new</span> GenericApplicationContext()
+        ctx.refresh()
+        <span class="keyword">def</span> simple = <span class="keyword">new</span> SimpleMapDatastore(ctx)
+
+        ...
+        for (cls <span class="keyword">in</span> classes) {
+            simple.mappingContext.addPersistentEntity(cls)
+        }
+
+        ...
+        def enhancer = <span class="keyword">new</span> GormEnhancer(simple, <span class="keyword">new</span> DatastoreTransactionManager(<span class="key">datastore</span>: simple))
+        enhancer.enhance()
+
+        simple.mappingContext.addMappingContextListener({ e -&gt; enhancer.enhance e } <span class="keyword">as</span> MappingContext.Listener)
+
+        simple.applicationContext.addApplicationListener <span class="keyword">new</span> DomainEventListener(simple)
+        simple.applicationContext.addApplicationListener <span class="keyword">new</span> AutoTimestampEventListener(simple)
+
+        <span class="keyword">return</span> simple.connect()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some setup code has been omitted for clarity, but essentially, the <code>Setup.groovy</code> class should initialize the <code>Datastore</code> and return a <code>Session</code> from the static setup method, which is passed a list of classes to configure.</p>
+</div>
+<div class="paragraph">
+<p>With this setup, all the TCK tests will be run against the subproject. If a specific test cannot be implemented due to the underlying datastore lacking support for a particular feature, you can create a test with the same name as the failing test, and that will then override the corresponding test in the TCK.</p>
+</div>
+<div class="paragraph">
+<p>For example: SimpleDB doesn&#8217;t support pagination. Add a <code>grails.gorm.tests.PagedResultSpec</code> class that overrides the one from the TCK. Each test is a Spock specification and Spock has an <code>Ignore</code> annotation that can be used to ignore a particular test:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="comment">/**
+ * Ignored for SimpleDB because SimpleDB doesn't support pagination
+ */</span>
+<span class="annotation">@Ignore</span>
+<span class="type">class</span> <span class="class">PagedResultSpec</span> <span class="directive">extends</span> GormDatastoreSpec{
+   ...
+}</code></pre>
+</div>
+</div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/understandingApi.html">&lt;&lt; <strong>3</strong><span>Understanding the GORM API</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/stepByStep.html"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    Copyright &copy; 2022-2025 Michael Yan and the original authors. The content is licensed under a Creative Commons Attribution 4.0 International (CC BY SA 4.0) license.
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>
