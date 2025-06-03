@@ -1,21 +1,21 @@
 === Checking out and Building 
 
-The project is https://github.com/graceframework/grails-data[hosted on GitHub].
+The project is https://github.com/graceframework/grace-data[hosted on GitHub].
 
 You are free to fork the project from there or clone it anonymously using git:
 
 ----
-git clone https://github.com/graceframework/grails-data.git
+git clone https://github.com/graceframework/grace-data.git
 cd grace-data
 ----
 
 The project has a https://gradle.org[Gradle] build.
 
-To build the project you can run the `assemble` task:
+To build the project you can run the `build` task:
 
 [source, bash]
 ----
-./gradlew assemble
+./gradlew build
 ----
 
 To install the jar files for the various subprojects into your local Maven repository you can run:
