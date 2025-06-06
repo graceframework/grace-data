@@ -1,0 +1,356 @@
+=== 2023.3.0
+
+link:{github}/releases/tag/v2023.3.0[release notes]
+
+
+=== 2023.3.0-RC1
+
+link:{github}/releases/tag/v2023.3.0-RC1[release notes]
+
+🛠 Improvements
+
+* Update README Update the description of GORM
+* Update README Update badge versions of Grace and Groovy
+* Remove some unused dependencies of grace-datastore-gorm-tck link:{github}/issues/48[#48]
+* Remove some unused dependencies of grace-datastore-gorm-support link:{github}/issues/47[#47]
+* Remove dependency on jakarta.annotation-api link:{github}/issues/46[#46]
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace 2023.3.0-M2 link:{github}/issues/41[#41]
+* Upgrade to Grace Async 6.3.0-RC1 link:{github}/issues/49[#49]
+* Upgrade to Gradle 8.13 link:{github}/issues/45[#45]
+* Upgrade to Groovy 4.0.26 link:{github}/issues/42[#42]
+* Upgrade to Spring Framework 6.1.18 link:{github}/issues/44[#44]
+* Upgrade to SLF4J 2.0.17 link:{github}/issues/43[#43]
+
+⚙️ Tasks
+
+* Release v2023.3.0-RC1
+
+=== 2023.3.0-M1
+
+link:{github}/releases/tag/v2023.3.0-M1[release notes]
+
+🛠 Improvements
+
+* Update README
+* Make jakarta.el-api compileOnly link:{github}/issues/40[#40]
+* Update github workflows Switch to 2023.3.x branch
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace Async 6.3.0-M1 link:{github}/issues/39[#39]
+* Upgrade to Grace 2023.3.0-M1 link:{github}/issues/38[#38]
+
+⚙️ Tasks
+
+* Release v2023.3.0-M1
+* Set version to 2023.3.0-SNAPSHOT 
+
+=== 2023.2.0
+
+link:{github}/releases/tag/v2023.2.0[release notes]
+
+🛠 Improvements
+
+* Update README 
+* Update GitHub issue template link:{github}/issues/36[#36]
+* Update build scripts to avoid deprecation warnings with Gradle 8 link:{github}/issues/35[#35]
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace 2023.2.0-RC1 link:{github}/issues/33[#33]
+* Upgrade to Grace Async 6.2.0 link:{github}/issues/34[#34]
+
+⚙️ Tasks
+
+* Release v2023.2.0
+
+=== 2023.2.0-RC1
+
+link:{github}/releases/tag/v2023.2.0-RC1[release notes]
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace 2023.2.0-M3 link:{github}/issues/31[#31]
+* Upgrade to Grace 2023.2.0-M2 link:{github}/issues/29[#29]
+* Upgrade to Grace Async 6.2.0-RC1 link:{github}/issues/28[#28]
+* Upgrade to Gradle 8.12 link:{github}/issues/32[#32]
+* Upgrade to Spring Framework 6.1.16 link:{github}/issues/30[#30]
+
+⚙️ Tasks
+
+* Release v2023.2.0-RC1
+
+=== 2023.2.0-M1
+
+link:{github}/releases/tag/v2023.2.0-M1[release notes]
+
+🛠 Improvements
+
+* Rerun related GORM domain inheritance tests link:{github}/issues/27[#27]
+* Support GORM domain inheritance with Groovy 4: convert `GormEntityApi` to Groovy trait link:{github}/issues/26[#26]
+* Update README Update badge of Grace to current version
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace 2023.2.0-M1 link:{github}/issues/18[#18]
+* Upgrade to Grace Async 6.2.0-M1 link:{github}/issues/22[#22]
+* Upgrade to H2 2.2.224 link:{github}/issues/25[#25]
+* Upgrade to Hibernate Validator 8.0.2.Final link:{github}/issues/23[#23]
+* Upgrade to JUnit Platform 1.10.5 link:{github}/issues/21[#21]
+* Upgrade to JUnit Jupiter 5.10.5 link:{github}/issues/20[#20]
+* Upgrade to Spring Framework 6.1.15 link:{github}/issues/19[#19]
+* Upgrade to SLF4J 2.0.16 link:{github}/issues/24[#24]
+
+⚙️ Tasks
+
+* Release v2023.2.0-M1
+* Update github workflows 
+* Next development version: 2023.2.0-SNAPSHOT
+
+=== 2023.1.1
+
+link:{github}/releases/tag/v2023.1.0[release notes]
+
+🛠 Improvements
+
+* Update README Update badge of Grace to current version
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace 2023.1.0 link:{github}/issues/17[#17]
+
+⚙️ Tasks
+
+* Release v2023.1.1
+* Next development version: 2023.1.1-SNAPSHOT
+
+=== 2023.1.0
+
+link:{github}/releases/tag/v2023.1.0[release notes]
+
+🛠 Improvements
+
+* Update README
+* Update Badges 
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace 2023.1.0-RC1 link:{github}/issues/13[#13]
+* Upgrade to Grace Async 6.1.0 link:{github}/issues/15[#15]
+* Upgrade to Gradle Nexus Publish Plugin 2.0.0 link:{github}/issues/16[#16]
+* Upgrade to Groovy 4.0.24 link:{github}/issues/14[#14]
+
+⚙️ Tasks
+
+* Release v2023.1.0
+
+=== 2023.1.0-RC1
+
+link:{github}/releases/tag/v2023.1.0-RC1[release notes]
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace 2023.1.0-M3 link:{github}/issues/11[#11]
+* Upgrade to Grace Async 6.1.0-RC1 link:{github}/issues/12[#12]
+
+⚙️ Tasks
+
+* Release v2023.1.0-RC1
+
+=== 2023.1.0-M3
+
+link:{github}/releases/tag/v2023.1.0-M3[release notes]
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace 2023.1.0-M2 link:{github}/issues/9[#9]
+* Upgrade to Grace Async 6.1.0-M3 link:{github}/issues/10[#10]
+
+⚙️ Tasks
+
+* Release v2023.1.0-M3
+
+=== 2023.1.0-M2
+
+link:{github}/releases/tag/v2023.1.0-M2[release notes]
+
+🛠 Improvements
+
+* Remove default value of the DataSource URL link:{github}/issues/5[#5]
+
+🐞 Bug Fixes
+
+* Remove submodule `grace-datastore-gorm-rx` that no longer exists link:{github}/issues/7[#7]
+
+⚙️ Tasks
+
+* Release v2023.1.0-M2 
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace 2023.1.0-M1 link:{github}/issues/6[#6]
+* Upgrade to Grace Async 6.1.0-M2 link:{github}/issues/8[#8]
+
+=== 2023.1.0-M1
+
+link:{github}/releases/tag/v2023.1.0-M1[release notes]
+
+⭐️ New Features
+
+* Use `@SettingsBuilder` replace of `@Builder` 
+* Support Groovy 5 link:{github}/issues/4[#4]
+
+🛠 Improvements
+
+* Update README
+* Update README
+
+⚙️ Tasks
+
+* Update github workflows
+* Next development version: 2023.1.0-SNAPSHOT
+
+🚀 Dependency Upgrades
+
+* Upgrade to Commons Validator 1.9.0
+* Upgrade to Grace 2023.0.2
+* Upgrade to Grace 2023.0.1
+* Upgrade to Grace Async 6.1.0-M1
+* Upgrade to Groovy 4.0.23
+* Upgrade to Hibernate Validator 8.0.1.Final 
+* Upgrade to JavaParser 3.26.2
+* Upgrade to Javassist 3.30.2-GA
+* Upgrade to SLF4J 2.0.13
+
+=== 2023.0.1
+
+link:{github}/releases/tag/v2023.0.1[release notes]
+
+* Release v2023.0.1
+* Upgrade to Grace Async 6.0.1
+* Upgrade to Caffeine 3.1.8
+* Upgrade to Grace 2023.0.0
+* Next development version: 2023.0.1-SNAPSHOT
+
+=== 2023.0.0
+
+link:{github}/releases/tag/v2023.0.0[release notes]
+
+* Release v2023.0.0
+* Upgrade to Spring Framework 6.0.23
+* Upgrade to Grace Async 6.0.0
+* Upgrade to Grace 2023.0.0-RC2
+
+=== 2023.0.0-RC1
+
+link:{github}/releases/tag/v2023.0.0-RC1[release notes]
+
+* Release v2023.0.0-RC1
+* Upgrade to Gradle Wrapper 7.6.4
+* Upgrade to Grace Async 6.0.0-RC1
+* Remove unused `println` statements
+* Upgrade to Spring Framework 6.0.22
+* Upgrade to Groovy 4.0.22
+* Upgrade to Grace 2023.0.0-M7
+
+=== 2023.0.0-M5
+
+link:{github}/releases/tag/v2023.0.0-M5[release notes]
+
+* Release v2023.0.0-M5
+* Upgrade to Grace Async 6.0.0-M4
+* Update README
+* Upgrade to Spring Framework 6.0.14
+* Upgrade to SLF4J 2.0.9
+* Upgrade to Groovy 4.0.21
+* Upgrade to Grace 2023.0.0-M6
+* Initialize the value of `ConstrainedProperty.DEFAULT_MESSAGES`
+
+=== 2023.0.0-M4
+
+link:{github}/releases/tag/v2023.0.0-M4[release notes]
+
+* Release v2023.0.0-M4
+* Upgrade to Grace Async 6.0.0-M3
+* Upgrade to Grace 2023.0.0-M5
+* Grace: update github workflows
+* Grace: update github workflows
+* Grace: update github workflows
+* remove clover config
+* Upgrade to Caffeine 3.1.6
+* Upgrade to Grace 2023.0.0-M4
+* Grace: update github workflows
+* Grace: migrate to grace
+* Revert "Upgrade to Groovy 4.0.12"
+* Groovy: Fixes STC errors
+* Upgrade to JUnit Jupiter 5.9.3 and JUnit Platform 1.9.3
+* Upgrade to SLF4J 2.0.7
+* Upgrade to Spring Framework 6.0.9
+* Upgrade to Groovy 4.0.12
+
+=== 2023.0.0-M3
+
+link:{github}/releases/tag/v2023.0.0-M3[release notes]
+
+* Release v2023.0.0-M3
+* Remove hibernate core related classes
+* Remove rx related tests
+* Remove grace-datastore-gorm-rx
+* Upgrade to Grace Async 6.0.0-M2
+* Grace: update github workflows
+* Grace: migrate to grace
+* Deprecated GORM for JPA support
+* Define rxJavaVersion in gradle.properties
+* Upgrade to Javassist 3.29.2-GA
+
+=== 2023.0.0-M2
+
+link:{github}/releases/tag/v2023.0.0-M2[release notes]
+
+* Release v2023.0.0-M2
+* Use org.hibernate.validator:hibernate-validator
+* Excluding the old datastore-core dependency
+* Remove excluding groovy 3.0 in grace-async dependency
+* Upgrade to Grace Async 6.0.0-M1
+* Upgrade to Grace 2023.0.0-M2
+* Grace: update github workflows
+* Grace: migrate to grace
+* Fixes NPE in DefaultConstrainedProperty
+* Excluding Groovy 3 in 'grails-async' dependency
+* Ignore spock tests related inheritance in GORM
+* GORM for rx: fixes Groovy compiling errors
+* Upgrade to Groovy 4.0.11
+* Fixes Groovy STC errors: *ServiceImplementer cannot be implemented more than once with different arguments
+* Fixes Groovy STC errors
+* Adding constant CONSTRAINT_SUFFIX
+* Convert DefaultConstraintRegistry.groovy to Java
+* Convert ConstraintRegistry.groovy to Java
+* Convert DefaultConstraintFactory.groovy to Java
+* Convert ConstraintFactory.groovy to Java
+* Convert ConstraintsEvaluator.groovy to Java
+* Convert Groovy interface to Java
+* Remove deprecated String constants in Entity
+* Convert Groovy interface to Java
+* Back to Snapshots
+
+=== 2023.0.0-M1
+
+link:{github}/releases/tag/v2023.0.0-M1[release notes]
+
+* Release v2023.0.0-M1
+* Grace: update readme
+* Grace: update github workflows
+* Grace: update gradle build scripts
+* Grace: rename all sub-projects
+* Upgrade to JUnit Jupiter 5.9.2 and JUnit Platform 1.9.2
+* Upgrade to Spring Framework 6.0.8
+* GORM: remove support for JPA Entity
+* Jakarta: Migrate to jakarta.* namespace
+* Jakarta: Update to Jakarta EE dependencies
+* Build target to JDK 17
+* Upgrade to Spring Framework 6.0.2
+* Start building against Grails 2023.0.0-SNAPSHOT
+* Next development version: 2023.0.0-SNAPSHOT
