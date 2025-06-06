@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3 Understanding the GORM API 2023.3.0-SNAPSHOT</title>
+    <title>4 Understanding the GORM API 2023.3.0-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -41,16 +41,22 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/releases.html"><strong>2</strong><span>Release History</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/understandingApi.html"><strong>3</strong><span>Understanding the GORM API</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/gettingStarted.html"><strong>3</strong><span>Getting Started</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/understandingApi.html"><strong>4</strong><span>Understanding the GORM API</span></a>
                         </div>
                         
                         <div class="toc-item" style="margin-left:0"><a href="../guide/stepByStep.html"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/testing.html"><strong>6</strong><span>Using the Test Compatibility Kit</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/support.html"><strong>7</strong><span>Support</span></a>
                         </div>
                         
                     </div>
@@ -71,18 +77,18 @@ function addJsClass() {
             <div id="main" class="corner-all">
 
                 
-                    <div class="toc-item prev-left"><a href="../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                    <div class="toc-item prev-left"><a href="../guide/gettingStarted.html">&lt;&lt; <strong>3</strong><span>Getting Started</span></a></div>
                 
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
-                    <div class="toc-item next-right"><a href="../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../guide/stepByStep.html"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span> >></a></div>
                 
 
 
                 <div class="project">
-                    <h1>3 Understanding the GORM API</h1>
+                    <h1>4 Understanding the GORM API</h1>
 
                     <p><strong>Version:</strong> 2023.3.0-SNAPSHOT</p>
                 </div>
@@ -91,22 +97,22 @@ function addJsClass() {
                 <div id="table-of-content">
                     <h2>Table of Contents</h2>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#datastoreBasics"><strong>3.1</strong><span>Datastore Basics</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#datastoreBasics"><strong>4.1</strong><span>Datastore Basics</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#implementingCrud"><strong>3.2</strong><span>Implementing CRUD</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#implementingCrud"><strong>4.2</strong><span>Implementing CRUD</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#secondaryIndexes"><strong>3.3</strong><span>Secondary Indexing</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#secondaryIndexes"><strong>4.3</strong><span>Secondary Indexing</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#implementingQueries"><strong>3.4</strong><span>Implementing Querying</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#implementingQueries"><strong>4.4</strong><span>Implementing Querying</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#gormEnhancer"><strong>3.5</strong><span>GORM Enhancer</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#gormEnhancer"><strong>4.5</strong><span>GORM Enhancer</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#gormApis"><strong>3.6</strong><span>Adding to GORM APIs</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#gormApis"><strong>4.6</strong><span>Adding to GORM APIs</span></a>
                     </div>
                     
                 </div>
@@ -114,7 +120,7 @@ function addJsClass() {
 
                 
 
-<h1 id="understandingApi"><a class="anchor" href="#understandingApi"></a>3 Understanding the GORM API</h1>
+<h1 id="understandingApi"><a class="anchor" href="#understandingApi"></a>4 Understanding the GORM API</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi.adoc"'>
@@ -134,7 +140,7 @@ function addJsClass() {
 </div>
 
 
-<h2 id="datastoreBasics"><a class="anchor" href="#datastoreBasics"></a>3.1 Datastore Basics</h2>
+<h2 id="datastoreBasics"><a class="anchor" href="#datastoreBasics"></a>4.1 Datastore Basics</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/datastoreBasics.adoc"'>
@@ -270,7 +276,7 @@ function addJsClass() {
 </div>
 
 
-<h2 id="implementingCrud"><a class="anchor" href="#implementingCrud"></a>3.2 Implementing CRUD</h2>
+<h2 id="implementingCrud"><a class="anchor" href="#implementingCrud"></a>4.2 Implementing CRUD</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/implementingCrud.adoc"'>
@@ -527,7 +533,7 @@ function addJsClass() {
 </div>
 
 
-<h2 id="secondaryIndexes"><a class="anchor" href="#secondaryIndexes"></a>3.3 Secondary Indexing</h2>
+<h2 id="secondaryIndexes"><a class="anchor" href="#secondaryIndexes"></a>4.3 Secondary Indexing</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/secondaryIndexes.adoc"'>
@@ -619,7 +625,7 @@ If the underlying datastore supports secondary indexes then it is ok to just ret
 </div>
 
 
-<h2 id="implementingQueries"><a class="anchor" href="#implementingQueries"></a>3.4 Implementing Querying</h2>
+<h2 id="implementingQueries"><a class="anchor" href="#implementingQueries"></a>4.4 Implementing Querying</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/implementingQueries.adoc"'>
@@ -773,7 +779,7 @@ If, for instance, the underlying datastore does not support the calculation of a
 </div>
 
 
-<h2 id="gormEnhancer"><a class="anchor" href="#gormEnhancer"></a>3.5 GORM Enhancer</h2>
+<h2 id="gormEnhancer"><a class="anchor" href="#gormEnhancer"></a>4.5 GORM Enhancer</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/gormEnhancer.adoc"'>
@@ -833,7 +839,7 @@ enhancer.enhance()</code></pre>
 </div>
 
 
-<h2 id="gormApis"><a class="anchor" href="#gormApis"></a>3.6 Adding to GORM APIs</h2>
+<h2 id="gormApis"><a class="anchor" href="#gormApis"></a>4.6 Adding to GORM APIs</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/gormApis.adoc"'>
@@ -900,9 +906,9 @@ enhancer.enhance()</code></pre>
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
-                    <div class="toc-item prev-left"><a href="../guide/gettingStarted.html">&lt;&lt; <strong>2</strong><span>Getting Started</span></a></div>
+                    <div class="toc-item prev-left"><a href="../guide/gettingStarted.html">&lt;&lt; <strong>3</strong><span>Getting Started</span></a></div>
                 
-                    <div class="toc-item next-right"><a href="../guide/testing.html"><strong>4</strong><span>Using the Test Compatibility Kit</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../guide/stepByStep.html"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>

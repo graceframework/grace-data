@@ -40,13 +40,17 @@ function addJsClass(el) {
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#gettingStarted"><strong>2</strong><span>Getting Started</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#releases"><strong>2</strong><span>Release History</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#understandingApi"><strong>3</strong><span>Understanding the GORM API</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#gettingStarted"><strong>3</strong><span>Getting Started</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#testing"><strong>4</strong><span>Using the Test Compatibility Kit</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#understandingApi"><strong>4</strong><span>Understanding the GORM API</span></a></div>
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#stepByStep"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#testing"><strong>6</strong><span>Using the Test Compatibility Kit</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#support"><strong>7</strong><span>Support</span></a></div>
                                 
                             </div>
                         </div>
@@ -79,25 +83,31 @@ function addJsClass(el) {
                             
                             <div class="toc-item" style="margin-left:0px"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:0px"><a href="#gettingStarted"><strong>2</strong><span>Getting Started</span></a></div>
+                            <div class="toc-item" style="margin-left:0px"><a href="#releases"><strong>2</strong><span>Release History</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:0px"><a href="#understandingApi"><strong>3</strong><span>Understanding the GORM API</span></a></div>
+                            <div class="toc-item" style="margin-left:10px"><a href="#2023.x"><strong>2.1</strong><span>What's new in 2023.x</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:10px"><a href="#datastoreBasics"><strong>3.1</strong><span>Datastore Basics</span></a></div>
+                            <div class="toc-item" style="margin-left:0px"><a href="#gettingStarted"><strong>3</strong><span>Getting Started</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:10px"><a href="#implementingCrud"><strong>3.2</strong><span>Implementing CRUD</span></a></div>
+                            <div class="toc-item" style="margin-left:0px"><a href="#understandingApi"><strong>4</strong><span>Understanding the GORM API</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:10px"><a href="#secondaryIndexes"><strong>3.3</strong><span>Secondary Indexing</span></a></div>
+                            <div class="toc-item" style="margin-left:10px"><a href="#datastoreBasics"><strong>4.1</strong><span>Datastore Basics</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:10px"><a href="#implementingQueries"><strong>3.4</strong><span>Implementing Querying</span></a></div>
+                            <div class="toc-item" style="margin-left:10px"><a href="#implementingCrud"><strong>4.2</strong><span>Implementing CRUD</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:10px"><a href="#gormEnhancer"><strong>3.5</strong><span>GORM Enhancer</span></a></div>
+                            <div class="toc-item" style="margin-left:10px"><a href="#secondaryIndexes"><strong>4.3</strong><span>Secondary Indexing</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:10px"><a href="#gormApis"><strong>3.6</strong><span>Adding to GORM APIs</span></a></div>
+                            <div class="toc-item" style="margin-left:10px"><a href="#implementingQueries"><strong>4.4</strong><span>Implementing Querying</span></a></div>
                             
-                            <div class="toc-item" style="margin-left:0px"><a href="#testing"><strong>4</strong><span>Using the Test Compatibility Kit</span></a></div>
+                            <div class="toc-item" style="margin-left:10px"><a href="#gormEnhancer"><strong>4.5</strong><span>GORM Enhancer</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:10px"><a href="#gormApis"><strong>4.6</strong><span>Adding to GORM APIs</span></a></div>
                             
                             <div class="toc-item" style="margin-left:0px"><a href="#stepByStep"><strong>5</strong><span>Step-by-Step Guide to Creating an Implementation</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#testing"><strong>6</strong><span>Using the Test Compatibility Kit</span></a></div>
+                            
+                            <div class="toc-item" style="margin-left:0px"><a href="#support"><strong>7</strong><span>Support</span></a></div>
                             
                             <div style="clear:both" ></div>
                         </div>
@@ -137,7 +147,964 @@ function addJsClass(el) {
 </div>
 
 
-<h1 id="gettingStarted"><a class="anchor" href="#gettingStarted"></a>2 Getting Started</h1>
+<h1 id="releases"><a class="anchor" href="#releases"></a>2 Release History</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/releases.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To make it easier for users to use and upgrade, Plugin adopts a version policy consistent with the <a href="https://github.com/graceframework/grace-framework">Grace Framework</a>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GORM Version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Grace Version</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/graceframework/grace-data/tree/2023.3.x">2023.3.x</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2023.3.x</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/graceframework/grace-data/tree/2023.2.x">2023.2.x</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2023.2.x</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/graceframework/grace-data/tree/2023.1.x">2023.1.x</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2023.1.x</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/graceframework/grace-data/tree/2023.0.x">2023.0.x</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2023.0.x</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/graceframework/grace-data/tree/2022.2.x">2022.2.x</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2022.2.x</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/graceframework/grace-data/tree/2022.1.x">2022.1.x</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2022.1.x</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/graceframework/grace-data/tree/2022.0.x">2022.0.x</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2022.0.x</p></td>
+</tr>
+</tbody>
+</table>
+
+
+<h2 id="2023.x"><a class="anchor" href="#2023.x"></a>2.1 What's new in 2023.x</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/releases/2023.x.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect2">
+<h3 id="_2023_3_0">2023.3.0</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.3.0">release notes</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_3_0_rc1">2023.3.0-RC1</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.3.0-RC1">release notes</a></p>
+</div>
+<div class="paragraph">
+<p>🛠 Improvements</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Update README Update the description of GORM</p>
+</li>
+<li>
+<p>Update README Update badge versions of Grace and Groovy</p>
+</li>
+<li>
+<p>Remove some unused dependencies of grace-datastore-gorm-tck <a href="https://github.com/graceframework/grace-data/issues/48">#48</a></p>
+</li>
+<li>
+<p>Remove some unused dependencies of grace-datastore-gorm-support <a href="https://github.com/graceframework/grace-data/issues/47">#47</a></p>
+</li>
+<li>
+<p>Remove dependency on jakarta.annotation-api <a href="https://github.com/graceframework/grace-data/issues/46">#46</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>🚀 Dependency Upgrades</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Upgrade to Grace 2023.3.0-M2 <a href="https://github.com/graceframework/grace-data/issues/41">#41</a></p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.3.0-RC1 <a href="https://github.com/graceframework/grace-data/issues/49">#49</a></p>
+</li>
+<li>
+<p>Upgrade to Gradle 8.13 <a href="https://github.com/graceframework/grace-data/issues/45">#45</a></p>
+</li>
+<li>
+<p>Upgrade to Groovy 4.0.26 <a href="https://github.com/graceframework/grace-data/issues/42">#42</a></p>
+</li>
+<li>
+<p>Upgrade to Spring Framework 6.1.18 <a href="https://github.com/graceframework/grace-data/issues/44">#44</a></p>
+</li>
+<li>
+<p>Upgrade to SLF4J 2.0.17 <a href="https://github.com/graceframework/grace-data/issues/43">#43</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>⚙️ Tasks</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.3.0-RC1</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_3_0_m1">2023.3.0-M1</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.3.0-M1">release notes</a></p>
+</div>
+<div class="paragraph">
+<p>🛠 Improvements</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Update README</p>
+</li>
+<li>
+<p>Make jakarta.el-api compileOnly <a href="https://github.com/graceframework/grace-data/issues/40">#40</a></p>
+</li>
+<li>
+<p>Update github workflows Switch to 2023.3.x branch</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>🚀 Dependency Upgrades</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Upgrade to Grace Async 6.3.0-M1 <a href="https://github.com/graceframework/grace-data/issues/39">#39</a></p>
+</li>
+<li>
+<p>Upgrade to Grace 2023.3.0-M1 <a href="https://github.com/graceframework/grace-data/issues/38">#38</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>⚙️ Tasks</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.3.0-M1</p>
+</li>
+<li>
+<p>Set version to 2023.3.0-SNAPSHOT</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_2_0">2023.2.0</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.2.0">release notes</a></p>
+</div>
+<div class="paragraph">
+<p>🛠 Improvements</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Update README</p>
+</li>
+<li>
+<p>Update GitHub issue template <a href="https://github.com/graceframework/grace-data/issues/36">#36</a></p>
+</li>
+<li>
+<p>Update build scripts to avoid deprecation warnings with Gradle 8 <a href="https://github.com/graceframework/grace-data/issues/35">#35</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>🚀 Dependency Upgrades</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Upgrade to Grace 2023.2.0-RC1 <a href="https://github.com/graceframework/grace-data/issues/33">#33</a></p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.2.0 <a href="https://github.com/graceframework/grace-data/issues/34">#34</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>⚙️ Tasks</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.2.0</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_2_0_rc1">2023.2.0-RC1</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.2.0-RC1">release notes</a></p>
+</div>
+<div class="paragraph">
+<p>🚀 Dependency Upgrades</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Upgrade to Grace 2023.2.0-M3 <a href="https://github.com/graceframework/grace-data/issues/31">#31</a></p>
+</li>
+<li>
+<p>Upgrade to Grace 2023.2.0-M2 <a href="https://github.com/graceframework/grace-data/issues/29">#29</a></p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.2.0-RC1 <a href="https://github.com/graceframework/grace-data/issues/28">#28</a></p>
+</li>
+<li>
+<p>Upgrade to Gradle 8.12 <a href="https://github.com/graceframework/grace-data/issues/32">#32</a></p>
+</li>
+<li>
+<p>Upgrade to Spring Framework 6.1.16 <a href="https://github.com/graceframework/grace-data/issues/30">#30</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>⚙️ Tasks</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.2.0-RC1</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_2_0_m1">2023.2.0-M1</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.2.0-M1">release notes</a></p>
+</div>
+<div class="paragraph">
+<p>🛠 Improvements</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Rerun related GORM domain inheritance tests <a href="https://github.com/graceframework/grace-data/issues/27">#27</a></p>
+</li>
+<li>
+<p>Support GORM domain inheritance with Groovy 4: convert <code>GormEntityApi</code> to Groovy trait <a href="https://github.com/graceframework/grace-data/issues/26">#26</a></p>
+</li>
+<li>
+<p>Update README Update badge of Grace to current version</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>🚀 Dependency Upgrades</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Upgrade to Grace 2023.2.0-M1 <a href="https://github.com/graceframework/grace-data/issues/18">#18</a></p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.2.0-M1 <a href="https://github.com/graceframework/grace-data/issues/22">#22</a></p>
+</li>
+<li>
+<p>Upgrade to H2 2.2.224 <a href="https://github.com/graceframework/grace-data/issues/25">#25</a></p>
+</li>
+<li>
+<p>Upgrade to Hibernate Validator 8.0.2.Final <a href="https://github.com/graceframework/grace-data/issues/23">#23</a></p>
+</li>
+<li>
+<p>Upgrade to JUnit Platform 1.10.5 <a href="https://github.com/graceframework/grace-data/issues/21">#21</a></p>
+</li>
+<li>
+<p>Upgrade to JUnit Jupiter 5.10.5 <a href="https://github.com/graceframework/grace-data/issues/20">#20</a></p>
+</li>
+<li>
+<p>Upgrade to Spring Framework 6.1.15 <a href="https://github.com/graceframework/grace-data/issues/19">#19</a></p>
+</li>
+<li>
+<p>Upgrade to SLF4J 2.0.16 <a href="https://github.com/graceframework/grace-data/issues/24">#24</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>⚙️ Tasks</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.2.0-M1</p>
+</li>
+<li>
+<p>Update github workflows</p>
+</li>
+<li>
+<p>Next development version: 2023.2.0-SNAPSHOT</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_1_1">2023.1.1</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.1.0">release notes</a></p>
+</div>
+<div class="paragraph">
+<p>🛠 Improvements</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Update README Update badge of Grace to current version</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>🚀 Dependency Upgrades</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Upgrade to Grace 2023.1.0 <a href="https://github.com/graceframework/grace-data/issues/17">#17</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>⚙️ Tasks</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.1.1</p>
+</li>
+<li>
+<p>Next development version: 2023.1.1-SNAPSHOT</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_1_0">2023.1.0</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.1.0">release notes</a></p>
+</div>
+<div class="paragraph">
+<p>🛠 Improvements</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Update README</p>
+</li>
+<li>
+<p>Update Badges</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>🚀 Dependency Upgrades</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Upgrade to Grace 2023.1.0-RC1 <a href="https://github.com/graceframework/grace-data/issues/13">#13</a></p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.1.0 <a href="https://github.com/graceframework/grace-data/issues/15">#15</a></p>
+</li>
+<li>
+<p>Upgrade to Gradle Nexus Publish Plugin 2.0.0 <a href="https://github.com/graceframework/grace-data/issues/16">#16</a></p>
+</li>
+<li>
+<p>Upgrade to Groovy 4.0.24 <a href="https://github.com/graceframework/grace-data/issues/14">#14</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>⚙️ Tasks</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.1.0</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_1_0_rc1">2023.1.0-RC1</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.1.0-RC1">release notes</a></p>
+</div>
+<div class="paragraph">
+<p>🚀 Dependency Upgrades</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Upgrade to Grace 2023.1.0-M3 <a href="https://github.com/graceframework/grace-data/issues/11">#11</a></p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.1.0-RC1 <a href="https://github.com/graceframework/grace-data/issues/12">#12</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>⚙️ Tasks</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.1.0-RC1</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_1_0_m3">2023.1.0-M3</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.1.0-M3">release notes</a></p>
+</div>
+<div class="paragraph">
+<p>🚀 Dependency Upgrades</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Upgrade to Grace 2023.1.0-M2 <a href="https://github.com/graceframework/grace-data/issues/9">#9</a></p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.1.0-M3 <a href="https://github.com/graceframework/grace-data/issues/10">#10</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>⚙️ Tasks</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.1.0-M3</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_1_0_m2">2023.1.0-M2</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.1.0-M2">release notes</a></p>
+</div>
+<div class="paragraph">
+<p>🛠 Improvements</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Remove default value of the DataSource URL <a href="https://github.com/graceframework/grace-data/issues/5">#5</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>🐞 Bug Fixes</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Remove submodule <code>grace-datastore-gorm-rx</code> that no longer exists <a href="https://github.com/graceframework/grace-data/issues/7">#7</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>⚙️ Tasks</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.1.0-M2</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>🚀 Dependency Upgrades</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Upgrade to Grace 2023.1.0-M1 <a href="https://github.com/graceframework/grace-data/issues/6">#6</a></p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.1.0-M2 <a href="https://github.com/graceframework/grace-data/issues/8">#8</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_1_0_m1">2023.1.0-M1</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.1.0-M1">release notes</a></p>
+</div>
+<div class="paragraph">
+<p>⭐️ New Features</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>@SettingsBuilder</code> replace of <code>@Builder</code></p>
+</li>
+<li>
+<p>Support Groovy 5 <a href="https://github.com/graceframework/grace-data/issues/4">#4</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>🛠 Improvements</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Update README</p>
+</li>
+<li>
+<p>Update README</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>⚙️ Tasks</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Update github workflows</p>
+</li>
+<li>
+<p>Next development version: 2023.1.0-SNAPSHOT</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>🚀 Dependency Upgrades</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Upgrade to Commons Validator 1.9.0</p>
+</li>
+<li>
+<p>Upgrade to Grace 2023.0.2</p>
+</li>
+<li>
+<p>Upgrade to Grace 2023.0.1</p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.1.0-M1</p>
+</li>
+<li>
+<p>Upgrade to Groovy 4.0.23</p>
+</li>
+<li>
+<p>Upgrade to Hibernate Validator 8.0.1.Final</p>
+</li>
+<li>
+<p>Upgrade to JavaParser 3.26.2</p>
+</li>
+<li>
+<p>Upgrade to Javassist 3.30.2-GA</p>
+</li>
+<li>
+<p>Upgrade to SLF4J 2.0.13</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_0_1">2023.0.1</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.0.1">release notes</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.0.1</p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.0.1</p>
+</li>
+<li>
+<p>Upgrade to Caffeine 3.1.8</p>
+</li>
+<li>
+<p>Upgrade to Grace 2023.0.0</p>
+</li>
+<li>
+<p>Next development version: 2023.0.1-SNAPSHOT</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_0_0">2023.0.0</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.0.0">release notes</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.0.0</p>
+</li>
+<li>
+<p>Upgrade to Spring Framework 6.0.23</p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.0.0</p>
+</li>
+<li>
+<p>Upgrade to Grace 2023.0.0-RC2</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_0_0_rc1">2023.0.0-RC1</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.0.0-RC1">release notes</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.0.0-RC1</p>
+</li>
+<li>
+<p>Upgrade to Gradle Wrapper 7.6.4</p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.0.0-RC1</p>
+</li>
+<li>
+<p>Remove unused <code>println</code> statements</p>
+</li>
+<li>
+<p>Upgrade to Spring Framework 6.0.22</p>
+</li>
+<li>
+<p>Upgrade to Groovy 4.0.22</p>
+</li>
+<li>
+<p>Upgrade to Grace 2023.0.0-M7</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_0_0_m5">2023.0.0-M5</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.0.0-M5">release notes</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.0.0-M5</p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.0.0-M4</p>
+</li>
+<li>
+<p>Update README</p>
+</li>
+<li>
+<p>Upgrade to Spring Framework 6.0.14</p>
+</li>
+<li>
+<p>Upgrade to SLF4J 2.0.9</p>
+</li>
+<li>
+<p>Upgrade to Groovy 4.0.21</p>
+</li>
+<li>
+<p>Upgrade to Grace 2023.0.0-M6</p>
+</li>
+<li>
+<p>Initialize the value of <code>ConstrainedProperty.DEFAULT_MESSAGES</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_0_0_m4">2023.0.0-M4</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.0.0-M4">release notes</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.0.0-M4</p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.0.0-M3</p>
+</li>
+<li>
+<p>Upgrade to Grace 2023.0.0-M5</p>
+</li>
+<li>
+<p>Grace: update github workflows</p>
+</li>
+<li>
+<p>Grace: update github workflows</p>
+</li>
+<li>
+<p>Grace: update github workflows</p>
+</li>
+<li>
+<p>remove clover config</p>
+</li>
+<li>
+<p>Upgrade to Caffeine 3.1.6</p>
+</li>
+<li>
+<p>Upgrade to Grace 2023.0.0-M4</p>
+</li>
+<li>
+<p>Grace: update github workflows</p>
+</li>
+<li>
+<p>Grace: migrate to grace</p>
+</li>
+<li>
+<p>Revert "Upgrade to Groovy 4.0.12"</p>
+</li>
+<li>
+<p>Groovy: Fixes STC errors</p>
+</li>
+<li>
+<p>Upgrade to JUnit Jupiter 5.9.3 and JUnit Platform 1.9.3</p>
+</li>
+<li>
+<p>Upgrade to SLF4J 2.0.7</p>
+</li>
+<li>
+<p>Upgrade to Spring Framework 6.0.9</p>
+</li>
+<li>
+<p>Upgrade to Groovy 4.0.12</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_0_0_m3">2023.0.0-M3</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.0.0-M3">release notes</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.0.0-M3</p>
+</li>
+<li>
+<p>Remove hibernate core related classes</p>
+</li>
+<li>
+<p>Remove rx related tests</p>
+</li>
+<li>
+<p>Remove grace-datastore-gorm-rx</p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.0.0-M2</p>
+</li>
+<li>
+<p>Grace: update github workflows</p>
+</li>
+<li>
+<p>Grace: migrate to grace</p>
+</li>
+<li>
+<p>Deprecated GORM for JPA support</p>
+</li>
+<li>
+<p>Define rxJavaVersion in gradle.properties</p>
+</li>
+<li>
+<p>Upgrade to Javassist 3.29.2-GA</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_0_0_m2">2023.0.0-M2</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.0.0-M2">release notes</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.0.0-M2</p>
+</li>
+<li>
+<p>Use org.hibernate.validator:hibernate-validator</p>
+</li>
+<li>
+<p>Excluding the old datastore-core dependency</p>
+</li>
+<li>
+<p>Remove excluding groovy 3.0 in grace-async dependency</p>
+</li>
+<li>
+<p>Upgrade to Grace Async 6.0.0-M1</p>
+</li>
+<li>
+<p>Upgrade to Grace 2023.0.0-M2</p>
+</li>
+<li>
+<p>Grace: update github workflows</p>
+</li>
+<li>
+<p>Grace: migrate to grace</p>
+</li>
+<li>
+<p>Fixes NPE in DefaultConstrainedProperty</p>
+</li>
+<li>
+<p>Excluding Groovy 3 in 'grails-async' dependency</p>
+</li>
+<li>
+<p>Ignore spock tests related inheritance in GORM</p>
+</li>
+<li>
+<p>GORM for rx: fixes Groovy compiling errors</p>
+</li>
+<li>
+<p>Upgrade to Groovy 4.0.11</p>
+</li>
+<li>
+<p>Fixes Groovy STC errors: *ServiceImplementer cannot be implemented more than once with different arguments</p>
+</li>
+<li>
+<p>Fixes Groovy STC errors</p>
+</li>
+<li>
+<p>Adding constant CONSTRAINT_SUFFIX</p>
+</li>
+<li>
+<p>Convert DefaultConstraintRegistry.groovy to Java</p>
+</li>
+<li>
+<p>Convert ConstraintRegistry.groovy to Java</p>
+</li>
+<li>
+<p>Convert DefaultConstraintFactory.groovy to Java</p>
+</li>
+<li>
+<p>Convert ConstraintFactory.groovy to Java</p>
+</li>
+<li>
+<p>Convert ConstraintsEvaluator.groovy to Java</p>
+</li>
+<li>
+<p>Convert Groovy interface to Java</p>
+</li>
+<li>
+<p>Remove deprecated String constants in Entity</p>
+</li>
+<li>
+<p>Convert Groovy interface to Java</p>
+</li>
+<li>
+<p>Back to Snapshots</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2023_0_0_m1">2023.0.0-M1</h3>
+<div class="paragraph">
+<p><a href="https://github.com/graceframework/grace-data/releases/tag/v2023.0.0-M1">release notes</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Release v2023.0.0-M1</p>
+</li>
+<li>
+<p>Grace: update readme</p>
+</li>
+<li>
+<p>Grace: update github workflows</p>
+</li>
+<li>
+<p>Grace: update gradle build scripts</p>
+</li>
+<li>
+<p>Grace: rename all sub-projects</p>
+</li>
+<li>
+<p>Upgrade to JUnit Jupiter 5.9.2 and JUnit Platform 1.9.2</p>
+</li>
+<li>
+<p>Upgrade to Spring Framework 6.0.8</p>
+</li>
+<li>
+<p>GORM: remove support for JPA Entity</p>
+</li>
+<li>
+<p>Jakarta: Migrate to jakarta.* namespace</p>
+</li>
+<li>
+<p>Jakarta: Update to Jakarta EE dependencies</p>
+</li>
+<li>
+<p>Build target to JDK 17</p>
+</li>
+<li>
+<p>Upgrade to Spring Framework 6.0.2</p>
+</li>
+<li>
+<p>Start building against Grails 2023.0.0-SNAPSHOT</p>
+</li>
+<li>
+<p>Next development version: 2023.0.0-SNAPSHOT</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+<h1 id="gettingStarted"><a class="anchor" href="#gettingStarted"></a>3 Getting Started</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/gettingStarted.adoc"'>
@@ -220,7 +1187,7 @@ cd grace-data</pre>
 </div>
 
 
-<h1 id="understandingApi"><a class="anchor" href="#understandingApi"></a>3 Understanding the GORM API</h1>
+<h1 id="understandingApi"><a class="anchor" href="#understandingApi"></a>4 Understanding the GORM API</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi.adoc"'>
@@ -240,7 +1207,7 @@ cd grace-data</pre>
 </div>
 
 
-<h2 id="datastoreBasics"><a class="anchor" href="#datastoreBasics"></a>3.1 Datastore Basics</h2>
+<h2 id="datastoreBasics"><a class="anchor" href="#datastoreBasics"></a>4.1 Datastore Basics</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/datastoreBasics.adoc"'>
@@ -376,7 +1343,7 @@ cd grace-data</pre>
 </div>
 
 
-<h2 id="implementingCrud"><a class="anchor" href="#implementingCrud"></a>3.2 Implementing CRUD</h2>
+<h2 id="implementingCrud"><a class="anchor" href="#implementingCrud"></a>4.2 Implementing CRUD</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/implementingCrud.adoc"'>
@@ -633,7 +1600,7 @@ cd grace-data</pre>
 </div>
 
 
-<h2 id="secondaryIndexes"><a class="anchor" href="#secondaryIndexes"></a>3.3 Secondary Indexing</h2>
+<h2 id="secondaryIndexes"><a class="anchor" href="#secondaryIndexes"></a>4.3 Secondary Indexing</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/secondaryIndexes.adoc"'>
@@ -725,7 +1692,7 @@ If the underlying datastore supports secondary indexes then it is ok to just ret
 </div>
 
 
-<h2 id="implementingQueries"><a class="anchor" href="#implementingQueries"></a>3.4 Implementing Querying</h2>
+<h2 id="implementingQueries"><a class="anchor" href="#implementingQueries"></a>4.4 Implementing Querying</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/implementingQueries.adoc"'>
@@ -879,7 +1846,7 @@ If, for instance, the underlying datastore does not support the calculation of a
 </div>
 
 
-<h2 id="gormEnhancer"><a class="anchor" href="#gormEnhancer"></a>3.5 GORM Enhancer</h2>
+<h2 id="gormEnhancer"><a class="anchor" href="#gormEnhancer"></a>4.5 GORM Enhancer</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/gormEnhancer.adoc"'>
@@ -939,7 +1906,7 @@ enhancer.enhance()</code></pre>
 </div>
 
 
-<h2 id="gormApis"><a class="anchor" href="#gormApis"></a>3.6 Adding to GORM APIs</h2>
+<h2 id="gormApis"><a class="anchor" href="#gormApis"></a>4.6 Adding to GORM APIs</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/understandingApi/gormApis.adoc"'>
@@ -1000,83 +1967,6 @@ enhancer.enhance()</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy"><span class="directive">static</span> mapWith = <span class="string"><span class="delimiter">&quot;</span><span class="content">neo4j</span><span class="delimiter">&quot;</span></span></code></pre>
-</div>
-</div>
-
-
-<h1 id="testing"><a class="anchor" href="#testing"></a>4 Using the Test Compatibility Kit</h1>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/testing.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>The <code>grace-datastore-gorm-tck</code> project provides several hundred tests to guarantee that a particular GORM implementation is compliant. To use the TCK you need to define a dependency on the TCK in the subprojects <code>build.gradle</code> file:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">testCompile project(<span class="string"><span class="delimiter">'</span><span class="content">:grace-datastore-gorm-tck</span><span class="delimiter">'</span></span>)</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then create a <code>Setup.groovy</code> file that sets up your custom datastore in your implementation.</p>
-</div>
-<div class="paragraph">
-<p>For example the <code>ConcurrentHashMap</code> implementation has one defined in <code>grace-datastore-gorm-test/src/test/groovy/org/grails/datastore/gorm/Setup.groovy</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">Setup</span> {
-
-    <span class="directive">static</span> destroy() {
-        <span class="comment">// noop</span>
-    }
-    <span class="directive">static</span> Session setup(classes) {
-
-        <span class="keyword">def</span> ctx = <span class="keyword">new</span> GenericApplicationContext()
-        ctx.refresh()
-        <span class="keyword">def</span> simple = <span class="keyword">new</span> SimpleMapDatastore(ctx)
-
-        ...
-        for (cls <span class="keyword">in</span> classes) {
-            simple.mappingContext.addPersistentEntity(cls)
-        }
-
-        ...
-        def enhancer = <span class="keyword">new</span> GormEnhancer(simple, <span class="keyword">new</span> DatastoreTransactionManager(<span class="key">datastore</span>: simple))
-        enhancer.enhance()
-
-        simple.mappingContext.addMappingContextListener({ e -&gt; enhancer.enhance e } <span class="keyword">as</span> MappingContext.Listener)
-
-        simple.applicationContext.addApplicationListener <span class="keyword">new</span> DomainEventListener(simple)
-        simple.applicationContext.addApplicationListener <span class="keyword">new</span> AutoTimestampEventListener(simple)
-
-        <span class="keyword">return</span> simple.connect()
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Some setup code has been omitted for clarity, but essentially, the <code>Setup.groovy</code> class should initialize the <code>Datastore</code> and return a <code>Session</code> from the static setup method, which is passed a list of classes to configure.</p>
-</div>
-<div class="paragraph">
-<p>With this setup, all the TCK tests will be run against the subproject. If a specific test cannot be implemented due to the underlying datastore lacking support for a particular feature, you can create a test with the same name as the failing test, and that will then override the corresponding test in the TCK.</p>
-</div>
-<div class="paragraph">
-<p>For example: SimpleDB doesn&#8217;t support pagination. Add a <code>grails.gorm.tests.PagedResultSpec</code> class that overrides the one from the TCK. Each test is a Spock specification and Spock has an <code>Ignore</code> annotation that can be used to ignore a particular test:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="comment">/**
- * Ignored for SimpleDB because SimpleDB doesn't support pagination
- */</span>
-<span class="annotation">@Ignore</span>
-<span class="type">class</span> <span class="class">PagedResultSpec</span> <span class="directive">extends</span> GormDatastoreSpec{
-   ...
-}</code></pre>
 </div>
 </div>
 
@@ -1260,6 +2150,97 @@ mkdir grace-datastore-gorm-xyz/src/test/groovy</code></pre>
 <div class="paragraph">
 <p>Keep iterating until you have implemented all the tests in the TCK.</p>
 </div>
+</div>
+
+
+<h1 id="testing"><a class="anchor" href="#testing"></a>6 Using the Test Compatibility Kit</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/testing.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The <code>grace-datastore-gorm-tck</code> project provides several hundred tests to guarantee that a particular GORM implementation is compliant. To use the TCK you need to define a dependency on the TCK in the subprojects <code>build.gradle</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">testCompile project(<span class="string"><span class="delimiter">'</span><span class="content">:grace-datastore-gorm-tck</span><span class="delimiter">'</span></span>)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then create a <code>Setup.groovy</code> file that sets up your custom datastore in your implementation.</p>
+</div>
+<div class="paragraph">
+<p>For example the <code>ConcurrentHashMap</code> implementation has one defined in <code>grace-datastore-gorm-test/src/test/groovy/org/grails/datastore/gorm/Setup.groovy</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="type">class</span> <span class="class">Setup</span> {
+
+    <span class="directive">static</span> destroy() {
+        <span class="comment">// noop</span>
+    }
+    <span class="directive">static</span> Session setup(classes) {
+
+        <span class="keyword">def</span> ctx = <span class="keyword">new</span> GenericApplicationContext()
+        ctx.refresh()
+        <span class="keyword">def</span> simple = <span class="keyword">new</span> SimpleMapDatastore(ctx)
+
+        ...
+        for (cls <span class="keyword">in</span> classes) {
+            simple.mappingContext.addPersistentEntity(cls)
+        }
+
+        ...
+        def enhancer = <span class="keyword">new</span> GormEnhancer(simple, <span class="keyword">new</span> DatastoreTransactionManager(<span class="key">datastore</span>: simple))
+        enhancer.enhance()
+
+        simple.mappingContext.addMappingContextListener({ e -&gt; enhancer.enhance e } <span class="keyword">as</span> MappingContext.Listener)
+
+        simple.applicationContext.addApplicationListener <span class="keyword">new</span> DomainEventListener(simple)
+        simple.applicationContext.addApplicationListener <span class="keyword">new</span> AutoTimestampEventListener(simple)
+
+        <span class="keyword">return</span> simple.connect()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some setup code has been omitted for clarity, but essentially, the <code>Setup.groovy</code> class should initialize the <code>Datastore</code> and return a <code>Session</code> from the static setup method, which is passed a list of classes to configure.</p>
+</div>
+<div class="paragraph">
+<p>With this setup, all the TCK tests will be run against the subproject. If a specific test cannot be implemented due to the underlying datastore lacking support for a particular feature, you can create a test with the same name as the failing test, and that will then override the corresponding test in the TCK.</p>
+</div>
+<div class="paragraph">
+<p>For example: SimpleDB doesn&#8217;t support pagination. Add a <code>grails.gorm.tests.PagedResultSpec</code> class that overrides the one from the TCK. Each test is a Spock specification and Spock has an <code>Ignore</code> annotation that can be used to ignore a particular test:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="comment">/**
+ * Ignored for SimpleDB because SimpleDB doesn't support pagination
+ */</span>
+<span class="annotation">@Ignore</span>
+<span class="type">class</span> <span class="class">PagedResultSpec</span> <span class="directive">extends</span> GormDatastoreSpec{
+   ...
+}</code></pre>
+</div>
+</div>
+
+
+<h1 id="support"><a class="anchor" href="#support"></a>7 Support</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2023.3.x/src/docs/guide/support.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>For support, please use the <a href="https://github.com/orgs/graceframework/discussions">Grace Discussions</a> or open an issue on <a href="https://github.com/graceframework/grace-data/issues">Github Issues</a>.</p>
 </div>
 
                     </div>
