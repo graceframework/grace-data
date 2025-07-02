@@ -23,6 +23,7 @@ To make it easier for users to use and upgrade, Grace Data adopts a version poli
 
 | GORM Version | Grace Version |
 |--------------|---------------|
+| 2024.0.x     | 2024.0.x      |
 | 2023.3.x     | 2023.3.x      |
 | 2023.2.x     | 2023.2.x      |
 | 2023.1.x     | 2023.1.x      |
@@ -33,7 +34,7 @@ To make it easier for users to use and upgrade, Grace Data adopts a version poli
 
 ## Ducumentation
 
-* [2023.3.x](https://graceframework.org/grace-data/2023.3.x/)
+* [2024.0.x](https://graceframework.org/grace-data/2024.0.x/)
 
 ## License
 
