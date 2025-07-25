@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 original authors
+ * Copyright 2015-2025 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -92,6 +92,7 @@ import static org.codehaus.groovy.ast.tools.GeneralUtils.returnS
  * - Named query methods<br>
  *
  * @author Graeme Rocher
+ * @author Michael Yan
  * @since 5.0
  */
 @CompileStatic
@@ -186,6 +187,13 @@ class GormEntityTransformation extends AbstractASTTransformation implements Comp
                 catch (Throwable e2) {
                     // Only GORM classes on the classpath continue
                 }
+            }
+            try {
+                AstUtils.addAnnotationOrGetExisting(classNode,
+                        (Class<? extends Annotation>) getClass().classLoader.loadClass('grails.artefact.Artefact'),
+                        [value: 'Domain'] as Map<String, Object>)
+            }
+            catch (Throwable ignored) {
             }
         }
 
