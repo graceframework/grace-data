@@ -1,11 +1,11 @@
 /*
- * Copyright 2011 SpringSource
+ * Copyright 2011-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,7 +15,6 @@
  */
 package org.grails.compiler.gorm;
 
-import java.net.URL;
 import java.util.Collection;
 
 import groovy.transform.Canonical;
@@ -29,12 +28,12 @@ import grails.compiler.ast.GrailsArtefactClassInjector;
 import org.grails.compiler.injection.GrailsASTUtils;
 import org.grails.core.artefact.DomainClassArtefactHandler;
 import org.grails.datastore.mapping.reflect.AstUtils;
-import org.grails.io.support.GrailsResourceUtils;
 
 /**
  * Transforms GORM entities making the GORM API available to Java.
  *
  * @author Graeme Rocher
+ * @author Michael Yan
  * @since 2.0
  */
 @AstTransformer
@@ -45,14 +44,9 @@ public class GormTransformer implements GrailsArtefactClassInjector {
         return new String[] { DomainClassArtefactHandler.TYPE };
     }
 
-    public boolean shouldInject(URL url) {
-        return GrailsResourceUtils.isDomainClass(url);
-    }
-
     public static Collection<String> getKnownEntityNames() {
         return AstUtils.getKnownEntityNames();
     }
-
 
     @Override
     public void performInjection(SourceUnit source, GeneratorContext context, ClassNode classNode) {
