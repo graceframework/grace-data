@@ -1,6 +1,6 @@
 package grails.gorm.tests
 
-import grails.persistence.Entity
+import grails.gorm.annotation.Entity
 
 import org.grails.datastore.mapping.core.Session
 import spock.lang.IgnoreRest

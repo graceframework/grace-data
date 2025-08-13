@@ -1,6 +1,6 @@
 package grails.gorm.tests
 
-import grails.persistence.Entity
+import grails.gorm.annotation.Entity
 import org.grails.datastore.mapping.model.types.OneToOne
 import org.grails.datastore.mapping.proxy.EntityProxy
 

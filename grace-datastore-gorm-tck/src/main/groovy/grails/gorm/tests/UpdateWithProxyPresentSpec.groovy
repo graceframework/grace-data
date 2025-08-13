@@ -3,7 +3,7 @@ package grails.gorm.tests
 import grails.gorm.DetachedCriteria
 import grails.gorm.async.AsyncEntity
 import grails.gorm.dirty.checking.DirtyCheck
-import grails.persistence.Entity
+import grails.gorm.annotation.Entity
 import groovy.transform.EqualsAndHashCode
 import org.grails.datastore.gorm.proxy.GroovyProxyFactory
 import org.grails.datastore.gorm.query.transform.ApplyDetachedCriteriaTransform

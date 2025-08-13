@@ -1,7 +1,7 @@
 package org.grails.datastore.mapping
 
 import grails.gorm.tests.GormDatastoreSpec
-import grails.persistence.Entity
+import grails.gorm.annotation.Entity
 
 /**
  * Created by Jim on 8/19/2016.

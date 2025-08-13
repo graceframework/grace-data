@@ -1,7 +1,7 @@
 package org.grails.datastore.gorm
 
 import grails.gorm.tests.GormDatastoreSpec
-import grails.persistence.Entity
+import grails.gorm.annotation.Entity
 import spock.lang.Issue
 
 /**

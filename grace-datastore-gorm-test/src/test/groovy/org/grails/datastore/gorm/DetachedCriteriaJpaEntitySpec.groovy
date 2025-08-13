@@ -2,7 +2,7 @@ package org.grails.datastore.gorm
 
 import grails.gorm.tests.GormDatastoreSpec
 
-import jakarta.persistence.Entity
+import grails.gorm.annotation.Entity
 
 import org.grails.datastore.gorm.query.transform.ApplyDetachedCriteriaTransform
 
@@ -20,7 +20,7 @@ class DetachedCriteriaJpaEntitySpec extends GormDatastoreSpec {
         return [Todo]
     }
     
-    def "test a where query on a jpa entity"()  {
+    def "test a where query on a GORM entity"()  {
         given: "a todo"
             new Todo(title: "todo").save(flush: true)
             session.clear()
@@ -50,8 +50,7 @@ class DetachedCriteriaJpaEntitySpec extends GormDatastoreSpec {
 
 }
 
-@jakarta.persistence.Entity
-@grails.persistence.Entity
+@Entity
 class Todo {
     Long id
     String title

@@ -1,7 +1,7 @@
 package grails.gorm.tests
 
 import grails.gorm.DetachedCriteria
-import grails.persistence.Entity
+import grails.gorm.annotation.Entity
 import groovy.transform.CompileStatic;
 
 import org.codehaus.groovy.control.MultipleCompilationErrorsException
@@ -27,7 +27,6 @@ class WhereMethodSpec extends GormDatastoreSpec {
         list << gcl.parseClass('''
 import grails.gorm.tests.*
 import grails.gorm.annotation.*
-import grails.persistence.*
 import grails.gorm.DetachedCriteria
 @Entity
 class Todo {
@@ -54,7 +53,6 @@ return Todo
         list << gcl.parseClass('''
 import grails.gorm.tests.*
 import grails.gorm.annotation.*
-import grails.persistence.*
 import grails.gorm.DetachedCriteria
 
 @Entity
@@ -1593,7 +1591,7 @@ class Project {
         gcl.parseClass('''
 import grails.gorm.tests.*
 import grails.gorm.*
-import grails.persistence.*
+import grails.gorm.annotation.*
 import org.grails.datastore.gorm.query.transform.ApplyDetachedCriteriaTransform
 
 @ApplyDetachedCriteriaTransform
@@ -1613,7 +1611,7 @@ class CallMe {
         gcl.parseClass('''
 import grails.gorm.tests.*
 import grails.gorm.*
-import grails.persistence.*
+import grails.gorm.annotation.*
 import org.grails.datastore.gorm.query.transform.ApplyDetachedCriteriaTransform
 
 @ApplyDetachedCriteriaTransform
@@ -1633,7 +1631,7 @@ class CallMe {
         gcl.parseClass('''
 import grails.gorm.tests.*
 import grails.gorm.*
-import grails.persistence.*
+import grails.gorm.annotation.*
 import org.grails.datastore.gorm.query.transform.ApplyDetachedCriteriaTransform
 
 @ApplyDetachedCriteriaTransform
@@ -1652,7 +1650,7 @@ class CallMe {
         gcl.parseClass('''
 import grails.gorm.tests.*
 import grails.gorm.*
-import grails.persistence.*
+import grails.gorm.annotation.*
 import org.grails.datastore.gorm.query.transform.ApplyDetachedCriteriaTransform
 
 @ApplyDetachedCriteriaTransform
@@ -1672,7 +1670,7 @@ class CallMe {
         gcl.parseClass('''
 import grails.gorm.tests.*
 import grails.gorm.*
-import grails.persistence.*
+import grails.gorm.annotation.*
 import org.grails.datastore.gorm.query.transform.ApplyDetachedCriteriaTransform
 
 @ApplyDetachedCriteriaTransform
@@ -1692,7 +1690,7 @@ class CallMe {
         gcl.parseClass('''
 import grails.gorm.tests.*
 import grails.gorm.*
-import grails.persistence.*
+import grails.gorm.annotation.*
 import org.grails.datastore.gorm.query.transform.ApplyDetachedCriteriaTransform
 
 @ApplyDetachedCriteriaTransform
@@ -1712,7 +1710,7 @@ class CallMe {
         gcl.parseClass('''
 import grails.gorm.tests.*
 import grails.gorm.*
-import grails.persistence.*
+import grails.gorm.annotation.*
 import org.grails.datastore.gorm.query.transform.ApplyDetachedCriteriaTransform
 
 @ApplyDetachedCriteriaTransform
@@ -1732,7 +1730,7 @@ class CallMe {
         gcl.parseClass('''
 import grails.gorm.tests.*
 import grails.gorm.*
-import grails.persistence.*
+import grails.gorm.annotation.*
 import org.grails.datastore.gorm.query.transform.ApplyDetachedCriteriaTransform
 
 @ApplyDetachedCriteriaTransform

@@ -1,6 +1,6 @@
 package org.grails.datastore.gorm
 
-import jakarta.persistence.Entity
+import grails.gorm.annotation.Entity
 import grails.gorm.tests.GormDatastoreSpec
 
 class NestedAssociationQuerySpec extends GormDatastoreSpec{
@@ -80,14 +80,14 @@ class NestedAssociationQuerySpec extends GormDatastoreSpec{
     }
 }
 
-@grails.persistence.Entity
+@Entity
 class UserOpinion {
     Long id
     Set answers = []
     static hasMany = [answers: Answer]
 }
 
-@grails.persistence.Entity
+@Entity
 class Answer {
 
     Long id
@@ -99,7 +99,7 @@ class Answer {
     }
 }
 
-@grails.persistence.Entity
+@Entity
 class Question {
 
     Long id
@@ -110,21 +110,21 @@ class Question {
     }
 }
 
-@grails.persistence.Entity
+@Entity
 class Release {
     Long id
     String name
     MilestoneCycle milestoneCycle
 }
 
-@grails.persistence.Entity
+@Entity
 class MilestoneCycle {
     Long id
     String name
     Department department
 }
 
-@grails.persistence.Entity
+@Entity
 class Department {
     Long id
     String name

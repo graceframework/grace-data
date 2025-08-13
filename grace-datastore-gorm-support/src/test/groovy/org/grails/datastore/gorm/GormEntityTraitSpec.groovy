@@ -1,7 +1,7 @@
 package org.grails.datastore.gorm
 
 import grails.artefact.Artefact
-import grails.persistence.Entity
+import grails.gorm.annotation.Entity
 import org.grails.datastore.gorm.query.GormQueryOperations
 import org.grails.datastore.mapping.dirty.checking.DirtyCheckable
 import org.grails.datastore.mapping.model.config.GormProperties
@@ -35,7 +35,7 @@ class GormEntityTraitSpec extends Specification {
     void "Test dynamic parse"(){
         when:
         def cls = new GroovyClassLoader().parseClass('''
-import grails.persistence.*
+import grails.gorm.annotation.Entity
 
 @Entity
 class Book {
@@ -92,7 +92,7 @@ class Publisher {
         def cl = new GroovyClassLoader()
         when:
         def cls = cl.parseClass('''
-import grails.persistence.*
+import grails.gorm.annotation.Entity
 
 @Entity
 class Group {
@@ -134,6 +134,7 @@ class SubMember extends Member {
         cls.getAnnotation(grails.gorm.annotation.Entity)
         ClassPropertyFetcher.forClass(SubMember).getStaticPropertyValuesFromInheritanceHierarchy(GormProperties.TRANSIENT, Collection) ==  [[], ["transientProperty"]]
     }
+
     void "test that a class marked with @Artefact('Domain') is enhanced with GormEntityTraitSpec"() {
         expect:
         GormEntity.isAssignableFrom QueryMethodArtefactDomain
@@ -156,7 +157,7 @@ class SubMember extends Member {
     }
 }
 
-@Artefact('Domain')
+@Entity
 class QueryMethodArtefactDomain {
     String name
 }

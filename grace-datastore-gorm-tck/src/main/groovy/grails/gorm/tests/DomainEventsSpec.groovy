@@ -1,7 +1,7 @@
 package grails.gorm.tests
 
 import grails.gorm.DetachedCriteria
-import grails.persistence.Entity;
+import grails.gorm.annotation.Entity
 import spock.lang.Issue
 
 import org.grails.datastore.mapping.core.Session

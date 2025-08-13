@@ -1,7 +1,7 @@
 package org.grails.datastore.gorm
 
 import grails.gorm.transactions.Transactional
-import grails.persistence.Entity
+import grails.gorm.annotation.Entity
 import org.grails.datastore.gorm.validation.constraints.registry.DefaultValidatorRegistry
 import org.grails.datastore.mapping.config.Settings
 import org.grails.datastore.mapping.core.DatastoreUtils
