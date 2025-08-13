@@ -1,11 +1,11 @@
 /*
- * Copyright 2015 original authors
+ * Copyright 2015-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,6 +31,7 @@ import org.codehaus.groovy.ast.ClassNode
 import org.codehaus.groovy.ast.CodeVisitorSupport
 import org.codehaus.groovy.ast.GenericsType
 import org.codehaus.groovy.ast.MethodNode
+import org.codehaus.groovy.ast.ModuleNode
 import org.codehaus.groovy.ast.Parameter
 import org.codehaus.groovy.ast.PropertyNode
 import org.codehaus.groovy.ast.VariableScope
@@ -61,6 +62,7 @@ import static org.codehaus.groovy.ast.tools.GenericsUtils.correctToGenericsSpecR
  * Utility methods for dealing with Groovy ASTs
  *
  * @author Graeme Rocher
+ * @author Michael Yan
  * @since 5.0
  */
 @CompileStatic
@@ -69,6 +71,9 @@ class AstUtils {
     private static final String SPEC_CLASS = "spock.lang.Specification"
     private static final Class<?>[] EMPTY_JAVA_CLASS_ARRAY = []
     private static final Class<?>[] OBJECT_CLASS_ARG = [Object.class]
+
+    public static final String META_DATA_KEY_GRAILS_APP_DIR = "GRAILS_APP_DIR"
+    public static final String META_DATA_KEY_PROJECT_DIR = "PROJECT_DIR"
 
     public static final ClassNode COMPILE_STATIC_TYPE = ClassHelper.make(CompileStatic)
     public static final ClassNode TYPE_CHECKED_TYPE = ClassHelper.make(TypeChecked)
@@ -119,7 +124,9 @@ class AstUtils {
      *
      * @param url The URL instance
      * @return true if it is a domain class
+     * @deprecated since 2024.0, in favor of #isDomainClass(ClassNode)
      */
+    @Deprecated(since = "2024.0.0", forRemoval = true)
     static boolean isDomainClass(URL url) {
         if (url == null) return false
 
@@ -419,22 +426,14 @@ class AstUtils {
 
     @Memoized
     static boolean isDomainClass(ClassNode classNode) {
-        if (classNode == null) return false
-        if (classNode.isArray()) return false
-        if (implementsInterface(classNode, "org.grails.datastore.gorm.GormEntity")) {
-            return true
+        if (classNode == null) {
+            return false
         }
-        String filePath = classNode.getModule() != null ? classNode.getModule().getDescription() : null
-        if (filePath != null) {
-            try {
-                if (isDomainClass(new File(filePath).toURI().toURL())) {
-                    return true
-                }
-            }
-            catch (MalformedURLException e) {
-                // ignore
-            }
+        if (classNode.isArray()) {
+            return false
         }
+
+        // First, check if the annotation @Entity has already been added
         List<AnnotationNode> annotations = classNode.getAnnotations()
         if (annotations != null && !annotations.isEmpty()) {
             for (AnnotationNode annotation : annotations) {
@@ -444,6 +443,35 @@ class AstUtils {
                 }
             }
         }
+
+        // Second, check whether this class implements the GormEntity interface
+        if (implementsInterface(classNode, "org.grails.datastore.gorm.GormEntity")) {
+            return true
+        }
+
+        // Last, check whether this class is under the /domain directory
+        ModuleNode moduleNode = classNode.getModule()
+        if (moduleNode == null) {
+            return false
+        }
+        SourceUnit sourceNode = moduleNode.getContext()
+        if (sourceNode == null) {
+            return false
+        }
+        ModuleNode ast = sourceNode.getAST()
+        if (ast == null) {
+            return false
+        }
+        String filename = sourceNode.getName()
+        String projectDir = ast.getNodeMetaData(META_DATA_KEY_PROJECT_DIR)
+        String grailsAppDir = ast.getNodeMetaData(META_DATA_KEY_GRAILS_APP_DIR)
+        if (filename == null || projectDir == null || grailsAppDir == null) {
+            return false
+        }
+        if (filename.startsWith(grailsAppDir + File.separatorChar + "domain")) {
+            return true
+        }
+
         return false
     }
 
