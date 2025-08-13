@@ -1,4 +1,4 @@
-rails.compiler.traits.TraitInjector=\
+grails.compiler.traits.TraitInjector=\
 org.grails.compiler.gorm.EntityTraitInjector
 
 grails.compiler.ast.ClassInjector=\
