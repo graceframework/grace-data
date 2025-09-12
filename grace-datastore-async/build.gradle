@@ -1,3 +1,3 @@
 dependencies {
-    api "org.graceframework:grace-async-core"
+    api "org.graceframework.async:grace-async-core:7.0.0-SNAPSHOT"
 }
