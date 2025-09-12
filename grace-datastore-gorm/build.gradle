@@ -16,7 +16,7 @@ dependencies {
     testImplementation("org.hibernate.validator:hibernate-validator")
     testImplementation("jakarta.el:jakarta.el-api")
     testImplementation("jakarta.validation:jakarta.validation-api")
-    testRuntimeOnly("org.glassfish:jakarta.el:$elImplVersion")
+    testRuntimeOnly("org.glassfish.expressly:expressly:$expresslyVersion")
     testRuntimeOnly("com.h2database:h2")
 }
 
