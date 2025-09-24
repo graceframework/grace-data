@@ -1,6 +1,6 @@
 package grails.gorm.tests
 
-import grails.validation.ValidationException
+import org.grails.datastore.mapping.validation.ValidationException
 import spock.lang.IgnoreRest
 
 /**

@@ -2,7 +2,7 @@ package grails.gorm.services
 
 import grails.gorm.annotation.Entity
 import grails.gorm.validation.PersistentEntityValidator
-import grails.validation.ValidationException
+import org.grails.datastore.mapping.validation.ValidationException
 import org.grails.datastore.gorm.validation.constraints.eval.DefaultConstraintEvaluator
 import org.grails.datastore.gorm.validation.constraints.registry.DefaultConstraintRegistry
 import org.grails.datastore.gorm.validation.constraints.registry.DefaultValidatorRegistry
