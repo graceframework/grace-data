@@ -1,5 +1,0 @@
-grails.compiler.traits.TraitInjector=\
-org.grails.compiler.gorm.EntityTraitInjector
-
-grails.compiler.ast.ClassInjector=\
-org.grails.compiler.gorm.GormTransformer
