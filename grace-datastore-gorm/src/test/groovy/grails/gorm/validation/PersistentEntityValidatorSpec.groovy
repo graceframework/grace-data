@@ -16,7 +16,7 @@ import spock.lang.Issue
 import spock.lang.Shared
 import spock.lang.Specification
 
-import jakarta.persistence.Entity
+import grails.gorm.annotation.Entity
 import jakarta.persistence.Transient
 
 class PersistentEntityValidatorSpec extends Specification {

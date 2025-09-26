@@ -6,7 +6,7 @@ import org.springframework.context.MessageSourceResolvable
 import org.springframework.context.NoSuchMessageException
 import spock.lang.Specification
 
-import jakarta.persistence.Entity
+import grails.gorm.annotation.Entity
 
 /**
  * Created by gonmarques on 23/12/17.

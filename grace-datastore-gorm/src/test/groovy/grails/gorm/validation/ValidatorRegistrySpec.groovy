@@ -9,7 +9,7 @@ import org.grails.datastore.mapping.validation.ValidatorRegistry
 import org.springframework.validation.Validator
 import spock.lang.Specification
 
-import jakarta.persistence.Entity
+import grails.gorm.annotation.Entity
 
 /**
  * Created by graemerocher on 09/06/16.
