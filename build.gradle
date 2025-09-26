@@ -1,26 +1,12 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-        if (project.projectVersion.endsWith('-SNAPSHOT')) {
-            maven {
-                name = 'Maven Central Portal Snapshots'
-                url = 'https://central.sonatype.com/repository/maven-snapshots/'
-
-                content {
-                    includeGroupAndSubgroups 'org.graceframework'
-                }
-                mavenContent {
-                    snapshotsOnly()
-                }
-            }
-        }
-    }
-    dependencies {
-        classpath "io.github.gradle-nexus:publish-plugin:2.0.0"
-        classpath "org.graceframework:grace-gradle-plugin:$graceVersion"
-        classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagementPluginVersion"
-    }
+plugins {
+    id 'java-library'
+    id 'groovy'
+    id 'maven-publish'
+    id 'signing'
+    id 'eclipse'
+    id 'idea'
+    alias libs.plugins.grace.doc
+    alias libs.plugins.gradle.nexus.publish
 }
 
 ext."signing.keyId" = project.hasProperty("signing.keyId") ? project.getProperty('signing.keyId') : System.getenv('SIGNING_KEY')
@@ -31,180 +17,8 @@ ext.isReleaseVersion = !projectVersion.endsWith("SNAPSHOT")
 version = project.projectVersion
 group = "org.graceframework"
 
-apply plugin: "groovy"
-apply plugin: "java-library"
-apply plugin: "io.github.gradle-nexus.publish-plugin"
-apply plugin: "maven-publish"
-apply plugin: "signing"
-apply plugin: "idea"
-apply plugin: 'org.graceframework.grace-doc'
-
-allprojects {
-    repositories {
-        mavenCentral()
-        if (project.projectVersion.endsWith('-SNAPSHOT')) {
-            maven {
-                name = 'Maven Central Portal Snapshots'
-                url = 'https://central.sonatype.com/repository/maven-snapshots/'
-
-                content {
-                    includeGroupAndSubgroups 'org.graceframework'
-                }
-                mavenContent {
-                    snapshotsOnly()
-                }
-            }
-        }
-    }
-
-    configurations {
-        documentation
-    }
-}
-
-subprojects {
-    version = project.projectVersion
-    group = "org.graceframework"
-
-    apply plugin: "groovy"
-    apply plugin: "eclipse"
-    apply plugin: "idea"
-    apply plugin: "java-library"
-    apply plugin: "maven-publish"
-    apply plugin: "signing"
-    apply plugin: "checkstyle"
-    apply plugin: "codenarc"
-    apply plugin: "io.spring.dependency-management"
-
-    dependencyManagement {
-        imports {
-            mavenBom "org.graceframework:grace-bom:$graceVersion"
-        }
-        applyMavenExclusions false
-        generatedPomCustomization {
-            enabled = false
-        }
-    }
-
-    dependencies {
-        api "org.apache.groovy:groovy"
-        testImplementation "org.apache.groovy:groovy-test-junit5"
-        testImplementation "org.junit.jupiter:junit-jupiter-api"
-        testImplementation "org.junit.jupiter:junit-jupiter-engine"
-        testImplementation "org.junit.platform:junit-platform-runner"
-        testImplementation("org.spockframework:spock-core") { transitive = false }
-
-        if (project.name == "grace-datastore-gorm-tck") {
-            api "org.apache.groovy:groovy-test-junit5"
-            api "org.junit.jupiter:junit-jupiter-api"
-            api "org.junit.platform:junit-platform-runner"
-            runtimeOnly "org.junit.jupiter:junit-jupiter-engine"
-            implementation("org.spockframework:spock-core") { transitive = false }
-        }
-    }
-
-    if (project.name == "grace-datastore-gorm-async") {
-        dependencies {
-            testImplementation project(":grace-datastore-gorm-tck")
-        }
-    }
-
-    compileTestGroovy {
-        configure(groovyOptions.forkOptions) {
-            jvmArgs = [ '-Xmx768m']
-        }
-    }
-
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(17)
-        }
-        withJavadocJar()
-        withSourcesJar()
-    }
-
-    javadoc {
-        failOnError = false
-    }
-
-    test {
-        useJUnitPlatform()
-    }
-
-    checkstyle {
-        toolVersion = "10.3.2"
-        configDirectory.set(rootProject.file("$rootDir/gradle/checkstyle"))
-    }
-
-    codenarc {
-        toolVersion = '3.1.0'
-        setConfigFile(new File("$rootDir/gradle/codenarc/codenarc.groovy"))
-    }
-
-    configure([javadoc]) {
-        options.encoding "UTF-8"
-        options.docEncoding "UTF-8"
-        options.charSet "UTF-8"
-        options.jFlags "-Xms64M", "-Xmx512M"
-    }
-
-    publishing {
-        publications {
-            maven(MavenPublication) {
-                def projectName = project.name.split('-')*.capitalize().join(' ')
-                groupId = project.group
-                version = project.version
-
-                versionMapping {
-                    usage('java-api') {
-                        fromResolutionOf('runtimeClasspath')
-                    }
-                    usage('java-runtime') {
-                        fromResolutionResult()
-                    }
-                }
-
-                from components.java
-
-                pom {
-                    name = projectName
-                    description = "Grace Data : $projectName"
-                    url = 'https://github.com/graceframework/grace-data'
-                    licenses {
-                        license {
-                            name = 'The Apache License, Version 2.0'
-                            url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
-                        }
-                    }
-                    developers {
-                        developer {
-                            id = 'rainboyan'
-                            name = 'Michael Yan'
-                            email = 'rain@rainboyan.com'
-                        }
-                    }
-                    scm {
-                        connection = 'scm:git:git://github.com/graceframework/grace-data.git'
-                        developerConnection = 'scm:git:ssh://github.com:graceframework/grace-data.git'
-                        url = 'https://github.com/graceframework/grace-data/'
-                    }
-                }
-            }
-        }
-    }
-
-    afterEvaluate {
-        signing {
-            required = isReleaseVersion && gradle.taskGraph.hasTask("publish")
-            sign publishing.publications.maven
-        }
-    }
-}
-
-dependencies {
-    documentation "com.github.javaparser:javaparser-core:$javaParserCoreVersion"
-    documentation "org.apache.groovy:groovy:$groovyVersion"
-    documentation "org.apache.groovy:groovy-ant:$groovyVersion"
+configurations {
+    documentation
 }
 
 def cleanTask = project.tasks.findByName('clean')
@@ -246,13 +60,55 @@ docs {
     sourceDir = project.file('src/docs')
 }
 
-project.afterEvaluate {
-    allprojects.repositories.each { handler ->
-        handler.each {
-            if (it.url.toString().startsWith("http://")) {
-                throw new RuntimeException("Build should not define insecure HTTP-based Maven repostories")
+publishing {
+    publications {
+        maven(MavenPublication) {
+            def projectName = project.name.split('-')*.capitalize().join(' ')
+            groupId = project.group
+            version = project.version
+
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+
+            from components.java
+
+            pom {
+                name = projectName
+                description = "Grace Data : $projectName"
+                url = 'https://github.com/graceframework/grace-data'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'rainboyan'
+                        name = 'Michael Yan'
+                        email = 'rain@rainboyan.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/graceframework/grace-data.git'
+                    developerConnection = 'scm:git:ssh://github.com:graceframework/grace-data.git'
+                    url = 'https://github.com/graceframework/grace-data/'
+                }
             }
         }
+    }
+}
+
+afterEvaluate {
+    signing {
+        required = isReleaseVersion && gradle.taskGraph.hasTask("publish")
+        sign publishing.publications.maven
     }
 }
 

@@ -1,12 +1,14 @@
+plugins {
+    id 'grace.build.common'
+}
+
 dependencies {
     api project(":grace-datastore-core")
-    api "commons-validator:commons-validator", {
+    api libs.commons.validator, {
         exclude group: 'xml-apis', module:'xml-apis'
         exclude group: 'commons-digester', module:'commons-digester'
         exclude group: 'commons-logging', module:'commons-logging'
         exclude group: 'commons-beanutils', module:'commons-beanutils'
     }
-
-    compileOnly("org.hibernate.validator:hibernate-validator")
-    testImplementation("org.hibernate.validator:hibernate-validator")
+    api libs.hibernate.validator
 }

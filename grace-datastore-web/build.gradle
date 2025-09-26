@@ -1,9 +1,12 @@
+plugins {
+    id 'grace.build.common'
+}
+
 dependencies {
     api project(":grace-datastore-core")
-    api "org.springframework:spring-web"
-    api "org.springframework:spring-context"
-    compileOnly("jakarta.servlet:jakarta.servlet-api")
-
-    testImplementation("jakarta.servlet:jakarta.servlet-api")
-    testImplementation "org.springframework:spring-test"
+    api libs.spring.context
+    api libs.spring.web
+    compileOnly libs.jakarta.servlet
+    testImplementation libs.jakarta.servlet
+    testImplementation libs.spring.test
 }

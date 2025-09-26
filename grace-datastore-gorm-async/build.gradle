@@ -1,4 +1,9 @@
+plugins {
+    id 'grace.build.common'
+}
+
 dependencies {
     api project(":grace-datastore-gorm")
     api project(":grace-datastore-async")
+    testImplementation project(":grace-datastore-gorm-tck")
 }

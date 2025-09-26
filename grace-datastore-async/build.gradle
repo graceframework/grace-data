@@ -1,3 +1,7 @@
+plugins {
+    id 'grace.build.common'
+}
+
 dependencies {
-    api "org.graceframework.async:grace-async-core:7.0.0-SNAPSHOT"
+    api libs.grace.async.core
 }

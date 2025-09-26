@@ -1,11 +1,13 @@
+plugins {
+    id 'grace.build.common'
+}
+
 dependencies {
     api project(":grace-datastore-core")
     api project(":grace-datastore-gorm")
 
-    implementation "com.github.ben-manes.caffeine:caffeine"
+    implementation libs.caffeine
     testImplementation project(":grace-datastore-gorm-tck")
-    testImplementation "org.apache.groovy:groovy-json"
-    testRuntimeOnly "org.springframework:spring-aop"
+    testImplementation libs.groovy.json
+    testRuntimeOnly libs.spring.aop
 }
-
-//compileTestGroovy.groovyOptions.forkOptions.jvmArgs = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']

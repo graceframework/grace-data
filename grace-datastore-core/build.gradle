@@ -1,17 +1,21 @@
+plugins {
+    id 'grace.build.common'
+}
+
 dependencies {
-    api "jakarta.annotation:jakarta.annotation-api"
-    api "jakarta.transaction:jakarta.transaction-api"
-    api "org.slf4j:slf4j-api"
-    api "org.slf4j:jcl-over-slf4j"
-    api "jakarta.persistence:jakarta.persistence-api"
-    api "org.springframework:spring-core"
-    api "org.springframework:spring-beans"
-    api "org.springframework:spring-tx"
-    api "org.springframework:spring-context"
-    implementation "com.github.ben-manes.caffeine:caffeine"
-    implementation "org.javassist:javassist:$javassistVersion"
+    api libs.jakarta.annotation.api
+    api libs.jakarta.transaction
+    api libs.jakarta.persistence.api
+    api libs.slf4j.api
+    api libs.slf4j.jcl
+    api libs.spring.context
+    api libs.spring.core
+    api libs.spring.beans
+    api libs.spring.tx
+    implementation libs.caffeine
+    implementation libs.javassist
 
     testImplementation project(":grace-datastore-gorm")
-    testImplementation("org.springframework:spring-context")
-    testImplementation("org.springframework:spring-web")
+    testImplementation libs.spring.context
+    testImplementation libs.spring.web
 }
