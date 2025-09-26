@@ -8,7 +8,7 @@ import org.grails.datastore.mapping.model.MappingContext
 import org.grails.datastore.mapping.validation.ValidatorRegistry
 import spock.lang.Specification
 
-import jakarta.persistence.Entity
+import grails.gorm.annotation.Entity
 
 class ImportFromSpec extends Specification {
 
