@@ -1,6 +1,7 @@
 package org.grails.datastore.mapping.core.grailsversion
 
 import spock.lang.Specification
+import spock.lang.PendingFeature
 import spock.lang.Unroll
 
 /**
@@ -8,6 +9,7 @@ import spock.lang.Unroll
  */
 class GrailsVersionSpec extends Specification {
 
+    @PendingFeature(reason="Since there is no dependency on grace-bootstrap at the moment, it is not possible to obtain the current Grails version.")
     @Unroll
     void "isAtLeast(#requiredVersion) => #expected"(String requiredVersion, boolean expected) {
         expect:

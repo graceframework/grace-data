@@ -127,10 +127,8 @@ subprojects {
         failOnError = false
     }
 
-    if (project.name == "grace-datastore-gorm" || project.name == "grace-datastore-gorm-test") {
-        test {
-            useJUnitPlatform()
-        }
+    test {
+        useJUnitPlatform()
     }
 
     checkstyle {

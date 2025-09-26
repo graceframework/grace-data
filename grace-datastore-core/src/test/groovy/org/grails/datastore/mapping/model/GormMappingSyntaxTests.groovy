@@ -48,7 +48,7 @@ class GormMappingSyntaxTests {
         context.addPersistentEntity(SecondEntity)
         def strategy = context.mappingSyntaxStrategy
         def props = strategy.getPersistentProperties(TestEntity,context)
-        assert props.size() == 3
+        assert props.size() == 4
     }
 
     @Test

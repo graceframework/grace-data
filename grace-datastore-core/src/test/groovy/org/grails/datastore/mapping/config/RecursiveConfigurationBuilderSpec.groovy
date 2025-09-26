@@ -1,8 +1,5 @@
 package org.grails.datastore.mapping.config
 
-import groovy.transform.AutoClone
-import groovy.transform.builder.Builder
-import groovy.transform.builder.SimpleStrategy
 import org.grails.datastore.mapping.core.DatastoreUtils
 import org.springframework.core.env.PropertyResolver
 import spock.lang.Specification
@@ -64,104 +61,29 @@ class RecursiveConfigurationBuilderSpec extends Specification {
         }
     }
 
-    @AutoClone
-    @Builder(builderStrategy = SimpleStrategy, prefix = '')
+    @SettingsBuilder
     static class MongoConnectionSourceSettings {
-        MongoClientOptions.Builder options = MongoClientOptions.builder()
+
+        MongoClientOptions options = new MongoClientOptions()
 
     }
 
+    @SettingsBuilder
     static class MongoClientOptions {
 
-        private AutoEncryptionSettings autoEncryptionSettings
+        AutoEncryptionSettings autoEncryptionSettings = new AutoEncryptionSettings()
 
-        private MongoClientOptions(Builder builder) {
-            autoEncryptionSettings = builder.autoEncryptionSettings;
-        }
-
-        static Builder builder() {
-            new Builder()
-        }
-
-        static class Builder {
-
-            private AutoEncryptionSettings autoEncryptionSettings
-
-            Builder autoEncryptionSettings(AutoEncryptionSettings autoEncryptionSettings) {
-                this.autoEncryptionSettings = autoEncryptionSettings
-                this
-            }
-
-            MongoClientOptions build() {
-                new MongoClientOptions(this)
-            }
-        }
     }
 
+    @SettingsBuilder
     static class MongoClientSettings {
 
-        private AutoEncryptionSettings autoEncryptionSettings
+        AutoEncryptionSettings autoEncryptionSettings = new AutoEncryptionSettings()
 
-        MongoClientSettings(Builder builder) {
-            autoEncryptionSettings = builder.autoEncryptionSettings
-        }
-
-        static Builder builder() {
-              new Builder()
-        }
-
-        static class Builder {
-
-            private AutoEncryptionSettings autoEncryptionSettings;
-
-            private Builder() {
-
-            }
-
-            Builder autoEncryptionSettings(AutoEncryptionSettings autoEncryptionSettings) {
-                this.autoEncryptionSettings = autoEncryptionSettings
-                this
-            }
-
-            MongoClientSettings build() {
-                new MongoClientSettings(this)
-            }
-        }
     }
 
+    @SettingsBuilder
     static class AutoEncryptionSettings {
-        private MongoClientSettings keyVaultMongoClientSettings;
-        private boolean bypassAutoEncryption
-
-        private AutoEncryptionSettings(Builder builder) {
-            this.keyVaultMongoClientSettings = builder.keyVaultMongoClientSettings
-            this.bypassAutoEncryption = builder.bypassAutoEncryption
-        }
-
-        static Builder builder() {
-            new Builder()
-        }
-
-        static class Builder {
-            private MongoClientSettings keyVaultMongoClientSettings
-            private boolean bypassAutoEncryption
-
-            private Builder() {
-            }
-
-            Builder bypassAutoEncryption(boolean bypassAutoEncryption) {
-                this.bypassAutoEncryption = bypassAutoEncryption
-                this
-            }
-
-            Builder keyVaultMongoClientSettings(MongoClientSettings keyVaultMongoClientSettings) {
-                this.keyVaultMongoClientSettings = keyVaultMongoClientSettings
-                this
-            }
-
-            AutoEncryptionSettings build() {
-                new AutoEncryptionSettings(this)
-            }
-        }
+        boolean bypassAutoEncryption
     }
 }
