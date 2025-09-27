@@ -60,58 +60,6 @@ docs {
     sourceDir = project.file('src/docs')
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            def projectName = project.name.split('-')*.capitalize().join(' ')
-            groupId = project.group
-            version = project.version
-
-            versionMapping {
-                usage('java-api') {
-                    fromResolutionOf('runtimeClasspath')
-                }
-                usage('java-runtime') {
-                    fromResolutionResult()
-                }
-            }
-
-            from components.java
-
-            pom {
-                name = projectName
-                description = "Grace Data : $projectName"
-                url = 'https://github.com/graceframework/grace-data'
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'rainboyan'
-                        name = 'Michael Yan'
-                        email = 'rain@rainboyan.com'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:git://github.com/graceframework/grace-data.git'
-                    developerConnection = 'scm:git:ssh://github.com:graceframework/grace-data.git'
-                    url = 'https://github.com/graceframework/grace-data/'
-                }
-            }
-        }
-    }
-}
-
-afterEvaluate {
-    signing {
-        required = isReleaseVersion && gradle.taskGraph.hasTask("publish")
-        sign publishing.publications.maven
-    }
-}
-
 nexusPublishing {
     repositories {
         sonatype {
