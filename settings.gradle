@@ -5,7 +5,6 @@ include ("grace-datastore-core",
 
         // Core GORM Implementation projects
         'grace-datastore-gorm',
-        'grace-datastore-async',
         'grace-datastore-gorm-async',
         'grace-datastore-gorm-validation',
         'grace-datastore-gorm-support',

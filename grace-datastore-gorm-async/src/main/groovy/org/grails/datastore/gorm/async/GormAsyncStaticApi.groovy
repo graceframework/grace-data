@@ -1,10 +1,11 @@
-/* Copyright (C) 2013 SpringSource
+/*
+ * Copyright 2013-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +17,7 @@ package org.grails.datastore.gorm.async
 
 import groovy.transform.CompileStatic
 
+import grails.async.DelegateAsync
 import grails.async.Promise
 import grails.async.Promises
 import grails.async.decorator.PromiseDecorator
@@ -23,12 +25,12 @@ import grails.async.decorator.PromiseDecoratorProvider
 import grails.gorm.api.GormStaticOperations
 
 import org.grails.datastore.gorm.GormStaticApi
-import org.grails.datastore.gorm.async.transform.DelegateAsync
 
 /**
  * Transforms the GormStaticApi into an asynchronous API
  *
  * @author Graeme Rocher
+ * @author Michael Yan
  * @since 2.3
  */
 class GormAsyncStaticApi<D> implements PromiseDecoratorProvider {

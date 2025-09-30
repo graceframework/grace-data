@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
+    api libs.grace.async.core
     api project(":grace-datastore-gorm")
-    api project(":grace-datastore-async")
     testImplementation project(":grace-datastore-gorm-tck")
 }

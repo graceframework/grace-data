@@ -1,7 +1,0 @@
-plugins {
-    id 'grace.build.common'
-}
-
-dependencies {
-    api libs.grace.async.core
-}
