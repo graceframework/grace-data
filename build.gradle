@@ -17,8 +17,17 @@ ext.isReleaseVersion = !projectVersion.endsWith("SNAPSHOT")
 version = project.projectVersion
 group = "org.graceframework"
 
+repositories {
+    mavenCentral()
+}
+
 configurations {
     documentation
+}
+
+dependencies {
+    documentation libs.javaparser
+    documentation libs.groovy.core
 }
 
 def cleanTask = project.tasks.findByName('clean')
