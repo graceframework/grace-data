@@ -211,22 +211,22 @@ ruleset {
     MissingBlankLineAfterPackage
     MissingBlankLineBeforeAnnotatedField
     SpaceAfterCatch
-    SpaceAfterClosingBrace
+    // SpaceAfterClosingBrace
     SpaceAfterComma
     SpaceAfterFor
     SpaceAfterIf
     SpaceAfterMethodCallName
     SpaceAfterMethodDeclarationName
     SpaceAfterNotOperator
-    SpaceAfterOpeningBrace
+    // SpaceAfterOpeningBrace
     SpaceAfterSemicolon
     SpaceAfterSwitch
     SpaceAfterWhile
     SpaceAroundClosureArrow
-    SpaceAroundMapEntryColon(characterAfterColonRegex: /\s/)
+    // SpaceAroundMapEntryColon(characterAfterColonRegex: /\s/)
     SpaceAroundOperator
-    SpaceBeforeClosingBrace
-    SpaceBeforeOpeningBrace
+    // SpaceBeforeClosingBrace
+    // SpaceBeforeOpeningBrace
     SpaceInsideParentheses
     TrailingWhitespace
 
