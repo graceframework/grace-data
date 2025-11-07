@@ -1,11 +1,11 @@
 /*
- * Copyright 2015 original authors
+ * Copyright 2015-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,7 +52,7 @@ class PropertyResolverMap implements Map<String, Object>, PropertyResolver {
 
     @Override
     boolean containsValue(Object value) {
-        throw new UnsupportedOperationException("Method containsValue not supported")
+        throw new UnsupportedOperationException('Method containsValue not supported')
     }
 
     @Override
@@ -62,36 +62,37 @@ class PropertyResolverMap implements Map<String, Object>, PropertyResolver {
 
     @Override
     Object put(String key, Object value) {
-        throw new UnsupportedOperationException("Map cannot be modified")
+        throw new UnsupportedOperationException('Map cannot be modified')
     }
 
     @Override
     String remove(Object key) {
-        throw new UnsupportedOperationException("Map cannot be modified")
+        throw new UnsupportedOperationException('Map cannot be modified')
     }
 
     @Override
     void putAll(Map<? extends String, ? extends Object> m) {
-        throw new UnsupportedOperationException("Map cannot be modified")
+        throw new UnsupportedOperationException('Map cannot be modified')
     }
 
     @Override
     void clear() {
-        throw new UnsupportedOperationException("Map cannot be modified")
+        throw new UnsupportedOperationException('Map cannot be modified')
     }
 
     @Override
     Set<String> keySet() {
-        throw new UnsupportedOperationException("Method keySet() not supported")
+        throw new UnsupportedOperationException('Method keySet() not supported')
     }
 
     @Override
     Collection<Object> values() {
-        throw new UnsupportedOperationException("Method values() not supported")
+        throw new UnsupportedOperationException('Method values() not supported')
     }
 
     @Override
     Set<Map.Entry<String, Object>> entrySet() {
-        throw new UnsupportedOperationException("Method entrySet() not supported")
+        throw new UnsupportedOperationException('Method entrySet() not supported')
     }
+
 }

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.validation.cascade
 
 import grails.gorm.annotation.Entity
@@ -22,8 +37,8 @@ class NoDuplicateCascadeSpec extends Specification {
     @Shared Validator validator
 
     void setupSpec() {
-        MappingContext mappingContext = new KeyValueMappingContext("test")
-        mappingContext.mappingFactory = new GormKeyValueMappingFactory("test")
+        MappingContext mappingContext = new KeyValueMappingContext('test')
+        mappingContext.mappingFactory = new GormKeyValueMappingFactory('test')
         mappingContext.syntaxStrategy = new GormMappingConfigurationStrategy(mappingContext.mappingFactory)
 
         def authorEntity = mappingContext.addPersistentEntity(Author)
@@ -34,8 +49,8 @@ class NoDuplicateCascadeSpec extends Specification {
         validator = registry.getValidator(chapterEntity)
     }
 
-    @Issue("https://github.com/grails/grails-data-mapping/issues/1064")
-    def "cascading validation should not validate objects more than once"() {
+    @Issue('https://github.com/grails/grails-data-mapping/issues/1064')
+    def 'cascading validation should not validate objects more than once'() {
 
         Author a1 = new Author()
         Book b = new Book(author: a1)

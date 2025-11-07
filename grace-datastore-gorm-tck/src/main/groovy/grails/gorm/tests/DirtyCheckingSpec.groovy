@@ -1,8 +1,25 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.tests
 
-import grails.gorm.annotation.Entity
-import org.grails.datastore.mapping.proxy.ProxyHandler
 import spock.lang.IgnoreIf
+
+import grails.gorm.annotation.Entity
+
+import org.grails.datastore.mapping.proxy.ProxyHandler
 
 /**
  * @author Graeme Rocher
@@ -20,46 +37,42 @@ class DirtyCheckingSpec extends GormDatastoreSpec {
         proxyHandler = session.getMappingContext().proxyHandler
     }
 
-    void "Test that dirty checking methods work when changing entities"() {
-
-        when: "A new instance is created"
-        def p = new Person(firstName: "Homer", lastName: "Simpson")
+    void 'Test that dirty checking methods work when changing entities'() {
+        when: 'A new instance is created'
+        def p = new Person(firstName: 'Homer', lastName: 'Simpson')
         p.save(flush: true)
 
-        then: "The instance is not dirty"
+        then: 'The instance is not dirty'
         !p.isDirty()
-        !p.isDirty("firstName")
+        !p.isDirty('firstName')
 
-        when: "The instance is changed"
-        p.firstName = "Bart"
+        when: 'The instance is changed'
+        p.firstName = 'Bart'
 
-        then: "The instance is now dirty"
+        then: 'The instance is now dirty'
         p.isDirty()
-        p.isDirty("firstName")
+        p.isDirty('firstName')
         p.dirtyPropertyNames == ['firstName']
-        p.getPersistentValue('firstName') == "Homer"
+        p.getPersistentValue('firstName') == 'Homer'
 
-        when: "The instance is loaded from the db"
+        when: 'The instance is loaded from the db'
         p.save(flush: true)
         session.clear()
         p = Person.get(p.id)
 
-        then: "The instance is not dirty"
+        then: 'The instance is not dirty'
         !p.isDirty()
         !p.isDirty('firstName')
 
-        when: "The instance is changed"
-        p.firstName = "Lisa"
+        when: 'The instance is changed'
+        p.firstName = 'Lisa'
 
-        then: "The instance is dirty"
+        then: 'The instance is dirty'
         p.isDirty()
-        p.isDirty("firstName")
-
-
+        p.isDirty('firstName')
     }
 
-    void "test relationships not marked dirty when proxies are used"() {
-
+    void 'test relationships not marked dirty when proxies are used'() {
         given:
         Long bookId = new TestBook(title: 'Martin Fierro', author: new TestAuthor(name: 'Jose Hernandez'))
                 .save(flush: true)
@@ -81,8 +94,7 @@ class DirtyCheckingSpec extends GormDatastoreSpec {
         TestAuthor.deleteAll()
     }
 
-    void "test relationships not marked dirty when domain objects are used"() {
-
+    void 'test relationships not marked dirty when domain objects are used'() {
         given:
         Long bookId = new TestBook(title: 'Martin Fierro', author: new TestAuthor(name: 'Jose Hernandez'))
                 .save(flush: true, failOnError: true)
@@ -104,12 +116,12 @@ class DirtyCheckingSpec extends GormDatastoreSpec {
         TestAuthor.deleteAll()
     }
 
-    void "test relationships are marked dirty when proxies are used but different"() {
+    void 'test relationships are marked dirty when proxies are used but different'() {
         given:
         Long bookId = new TestBook(title: 'Martin Fierro', author: new TestAuthor(name: 'Jose Hernandez'))
                 .save(flush: true, failOnError: true)
                 .id
-        Long otherAuthorId = new TestAuthor(name: "JD").save(flush: true, failOnError: true).id
+        Long otherAuthorId = new TestAuthor(name: 'JD').save(flush: true, failOnError: true).id
         session.flush()
         session.clear()
 
@@ -127,13 +139,12 @@ class DirtyCheckingSpec extends GormDatastoreSpec {
         TestAuthor.deleteAll()
     }
 
-    void "test relationships marked dirty when domain objects are used and changed"() {
-
+    void 'test relationships marked dirty when domain objects are used and changed'() {
         given:
         Long bookId = new TestBook(title: 'Martin Fierro', author: new TestAuthor(name: 'Jose Hernandez'))
                 .save(flush: true, failOnError: true)
                 .id
-        Long otherAuthorId = new TestAuthor(name: "JD").save(flush: true, failOnError: true).id
+        Long otherAuthorId = new TestAuthor(name: 'JD').save(flush: true, failOnError: true).id
         session.flush()
         session.clear()
 
@@ -151,12 +162,12 @@ class DirtyCheckingSpec extends GormDatastoreSpec {
         TestAuthor.deleteAll()
     }
 
-    @IgnoreIf({ Boolean.getBoolean("hibernate5.gorm.suite")}) // because one-to-one association loads eagerly in the Hibernate
-    void "test initialized proxy is not marked as dirty"() {
-
+    @IgnoreIf({ Boolean.getBoolean('hibernate5.gorm.suite') })
+    // because one-to-one association loads eagerly in the Hibernate
+    void 'test initialized proxy is not marked as dirty'() {
         given:
-        Card card = new Card(cardNumber: "1111-2222-3333-4444")
-        card.cardProfile = new CardProfile(fullName: "JD")
+        Card card = new Card(cardNumber: '1111-2222-3333-4444')
+        card.cardProfile = new CardProfile(fullName: 'JD')
         card.save(flush: true, failOnError: true)
         session.flush()
         session.clear()
@@ -177,7 +188,6 @@ class DirtyCheckingSpec extends GormDatastoreSpec {
         cleanup:
         Card.deleteAll()
         CardProfile.deleteAll()
-
     }
 
 }
@@ -188,6 +198,7 @@ class Card implements Serializable {
     Long id
     String cardNumber
     static hasOne = [cardProfile: CardProfile]
+
 }
 
 @Entity
@@ -211,12 +222,19 @@ class TestAuthor implements Serializable {
 
     @Override
     boolean equals(o) {
-        if (!(o instanceof TestAuthor)) return false
-        if (this.is(o)) return true
+        if (!(o instanceof TestAuthor)) {
+            return false
+        }
+        if (this.is(o)) {
+            return true
+        }
         TestAuthor that = (TestAuthor) o
-        if (id !=null && that.id !=null) return id == that.id
+        if (id != null && that.id != null) {
+            return id == that.id
+        }
         return false
     }
+
 }
 
 @Entity
@@ -225,4 +243,5 @@ class TestBook implements Serializable {
     Long id
     String title
     TestAuthor author
+
 }

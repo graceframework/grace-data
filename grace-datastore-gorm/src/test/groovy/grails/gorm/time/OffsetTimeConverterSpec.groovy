@@ -13,17 +13,17 @@ class OffsetTimeConverterSpec extends Specification implements OffsetTimeConvert
     OffsetTime offsetTime
 
     void setupSpec() {
-        TimeZone.default = TimeZone.getTimeZone("America/Los_Angeles")
+        TimeZone.default = TimeZone.getTimeZone('America/Los_Angeles')
         LocalTime localTime = LocalTime.of(6,5,4,3)
         offsetTime = OffsetTime.of(localTime, ZoneOffset.ofHours(-6))
     }
 
-    void "test convert to long"() {
+    void 'test convert to long'() {
         expect:
         convert(offsetTime) == 43504000000003L
     }
 
-    void "test convert from long"() {
+    void 'test convert from long'() {
         given:
         OffsetTime converted = convert(43504000000003L)
 

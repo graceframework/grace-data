@@ -1,3 +1,18 @@
+/*
+ * Copyright 2011-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.query.criteria
 
 import jakarta.persistence.FetchType
@@ -42,12 +57,11 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
     protected Map<String, FetchType> fetchStrategies = [:]
     protected Map<String, JoinType> joinTypes = [:]
     protected Closure lazyQuery
-    protected String alias;
+    protected String alias
     protected String connectionName = ConnectionSource.DEFAULT
     protected Map<String, DetachedAssociationCriteria> associationCriteriaMap = [:]
 
     ProjectionList projectionList = new DetachedProjections(projections)
-
 
     /**
      * Constructs a DetachedCriteria instance target the given class and alias for the name
@@ -172,7 +186,9 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
     }
 
     PersistentEntity getPersistentEntity() {
-        if (persistentEntity == null) initialiseIfNecessary(targetClass)
+        if (persistentEntity == null) {
+            initialiseIfNecessary(targetClass)
+        }
         return persistentEntity
     }
 
@@ -278,7 +294,7 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
     }
 
     @Override
-    Criteria "in"(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> subquery) {
+    Criteria 'in'(String propertyName, @DelegatesTo(AbstractDetachedCriteria) Closure<?> subquery) {
         inList propertyName, buildQueryableCriteria(subquery)
     }
 
@@ -336,15 +352,16 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
     }
 
     protected List convertArgumentList(Collection argList) {
-        List convertedList = new ArrayList(argList.size());
+        List convertedList = new ArrayList(argList.size())
         for (Object item : argList) {
             if (item instanceof CharSequence) {
-                item = item.toString();
+                item = item.toString()
             }
-            convertedList.add(item);
+            convertedList.add(item)
         }
-        return convertedList;
+        return convertedList
     }
+
     /**
      * @see Criteria
      */
@@ -475,8 +492,8 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
      */
     @Override
     Criteria exists(QueryableCriteria<?> subquery) {
-        add new Query.Exists(subquery);
-        return this;
+        add new Query.Exists(subquery)
+        return this
     }
 
     /**
@@ -484,8 +501,8 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
      */
     @Override
     Criteria notExists(QueryableCriteria<?> subquery) {
-        add new Query.NotExists(subquery);
-        return this;
+        add new Query.NotExists(subquery)
+        return this
     }
 
     /**
@@ -724,46 +741,55 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
             this.projections = projections
         }
 
+        @Override
         ProjectionList avg(String name) {
             projections << Projections.avg(name)
             return this
         }
 
+        @Override
         ProjectionList max(String name) {
             projections << Projections.max(name)
             return this
         }
 
+        @Override
         ProjectionList min(String name) {
             projections << Projections.min(name)
             return this
         }
 
+        @Override
         ProjectionList sum(String name) {
             projections << Projections.sum(name)
             return this
         }
 
+        @Override
         ProjectionList property(String name) {
             projections << Projections.property(name)
             return this
         }
 
+        @Override
         ProjectionList rowCount() {
             projections << Projections.count()
             return this
         }
 
+        @Override
         ProjectionList distinct(String property) {
             projections << Projections.distinct(property)
             return this
         }
 
+        @Override
         ProjectionList distinct() {
             projections << Projections.distinct()
             return this
         }
 
+        @Override
         ProjectionList countDistinct(String property) {
             projections << Projections.countDistinct(property)
             return this
@@ -775,15 +801,18 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
             return this
         }
 
+        @Override
         ProjectionList count() {
             projections << Projections.count()
             return this
         }
 
+        @Override
         ProjectionList id() {
             projections << Projections.id()
             return this
         }
+
     }
 
     /**
@@ -807,7 +836,6 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
         AbstractDetachedCriteria<T> newQuery = clone()
         return newQuery.build(additionalQuery)
     }
-
 
     /**
      * Enable the builder syntax for constructing Criteria
@@ -837,7 +865,6 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
         return newCriteria
     }
 
-
     /**
      * Create a return a new DetachedCriteria that uses the given connection
      *
@@ -846,7 +873,6 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
      * @return A new criteria instance
      * @since 6.1
      */
-
     AbstractDetachedCriteria<T> withConnection(String name) {
         AbstractDetachedCriteria newCriteria = this.clone()
         newCriteria.connectionName = name
@@ -916,7 +942,7 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
      */
     AbstractDetachedCriteria<T> sort(String property, String direction) {
         AbstractDetachedCriteria newCriteria = this.clone()
-        newCriteria.orders.add(new Query.Order(property, "desc".equalsIgnoreCase(direction) ? Query.Order.Direction.DESC : Query.Order.Direction.ASC))
+        newCriteria.orders.add(new Query.Order(property, 'desc'.equalsIgnoreCase(direction) ? Query.Order.Direction.DESC : Query.Order.Direction.ASC))
         return newCriteria
     }
 
@@ -992,7 +1018,6 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
         return newCriteria
     }
 
-
     def propertyMissing(String name) {
         final entity = getPersistentEntity()
         final p = entity.getPropertyByName(name)
@@ -1039,7 +1064,6 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
             throw new MissingMethodException(methodName, AbstractDetachedCriteria, args)
         }
 
-
         def alias = args[0] instanceof CharSequence ? args[0].toString() : null
 
         def existing = associationCriteriaMap[methodName]
@@ -1049,7 +1073,6 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
 
         associationCriteriaMap[methodName] = associationCriteria
         add associationCriteria
-
 
         def lastArg = args[-1]
         if (lastArg instanceof Closure) {
@@ -1066,12 +1089,12 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
             try {
                 parentCallable.delegate = associationCriteria
                 callable.call()
-            } finally {
+            }
+            finally {
                 parentCallable.delegate = previous
             }
         }
     }
-
 
     protected void handleJunction(Closure callable) {
         try {
@@ -1086,7 +1109,6 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
 
     protected abstract QueryableCriteria buildQueryableCriteria(Closure queryClosure)
 
-
     protected void applyLazyCriteria() {
         if (lazyQuery == null) {
             return
@@ -1098,13 +1120,13 @@ abstract class AbstractDetachedCriteria<T> implements Criteria, Cloneable {
     }
 
     @Override
-    public Criteria cache(boolean shouldCache) {
+    Criteria cache(boolean shouldCache) {
         // no-op for now
         this
     }
 
     @Override
-    public Criteria readOnly(boolean readOnly) {
+    Criteria readOnly(boolean readOnly) {
         // no-op for now
         this
     }

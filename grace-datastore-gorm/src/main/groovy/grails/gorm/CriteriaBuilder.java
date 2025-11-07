@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -97,8 +98,8 @@ public class CriteriaBuilder<T> extends AbstractCriteriaBuilder implements Build
 
     /**
      * Defines and executes a list query in a single call. Example: Foo.createCriteria.list { }
-     * @param callable The closure to execute
      *
+     * @param callable The closure to execute
      * @return The result list
      */
     public List list(Closure callable) {
@@ -111,9 +112,7 @@ public class CriteriaBuilder<T> extends AbstractCriteriaBuilder implements Build
     /**
      * Defines and executes a get query (a single result) in a single call. Example: Foo.createCriteria.get { }
      *
-     *
      * @param callable The closure to execute
-     *
      * @return A single result
      */
     public Object get(Closure callable) {
@@ -126,8 +125,8 @@ public class CriteriaBuilder<T> extends AbstractCriteriaBuilder implements Build
 
     /**
      * Defines and executes a list distinct query in a single call. Example: Foo.createCriteria.listDistinct { }
-     * @param callable The closure to execute
      *
+     * @param callable The closure to execute
      * @return The result list
      */
     public List listDistinct(Closure callable) {
@@ -153,8 +152,8 @@ public class CriteriaBuilder<T> extends AbstractCriteriaBuilder implements Build
 
     /**
      * Defines and executes a count query in a single call. Example: Foo.createCriteria.count { }
-     * @param callable The closure to execute
      *
+     * @param callable The closure to execute
      * @return The result count
      */
     public Number count(Closure callable) {

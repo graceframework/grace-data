@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.tests
 
 /**
@@ -5,80 +20,82 @@ package grails.gorm.tests
  */
 class OrderBySpec extends GormDatastoreSpec {
 
-    void "Test order with criteria"() {
+    void 'Test order with criteria'() {
         given:
-            def age = 40
+        def age = 40
 
-            ["Bob", "Fred", "Barney", "Frank", "Joe", "Ernie"].each {
-                new TestEntity(name:it, age: age++, child:new ChildEntity(name:"$it Child")).save()
-            }
-
-        when:
-            def results = TestEntity.createCriteria().list {
-                order "age"
-            }
-        then:
-            40 == results[0].age
-            41 == results[1].age
-            42 == results[2].age
+        ['Bob', 'Fred', 'Barney', 'Frank', 'Joe', 'Ernie'].each {
+            new TestEntity(name: it, age: age++, child: new ChildEntity(name: "$it Child")).save()
+        }
 
         when:
-            results = TestEntity.createCriteria().list {
-                order "age", "desc"
-            }
-
+        def results = TestEntity.createCriteria().list {
+            order 'age'
+        }
         then:
-            45 == results[0].age
-            44 == results[1].age
-            43 == results[2].age
-    }
-    void "Test order by with list() method"() {
-        given:
-            def age = 40
-
-            ["Bob", "Fred", "Barney", "Frank", "Joe", "Ernie"].each {
-                new TestEntity(name:it, age: age++, child:new ChildEntity(name:"$it Child")).save()
-            }
+        results[0].age == 40
+        results[1].age == 41
+        results[2].age == 42
 
         when:
-            def results = TestEntity.list(sort:"age")
+        results = TestEntity.createCriteria().list {
+            order 'age', 'desc'
+        }
 
         then:
-            40 == results[0].age
-            41 == results[1].age
-            42 == results[2].age
-
-        when:
-            results = TestEntity.list(sort:"age", order:"desc")
-
-        then:
-            45 == results[0].age
-            44 == results[1].age
-            43 == results[2].age
+        results[0].age == 45
+        results[1].age == 44
+        results[2].age == 43
     }
 
-    void "Test order by property name with dynamic finder"() {
+    void 'Test order by with list() method'() {
         given:
-            def age = 40
+        def age = 40
 
-            ["Bob", "Fred", "Barney", "Frank", "Joe", "Ernie"].each {
-                new TestEntity(name:it, age: age++, child:new ChildEntity(name:"$it Child")).save()
-            }
-
-        when:
-            def results = TestEntity.findAllByAgeGreaterThanEquals(40, [sort:"age"])
-
-        then:
-            40 == results[0].age
-            41 == results[1].age
-            42 == results[2].age
+        ['Bob', 'Fred', 'Barney', 'Frank', 'Joe', 'Ernie'].each {
+            new TestEntity(name: it, age: age++, child: new ChildEntity(name: "$it Child")).save()
+        }
 
         when:
-            results = TestEntity.findAllByAgeGreaterThanEquals(40, [sort:"age", order:"desc"])
+        def results = TestEntity.list(sort: 'age')
 
         then:
-            45 == results[0].age
-            44 == results[1].age
-            43 == results[2].age
+        results[0].age == 40
+        results[1].age == 41
+        results[2].age == 42
+
+        when:
+        results = TestEntity.list(sort: 'age', order: 'desc')
+
+        then:
+        results[0].age == 45
+        results[1].age == 44
+        results[2].age == 43
     }
+
+    void 'Test order by property name with dynamic finder'() {
+        given:
+        def age = 40
+
+        ['Bob', 'Fred', 'Barney', 'Frank', 'Joe', 'Ernie'].each {
+            new TestEntity(name: it, age: age++, child: new ChildEntity(name: "$it Child")).save()
+        }
+
+        when:
+        def results = TestEntity.findAllByAgeGreaterThanEquals(40, [sort: 'age'])
+
+        then:
+        results[0].age == 40
+        results[1].age == 41
+        results[2].age == 42
+
+        when:
+        results = TestEntity.findAllByAgeGreaterThanEquals(40, [sort: 'age', order: 'desc'])
+
+        then:
+        results[0].age == 45
+        results[1].age == 44
+        results[2].age == 43
+    }
+
 }

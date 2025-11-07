@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.validation.constraints;
 
 import java.math.BigDecimal;
@@ -14,18 +29,18 @@ import org.grails.datastore.mapping.reflect.ClassUtils;
 /**
  * Manages the scale for floating point numbers (i.e., the
  * number of digits to the right of the decimal point).
- *
+ * <p>
  * Supports properties of the following types:
  * <ul>
  * <li>java.lang.Float</li>
  * <li>java.lang.Double</li>
  * <li>java.math.BigDecimal (and its subclasses)</li>
  * </ul>
- *
+ * <p>
  * When applied, determines if the number includes more
  * nonzero decimal places than the scale permits. If so, it rounds the number
  * to the maximum number of decimal places allowed by the scale.
- *
+ * <p>
  * The rounding behavior described above occurs automatically when the
  * constraint is applied. This constraint does <i>not</i> generate
  * validation errors.
@@ -37,15 +52,13 @@ public class ScaleConstraint extends AbstractConstraint {
 
     private final int scale;
 
-    public ScaleConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
+    public ScaleConstraint(Class<?> constraintOwningClass, String constraintPropertyName,
+            Object constraintParameter, MessageSource messageSource) {
         super(constraintOwningClass, constraintPropertyName, constraintParameter, messageSource);
         this.scale = (int) this.constraintParameter;
     }
 
-    /*
-     * {@inheritDoc}
-     * @see org.codehaus.groovy.grails.validation.Constraint#supports(java.lang.Class)
-     */
+    @Override
     @SuppressWarnings("rawtypes")
     public boolean supports(Class type) {
         return type != null && (
@@ -54,10 +67,7 @@ public class ScaleConstraint extends AbstractConstraint {
                         ClassUtils.isAssignableOrConvertibleFrom(Double.class, type));
     }
 
-    /*
-     * {@inheritDoc}
-     * @see org.codehaus.groovy.grails.validation.Constraint#getName()
-     */
+    @Override
     public String getName() {
         return ConstrainedProperty.SCALE_CONSTRAINT;
     }
@@ -66,7 +76,7 @@ public class ScaleConstraint extends AbstractConstraint {
      * @return the scale
      */
     public int getScale() {
-        return scale;
+        return this.scale;
     }
 
     @Override
@@ -89,6 +99,7 @@ public class ScaleConstraint extends AbstractConstraint {
 
     /**
      * {@inheritDoc}
+     *
      * @see AbstractConstraint#processValidate(
      *java.lang.Object, java.lang.Object, org.springframework.validation.Errors)
      */
@@ -120,15 +131,14 @@ public class ScaleConstraint extends AbstractConstraint {
     }
 
     /**
-     * @return the <code>BigDecimal</code> object that results from applying the contraint's scale to the underlying number
      * @param originalValue The original value
+     * @return the <code>BigDecimal</code> object that results from applying the contraint's scale to the underlying number
      */
     private BigDecimal getScaledValue(BigDecimal originalValue) {
-        if (originalValue.scale() > scale) {
-            return originalValue.setScale(scale, BigDecimal.ROUND_HALF_UP);
+        if (originalValue.scale() > this.scale) {
+            return originalValue.setScale(this.scale, BigDecimal.ROUND_HALF_UP);
         }
         return originalValue;
     }
 
 }
-

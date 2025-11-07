@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.multitenancy
 
 import groovy.transform.CompileStatic
@@ -21,6 +36,7 @@ import org.grails.datastore.mapping.multitenancy.TenantResolver
 @CompileStatic
 @Slf4j
 class Tenants {
+
     /**
      * Execute the given closure for each tenant.
      *
@@ -54,7 +70,7 @@ class Tenants {
             return currentId(multiTenantCapableDatastore)
         }
         else {
-            throw new UnsupportedOperationException("Datastore implementation does not support multi-tenancy")
+            throw new UnsupportedOperationException('Datastore implementation does not support multi-tenancy')
         }
     }
 
@@ -100,7 +116,7 @@ class Tenants {
             }
         }
         else {
-            throw new UnsupportedOperationException("Datastore implementation does not support multi-tenancy")
+            throw new UnsupportedOperationException('Datastore implementation does not support multi-tenancy')
         }
     }
 
@@ -118,7 +134,7 @@ class Tenants {
             return withoutId(multiTenantCapableDatastore, callable)
         }
         else {
-            throw new UnsupportedOperationException("Datastore implementation does not support multi-tenancy")
+            throw new UnsupportedOperationException('Datastore implementation does not support multi-tenancy')
         }
     }
 
@@ -136,7 +152,7 @@ class Tenants {
             return withId(multiTenantCapableDatastore, tenantIdentifier, callable)
         }
         else {
-            throw new UnsupportedOperationException("Datastore implementation does not support multi-tenancy")
+            throw new UnsupportedOperationException('Datastore implementation does not support multi-tenancy')
         }
     }
 
@@ -155,7 +171,7 @@ class Tenants {
             return withId(multiTenantCapableDatastore, tenantIdentifier, callable)
         }
         else {
-            throw new UnsupportedOperationException("Datastore implementation does not support multi-tenancy")
+            throw new UnsupportedOperationException('Datastore implementation does not support multi-tenancy')
         }
     }
 
@@ -172,9 +188,10 @@ class Tenants {
             return withId(multiTenantCapableDatastore, tenantId, callable)
         }
         else {
-            throw new UnsupportedOperationException("Datastore implementation does not support multi-tenancy")
+            throw new UnsupportedOperationException('Datastore implementation does not support multi-tenancy')
         }
     }
+
     /**
      * Execute the given closure with given tenant id
      * @param tenantId The tenant id
@@ -188,7 +205,7 @@ class Tenants {
             return withId(multiTenantCapableDatastore, tenantId, callable)
         }
         else {
-            throw new UnsupportedOperationException("Datastore implementation does not support multi-tenancy")
+            throw new UnsupportedOperationException('Datastore implementation does not support multi-tenancy')
         }
     }
 
@@ -216,23 +233,23 @@ class Tenants {
                     switch (i) {
                         case 0:
                             return callable.call()
-                            break
                         case 1:
                             return callable.call(ConnectionSource.DEFAULT)
-                            break
                         case 2:
                             return callable.call(ConnectionSource.DEFAULT, session)
                         default:
-                            throw new IllegalArgumentException("Provided closure accepts too many arguments")
+                            throw new IllegalArgumentException('Provided closure accepts too many arguments')
                     }
-
                 }
             }
         } as T
     }
 
     /**
-     * Execute the given closure with given tenant id for the given datastore. This method will create a new datastore session for the scope of the call and hence is designed to be used to manage the connection life cycle
+     * Execute the given closure with given tenant id for the given datastore.
+     * This method will create a new datastore session for the scope of the call
+     * and hence is designed to be used to manage the connection life cycle.
+     *
      * @param tenantId The tenant id
      * @param callable The closure
      * @return The result of the closure
@@ -250,12 +267,10 @@ class Tenants {
                     switch (i) {
                         case 0:
                             return callable.call()
-                            break
                         case 1:
                             return callable.call(tenantId)
-                            break
                         default:
-                            throw new IllegalArgumentException("Provided closure accepts too many arguments")
+                            throw new IllegalArgumentException('Provided closure accepts too many arguments')
                     }
                 }
             }
@@ -265,23 +280,23 @@ class Tenants {
                     switch (i) {
                         case 0:
                             return callable.call()
-                            break
                         case 1:
                             return callable.call(tenantId)
-                            break
                         case 2:
                             return callable.call(tenantId, session)
                         default:
-                            throw new IllegalArgumentException("Provided closure accepts too many arguments")
+                            throw new IllegalArgumentException('Provided closure accepts too many arguments')
                     }
-
                 }
             }
         } as T
     }
 
     /**
-     * Execute the given closure for each tenant for the given datastore. This method will create a new datastore session for the scope of the call and hence is designed to be used to manage the connection life cycle
+     * Execute the given closure for each tenant for the given datastore.
+     * This method will create a new datastore session for the scope of the call
+     * and hence is designed to be used to manage the connection life cycle.
+     *
      * @param callable The closure
      * @return The result of the closure
      */
@@ -326,20 +341,20 @@ class Tenants {
             eachTenant(multiTenantCapableDatastore, callable)
         }
         else {
-            throw new UnsupportedOperationException("Datastore implementation does not support multi-tenancy")
+            throw new UnsupportedOperationException('Datastore implementation does not support multi-tenancy')
         }
     }
 
     @CompileStatic
     protected static class CurrentTenant {
 
-        private static final ThreadLocal<Serializable> currentTenantThreadLocal = new ThreadLocal<>()
+        private static final ThreadLocal<Serializable> CURRENT_TENANT_THREAD_LOCAL = new ThreadLocal<>()
 
         /**
          * @return Obtain the current tenant
          */
         static Serializable get() {
-            currentTenantThreadLocal.get()
+            CURRENT_TENANT_THREAD_LOCAL.get()
         }
 
         /**
@@ -348,11 +363,11 @@ class Tenants {
          * @param tenantId The tenant id
          */
         private static void set(Serializable tenantId) {
-            currentTenantThreadLocal.set(tenantId)
+            CURRENT_TENANT_THREAD_LOCAL.set(tenantId)
         }
 
         private static void remove() {
-            currentTenantThreadLocal.remove()
+            CURRENT_TENANT_THREAD_LOCAL.remove()
         }
 
         /**
@@ -366,7 +381,8 @@ class Tenants {
             try {
                 set(tenantId)
                 callable.call(tenantId)
-            } finally {
+            }
+            finally {
                 if (previous == null) {
                     remove()
                 }
@@ -387,7 +403,8 @@ class Tenants {
             try {
                 set(ConnectionSource.DEFAULT)
                 callable.call()
-            } finally {
+            }
+            finally {
                 if (previous == null) {
                     remove()
                 }
@@ -396,6 +413,7 @@ class Tenants {
                 }
             }
         }
+
     }
 
 }

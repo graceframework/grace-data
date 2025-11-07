@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,11 +17,10 @@ package org.grails.datastore.mapping.core;
 
 import java.util.Map;
 
-import jakarta.annotation.PreDestroy;
-
 import groovy.lang.Closure;
 import groovy.lang.GroovySystem;
 import groovy.lang.MetaClassRegistry;
+import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -102,12 +102,12 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
 
     @Override
     public <T> T getService(Class<T> interfaceType) throws ServiceNotFoundException {
-        return serviceRegistry.getService(interfaceType);
+        return this.serviceRegistry.getService(interfaceType);
     }
 
     @Override
     public <T extends Service> Iterable<T> getServices() {
-        return serviceRegistry.getServices();
+        return this.serviceRegistry.getServices();
     }
 
     @PreDestroy
@@ -126,11 +126,11 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
     }
 
     public void setApplicationContext(ApplicationContext ctx) {
-        applicationContext = ctx;
+        this.applicationContext = ctx;
     }
 
     public Session connect() {
-        return connect(connectionDetails);
+        return connect(this.connectionDetails);
     }
 
     public final Session connect(PropertyResolver connDetails) {
@@ -148,7 +148,7 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
 
     @Override
     public Session connectStateless() {
-        Session session = createStatelessSession(connectionDetails);
+        Session session = createStatelessSession(this.connectionDetails);
         publishSessionCreationEvent(session);
         return session;
     }
@@ -181,6 +181,7 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
 
     /**
      * Static way to retrieve the session
+     *
      * @return The session instance
      * @throws ConnectionNotFoundException If no session has been created
      */
@@ -190,6 +191,7 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
 
     /**
      * Static way to retrieve the session
+     *
      * @param datastoreClass The type of datastore
      * @return The session instance
      * @throws ConnectionNotFoundException If no session has been created
@@ -210,13 +212,14 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
         }
 
         if (session == null) {
-            throw new ConnectionNotFoundException("No datastore session found. Call Datastore.connect(..) before calling Datastore.getCurrentSession()");
+            throw new ConnectionNotFoundException(
+                    "No datastore session found. Call Datastore.connect(..) before calling Datastore.getCurrentSession()");
         }
         return session;
     }
 
     public MappingContext getMappingContext() {
-        return mappingContext;
+        return this.mappingContext;
     }
 
     /**
@@ -224,7 +227,7 @@ public abstract class AbstractDatastore implements Datastore, StatelessDatastore
      */
     @Deprecated
     public ConfigurableApplicationContext getApplicationContext() {
-        return (ConfigurableApplicationContext) applicationContext;
+        return (ConfigurableApplicationContext) this.applicationContext;
     }
 
     public ApplicationEventPublisher getApplicationEventPublisher() {

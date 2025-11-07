@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,7 +34,7 @@ import org.grails.datastore.mapping.model.config.JpaMappingConfigurationStrategy
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class DocumentMappingContext extends AbstractMappingContext {
 
-    protected String defaultDatabaseName;
+    protected final String defaultDatabaseName;
 
     protected MappingFactory<Collection, Attribute> mappingFactory;
 
@@ -51,8 +52,8 @@ public class DocumentMappingContext extends AbstractMappingContext {
     public DocumentMappingContext(String defaultDatabaseName) {
         Assert.notNull(defaultDatabaseName, "Argument [defaultDatabaseName] cannot be null");
         this.defaultDatabaseName = defaultDatabaseName;
-        mappingFactory = createDocumentMappingFactory(null);
-        syntaxStrategy = new JpaMappingConfigurationStrategy(mappingFactory);
+        this.mappingFactory = createDocumentMappingFactory(null);
+        this.syntaxStrategy = new JpaMappingConfigurationStrategy(this.mappingFactory);
     }
 
     @Deprecated
@@ -60,24 +61,24 @@ public class DocumentMappingContext extends AbstractMappingContext {
         Assert.notNull(defaultDatabaseName, "Argument [defaultDatabaseName] cannot be null");
 
         this.defaultDatabaseName = defaultDatabaseName;
-        mappingFactory = createDocumentMappingFactory(defaultMapping);
+        this.mappingFactory = createDocumentMappingFactory(defaultMapping);
         this.defaultMapping = defaultMapping;
-        syntaxStrategy = new JpaMappingConfigurationStrategy(mappingFactory);
+        this.syntaxStrategy = new JpaMappingConfigurationStrategy(this.mappingFactory);
     }
 
     @Override
     protected void initialize(ConnectionSourceSettings settings) {
         this.defaultMapping = settings.getDefault().getMapping();
-        AbstractGormMappingFactory documentMappingFactory = (AbstractGormMappingFactory) createDocumentMappingFactory(defaultMapping);
+        AbstractGormMappingFactory documentMappingFactory = (AbstractGormMappingFactory) createDocumentMappingFactory(this.defaultMapping);
         documentMappingFactory.setDefaultConstraints(settings.getDefault().getConstraints());
 
-        mappingFactory = documentMappingFactory;
-        syntaxStrategy = new JpaMappingConfigurationStrategy(mappingFactory);
+        this.mappingFactory = documentMappingFactory;
+        this.syntaxStrategy = new JpaMappingConfigurationStrategy(this.mappingFactory);
         super.initialize(settings);
     }
 
     public Closure getDefaultMapping() {
-        return defaultMapping;
+        return this.defaultMapping;
     }
 
     protected MappingFactory createDocumentMappingFactory(Closure defaultMapping) {
@@ -87,16 +88,16 @@ public class DocumentMappingContext extends AbstractMappingContext {
     }
 
     public String getDefaultDatabaseName() {
-        return defaultDatabaseName;
+        return this.defaultDatabaseName;
     }
 
     public MappingConfigurationStrategy getMappingSyntaxStrategy() {
-        return syntaxStrategy;
+        return this.syntaxStrategy;
     }
 
     @Override
     public MappingFactory<Collection, Attribute> getMappingFactory() {
-        return mappingFactory;
+        return this.mappingFactory;
     }
 
     @Override

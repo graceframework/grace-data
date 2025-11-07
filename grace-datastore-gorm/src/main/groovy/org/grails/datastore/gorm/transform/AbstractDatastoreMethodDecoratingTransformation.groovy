@@ -1,11 +1,11 @@
 /*
- * Copyright 2017 the original author or authors.
+ * Copyright 2017-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -70,8 +70,8 @@ import static org.grails.datastore.mapping.reflect.AstUtils.isSpockTest
 abstract class AbstractDatastoreMethodDecoratingTransformation extends AbstractMethodDecoratingTransformation {
 
     public static final String FIELD_TARGET_DATASTORE = '$targetDatastore'
-    public static final String METHOD_GET_TARGET_DATASTORE = "getTargetDatastore"
-    protected static final String METHOD_GET_DATASTORE_FOR_CONNECTION = "getDatastoreForConnection"
+    public static final String METHOD_GET_TARGET_DATASTORE = 'getTargetDatastore'
+    protected static final String METHOD_GET_DATASTORE_FOR_CONNECTION = 'getDatastoreForConnection'
 
     @Override
     protected void enhanceClassNode(SourceUnit source, AnnotationNode annotationNode, ClassNode declaringClassNode) {
@@ -84,30 +84,30 @@ abstract class AbstractDatastoreMethodDecoratingTransformation extends AbstractM
         }
         declaringClassNode.putNodeMetaData(appliedMarker, appliedMarker)
 
-        Expression connectionName = annotationNode.getMember("connection")
+        Expression connectionName = annotationNode.getMember('connection')
         boolean hasDataSourceProperty = connectionName != null
         boolean isSpockTest = isSpockTest(declaringClassNode)
         ClassExpression gormEnhancerExpr = classX(GormEnhancer)
 
-        Expression datastoreAttribute = annotationNode.getMember("datastore")
+        Expression datastoreAttribute = annotationNode.getMember('datastore')
         ClassNode defaultType = hasDataSourceProperty ? make(MultipleConnectionSourceCapableDatastore) : make(Datastore)
         boolean hasSpecificDatastore = datastoreAttribute instanceof ClassExpression
         ClassNode datastoreType = hasSpecificDatastore ? ((ClassExpression) datastoreAttribute).getType().getPlainNodeReference() : defaultType
-        Parameter connectionNameParam = param(STRING_TYPE, "connectionName")
+        Parameter connectionNameParam = param(STRING_TYPE, 'connectionName')
         MethodCallExpression datastoreLookupCall
         MethodCallExpression datastoreLookupDefaultCall
         if (hasSpecificDatastore) {
-            datastoreLookupDefaultCall = callD(gormEnhancerExpr, "findDatastoreByType", classX(datastoreType.getPlainNodeReference()))
+            datastoreLookupDefaultCall = callD(gormEnhancerExpr, 'findDatastoreByType', classX(datastoreType.getPlainNodeReference()))
         }
         else {
-            datastoreLookupDefaultCall = callD(gormEnhancerExpr, "findSingleDatastore")
+            datastoreLookupDefaultCall = callD(gormEnhancerExpr, 'findSingleDatastore')
         }
         datastoreLookupCall = callD(datastoreLookupDefaultCall, METHOD_GET_DATASTORE_FOR_CONNECTION, varX(connectionNameParam))
 
-        if (implementsInterface(declaringClassNode, "org.grails.datastore.mapping.services.Service")) {
+        if (implementsInterface(declaringClassNode, 'org.grails.datastore.mapping.services.Service')) {
             // simplify logic for services
             Parameter[] getTargetDatastoreParams = params(connectionNameParam)
-            VariableExpression datastoreVar = varX("datastore", make(Datastore))
+            VariableExpression datastoreVar = varX('datastore', make(Datastore))
 
             // Add method:
             // protected Datastore getTargetDatastore(String connectionName)
@@ -117,7 +117,8 @@ abstract class AbstractDatastoreMethodDecoratingTransformation extends AbstractM
             //      return GormEnhancer.findSingleDatastore().getDatastoreForConnection(connectionName)
 
             if (declaringClassNode.getMethod(METHOD_GET_TARGET_DATASTORE, getTargetDatastoreParams) == null) {
-                MethodNode mn = declaringClassNode.addMethod(METHOD_GET_TARGET_DATASTORE, Modifier.PROTECTED, datastoreType, getTargetDatastoreParams, null,
+                MethodNode mn = declaringClassNode.addMethod(METHOD_GET_TARGET_DATASTORE, Modifier.PROTECTED,
+                        datastoreType, getTargetDatastoreParams, null,
                         ifElseS(notNullX(datastoreVar),
                                 returnS(callD(castX(make(MultipleConnectionSourceCapableDatastore), datastoreVar), METHOD_GET_DATASTORE_FOR_CONNECTION, varX(connectionNameParam))),
                                 returnS(datastoreLookupCall)
@@ -125,7 +126,8 @@ abstract class AbstractDatastoreMethodDecoratingTransformation extends AbstractM
                 compileMethodStatically(source, mn)
             }
             if (declaringClassNode.getMethod(METHOD_GET_TARGET_DATASTORE, ZERO_PARAMETERS) == null) {
-                MethodNode mn = declaringClassNode.addMethod(METHOD_GET_TARGET_DATASTORE, Modifier.PROTECTED, datastoreType, ZERO_PARAMETERS, null,
+                MethodNode mn = declaringClassNode.addMethod(METHOD_GET_TARGET_DATASTORE, Modifier.PROTECTED,
+                        datastoreType, ZERO_PARAMETERS, null,
                         ifElseS(notNullX(datastoreVar),
                                 returnS(datastoreVar),
                                 returnS(datastoreLookupDefaultCall))
@@ -139,9 +141,9 @@ abstract class AbstractDatastoreMethodDecoratingTransformation extends AbstractM
             if (datastoreField == null) {
                 datastoreField = declaringClassNode.addField(FIELD_TARGET_DATASTORE, Modifier.PROTECTED, datastoreType, null)
 
-                Parameter datastoresParam = param(datastoreType.makeArray(), "datastores")
+                Parameter datastoresParam = param(datastoreType.makeArray(), 'datastores')
                 VariableExpression datastoresVar = varX(datastoresParam)
-                Expression datastoreVar = callD(classX(RuntimeSupport), "findDefaultDatastore", datastoresVar)
+                Expression datastoreVar = callD(classX(RuntimeSupport), 'findDefaultDatastore', datastoresVar)
 
                 BlockStatement setTargetDatastoreBody
                 VariableExpression datastoreFieldVar = varX(datastoreField)
@@ -165,12 +167,12 @@ abstract class AbstractDatastoreMethodDecoratingTransformation extends AbstractM
 
                 // Add method: @Autowired void setTargetDatastore(Datastore[] datastores)
                 Parameter[] setTargetDatastoreParams = params(datastoresParam)
-                if (declaringClassNode.getMethod("setTargetDatastore", setTargetDatastoreParams) == null) {
-                    MethodNode setTargetDatastoreMethod = declaringClassNode.addMethod("setTargetDatastore", Modifier.PUBLIC, VOID_TYPE, setTargetDatastoreParams, null, setTargetDatastoreBody)
+                if (declaringClassNode.getMethod('setTargetDatastore', setTargetDatastoreParams) == null) {
+                    MethodNode setTargetDatastoreMethod = declaringClassNode.addMethod('setTargetDatastore', Modifier.PUBLIC, VOID_TYPE, setTargetDatastoreParams, null, setTargetDatastoreBody)
 
                     // Autowire setTargetDatastore via Spring
                     addAnnotationOrGetExisting(setTargetDatastoreMethod, Autowired)
-                            .setMember("required", constX(false))
+                            .setMember('required', constX(false))
 
                     compileMethodStatically(source, setTargetDatastoreMethod)
                 }
@@ -182,11 +184,11 @@ abstract class AbstractDatastoreMethodDecoratingTransformation extends AbstractM
                 //    else
                 //      return GormEnhancer.findSingleDatastore().getDatastoreForConnection(connectionName)
 
-
                 Parameter[] getTargetDatastoreParams = params(connectionNameParam)
 
                 if (declaringClassNode.getMethod(METHOD_GET_TARGET_DATASTORE, getTargetDatastoreParams) == null) {
-                    MethodNode mn = declaringClassNode.addMethod(METHOD_GET_TARGET_DATASTORE, Modifier.PROTECTED, datastoreType, getTargetDatastoreParams, null,
+                    MethodNode mn = declaringClassNode.addMethod(METHOD_GET_TARGET_DATASTORE, Modifier.PROTECTED,
+                            datastoreType, getTargetDatastoreParams, null,
                             ifElseS(notNullX(datastoreFieldVar),
                                     returnS(callX(datastoreFieldVar, METHOD_GET_DATASTORE_FOR_CONNECTION, varX(connectionNameParam))),
                                     returnS(datastoreLookupCall)
@@ -196,7 +198,8 @@ abstract class AbstractDatastoreMethodDecoratingTransformation extends AbstractM
                     }
                 }
                 if (declaringClassNode.getMethod(METHOD_GET_TARGET_DATASTORE, ZERO_PARAMETERS) == null) {
-                    MethodNode mn = declaringClassNode.addMethod(METHOD_GET_TARGET_DATASTORE, Modifier.PROTECTED, datastoreType, ZERO_PARAMETERS, null,
+                    MethodNode mn = declaringClassNode.addMethod(METHOD_GET_TARGET_DATASTORE, Modifier.PROTECTED,
+                            datastoreType, ZERO_PARAMETERS, null,
                             ifElseS(notNullX(datastoreFieldVar),
                                     returnS(datastoreFieldVar),
                                     returnS(datastoreLookupDefaultCall))
@@ -207,11 +210,11 @@ abstract class AbstractDatastoreMethodDecoratingTransformation extends AbstractM
                     }
                 }
             }
-
         }
     }
 
-    protected void weaveSetTargetDatastoreBody(SourceUnit source, AnnotationNode annotationNode, ClassNode declaringClassNode, Expression datastoreVar, BlockStatement setTargetDatastoreBody) {
+    protected void weaveSetTargetDatastoreBody(SourceUnit source, AnnotationNode annotationNode,
+            ClassNode declaringClassNode, Expression datastoreVar, BlockStatement setTargetDatastoreBody) {
         // no-op
     }
 

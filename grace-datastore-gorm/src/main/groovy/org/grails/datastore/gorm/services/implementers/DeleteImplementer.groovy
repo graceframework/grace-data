@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.services.implementers
 
 import groovy.transform.CompileStatic
@@ -36,7 +51,9 @@ class DeleteImplementer extends AbstractDetachedCriteriaServiceImplementor imple
 
     @Override
     boolean doesImplement(ClassNode domainClass, MethodNode methodNode) {
-        if (methodNode.parameters.length == 0) return false
+        if (methodNode.parameters.length == 0) {
+            return false
+        }
         else {
             return AstUtils.isDomainClass(domainClass) && super.doesImplement(domainClass, methodNode)
         }
@@ -58,10 +75,11 @@ class DeleteImplementer extends AbstractDetachedCriteriaServiceImplementor imple
     }
 
     @Override
-    void implementById(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode, BlockStatement body, Expression byIdLookup) {
+    void implementById(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode,
+            ClassNode targetClassNode, BlockStatement body, Expression byIdLookup) {
         boolean isVoidReturnType = ClassHelper.VOID_TYPE.equals(newMethodNode.returnType)
         VariableExpression obj = varX('$obj')
-        Statement deleteStatement = stmt(callX(obj, "delete"))
+        Statement deleteStatement = stmt(callX(obj, 'delete'))
         if (!isVoidReturnType) {
             deleteStatement = block(
                     deleteStatement,
@@ -84,9 +102,9 @@ class DeleteImplementer extends AbstractDetachedCriteriaServiceImplementor imple
     }
 
     @Override
-    void implementWithQuery(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode, BlockStatement body, VariableExpression detachedCriteriaVar, Expression queryArgs) {
-
-        MethodCallExpression deleteCall = callX(detachedCriteriaVar, "deleteAll")
+    void implementWithQuery(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode,
+            ClassNode targetClassNode, BlockStatement body, VariableExpression detachedCriteriaVar, Expression queryArgs) {
+        MethodCallExpression deleteCall = callX(detachedCriteriaVar, 'deleteAll')
         boolean isVoidReturnType = ClassHelper.VOID_TYPE.equals(newMethodNode.returnType)
 
         body.addStatements([

@@ -1,11 +1,11 @@
 /*
- * Copyright 2017 the original author or authors.
+ * Copyright 2017-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,8 +34,8 @@ import org.grails.datastore.mapping.core.connections.ConnectionSourcesProvider;
 /**
  * Define a read-only transaction
  *
- * @since 6.1
  * @author Graeme Rocher
+ * @since 6.1
  */
 @Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
@@ -57,6 +57,7 @@ public @interface ReadOnly {
     /**
      * The transaction propagation type.
      * Defaults to {@link org.springframework.transaction.annotation.Propagation#REQUIRED}.
+     *
      * @see org.springframework.transaction.interceptor.TransactionAttribute#getPropagationBehavior()
      */
     Propagation propagation() default Propagation.REQUIRED;
@@ -64,6 +65,7 @@ public @interface ReadOnly {
     /**
      * The transaction isolation level.
      * Defaults to {@link org.springframework.transaction.annotation.Isolation#DEFAULT}.
+     *
      * @see org.springframework.transaction.interceptor.TransactionAttribute#getIsolationLevel()
      */
     Isolation isolation() default Isolation.DEFAULT;
@@ -71,6 +73,7 @@ public @interface ReadOnly {
     /**
      * The timeout for this transaction.
      * Defaults to the default timeout of the underlying transaction system.
+     *
      * @see org.springframework.transaction.interceptor.TransactionAttribute#getTimeout()
      */
     int timeout() default TransactionDefinition.TIMEOUT_DEFAULT;
@@ -124,16 +127,18 @@ public @interface ReadOnly {
 
 
     /**
-     * In Spring, when there are nested transaction calls, the execution of the outermost callback will throw UnexpectedRollbackException if TransactionStatus.setRollbackOnly() was called in a nested transaction callback.
-     *
-     * This feature will make the setRollbackOnly state get inherited to parent level transaction template calls and therefore prevent UnexpectedRollbackException.
+     * In Spring, when there are nested transaction calls, the execution of the outermost callback will throw UnexpectedRollbackException
+     * if TransactionStatus.setRollbackOnly() was called in a nested transaction callback.
+     * <p>
+     * This feature will make the setRollbackOnly state get inherited to parent level transaction template calls
+     * and therefore prevent UnexpectedRollbackException.
      * The default value is true.
-     *
      */
     boolean inheritRollbackOnly() default true;
 
     /**
-     * If you are using multiple GORM implementations and wish to create a transaction for a specific implementation then use this. For example {@code @Transactional(forDatastore=HibernateDatastore) }
+     * If you are using multiple GORM implementations and wish to create a transaction for a specific implementation then use this.
+     * For example {@code @Transactional(forDatastore=HibernateDatastore) }
      *
      * @return The type of the datastore
      */

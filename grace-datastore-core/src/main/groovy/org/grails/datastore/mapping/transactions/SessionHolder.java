@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,12 +30,12 @@ import org.grails.datastore.mapping.core.Session;
  */
 public class SessionHolder extends ResourceHolderSupport {
 
-    private Deque<Session> sessions = new LinkedBlockingDeque<Session>();
+    private Deque<Session> sessions = new LinkedBlockingDeque<>();
 
     private Object creator = null;
 
     public SessionHolder(Session session) {
-        sessions.add(session);
+        this.sessions.add(session);
     }
 
     public SessionHolder(Session session, Object creator) {
@@ -43,7 +44,7 @@ public class SessionHolder extends ResourceHolderSupport {
     }
 
     public Object getCreator() {
-        return creator;
+        return this.creator;
     }
 
     public Transaction<?> getTransaction() {
@@ -56,7 +57,7 @@ public class SessionHolder extends ResourceHolderSupport {
 
     @Override
     public void setSynchronizedWithTransaction(boolean synchronizedWithTransaction) {
-        for (Session session : sessions) {
+        for (Session session : this.sessions) {
             session.setSynchronizedWithTransaction(synchronizedWithTransaction);
         }
         super.setSynchronizedWithTransaction(synchronizedWithTransaction);
@@ -68,11 +69,11 @@ public class SessionHolder extends ResourceHolderSupport {
     }
 
     public Session getSession() {
-        return sessions.peekLast();
+        return this.sessions.peekLast();
     }
 
     public boolean isEmpty() {
-        return sessions.isEmpty();
+        return this.sessions.isEmpty();
     }
 
     public boolean doesNotHoldNonDefaultSession() {
@@ -80,19 +81,19 @@ public class SessionHolder extends ResourceHolderSupport {
     }
 
     public void addSession(Session session) {
-        sessions.add(session);
+        this.sessions.add(session);
     }
 
     public void removeSession(Session session) {
-        sessions.remove(session);
+        this.sessions.remove(session);
     }
 
     public boolean containsSession(Session session) {
-        return sessions.contains(session);
+        return this.sessions.contains(session);
     }
 
     public int size() {
-        return sessions.size();
+        return this.sessions.size();
     }
 
     public Session getValidatedSession() {

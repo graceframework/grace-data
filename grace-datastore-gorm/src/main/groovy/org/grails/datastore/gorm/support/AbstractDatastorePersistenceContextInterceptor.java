@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,8 +29,8 @@ import org.grails.datastore.mapping.transactions.SessionHolder;
 /**
  * Abstract implementation of the persistence context interceptor
  *
- * @since 1.0
  * @author Graeme Rocher
+ * @since 1.0
  */
 public abstract class AbstractDatastorePersistenceContextInterceptor {
 
@@ -42,8 +43,7 @@ public abstract class AbstractDatastorePersistenceContextInterceptor {
     }
 
     public void init() {
-
-        final SessionHolder sessionHolder = (SessionHolder) TransactionSynchronizationManager.getResource(datastore);
+        final SessionHolder sessionHolder = (SessionHolder) TransactionSynchronizationManager.getResource(this.datastore);
         if (sessionHolder == null) {
             LOG.debug("Opening single Datastore session in DatastorePersistenceContextInterceptor");
             Session session = getSession();
@@ -58,14 +58,14 @@ public abstract class AbstractDatastorePersistenceContextInterceptor {
     }
 
     protected Session getSession() {
-        return DatastoreUtils.getSession(datastore, true);
+        return DatastoreUtils.getSession(this.datastore, true);
     }
 
     public void destroy() {
         // single session mode
-        final SessionHolder sessionHolder = (SessionHolder) TransactionSynchronizationManager.getResource(datastore);
+        final SessionHolder sessionHolder = (SessionHolder) TransactionSynchronizationManager.getResource(this.datastore);
         if (sessionHolder != null && this == sessionHolder.getCreator()) {
-            SessionHolder holder = (SessionHolder) TransactionSynchronizationManager.unbindResource(datastore);
+            SessionHolder holder = (SessionHolder) TransactionSynchronizationManager.unbindResource(this.datastore);
             LOG.debug("Closing single Datastore session in DatastorePersistenceContextInterceptor");
             try {
                 Session session = holder.getSession();
@@ -106,7 +106,7 @@ public abstract class AbstractDatastorePersistenceContextInterceptor {
 
     public boolean isOpen() {
         try {
-            return DatastoreUtils.doGetSession(datastore, false).isConnected();
+            return DatastoreUtils.doGetSession(this.datastore, false).isConnected();
         }
         catch (IllegalStateException e) {
             return false;

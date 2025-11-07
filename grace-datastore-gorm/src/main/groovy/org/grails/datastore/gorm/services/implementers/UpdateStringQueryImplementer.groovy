@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.services.implementers
 
 import groovy.transform.CompileStatic
@@ -38,17 +53,17 @@ class UpdateStringQueryImplementer extends AbstractStringQueryImplementer implem
     boolean isAnnotated(ClassNode domainClass, MethodNode methodNode) {
         AnnotationNode annotation = AstUtils.findAnnotation(methodNode, Query)
         if (annotation != null) {
-            Expression expr = annotation.getMember("value")
+            Expression expr = annotation.getMember('value')
             if (expr instanceof GStringExpression) {
                 GStringExpression gstring = (GStringExpression) expr
                 String queryStem = gstring.strings[0].text.toLowerCase(Locale.ENGLISH)
-                if (queryStem.contains("update") || queryStem.contains('delete')) {
+                if (queryStem.contains('update') || queryStem.contains('delete')) {
                     return true
                 }
             }
             else if (expr instanceof ConstantExpression) {
                 String queryStem = ((ConstantExpression) expr).text.toLowerCase(Locale.ENGLISH)
-                if (queryStem.contains("update") || queryStem.contains('delete')) {
+                if (queryStem.contains('update') || queryStem.contains('delete')) {
                     return true
                 }
             }
@@ -65,7 +80,7 @@ class UpdateStringQueryImplementer extends AbstractStringQueryImplementer implem
     protected Statement buildQueryReturnStatement(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, Expression args) {
         ClassNode returnType = newMethodNode.returnType
         boolean isVoid = returnType == ClassHelper.VOID_TYPE
-        Expression methodCall = callX(findStaticApiForConnectionId(domainClassNode, newMethodNode), "executeUpdate", args)
+        Expression methodCall = callX(findStaticApiForConnectionId(domainClassNode, newMethodNode), 'executeUpdate', args)
         methodCall = isVoid ? methodCall : castX(returnType.plainNodeReference, methodCall)
         return isVoid ? stmt(methodCall) : returnS(methodCall)
     }

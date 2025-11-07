@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -274,7 +275,7 @@ public abstract class DynamicFinder extends AbstractFinder implements QueryBuild
      * @return True if it is
      */
     public boolean isMethodMatch(String methodName) {
-        return pattern.matcher(methodName.subSequence(0, methodName.length())).find();
+        return this.pattern.matcher(methodName.subSequence(0, methodName.length())).find();
     }
 
     public Object invoke(final Class clazz, String methodName, Closure additionalCriteria, Object[] arguments) {
@@ -294,13 +295,15 @@ public abstract class DynamicFinder extends AbstractFinder implements QueryBuild
             Closure additionalCriteria, Object[] arguments) {
 
         List expressions = new ArrayList();
-        if (arguments == null) arguments = EMPTY_OBJECT_ARRAY;
+        if (arguments == null) {
+            arguments = EMPTY_OBJECT_ARRAY;
+        }
         else {
             Object[] tmp = new Object[arguments.length];
             System.arraycopy(arguments, 0, tmp, 0, arguments.length);
             arguments = tmp;
         }
-        Matcher match = pattern.matcher(methodName);
+        Matcher match = this.pattern.matcher(methodName);
         // find match
         match.find();
 
@@ -334,11 +337,11 @@ public abstract class DynamicFinder extends AbstractFinder implements QueryBuild
         boolean containsOperator = false;
         String operatorInUse = null;
         if (querySequence != null) {
-            for (int i = 0; i < operators.length; i++) {
-                Matcher currentMatcher = operatorPatterns[i].matcher(querySequence);
+            for (int i = 0; i < this.operators.length; i++) {
+                Matcher currentMatcher = this.operatorPatterns[i].matcher(querySequence);
                 if (currentMatcher.find()) {
                     containsOperator = true;
-                    operatorInUse = operators[i];
+                    operatorInUse = this.operators[i];
 
                     queryParameters = querySequence.split(operatorInUse);
 
@@ -358,7 +361,7 @@ public abstract class DynamicFinder extends AbstractFinder implements QueryBuild
                             currentArguments[k] = arguments[argumentCursor];
                         }
                         currentExpression = getInitializedExpression(currentExpression, currentArguments);
-                        PersistentEntity persistentEntity = mappingContext.getPersistentEntity(clazz.getName());
+                        PersistentEntity persistentEntity = this.mappingContext.getPersistentEntity(clazz.getName());
 
                         try {
                             currentExpression.convertArguments(persistentEntity);
@@ -388,7 +391,7 @@ public abstract class DynamicFinder extends AbstractFinder implements QueryBuild
             Object[] soloArgs = new Object[requiredArguments];
             System.arraycopy(arguments, 0, soloArgs, 0, requiredArguments);
             solo = getInitializedExpression(solo, arguments);
-            PersistentEntity persistentEntity = mappingContext.getPersistentEntity(clazz.getName());
+            PersistentEntity persistentEntity = this.mappingContext.getPersistentEntity(clazz.getName());
             try {
                 solo.convertArguments(persistentEntity);
             }
@@ -751,14 +754,16 @@ public abstract class DynamicFinder extends AbstractFinder implements QueryBuild
             o = Query.Order.asc(sort);
         }
 
-        if (ignoreCase) o = o.ignoreCase();
+        if (ignoreCase) {
+            o = o.ignoreCase();
+        }
 
         q.order(o);
     }
 
     private void populateOperators(String[] operators) {
         for (int i = 0; i < operators.length; i++) {
-            operatorPatterns[i] = Pattern.compile("(\\w+)(" + operators[i] + ")(\\p{Upper})(\\w+)");
+            this.operatorPatterns[i] = Pattern.compile("(\\w+)(" + operators[i] + ")(\\p{Upper})(\\w+)");
         }
     }
 

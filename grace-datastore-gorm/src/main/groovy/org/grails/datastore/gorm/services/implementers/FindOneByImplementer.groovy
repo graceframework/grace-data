@@ -1,11 +1,11 @@
 /*
- * Copyright 2017 the original author or authors.
+ * Copyright 2017-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -48,7 +48,7 @@ class FindOneByImplementer extends FindAllByImplementer implements SingleResultS
         if (parameters.length == 1 && parameters[0].name == GormProperties.IDENTITY) {
             // add a method that invokes get(id)
             ArgumentListExpression argList = buildArgs(parameters, abstractMethodNode, body)
-            Expression queryMethodCall = callX(findStaticApiForConnectionId(domainClassNode, newMethodNode), "get", argList)
+            Expression queryMethodCall = callX(findStaticApiForConnectionId(domainClassNode, newMethodNode), 'get', argList)
             body.addStatement(
                     returnS(
                             queryMethodCall
@@ -77,7 +77,7 @@ class FindOneByImplementer extends FindAllByImplementer implements SingleResultS
 
     @Override
     protected String getDynamicFinderPrefix() {
-        return "findBy"
+        return 'findBy'
     }
 
 }

@@ -1,57 +1,70 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.tests
 
 import grails.gorm.annotation.Entity
+
 import org.grails.datastore.mapping.proxy.ProxyHandler
 
 class BuiltinUniqueConstraintWorksWithTargetProxiesConstraintsSpec extends GormDatastoreSpec {
 
-    void "test unique constraint on root instance"() {
-
+    void 'test unique constraint on root instance'() {
         setup:
-        ContactDetails contactDetails1 = new ContactDetails(phoneNumber: "+1-202-555-0105").save(failOnError: true)
-        ContactDetails contactDetails2 = new ContactDetails(phoneNumber: "+1-202-555-0105")
+        ContactDetails contactDetails1 = new ContactDetails(phoneNumber: '+1-202-555-0105').save(failOnError: true)
+        ContactDetails contactDetails2 = new ContactDetails(phoneNumber: '+1-202-555-0105')
         session.flush()
         session.clear()
 
-        when: "I try to validate the another object"
+        when: 'I try to validate the another object'
         contactDetails2.validate()
 
-        then: "another should have an error on name because it is duplicated"
+        then: 'another should have an error on name because it is duplicated'
         contactDetails2.hasErrors()
-        contactDetails2.errors.hasFieldErrors("phoneNumber")
-        contactDetails2.errors.getFieldError("phoneNumber").codes.contains("unique.phoneNumber")
+        contactDetails2.errors.hasFieldErrors('phoneNumber')
+        contactDetails2.errors.getFieldError('phoneNumber').codes.contains('unique.phoneNumber')
 
         cleanup:
         ContactDetails.deleteAll(contactDetails1)
     }
 
-    void "test unique constraint for the associated child object"() {
-
+    void 'test unique constraint for the associated child object'() {
         setup:
-        ContactDetails contactDetails1 = new ContactDetails(phoneNumber: "+1-202-555-0105").save(failOnError: true)
+        ContactDetails contactDetails1 = new ContactDetails(phoneNumber: '+1-202-555-0105').save(failOnError: true)
         Patient patient1 = new Patient(contactDetails: contactDetails1).save(failOnError: true)
         session.flush()
         session.clear()
 
         when:
-        Patient patient2 = new Patient(contactDetails: new ContactDetails(phoneNumber: "+1-202-555-0105"))
+        Patient patient2 = new Patient(contactDetails: new ContactDetails(phoneNumber: '+1-202-555-0105'))
         patient2.validate()
 
         then:
         patient2.hasErrors()
-        patient2.errors.hasFieldErrors("contactDetails.phoneNumber")
-        patient2.errors.getFieldError("contactDetails.phoneNumber").codes.contains("unique.phoneNumber")
+        patient2.errors.hasFieldErrors('contactDetails.phoneNumber')
+        patient2.errors.getFieldError('contactDetails.phoneNumber').codes.contains('unique.phoneNumber')
 
         cleanup:
         Patient.deleteAll(patient1)
         ContactDetails.deleteAll(contactDetails1)
     }
 
-    void "test unique constraint on the unmodified association loaded as initialized proxy"() {
-
+    void 'test unique constraint on the unmodified association loaded as initialized proxy'() {
         setup:
         final ProxyHandler proxyHandler = session.mappingContext.getProxyHandler()
-        ContactDetails contactDetails = new ContactDetails(phoneNumber: "+1-202-555-0105").save(failOnError: true)
+        ContactDetails contactDetails = new ContactDetails(phoneNumber: '+1-202-555-0105').save(failOnError: true)
         Patient patient = new Patient(contactDetails: contactDetails).save(failOnError: true)
         Long patientId = patient.id
         session.flush()
@@ -59,7 +72,7 @@ class BuiltinUniqueConstraintWorksWithTargetProxiesConstraintsSpec extends GormD
 
         when:
         patient = Patient.get(patientId)
-        patient.contactDetails.phoneNumber = "+1-202-555-0105"
+        patient.contactDetails.phoneNumber = '+1-202-555-0105'
 
         then:
         proxyHandler.isProxy(patient.contactDetails)
@@ -76,6 +89,7 @@ class BuiltinUniqueConstraintWorksWithTargetProxiesConstraintsSpec extends GormD
     List getDomainClasses() {
         [ContactDetails, Patient]
     }
+
 }
 
 @Entity
@@ -86,6 +100,7 @@ class ContactDetails implements Serializable {
     static constraints = {
         phoneNumber nullable: false, unique: true
     }
+
 }
 
 @Entity
@@ -100,4 +115,5 @@ class Patient implements Serializable {
     static mapping = {
         contactDetails lazy: true
     }
+
 }

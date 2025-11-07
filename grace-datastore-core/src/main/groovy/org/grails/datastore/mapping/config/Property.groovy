@@ -1,10 +1,11 @@
-/* Copyright (C) 2011 SpringSource
+/*
+ * Copyright 2011-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,13 +15,12 @@
  */
 package org.grails.datastore.mapping.config
 
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
 import jakarta.persistence.AccessType
 import jakarta.persistence.CascadeType
 import jakarta.persistence.EnumType
 import jakarta.persistence.FetchType
-
-import groovy.transform.CompileDynamic
-import groovy.transform.CompileStatic
 import org.springframework.beans.MutablePropertyValues
 import org.springframework.validation.DataBinder
 
@@ -153,11 +153,11 @@ class Property implements Cloneable {
     }
 
     Boolean getLazy() {
-        return lazy
+        return this.lazy
     }
 
     Boolean isLazy() {
-        return lazy == Boolean.TRUE
+        return this.lazy == Boolean.TRUE
     }
 
     void setLazy(Boolean lazy) {
@@ -167,9 +167,9 @@ class Property implements Cloneable {
     @Override
     Property clone() throws CloneNotSupportedException {
         Property cloned = (Property) super.clone()
-        cloned.uniquenessGroup = new ArrayList<>(uniquenessGroup)
-        if (inList != null) {
-            cloned.inList = new ArrayList<>(inList)
+        cloned.uniquenessGroup = new ArrayList<>(this.uniquenessGroup)
+        if (this.inList != null) {
+            cloned.inList = new ArrayList<>(this.inList)
         }
 
         return cloned
@@ -195,7 +195,7 @@ class Property implements Cloneable {
      * @return The name of the property this property mapping relates to
      */
     String getName() {
-        return propertyName
+        return this.propertyName
     }
 
     void setName(String propertyName) {
@@ -219,10 +219,10 @@ class Property implements Cloneable {
         if (FetchType.EAGER.name().equalsIgnoreCase(name)) {
             setFetchStrategy(FetchType.EAGER)
         }
-        else if ("select".equalsIgnoreCase(name)) {
+        else if ('select'.equalsIgnoreCase(name)) {
             setFetchStrategy(FetchType.LAZY)
         }
-        else if ("join".equalsIgnoreCase(name)) {
+        else if ('join'.equalsIgnoreCase(name)) {
             setFetchStrategy(FetchType.EAGER)
         }
         else {
@@ -255,16 +255,15 @@ class Property implements Cloneable {
      * @return Whether the property should be unique
      */
     boolean isUnique() {
-        return unique
+        return this.unique
     }
 
     /**
      * @return Whether the property is unique within a group
      */
     boolean isUniqueWithinGroup() {
-        return !uniquenessGroup.isEmpty()
+        return !this.uniquenessGroup.isEmpty()
     }
-
 
     void setUnique(boolean unique) {
         this.unique = unique
@@ -293,21 +292,21 @@ class Property implements Cloneable {
     }
 
     List<String> getUniquenessGroup() {
-        return uniquenessGroup
+        return this.uniquenessGroup
     }
 
     /**
      * @return The type of the enum, either ordinal or string
      */
     String getEnumType() {
-        return enumType.toString()
+        return this.enumType.toString()
     }
 
     /**
      * @return The type of the enum, either ordinal or string
      */
     EnumType getEnumTypeObject() {
-        return enumType
+        return this.enumType
     }
 
     void setEnumType(EnumType enumType) {

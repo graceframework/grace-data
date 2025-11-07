@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.jdbc.schema
 
 import java.sql.Connection
@@ -23,9 +38,9 @@ class DefaultSchemaHandler implements SchemaHandler {
     final String defaultSchemaName
 
     DefaultSchemaHandler() {
-        useSchemaStatement = "SET SCHEMA %s"
-        createSchemaStatement = "CREATE SCHEMA %s"
-        defaultSchemaName = "PUBLIC"
+        useSchemaStatement = 'SET SCHEMA %s'
+        createSchemaStatement = 'CREATE SCHEMA %s'
+        defaultSchemaName = 'PUBLIC'
     }
 
     DefaultSchemaHandler(String useSchemaStatement, String createSchemaStatement, String defaultSchemaName) {
@@ -65,7 +80,7 @@ class DefaultSchemaHandler implements SchemaHandler {
             connection = dataSource.getConnection()
             ResultSet schemas = connection.getMetaData().getSchemas()
             while (schemas.next()) {
-                schemaNames.add(schemas.getString("TABLE_SCHEM"))
+                schemaNames.add(schemas.getString('TABLE_SCHEM'))
             }
         } finally {
             try {
@@ -77,4 +92,5 @@ class DefaultSchemaHandler implements SchemaHandler {
         }
         return schemaNames
     }
+
 }

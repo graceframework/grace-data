@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.tests
 
 import grails.gorm.annotation.Entity
@@ -5,26 +20,28 @@ import grails.gorm.annotation.Entity
 /**
  * @author graemerocher
  */
-class CircularOneToManySpec extends GormDatastoreSpec{
+class CircularOneToManySpec extends GormDatastoreSpec {
 
-    void "Test circular one-to-many"() {
+    void 'Test circular one-to-many'() {
         given:
-            def parent = new Task(name:"Root").save()
-            def child = new Task(task:parent, name:"Finish Job").save(flush:true)
-            session.clear()
+        def parent = new Task(name: 'Root').save()
+        def child = new Task(task: parent, name: 'Finish Job').save(flush: true)
+        session.clear()
 
         when:
-            parent = Task.findByName("Root")
-            child = Task.findByName("Finish Job")
+        parent = Task.findByName('Root')
+        child = Task.findByName('Finish Job')
 
         then:
-            parent.task == null
-            child.task.id == parent.id
+        parent.task == null
+        child.task.id == parent.id
     }
+
 }
 
 @Entity
 class Task implements Serializable {
+
     Long id
     Long version
     Set tasks
@@ -32,8 +49,9 @@ class Task implements Serializable {
     String name
 
     static mapping = {
-        name index:true
+        name index: true
     }
 
-    static hasMany = [tasks:Task]
+    static hasMany = [tasks: Task]
+
 }

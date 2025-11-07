@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.validation.constraints;
 
 import java.beans.Introspector;
@@ -45,41 +60,44 @@ public abstract class AbstractConstraint implements Constraint {
 
     private final String shortNamePrefix;
 
-    public AbstractConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
+    public AbstractConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter,
+            MessageSource messageSource) {
         this.constraintPropertyName = constraintPropertyName;
         this.constraintOwningClass = constraintOwningClass;
         this.constraintParameter = validateParameter(constraintParameter);
         this.messageSource = messageSource;
-        classShortName = Introspector.decapitalize(constraintOwningClass.getSimpleName());
-        fullQualifiedPrefix = constraintOwningClass.getName() + '.' + constraintPropertyName + '.';
-        shortNamePrefix = classShortName + '.' + constraintPropertyName + '.';
-        fullQualifiedConstraintErrorCode = fullQualifiedPrefix + getName() + ".error";
-        shortNameConstraintErrorCode = shortNamePrefix + getName() + ".error";
+        this.classShortName = Introspector.decapitalize(constraintOwningClass.getSimpleName());
+        this.fullQualifiedPrefix = constraintOwningClass.getName() + '.' + constraintPropertyName + '.';
+        this.shortNamePrefix = this.classShortName + '.' + constraintPropertyName + '.';
+        this.fullQualifiedConstraintErrorCode = this.fullQualifiedPrefix + getName() + ".error";
+        this.shortNameConstraintErrorCode = this.shortNamePrefix + getName() + ".error";
     }
 
     /**
      * Validate the parameter passed
      *
      * @param constraintParameter The parameter to validate
-     *
      * @return The validated parameter
      */
     protected abstract Object validateParameter(Object constraintParameter);
 
+    @Override
     public String getPropertyName() {
-        return constraintPropertyName;
+        return this.constraintPropertyName;
     }
 
+    @Override
     public Object getParameter() {
-        return constraintParameter;
+        return this.constraintParameter;
     }
 
     protected void checkState() {
-        Assert.hasLength(constraintPropertyName, "Property 'propertyName' must be set on the constraint");
-        Assert.notNull(constraintOwningClass, "Property 'owningClass' must be set on the constraint");
-        Assert.notNull(constraintParameter, "Property 'constraintParameter' must be set on the constraint");
+        Assert.hasLength(this.constraintPropertyName, "Property 'propertyName' must be set on the constraint");
+        Assert.notNull(this.constraintOwningClass, "Property 'owningClass' must be set on the constraint");
+        Assert.notNull(this.constraintParameter, "Property 'constraintParameter' must be set on the constraint");
     }
 
+    @Override
     public void validate(Object target, Object propertyValue, Errors errors) {
         checkState();
 
@@ -123,20 +141,20 @@ public abstract class AbstractConstraint implements Constraint {
         BindingResult result = (BindingResult) errors;
         Set<String> newCodes = new LinkedHashSet<String>();
 
-        if (args.length > 1 && messageSource != null) {
+        if (args.length > 1 && this.messageSource != null) {
             if ((args[0] instanceof String) && (args[1] instanceof Class<?>)) {
                 final Locale locale = LocaleContextHolder.getLocale();
                 final Class<?> constrainedClass = (Class<?>) args[1];
                 final String fullClassName = constrainedClass.getName();
 
                 String classNameCode = fullClassName + ".label";
-                String resolvedClassName = messageSource.getMessage(classNameCode, null, fullClassName, locale);
+                String resolvedClassName = this.messageSource.getMessage(classNameCode, null, fullClassName, locale);
                 final String classAsPropertyName = Introspector.decapitalize(constrainedClass.getSimpleName());
 
                 if (resolvedClassName.equals(fullClassName)) {
                     // try short version
                     classNameCode = classAsPropertyName + ".label";
-                    resolvedClassName = messageSource.getMessage(classNameCode, null, fullClassName, locale);
+                    resolvedClassName = this.messageSource.getMessage(classNameCode, null, fullClassName, locale);
                 }
 
                 // update passed version
@@ -146,10 +164,10 @@ public abstract class AbstractConstraint implements Constraint {
 
                 String propertyName = (String) args[0];
                 String propertyNameCode = fullClassName + '.' + propertyName + ".label";
-                String resolvedPropertyName = messageSource.getMessage(propertyNameCode, null, propertyName, locale);
+                String resolvedPropertyName = this.messageSource.getMessage(propertyNameCode, null, propertyName, locale);
                 if (resolvedPropertyName.equals(propertyName)) {
                     propertyNameCode = classAsPropertyName + '.' + propertyName + ".label";
-                    resolvedPropertyName = messageSource.getMessage(propertyNameCode, null, propertyName, locale);
+                    resolvedPropertyName = this.messageSource.getMessage(propertyNameCode, null, propertyName, locale);
                 }
 
                 // update passed version
@@ -160,18 +178,18 @@ public abstract class AbstractConstraint implements Constraint {
         }
 
         //Qualified class name is added first to match before unqualified class (which is still resolved for backwards compatibility)
-        newCodes.addAll(Arrays.asList(result.resolveMessageCodes(fullQualifiedConstraintErrorCode, constraintPropertyName)));
-        newCodes.addAll(Arrays.asList(result.resolveMessageCodes(shortNameConstraintErrorCode, constraintPropertyName)));
+        newCodes.addAll(Arrays.asList(result.resolveMessageCodes(this.fullQualifiedConstraintErrorCode, this.constraintPropertyName)));
+        newCodes.addAll(Arrays.asList(result.resolveMessageCodes(this.shortNameConstraintErrorCode, this.constraintPropertyName)));
         for (String code : codes) {
-            newCodes.addAll(Arrays.asList(result.resolveMessageCodes(fullQualifiedPrefix + code, constraintPropertyName)));
-            newCodes.addAll(Arrays.asList(result.resolveMessageCodes(shortNamePrefix + code, constraintPropertyName)));
+            newCodes.addAll(Arrays.asList(result.resolveMessageCodes(this.fullQualifiedPrefix + code, this.constraintPropertyName)));
+            newCodes.addAll(Arrays.asList(result.resolveMessageCodes(this.shortNamePrefix + code, this.constraintPropertyName)));
             //We resolve the error code on it's own last so that a global code doesn't override a class/field specific error
-            newCodes.addAll(Arrays.asList(result.resolveMessageCodes(code, constraintPropertyName)));
+            newCodes.addAll(Arrays.asList(result.resolveMessageCodes(code, this.constraintPropertyName)));
         }
 
         FieldError error = new FieldError(
                 errors.getObjectName(),
-                errors.getNestedPath() + constraintPropertyName,
+                errors.getNestedPath() + this.constraintPropertyName,
                 getPropertyValue(errors, target),
                 false,
                 newCodes.toArray(new String[newCodes.size()]),
@@ -182,16 +200,16 @@ public abstract class AbstractConstraint implements Constraint {
 
     private Object getPropertyValue(Errors errors, Object target) {
         try {
-            return errors.getFieldValue(constraintPropertyName);
+            return errors.getFieldValue(this.constraintPropertyName);
         }
         catch (Exception nre) {
-            int i = constraintPropertyName.lastIndexOf(".");
+            int i = this.constraintPropertyName.lastIndexOf(".");
             String propertyName;
             if (i > -1) {
-                propertyName = constraintPropertyName.substring(i, constraintPropertyName.length());
+                propertyName = this.constraintPropertyName.substring(i, this.constraintPropertyName.length());
             }
             else {
-                propertyName = constraintPropertyName;
+                propertyName = this.constraintPropertyName;
             }
             return new BeanWrapperImpl(target).getPropertyValue(propertyName);
         }
@@ -212,14 +230,15 @@ public abstract class AbstractConstraint implements Constraint {
      * current locale. Note that the string returned includes any
      * placeholders that the required message has - these must be
      * expanded by the caller if required.
+     *
      * @param code The i18n message code to look up.
      * @return The message corresponding to the given code in the
      * current locale.
      */
     protected String getDefaultMessage(String code) {
         try {
-            if (messageSource != null) {
-                return messageSource.getMessage(code, null, LocaleContextHolder.getLocale());
+            if (this.messageSource != null) {
+                return this.messageSource.getMessage(code, null, LocaleContextHolder.getLocale());
             }
 
             return ConstrainedProperty.DEFAULT_MESSAGES.get(code);
@@ -233,7 +252,7 @@ public abstract class AbstractConstraint implements Constraint {
 
     @Override
     public String toString() {
-        return new ToStringCreator(this).append(constraintParameter).toString();
+        return new ToStringCreator(this).append(this.constraintParameter).toString();
     }
 
     /**
@@ -241,6 +260,7 @@ public abstract class AbstractConstraint implements Constraint {
      *
      * @return true if it is
      */
+    @Override
     public boolean isValid() {
         return true;
     }

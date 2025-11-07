@@ -43,7 +43,6 @@ trait ValidatedService<T> extends Service<T> {
      */
     ValidatorFactory getValidatorFactory() {
         if (validatorFactory == null) {
-
             Configuration configuration
             if (datastore != null) {
                 configuration = JavaxValidatorRegistry.buildConfigurationFor(

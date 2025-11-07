@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.services.implementers
 
 import java.beans.Introspector
@@ -45,7 +60,9 @@ abstract class AbstractProjectionImplementer extends AbstractDetachedCriteriaSer
     }
 
     protected boolean isValidPropertyType(ClassNode returnType, ClassNode propertyType) {
-        if (propertyType == null) return false
+        if (propertyType == null) {
+            return false
+        }
         else {
             returnType == propertyType || AstUtils.isSubclassOfOrImplementsInterface(returnType, propertyType)
         }
@@ -57,27 +74,31 @@ abstract class AbstractProjectionImplementer extends AbstractDetachedCriteriaSer
     }
 
     @Override
-    void implementById(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode, BlockStatement body, Expression byIdLookup) {
+    void implementById(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode,
+            BlockStatement body, Expression byIdLookup) {
         // no-op
     }
 
     @Override
-    void implementWithQuery(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode, BlockStatement body, VariableExpression detachedCriteriaVar, Expression queryArgs) {
+    void implementWithQuery(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode,
+            BlockStatement body, VariableExpression detachedCriteriaVar, Expression queryArgs) {
         String propertyName = (String) abstractMethodNode.getNodeMetaData(RESOLVED_PROPERTY_NAME)
-        assert propertyName != null: "Bug in ${getClass().name} transform logic. Method implement should never be called before doesImplement(..) check"
+        assert propertyName != null: "Bug in ${getClass().name} transform logic. " +
+                'Method implement should never be called before doesImplement(..) check'
 
         body.addStatements([
                 assignS(detachedCriteriaVar, callX(detachedCriteriaVar, getProjectionName(), constX(propertyName))),
-                returnS(callX(detachedCriteriaVar, getQueryMethodToInvoke(domainClassNode, newMethodNode), queryArgs != null ? queryArgs : AstUtils.ZERO_ARGUMENTS))
+                returnS(callX(detachedCriteriaVar, getQueryMethodToInvoke(domainClassNode, newMethodNode),
+                        queryArgs != null ? queryArgs : AstUtils.ZERO_ARGUMENTS))
         ])
     }
 
     protected String getProjectionName() {
-        "property"
+        'property'
     }
 
     protected String getQueryMethodToInvoke(ClassNode domainClassNode, MethodNode newMethodNode) {
-        "find"
+        'find'
     }
 
 }

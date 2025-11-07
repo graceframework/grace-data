@@ -1,129 +1,144 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.tests
 
 import grails.gorm.annotation.Entity
 
 import org.grails.datastore.mapping.core.OptimisticLockingException
-import org.grails.datastore.mapping.core.Session
 
 /**
  * @author Burt Beckwith
  */
 class OptimisticLockingSpec extends GormDatastoreSpec {
 
-    void "Test versioning"() {
-
+    void 'Test versioning'() {
         given:
-            def o = new OptLockVersioned(name: 'locked')
+        def o = new OptLockVersioned(name: 'locked')
 
         when:
-            o.save flush: true
+        o.save flush: true
 
         then:
-            o.version == 0
+        o.version == 0
 
         when:
-            session.clear()
-            o = OptLockVersioned.get(o.id)
-            o.name = 'Fred'
-            o.save flush: true
+        session.clear()
+        o = OptLockVersioned.get(o.id)
+        o.name = 'Fred'
+        o.save flush: true
 
         then:
-            o.version == 1
+        o.version == 1
 
         when:
-            session.clear()
-            o = OptLockVersioned.get(o.id)
+        session.clear()
+        o = OptLockVersioned.get(o.id)
 
         then:
-            o.name == 'Fred'
-            o.version == 1
+        o.name == 'Fred'
+        o.version == 1
     }
 
-    void "Test optimistic locking"() {
-
+    void 'Test optimistic locking'() {
         given:
-            def o = new OptLockVersioned(name: 'locked').save(flush: true)
-            session.clear()
+        def o = new OptLockVersioned(name: 'locked').save(flush: true)
+        session.clear()
 
         when:
-            o = OptLockVersioned.get(o.id)
+        o = OptLockVersioned.get(o.id)
 
-            Thread.start {
-                OptLockVersioned.withNewSession { s ->
-                    def reloaded = OptLockVersioned.get(o.id)
-                    assert reloaded
-                    reloaded.name += ' in new session'
-                    reloaded.save(flush: true)
-                }
-            }.join()
-            sleep 2000 // heisenbug
-
-            o.name += ' in main session'
-            def ex
-            try {
-                o.save(flush: true)
+        Thread.start {
+            OptLockVersioned.withNewSession { s ->
+                def reloaded = OptLockVersioned.get(o.id)
+                assert reloaded
+                reloaded.name += ' in new session'
+                reloaded.save(flush: true)
             }
-            catch (e) {
-                ex = e
-                e.printStackTrace()
-            }
+        }.join()
+        sleep 2000 // heisenbug
 
-            session.clear()
-            o = OptLockVersioned.get(o.id)
+        o.name += ' in main session'
+        def ex
+        try {
+            o.save(flush: true)
+        }
+        catch (e) {
+            ex = e
+            e.printStackTrace()
+        }
+
+        session.clear()
+        o = OptLockVersioned.get(o.id)
 
         then:
-            ex instanceof OptimisticLockingException
-            o.version == 1
-            o.name == 'locked in new session'
+        ex instanceof OptimisticLockingException
+        o.version == 1
+        o.name == 'locked in new session'
     }
 
     void "Test optimistic locking disabled with 'version false'"() {
-
         given:
-            def o = new OptLockNotVersioned(name: 'locked').save(flush: true)
-            session.clear()
+        def o = new OptLockNotVersioned(name: 'locked').save(flush: true)
+        session.clear()
 
         when:
-            o = OptLockNotVersioned.get(o.id)
+        o = OptLockNotVersioned.get(o.id)
 
-            Thread.start {
-                OptLockNotVersioned.withNewSession { s ->
-                    def reloaded = OptLockNotVersioned.get(o.id)
-                    reloaded.name += ' in new session'
-                    reloaded.save(flush: true)
-                }
-            }.join()
-            sleep 2000 // heisenbug
-
-            o.name += ' in main session'
-            def ex
-            try {
-                o.save(flush: true)
+        Thread.start {
+            OptLockNotVersioned.withNewSession { s ->
+                def reloaded = OptLockNotVersioned.get(o.id)
+                reloaded.name += ' in new session'
+                reloaded.save(flush: true)
             }
-            catch (e) {
-                ex = e
-                e.printStackTrace()
-            }
+        }.join()
+        sleep 2000 // heisenbug
 
-            session.clear()
-            o = OptLockNotVersioned.get(o.id)
+        o.name += ' in main session'
+        def ex
+        try {
+            o.save(flush: true)
+        }
+        catch (e) {
+            ex = e
+            e.printStackTrace()
+        }
+
+        session.clear()
+        o = OptLockNotVersioned.get(o.id)
 
         then:
-            ex == null
-            o.name == 'locked in main session'
+        ex == null
+        o.name == 'locked in main session'
     }
+
 }
 
 @Entity
 class OptLockVersioned implements Serializable {
+
     Long id
     Long version
 
     String name
+
 }
 
 @Entity
 class OptLockNotVersioned implements Serializable {
+
     Long id
     Long version
 
@@ -132,4 +147,5 @@ class OptLockNotVersioned implements Serializable {
     static mapping = {
         version false
     }
+
 }

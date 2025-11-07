@@ -1,12 +1,25 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.tests
+
+import spock.lang.Ignore
+import spock.lang.Issue
 
 import grails.gorm.DetachedCriteria
 import grails.gorm.annotation.Entity
-import spock.lang.Issue
-
-import org.grails.datastore.mapping.core.Session
-
-import spock.lang.Ignore
 
 /**
  * @author graemerocher
@@ -16,289 +29,294 @@ class DomainEventsSpec extends GormDatastoreSpec {
     def setup() {
         PersonEvent.resetStore()
     }
-    @Issue('GPMONGODB-262')
-    void "Test that returning false from beforeUpdate evicts the event"() {
-        when:"An entity is saved"
-            def p = new PersonEvent(name: "Fred")
-            p.save(flush: true)
-            session.clear()
-            p = PersonEvent.get(p.id)
-        then:"The person is saved"
-            p != null
-
-        when:"The beforeUpdate event returns false"
-            p.name = "Bad"
-            p.save(flush: true)
-            session.clear()
-
-        then:"The person is never updated"
-            PersonEvent.get(p.id).name == "Fred"
-    }
 
     @Issue('GPMONGODB-262')
-    void "Test that returning false from beforeInsert evicts the event"() {
-        when:"false is returned from a beforeInsert event"
-            def p = new PersonEvent(name: "Bad")
-            try {
-                p.save()
-                session.flush()
-            } catch (e) {
-                // ignore hibernate related flush errors
-            }
-            session.clear()
+    void 'Test that returning false from beforeUpdate evicts the event'() {
+        when: 'An entity is saved'
+        def p = new PersonEvent(name: 'Fred')
+        p.save(flush: true)
+        session.clear()
+        p = PersonEvent.get(p.id)
+        then: 'The person is saved'
+        p != null
 
-        then:"The person is never saved"
-            !PersonEvent.get(p.id)
+        when: 'The beforeUpdate event returns false'
+        p.name = 'Bad'
+        p.save(flush: true)
+        session.clear()
+
+        then: 'The person is never updated'
+        PersonEvent.get(p.id).name == 'Fred'
     }
 
     @Issue('GPMONGODB-262')
-    void "Test that returning false from beforeDelete evicts the event"() {
-        when:"a new person is saved"
-            def p = new PersonEvent(name: "DontDelete")
-            p.save(flush: true)
-            session.clear()
-            p = PersonEvent.get(p.id)
-
-
-        then:"The person exists"
-            p != null
-
-        when:"The beforeDelete event returns false"
-            p.delete(flush: true)
-            session.clear()
-
-        then:"The event was cancelled"
-            PersonEvent.get(p.id)
-    }
-
-    void "Test modify property before save"() {
-        given:
-            session.datastore.mappingContext.addPersistentEntity(ModifyPerson)
-            def p = new ModifyPerson(name:"Bob").save(flush:true)
-            session.clear()
-
-        when:"An object is queried by id"
-            p = ModifyPerson.get(p.id)
-
-        then: "the correct object is returned"
-            p.name == "Fred"
-
-        when:"An object is queried by the updated value"
-            p = ModifyPerson.findByName("Fred")
-
-        then:"The correct person is returned"
-            p.name == "Fred"
-    }
-
-    void "Test auto time stamping working"() {
-
-        given:
-            def p = new PersonEvent()
-
-            p.name = "Fred"
-            p.save(flush:true)
-            session.clear()
-
-        when:
-            p = PersonEvent.get(p.id)
-
-        then:
-            sleep(2000)
-
-            p.dateCreated == p.lastUpdated
-
-        when:
-            p.name = "Wilma"
-            p.save(flush:true)
-
-        then:
-            p.dateCreated.before(p.lastUpdated)
-    }
-
-    void "Test delete events"() {
-        given:
-            def p = new PersonEvent()
-            p.name = "Fred"
-            p.save(flush:true)
-            session.clear()
-
-        when:
-            p = PersonEvent.get(p.id)
-
-        then:
-            0 == PersonEvent.STORE.beforeDelete
-            0 == PersonEvent.STORE.afterDelete
-
-        when:
-            p.delete(flush:true)
-
-        then:
-            1 == PersonEvent.STORE.beforeDelete
-            1 == PersonEvent.STORE.afterDelete
-    }
-
-    void "Test multi-delete events"() {
-        given:
-            def freds = (1..3).collect {
-                new PersonEvent(name: "Fred$it").save(flush:true)
-            }
-            session.clear()
-
-        when:
-            freds = PersonEvent.findAllByIdInList(freds*.id)
-
-        then:
-            3 == freds.size()
-            0 == PersonEvent.STORE.beforeDelete
-            0 == PersonEvent.STORE.afterDelete
-
-        when:
-            new DetachedCriteria(PersonEvent).build {
-                'in'('id', freds*.id)
-            }.deleteAll()
+    void 'Test that returning false from beforeInsert evicts the event'() {
+        when: 'false is returned from a beforeInsert event'
+        def p = new PersonEvent(name: 'Bad')
+        try {
+            p.save()
             session.flush()
+        }
+        catch (ignore) {
+            // ignore hibernate related flush errors
+        }
+        session.clear()
+
+        then: 'The person is never saved'
+        !PersonEvent.get(p.id)
+    }
+
+    @Issue('GPMONGODB-262')
+    void 'Test that returning false from beforeDelete evicts the event'() {
+        when: 'a new person is saved'
+        def p = new PersonEvent(name: 'DontDelete')
+        p.save(flush: true)
+        session.clear()
+        p = PersonEvent.get(p.id)
+
+        then: 'The person exists'
+        p != null
+
+        when: 'The beforeDelete event returns false'
+        p.delete(flush: true)
+        session.clear()
+
+        then: 'The event was cancelled'
+        PersonEvent.get(p.id)
+    }
+
+    void 'Test modify property before save'() {
+        given:
+        session.datastore.mappingContext.addPersistentEntity(ModifyPerson)
+        def p = new ModifyPerson(name: 'Bob').save(flush: true)
+        session.clear()
+
+        when: 'An object is queried by id'
+        p = ModifyPerson.get(p.id)
+
+        then: 'the correct object is returned'
+        p.name == 'Fred'
+
+        when: 'An object is queried by the updated value'
+        p = ModifyPerson.findByName('Fred')
+
+        then: 'The correct person is returned'
+        p.name == 'Fred'
+    }
+
+    void 'Test auto time stamping working'() {
+        given:
+        def p = new PersonEvent()
+
+        p.name = 'Fred'
+        p.save(flush: true)
+        session.clear()
+
+        when:
+        p = PersonEvent.get(p.id)
 
         then:
-            0 == PersonEvent.count()
-            0 == PersonEvent.list().size()
+        sleep(2000)
 
-        // removed the below assertions because in the case of batch DML statements neither Hibernate nor JPA triggers delete events for individual entities
+        p.dateCreated == p.lastUpdated
+
+        when:
+        p.name = 'Wilma'
+        p.save(flush: true)
+
+        then:
+        p.dateCreated.before(p.lastUpdated)
+    }
+
+    void 'Test delete events'() {
+        given:
+        def p = new PersonEvent()
+        p.name = 'Fred'
+        p.save(flush: true)
+        session.clear()
+
+        when:
+        p = PersonEvent.get(p.id)
+
+        then:
+        PersonEvent.STORE.beforeDelete == 0
+        PersonEvent.STORE.afterDelete == 0
+
+        when:
+        p.delete(flush: true)
+
+        then:
+        PersonEvent.STORE.beforeDelete == 1
+        PersonEvent.STORE.afterDelete == 1
+    }
+
+    void 'Test multi-delete events'() {
+        given:
+        def freds = (1..3).collect {
+            new PersonEvent(name: "Fred$it").save(flush: true)
+        }
+        session.clear()
+
+        when:
+        freds = PersonEvent.findAllByIdInList(freds*.id)
+
+        then:
+        freds.size() == 3
+        PersonEvent.STORE.beforeDelete == 0
+        PersonEvent.STORE.afterDelete == 0
+
+        when:
+        new DetachedCriteria(PersonEvent).build {
+            'in'('id', freds*.id)
+        }.deleteAll()
+        session.flush()
+
+        then:
+        PersonEvent.count() == 0
+        PersonEvent.list().size() == 0
+
+        // removed the below assertions because in the case of batch DML statements
+        // neither Hibernate nor JPA triggers delete events for individual
+        // entities
 //            3 == PersonEvent.STORE.beforeDelete
 //            3 == PersonEvent.STORE.afterDelete
     }
 
-    void "Test before update event"() {
+    void 'Test before update event'() {
         given:
-            def p = new PersonEvent()
+        def p = new PersonEvent()
 
-            p.name = "Fred"
-            p.save(flush:true)
-            session.clear()
-
-        when:
-            p = PersonEvent.get(p.id)
-
-        then:
-            "Fred" == p.name
-            0 == PersonEvent.STORE.beforeUpdate
-            0 == PersonEvent.STORE.afterUpdate
+        p.name = 'Fred'
+        p.save(flush: true)
+        session.clear()
 
         when:
-            p.name = "Bob"
-            p.save(flush:true)
-            session.clear()
-            p = PersonEvent.get(p.id)
+        p = PersonEvent.get(p.id)
 
         then:
-            "Bob" == p.name
-            1 == PersonEvent.STORE.beforeUpdate
-            1 == PersonEvent.STORE.afterUpdate
+        p.name == 'Fred'
+        PersonEvent.STORE.beforeUpdate == 0
+        PersonEvent.STORE.afterUpdate == 0
+
+        when:
+        p.name = 'Bob'
+        p.save(flush: true)
+        session.clear()
+        p = PersonEvent.get(p.id)
+
+        then:
+        p.name == 'Bob'
+        PersonEvent.STORE.beforeUpdate == 1
+        PersonEvent.STORE.afterUpdate == 1
     }
 
-    void "Test insert events"() {
+    void 'Test insert events'() {
         given:
-            def p = new PersonEvent()
+        def p = new PersonEvent()
 
-            p.name = "Fred"
-            p.save(flush:true)
-            session.clear()
-
-        when:
-            p = PersonEvent.get(p.id)
-
-        then:
-            "Fred" == p.name
-            0 == PersonEvent.STORE.beforeUpdate
-            1 == PersonEvent.STORE.beforeInsert
-            0 == PersonEvent.STORE.afterUpdate
-            1 == PersonEvent.STORE.afterInsert
+        p.name = 'Fred'
+        p.save(flush: true)
+        session.clear()
 
         when:
-            p.name = "Bob"
-            p.save(flush:true)
-            session.clear()
-            p = PersonEvent.get(p.id)
+        p = PersonEvent.get(p.id)
 
         then:
-            "Bob" == p.name
-            1 == PersonEvent.STORE.beforeUpdate
-            1 == PersonEvent.STORE.beforeInsert
-            1 == PersonEvent.STORE.afterUpdate
-            1 == PersonEvent.STORE.afterInsert
+        p.name == 'Fred'
+        PersonEvent.STORE.beforeUpdate == 0
+        PersonEvent.STORE.beforeInsert == 1
+        PersonEvent.STORE.afterUpdate == 0
+        PersonEvent.STORE.afterInsert == 1
+
+        when:
+        p.name = 'Bob'
+        p.save(flush: true)
+        session.clear()
+        p = PersonEvent.get(p.id)
+
+        then:
+        p.name == 'Bob'
+        PersonEvent.STORE.beforeUpdate == 1
+        PersonEvent.STORE.beforeInsert == 1
+        PersonEvent.STORE.afterUpdate == 1
+        PersonEvent.STORE.afterInsert == 1
     }
 
-    void "Test load events"() {
+    void 'Test load events'() {
         given:
-            def p = new PersonEvent()
+        def p = new PersonEvent()
 
-            p.name = "Fred"
-            p.save(flush:true)
-            session.clear()
+        p.name = 'Fred'
+        p.save(flush: true)
+        session.clear()
 
         when:
-            p = PersonEvent.get(p.id)
+        p = PersonEvent.get(p.id)
 
         then:
-            "Fred" == p.name
-            if (!'JpaSession'.equals(session.getClass().simpleName)) {
-                // JPA doesn't seem to support a pre-load event
-                1 == PersonEvent.STORE.beforeLoad
-            }
-            1 == PersonEvent.STORE.afterLoad
+        p.name == 'Fred'
+        if (!'JpaSession'.equals(session.getClass().simpleName)) {
+            // JPA doesn't seem to support a pre-load event
+            PersonEvent.STORE.beforeLoad == 1
+        }
+        PersonEvent.STORE.afterLoad == 1
     }
 
-    void "Test multi-load events"() {
+    void 'Test multi-load events'() {
         given:
-            def freds = (1..3).collect {
-                new PersonEvent(name: "Fred$it").save(flush:true)
-            }
-            session.clear()
+        def freds = (1..3).collect {
+            new PersonEvent(name: "Fred$it").save(flush: true)
+        }
+        session.clear()
 
         when:
-            freds = PersonEvent.findAllByIdInList(freds*.id)
-            for(f in freds) {} // just to trigger load
+        freds = PersonEvent.findAllByIdInList(freds*.id)
+        for (f in freds) {
+            // just to trigger load
+        }
 
         then:
-            3 == freds.size()
-            if (!'JpaSession'.equals(session.getClass().simpleName)) {
-                // JPA doesn't seem to support a pre-load event
-                3 == PersonEvent.STORE.beforeLoad
-            }
-            3 == PersonEvent.STORE.afterLoad
+        freds.size() == 3
+        if (!'JpaSession'.equals(session.getClass().simpleName)) {
+            // JPA doesn't seem to support a pre-load event
+            PersonEvent.STORE.beforeLoad == 3
+        }
+        PersonEvent.STORE.afterLoad == 3
     }
 
     @Ignore
-    void "Test bean autowiring"() {
+    void 'Test bean autowiring'() {
         given:
-            def personService = new Object()
-            session.datastore.applicationContext.beanFactory.registerSingleton 'personService', personService
+        def personService = new Object()
+        session.datastore.applicationContext.beanFactory.registerSingleton 'personService', personService
 
-            def p = new PersonEvent()
-            def saved = p
-            p.name = "Fred"
-            p.save(flush:true)
-            session.clear()
+        def p = new PersonEvent()
+        def saved = p
+        p.name = 'Fred'
+        p.save(flush: true)
+        session.clear()
 
         when:
-            p = PersonEvent.get(p.id)
+        p = PersonEvent.get(p.id)
 
         then:
-            "Fred" == p.name
-            personService.is saved.personService // test Groovy constructor
-            if (!session.datastore.getClass().name.contains('Hibernate')) {
-                // autowiring is added to the real constructor by an AST, so can't test this for Hibernate
-                personService.is p.personService // test constructor called by the datastore
-            }
+        p.name == 'Fred'
+        personService.is saved.personService // test Groovy constructor
+        if (!session.datastore.getClass().name.contains('Hibernate')) {
+            // autowiring is added to the real constructor by an AST, so can't test this for Hibernate
+            personService.is p.personService // test constructor called by the datastore
+        }
     }
-
 
     def cleanup() {
         session.datastore.applicationContext?.beanFactory?.destroySingleton 'personService'
     }
+
 }
 
 @Entity
 class PersonEvent implements Serializable {
+
     Long id
     Long version
     String name
@@ -308,10 +326,11 @@ class PersonEvent implements Serializable {
     def personService
 
     static STORE_INITIAL = [
-        beforeDelete: 0, afterDelete: 0,
-        beforeUpdate: 0, afterUpdate: 0,
-        beforeInsert: 0, afterInsert: 0,
-        beforeLoad:   0, afterLoad:   0]
+            beforeDelete: 0, afterDelete: 0,
+            beforeUpdate: 0, afterUpdate: 0,
+            beforeInsert: 0, afterInsert: 0,
+            beforeLoad  : 0, afterLoad: 0
+    ]
 
     static STORE = [:] + STORE_INITIAL
 
@@ -320,7 +339,7 @@ class PersonEvent implements Serializable {
     }
 
     def beforeDelete() {
-        if (name == "DontDelete") {
+        if (name == 'DontDelete') {
             return false
         }
         STORE.beforeDelete++
@@ -331,7 +350,7 @@ class PersonEvent implements Serializable {
     }
 
     def beforeUpdate() {
-        if (name == "Bad") {
+        if (name == 'Bad') {
             return false
         }
         STORE.beforeUpdate++
@@ -342,7 +361,7 @@ class PersonEvent implements Serializable {
     }
 
     def beforeInsert() {
-        if (name == "Bad") {
+        if (name == 'Bad') {
             return false
         }
         STORE.beforeInsert++
@@ -359,20 +378,23 @@ class PersonEvent implements Serializable {
     void afterLoad() {
         STORE.afterLoad++
     }
+
 }
 
 @Entity
 class ModifyPerson implements Serializable {
+
     Long id
     Long version
 
     String name
 
     static mapping = {
-        name index:true
+        name index: true
     }
 
     def beforeInsert() {
-        name = "Fred"
+        name = 'Fred'
     }
+
 }

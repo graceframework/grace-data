@@ -1,3 +1,18 @@
+/*
+ * Copyright 2015-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.reflect;
 
 import java.io.Serializable;
@@ -65,7 +80,7 @@ public interface EntityReflector {
      * Get a property for the specified index
      *
      * @param object The object
-     * @param index The index
+     * @param index  The index
      * @return The value
      */
     Object getProperty(Object object, int index);
@@ -74,7 +89,7 @@ public interface EntityReflector {
      * Set a property for the specified index
      *
      * @param object The object
-     * @param index The index
+     * @param index  The index
      * @param value  The value
      */
     void setProperty(Object object, int index, Object value);
@@ -83,7 +98,7 @@ public interface EntityReflector {
      * Get a property for the specified index
      *
      * @param object The object
-     * @param name The index
+     * @param name   The index
      * @return The value
      */
     Object getProperty(Object object, String name);
@@ -92,14 +107,13 @@ public interface EntityReflector {
      * Set a property for the specified index
      *
      * @param object The object
-     * @param name The index
+     * @param name   The index
      * @param value  The value
      */
     void setProperty(Object object, String name, Object value);
 
     /**
      * @param name Obtains the property reader for the given property
-     *
      * @return The name of the property
      */
     PropertyReader getPropertyReader(String name);
@@ -158,7 +172,7 @@ public interface EntityReflector {
          * Writes the property
          *
          * @param object the object
-         * @param value The value
+         * @param value  The value
          */
         void write(Object object, Object value);
 

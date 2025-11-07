@@ -1,10 +1,11 @@
-/* Copyright (C) 2013 SpringSource
+/*
+ * Copyright 2013-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,7 +21,7 @@ import org.codehaus.groovy.runtime.metaclass.MethodSelectionException
 /**
  * Not public API. Used by GormEnhancer
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings('rawtypes')
 @CompileStatic
 abstract class MethodInvokingClosure extends Closure {
 
@@ -52,8 +53,7 @@ abstract class MethodInvokingClosure extends Closure {
     }
 
     /**
-     * Utility method for choosing matching metamethod, handles MethodSelectionException 
-     *
+     * Utility method for choosing matching metamethod, handles MethodSelectionException
      *
      * @param theMetaClass
      * @param methodName
@@ -61,15 +61,18 @@ abstract class MethodInvokingClosure extends Closure {
      * @param staticScope
      * @return
      */
-    protected static MetaMethod pickMetaMethod(final MetaClass theMetaClass, final String methodName, final Class[] parameterTypes, boolean staticScope) {
+    protected static MetaMethod pickMetaMethod(final MetaClass theMetaClass, final String methodName,
+            final Class[] parameterTypes, boolean staticScope) {
         try {
             return theMetaClass.pickMethod(methodName, parameterTypes)
         }
         catch (MethodSelectionException mse) {
             // the metamethod already exists with multiple signatures, pick the most specific
             return theMetaClass.methods.find { MetaMethod existingMethod ->
-                existingMethod.name == methodName && existingMethod.isStatic() == staticScope && ((!parameterTypes && !existingMethod.parameterTypes) || parameterTypes == existingMethod.parameterTypes)
+                existingMethod.name == methodName && existingMethod.isStatic() == staticScope &&
+                        ((!parameterTypes && !existingMethod.parameterTypes) || parameterTypes == existingMethod.parameterTypes)
             }
         }
     }
+
 }

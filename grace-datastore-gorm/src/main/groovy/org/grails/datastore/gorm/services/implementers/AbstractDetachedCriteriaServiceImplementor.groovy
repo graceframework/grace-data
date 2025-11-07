@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.services.implementers
 
 import groovy.transform.CompileStatic
@@ -47,7 +62,7 @@ abstract class AbstractDetachedCriteriaServiceImplementor extends AbstractReadOp
         AnnotationNode joinAnnotation = AstUtils.findAnnotation(abstractMethodNode, Join)
         if (lookupById() && joinAnnotation == null && parameterCount == 1 && parameters[0].name == GormProperties.IDENTITY) {
             // optimize query by id
-            Expression byId = callX(classX(domainClassNode), "get", varX(parameters[0]))
+            Expression byId = callX(classX(domainClassNode), 'get', varX(parameters[0]))
             implementById(domainClassNode, abstractMethodNode, newMethodNode, targetClassNode, body, byId)
         }
         else {
@@ -61,7 +76,7 @@ abstract class AbstractDetachedCriteriaServiceImplementor extends AbstractReadOp
 
             if (connectionId != null) {
                 body.addStatement(
-                        assignS(queryVar, callX(queryVar, "withConnection", connectionId))
+                        assignS(queryVar, callX(queryVar, 'withConnection', connectionId))
                 )
             }
             handleJoinAnnotation(joinAnnotation, body, queryVar)
@@ -72,14 +87,14 @@ abstract class AbstractDetachedCriteriaServiceImplementor extends AbstractReadOp
                     if (parameterName == GormProperties.IDENTITY) {
                         body.addStatement(
                                 stmt(
-                                        callX(queryVar, "idEq", varX(parameter))
+                                        callX(queryVar, 'idEq', varX(parameter))
                                 )
                         )
                     }
                     else if (isValidParameter(domainClassNode, parameter, parameterName)) {
                         body.addStatement(
                                 stmt(
-                                        callX(queryVar, "eq", args(constX(parameterName), varX(parameter)))
+                                        callX(queryVar, 'eq', args(constX(parameterName), varX(parameter)))
                                 )
                         )
                     }
@@ -90,11 +105,11 @@ abstract class AbstractDetachedCriteriaServiceImplementor extends AbstractReadOp
                         AstUtils.error(
                                 abstractMethodNode.declaringClass.module.context,
                                 abstractMethodNode,
-                                "Cannot implement method for argument [${parameterName}]. No property exists on domain class [$domainClassNode.name]"
+                                "Cannot implement method for argument [${parameterName}]. " +
+                                        "No property exists on domain class [$domainClassNode.name]"
                         )
                     }
                 }
-
             }
             implementWithQuery(domainClassNode, abstractMethodNode, newMethodNode, targetClassNode, body, queryVar, argsExpression)
         }
@@ -107,17 +122,17 @@ abstract class AbstractDetachedCriteriaServiceImplementor extends AbstractReadOp
     @PackageScope
     static void handleJoinAnnotation(AnnotationNode joinAnnotation, BlockStatement body, VariableExpression queryVar) {
         if (joinAnnotation != null) {
-            Expression joinValue = joinAnnotation.getMember("value")
+            Expression joinValue = joinAnnotation.getMember('value')
             if (joinValue != null) {
-                Expression joinType = joinAnnotation.getMember("type")
+                Expression joinType = joinAnnotation.getMember('type')
                 if (joinType instanceof PropertyExpression) {
                     body.addStatement(
-                            stmt(callX(queryVar, "join", args(joinValue, joinType)))
+                            stmt(callX(queryVar, 'join', args(joinValue, joinType)))
                     )
                 }
                 else {
                     body.addStatement(
-                            stmt(callX(queryVar, "join", joinValue))
+                            stmt(callX(queryVar, 'join', joinValue))
                     )
                 }
             }
@@ -142,7 +157,8 @@ abstract class AbstractDetachedCriteriaServiceImplementor extends AbstractReadOp
      * @param body The body
      * @param byIdLookup The expression that looks up the object by id
      */
-    abstract void implementById(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode, BlockStatement body, Expression byIdLookup)
+    abstract void implementById(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode,
+            ClassNode targetClassNode, BlockStatement body, Expression byIdLookup)
 
     /**
      * Provide an implementation in the case of a query
@@ -155,6 +171,7 @@ abstract class AbstractDetachedCriteriaServiceImplementor extends AbstractReadOp
      * @param detachedCriteriaVar The detached criteria query
      * @param queryArgs Any arguments to the query
      */
-    abstract void implementWithQuery(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode, ClassNode targetClassNode, BlockStatement body, VariableExpression detachedCriteriaVar, Expression queryArgs)
+    abstract void implementWithQuery(ClassNode domainClassNode, MethodNode abstractMethodNode, MethodNode newMethodNode,
+            ClassNode targetClassNode, BlockStatement body, VariableExpression detachedCriteriaVar, Expression queryArgs)
 
 }

@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,6 +14,8 @@
  * limitations under the License.
  */
 package org.grails.datastore.mapping.simple.engine
+
+import org.springframework.context.ApplicationEventPublisher
 
 import org.grails.datastore.mapping.config.Property
 import org.grails.datastore.mapping.core.IdentityGenerationException
@@ -31,7 +34,6 @@ import org.grails.datastore.mapping.model.types.ManyToMany
 import org.grails.datastore.mapping.query.Query
 import org.grails.datastore.mapping.simple.SimpleMapDatastore
 import org.grails.datastore.mapping.simple.query.SimpleMapQuery
-import org.springframework.context.ApplicationEventPublisher
 
 /**
  * A simple implementation of the {@link org.grails.datastore.mapping.engine.EntityPersister} abstract class that backs onto an in-memory map.
@@ -48,14 +50,16 @@ class SimpleMapEntityPersister extends AbstractKeyValueEntityPersister<Map, Obje
     String family
 
     SimpleMapEntityPersister(MappingContext context, PersistentEntity entity, Session session,
-                             SimpleMapDatastore datastore, ApplicationEventPublisher publisher) {
+            SimpleMapDatastore datastore, ApplicationEventPublisher publisher) {
         super(context, entity, session, publisher)
         this.datastore = datastore.backingMap
         this.indices = datastore.indices
         family = getFamily(entity, entity.getMapping())
         final identity = entity.getIdentity()
         def idType = identity?.type
-        if (this.datastore[family] == null) this.datastore[family] = [:]
+        if (this.datastore[family] == null) {
+            this.datastore[family] = [:]
+        }
 
         if (idType == Integer) {
             lastKey = this.datastore[family].size()
@@ -69,7 +73,9 @@ class SimpleMapEntityPersister extends AbstractKeyValueEntityPersister<Map, Obje
         def disc = nativeEntry?.discriminator
         if (disc) {
             def childEntity = getMappingContext().getChildEntityByDiscriminator(persistentEntity.rootEntity, disc)
-            if (childEntity) return childEntity
+            if (childEntity) {
+                return childEntity
+            }
         }
         return persistentEntity
     }
@@ -109,7 +115,6 @@ class SimpleMapEntityPersister extends AbstractKeyValueEntityPersister<Map, Obje
             }
 
             void index(value, primaryKey) {
-
                 def index = getIndexName(value)
                 def indexed = indices[index]
                 if (indexed == null) {
@@ -138,11 +143,12 @@ class SimpleMapEntityPersister extends AbstractKeyValueEntityPersister<Map, Obje
             String getIndexName(value) {
                 return "${indexRoot}:$value"
             }
+
         }
     }
 
     AssociationIndexer getAssociationIndexer(Map nativeEntry, Association association) {
-        if(association?.associatedEntity == null) {
+        if (association?.associatedEntity == null) {
             return null
         }
 
@@ -183,8 +189,9 @@ class SimpleMapEntityPersister extends AbstractKeyValueEntityPersister<Map, Obje
 
             void index(primaryKey, foreignKey) {
                 def indexed = getIndex(primaryKey)
-                if (!indexed.contains(foreignKey))
+                if (!indexed.contains(foreignKey)) {
                     indexed.add(foreignKey)
+                }
             }
 
             List query(primaryKey) {
@@ -199,11 +206,13 @@ class SimpleMapEntityPersister extends AbstractKeyValueEntityPersister<Map, Obje
             PersistentEntity getIndexedEntity() {
                 return association.associatedEntity
             }
+
         }
     }
 
     @Override
-    protected void setManyToMany(PersistentEntity persistentEntity, Object obj, Map nativeEntry, ManyToMany manyToMany, Collection associatedObjects, Map<Association, List<Serializable>> toManyKeys) {
+    protected void setManyToMany(PersistentEntity persistentEntity, Object obj, Map nativeEntry,
+            ManyToMany manyToMany, Collection associatedObjects, Map<Association, List<Serializable>> toManyKeys) {
 
         def identifiers
         if (manyToMany.isOwningSide()) {
@@ -219,7 +228,8 @@ class SimpleMapEntityPersister extends AbstractKeyValueEntityPersister<Map, Obje
     }
 
     @Override
-    protected Collection getManyToManyKeys(PersistentEntity persistentEntity, Object obj, Serializable nativeKey, Map nativeEntry, ManyToMany manyToMany) {
+    protected Collection getManyToManyKeys(PersistentEntity persistentEntity, Object obj, Serializable nativeKey,
+            Map nativeEntry, ManyToMany manyToMany) {
         final indexer = getAssociationIndexer(nativeEntry, manyToMany)
         final primaryKey = getObjectIdentifier(obj)
         indexer.query(primaryKey)
@@ -245,7 +255,7 @@ class SimpleMapEntityPersister extends AbstractKeyValueEntityPersister<Map, Obje
         nativeEntry[key] = values
     }
 
-    protected Map getEmbedded( Map nativeEntry, String key) {
+    protected Map getEmbedded(Map nativeEntry, String key) {
         nativeEntry[key]
     }
 
@@ -274,12 +284,13 @@ class SimpleMapEntityPersister extends AbstractKeyValueEntityPersister<Map, Obje
             return type == String ? key.toString() : key
         }
         else if (UUID.isAssignableFrom(type)) {
-          return UUID.randomUUID()
+            return UUID.randomUUID()
         }
         else {
             try {
                 return type.newInstance()
-            } catch (e) {
+            }
+            catch (e) {
                 throw new IdentityGenerationException("Cannot generator identity for entity $persistentEntity with type $type")
             }
         }
@@ -295,7 +306,7 @@ class SimpleMapEntityPersister extends AbstractKeyValueEntityPersister<Map, Obje
         return storeId
     }
 
-    protected def indexIdentifier(PersistentEntity persistentEntity, storeId) {
+    protected void indexIdentifier(PersistentEntity persistentEntity, storeId) {
         final indexer = getPropertyIndexer(persistentEntity.identity)
         indexer.index(storeId, storeId)
     }
@@ -303,7 +314,6 @@ class SimpleMapEntityPersister extends AbstractKeyValueEntityPersister<Map, Obje
     private updateInheritanceHierarchy(PersistentEntity persistentEntity, storeId, Map nativeEntry) {
         def parent = persistentEntity.parentEntity
         while (parent != null) {
-
             def f = getFamily(parent, parent.mapping)
             def parentEntry = datastore[f]
             if (parentEntry == null) {
@@ -331,8 +341,8 @@ class SimpleMapEntityPersister extends AbstractKeyValueEntityPersister<Map, Obje
                     currentVersion = entityAccess.getProperty('version')?.toLong()
                     if (currentVersion == null && oldVersion == null) {
                         currentVersion = 0L
-                        entityAccess.setProperty("version", currentVersion)
-                        entry["version"] = currentVersion
+                        entityAccess.setProperty('version', currentVersion)
+                        entry['version'] = currentVersion
                     }
                 }
                 if (oldVersion != null && currentVersion != null && !oldVersion.equals(currentVersion)) {
@@ -357,4 +367,5 @@ class SimpleMapEntityPersister extends AbstractKeyValueEntityPersister<Map, Obje
             deleteEntry(family, it, null)
         }
     }
+
 }

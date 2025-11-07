@@ -1,10 +1,25 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.tests
-
-import org.grails.datastore.mapping.core.DatastoreUtils
-import org.grails.datastore.mapping.core.Session
 
 import spock.lang.Shared
 import spock.lang.Specification
+
+import org.grails.datastore.mapping.core.DatastoreUtils
+import org.grails.datastore.mapping.core.Session
 
 /**
  * A Spec base class that manages a Session for each feature as well as
@@ -20,15 +35,16 @@ import spock.lang.Specification
  */
 abstract class GormDatastoreSpec extends Specification {
 
-    static final CURRENT_TEST_NAME = "current.gorm.test"
+    static final CURRENT_TEST_NAME = 'current.gorm.test'
     static final SETUP_CLASS_NAME = 'org.grails.datastore.gorm.Setup'
     static final TEST_CLASSES = [
-         Book, ChildEntity, City, ClassWithListArgBeforeValidate, ClassWithNoArgBeforeValidate,
-         ClassWithOverloadedBeforeValidate, CommonTypes, Country, EnumThing, Face, Highway,
-         Location, ModifyPerson, Nose, OptLockNotVersioned, OptLockVersioned, Person, PersonEvent,
-         Pet, PetType, Plant, PlantCategory, Publication, Task, TestEntity]
+            Book, ChildEntity, City, ClassWithListArgBeforeValidate, ClassWithNoArgBeforeValidate,
+            ClassWithOverloadedBeforeValidate, CommonTypes, Country, EnumThing, Face, Highway,
+            Location, ModifyPerson, Nose, OptLockNotVersioned, OptLockVersioned, Person, PersonEvent,
+            Pet, PetType, Plant, PlantCategory, Publication, Task, TestEntity]
 
-    @Shared Class setupClass
+    @Shared
+    Class setupClass
 
     Session session
 
@@ -58,7 +74,8 @@ abstract class GormDatastoreSpec extends Specification {
         }
         try {
             setupClass.destroy()
-        } catch(e) {
+        }
+        catch (e) {
             println "ERROR: Exception during test cleanup: ${e.message}"
         }
 
@@ -66,7 +83,7 @@ abstract class GormDatastoreSpec extends Specification {
     }
 
     private cleanRegistry() {
-        for (clazz in (TEST_CLASSES + getDomainClasses() )) {
+        for (clazz in (TEST_CLASSES + getDomainClasses())) {
             GroovySystem.metaClassRegistry.removeMetaClass(clazz)
         }
     }
@@ -74,8 +91,10 @@ abstract class GormDatastoreSpec extends Specification {
     static Class loadSetupClass() {
         try {
             getClassLoader().loadClass(SETUP_CLASS_NAME)
-        } catch (Throwable e) {
-            throw new RuntimeException("Datastore setup class ($SETUP_CLASS_NAME) was not found",e)
+        }
+        catch (Throwable e) {
+            throw new RuntimeException("Datastore setup class ($SETUP_CLASS_NAME) was not found", e)
         }
     }
+
 }

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.validation.constraints;
 
 import java.util.List;
@@ -17,7 +32,8 @@ public class InListConstraint extends AbstractConstraint {
 
     protected final List<?> list;
 
-    public InListConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
+    public InListConstraint(Class<?> constraintOwningClass, String constraintPropertyName,
+            Object constraintParameter, MessageSource messageSource) {
         super(constraintOwningClass, constraintPropertyName, constraintParameter, messageSource);
         this.list = (List<?>) this.constraintParameter;
     }
@@ -26,17 +42,16 @@ public class InListConstraint extends AbstractConstraint {
      * @return Returns the list.
      */
     public List<?> getList() {
-        return list;
+        return this.list;
     }
 
-    /* (non-Javadoc)
-     * @see org.grails.validation.Constraint#supports(java.lang.Class)
-     */
+    @Override
     @SuppressWarnings("rawtypes")
     public boolean supports(Class type) {
         return type != null;
     }
 
+    @Override
     public String getName() {
         return ConstrainedProperty.IN_LIST_CONSTRAINT;
     }
@@ -55,8 +70,8 @@ public class InListConstraint extends AbstractConstraint {
     @Override
     protected void processValidate(Object target, Object propertyValue, Errors errors) {
         // Check that the list contains the given value. If not, add an error.
-        if (!list.contains(propertyValue)) {
-            Object[] args = new Object[] { constraintPropertyName, constraintOwningClass, propertyValue, list };
+        if (!this.list.contains(propertyValue)) {
+            Object[] args = new Object[] { constraintPropertyName, constraintOwningClass, propertyValue, this.list };
             rejectValue(target, errors, ConstrainedProperty.DEFAULT_NOT_INLIST_MESSAGE_CODE,
                     ConstrainedProperty.NOT_PREFIX + ConstrainedProperty.IN_LIST_CONSTRAINT, args);
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2024 the original author or authors.
+ * Copyright 2016-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,15 @@
  */
 package org.grails.datastore.mapping.config
 
+import java.lang.reflect.Method
+import java.lang.reflect.Modifier
+
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.springframework.core.convert.ConversionFailedException
 import org.springframework.core.env.PropertyResolver
 import org.springframework.util.ReflectionUtils
-
-import java.lang.reflect.Method
-import java.lang.reflect.Modifier
 
 import org.grails.datastore.mapping.core.exceptions.ConfigurationException
 import org.grails.datastore.mapping.reflect.NameUtils
@@ -50,9 +50,10 @@ abstract class ConfigurationBuilder<B, C> {
 
     /**
      * @param propertyResolver The property resolver
-     * @param configurationPrefix The prefix to resolve settings from within the configuration. Example "grails.gorm.neo4j" or "grails.gorm.mongodb"
-     * @param builderMethodPrefix The prefix to builder method calls. Default is null which results in builder methods like "foo(...)". Seting a prefix of "with" results in "withFoo(..)"
-     *
+     * @param configurationPrefix The prefix to resolve settings from within the configuration.
+     *        Example "grails.gorm.neo4j" or "grails.gorm.mongodb"
+     * @param builderMethodPrefix The prefix to builder method calls.
+     *        Default is null which results in builder methods like "foo(...)". Setting a prefix of "with" results in "withFoo(..)"
      */
     @CompileDynamic
     ConfigurationBuilder(PropertyResolver propertyResolver, String configurationPrefix, String builderMethodPrefix) {
@@ -64,8 +65,10 @@ abstract class ConfigurationBuilder<B, C> {
 
     /**
      * @param propertyResolver The property resolver
-     * @param configurationPrefix The prefix to resolve settings from within the configuration. Example "grails.gorm.neo4j" or "grails.gorm.mongodb"
-     * @param builderMethodPrefix The prefix to builder method calls. Default is null which results in builder methods like "foo(...)". Seting a prefix of "with" results in "withFoo(..)"
+     * @param configurationPrefix The prefix to resolve settings from within the configuration.
+     *        Example "grails.gorm.neo4j" or "grails.gorm.mongodb"
+     * @param builderMethodPrefix The prefix to builder method calls.
+     *        Default is null which results in builder methods like "foo(...)". Setting a prefix of "with" results in "withFoo(..)"
      * @param fallBackConfiguration An object to read the fallback configuration from
      */
     @CompileDynamic
@@ -79,7 +82,7 @@ abstract class ConfigurationBuilder<B, C> {
             try {
                 cloned = fallBackConfiguration.clone()
             }
-            catch (CloneNotSupportedException e) {
+            catch (CloneNotSupportedException ignore) {
                 cloned = fallBackConfiguration
             }
             this.fallBackConfiguration = cloned
@@ -90,8 +93,8 @@ abstract class ConfigurationBuilder<B, C> {
     }
 
     C build() {
-        rootBuilder = createBuilder()
-        buildInternal(rootBuilder, this.configurationPrefix)
+        this.rootBuilder = createBuilder()
+        buildInternal(this.rootBuilder, this.configurationPrefix)
     }
 
     /**
@@ -119,7 +122,9 @@ abstract class ConfigurationBuilder<B, C> {
         List<Class> classes = [cls]
         while (cls != Object) {
             def superClass = cls.getSuperclass()
-            if (superClass == Object || superClass == LinkedHashMap) break
+            if (superClass == Object || superClass == LinkedHashMap) {
+                break
+            }
 
             classes.add(superClass)
             cls = superClass
@@ -153,10 +158,10 @@ abstract class ConfigurationBuilder<B, C> {
 
                 String settingName
 
-                boolean hasBuilderPrefix = builderMethodPrefix != null
+                boolean hasBuilderPrefix = this.builderMethodPrefix != null
 
-                if (hasBuilderPrefix && methodName.startsWith(builderMethodPrefix)) {
-                    settingName = methodName.substring(builderMethodPrefix.size()).uncapitalize()
+                if (hasBuilderPrefix && methodName.startsWith(this.builderMethodPrefix)) {
+                    settingName = methodName.substring(this.builderMethodPrefix.size()).uncapitalize()
                 }
                 else if (hasBuilderPrefix) {
                     continue
@@ -179,7 +184,7 @@ abstract class ConfigurationBuilder<B, C> {
 
                     def builderMethod = ReflectionUtils.findMethod(argType, 'builder')
                     if (builderMethod != null && Modifier.isStatic(builderMethod.modifiers)) {
-                        if (propertyResolver.containsProperty(propertyPath)) {
+                        if (this.propertyResolver.containsProperty(propertyPath)) {
                             Method existingGetter = ReflectionUtils.findMethod(builderClass, NameUtils.getGetterName(methodName))
                             def newBuilder
 
@@ -204,7 +209,7 @@ abstract class ConfigurationBuilder<B, C> {
                                         method.invoke(builder, buildMethod.invoke(newBuilder))
                                     }
                                     catch (Throwable e) {
-                                        log.error("build method threw exception", e)
+                                        log.error('build method threw exception', e)
                                     }
                                 }
                                 else {
@@ -251,7 +256,7 @@ abstract class ConfigurationBuilder<B, C> {
                         }
 
                         if (newBuilder instanceof Map) {
-                            Map subMap = propertyResolver.getProperty(propertyPath, Map, Collections.emptyMap())
+                            Map subMap = this.propertyResolver.getProperty(propertyPath, Map, Collections.emptyMap())
                             if (!subMap.isEmpty()) {
                                 ((Map) newBuilder).putAll(subMap)
                             }
@@ -280,7 +285,8 @@ abstract class ConfigurationBuilder<B, C> {
                                 if (fallBackConfig != null && builderClass.isInstance(fallBackConfig)) {
                                     ConfigurationBuilder fallbackBuilder = (ConfigurationBuilder) existingGetter.invoke(fallBackConfig)
                                     if (fallbackBuilder != null) {
-                                        newBuilder = (ConfigurationBuilder) argType.newInstance(this.propertyResolver, propertyPath, fallbackBuilder.build())
+                                        newBuilder = (ConfigurationBuilder) argType.newInstance(this.propertyResolver, propertyPath,
+                                                                                                fallbackBuilder.build())
                                     }
                                     else {
                                         newBuilder = (ConfigurationBuilder) argType.newInstance(this.propertyResolver, propertyPath)
@@ -299,7 +305,7 @@ abstract class ConfigurationBuilder<B, C> {
                         continue
                     }
                 }
-                else if (methodName.startsWith("get") && parameterTypes.length == 0) {
+                else if (methodName.startsWith('get') && parameterTypes.length == 0) {
                     if (method.returnType.getAnnotation(ConfigurationSettings)) {
                         def childBuilder = method.invoke(builder)
                         if (childBuilder != null) {
@@ -325,7 +331,7 @@ abstract class ConfigurationBuilder<B, C> {
                     }
                 }
                 else if (parameterTypes.length == 0) {
-                    def value = propertyResolver.getProperty(propertyPath, Boolean, false)
+                    def value = this.propertyResolver.getProperty(propertyPath, Boolean, false)
                     if (value) {
                         try {
                             method.invoke(builder)
@@ -351,7 +357,7 @@ abstract class ConfigurationBuilder<B, C> {
                     def valueOfMethod = ReflectionUtils.findMethod(argType, 'valueOf')
                     if (valueOfMethod != null && Modifier.isStatic(valueOfMethod.modifiers)) {
                         try {
-                            def value = propertyResolver.getProperty(propertyPathForArg, "")
+                            def value = this.propertyResolver.getProperty(propertyPathForArg, '')
                             if (value) {
                                 def converted = valueOfMethod.invoke(argType, value)
                                 args.add(converted)
@@ -366,16 +372,16 @@ abstract class ConfigurationBuilder<B, C> {
 
                         def value
                         try {
-                            value = propertyResolver.getProperty(propertyPathForArg, argType, fallBackValue)
+                            value = this.propertyResolver.getProperty(propertyPathForArg, argType as Class<Object>, fallBackValue)
                         }
                         catch (ConversionFailedException e) {
                             if (argType.isEnum()) {
-                                value = propertyResolver.getProperty(propertyPathForArg, String)
+                                value = this.propertyResolver.getProperty(propertyPathForArg, String)
                                 if (value != null) {
                                     try {
                                         value = Enum.valueOf((Class) argType, value.toUpperCase())
                                     }
-                                    catch (Throwable e2) {
+                                    catch (Throwable ignore) {
                                         // ignore e2 and throw original
                                         throw new ConfigurationException("Invalid value for setting [$propertyPathForArg]: $e.message", e)
                                     }
@@ -389,10 +395,9 @@ abstract class ConfigurationBuilder<B, C> {
                             }
                         }
                         if (value != null) {
-                            log.debug("Resolved value [{}] for setting [{}]", value, propertyPathForArg)
+                            log.debug('Resolved value [{}] for setting [{}]', value, propertyPathForArg)
                             args.add(value)
                         }
-
                     }
                 }
 
@@ -401,9 +406,7 @@ abstract class ConfigurationBuilder<B, C> {
                     ReflectionUtils.invokeMethod(method, builder, args.toArray())
                 }
             }
-
         }
-
     }
 
     protected Object newChildBuilderForFallback(Object childBuilder, Object fallbackConfig) {

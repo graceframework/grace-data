@@ -24,22 +24,27 @@ package grails.core.support.proxy;
  */
 public class DefaultProxyHandler implements ProxyHandler {
 
+    @Override
     public boolean isInitialized(Object o) {
         return true;
     }
 
+    @Override
     public boolean isInitialized(Object obj, String associationName) {
         return true;
     }
 
+    @Override
     public Object unwrapIfProxy(Object instance) {
         return instance;
     }
 
+    @Override
     public boolean isProxy(Object o) {
         return false;
     }
 
+    @Override
     public void initialize(Object o) {
         // do nothing
     }

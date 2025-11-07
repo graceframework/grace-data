@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -46,7 +47,7 @@ public class ManualProjections {
     /**
      * Calculates the minimum value of a property
      *
-     * @param results The results
+     * @param results  The results
      * @param property The property to calculate
      * @return The minimum value or null if there are no results
      */
@@ -55,10 +56,10 @@ public class ManualProjections {
             return null;
         }
 
-        final List sorted = order.applyOrder(new ArrayList(results), Query.Order.asc(property));
+        final List sorted = this.order.applyOrder(new ArrayList(results), Query.Order.asc(property));
         final Object o = sorted.get(0);
-        if (entity.isInstance(o)) {
-            return FieldEntityAccess.getOrIntializeReflector(entity).getProperty(o, property);
+        if (this.entity.isInstance(o)) {
+            return FieldEntityAccess.getOrIntializeReflector(this.entity).getProperty(o, property);
         }
         return o;
     }
@@ -66,7 +67,7 @@ public class ManualProjections {
     /**
      * Counts the number of distinct values
      *
-     * @param results The results
+     * @param results  The results
      * @param property The property
      * @return A count of the distinct values
      */
@@ -84,7 +85,7 @@ public class ManualProjections {
     /**
      * Calculates the maximum value of a property
      *
-     * @param results The results
+     * @param results  The results
      * @param property The property to calculate
      * @return The maximum value or null if there are no results
      */
@@ -93,10 +94,10 @@ public class ManualProjections {
             return null;
         }
 
-        final List sorted = order.applyOrder(new ArrayList(results), Query.Order.asc(property));
+        final List sorted = this.order.applyOrder(new ArrayList(results), Query.Order.asc(property));
         final Object o = sorted.get(results.size() - 1);
-        if (entity.isInstance(o)) {
-            return FieldEntityAccess.getOrIntializeReflector(entity).getProperty(o, property);
+        if (this.entity.isInstance(o)) {
+            return FieldEntityAccess.getOrIntializeReflector(this.entity).getProperty(o, property);
         }
         return o;
     }
@@ -104,7 +105,7 @@ public class ManualProjections {
     /**
      * Obtains a properties value from the results
      *
-     * @param results The results
+     * @param results  The results
      * @param property The property
      * @return A list of results
      */
@@ -115,8 +116,8 @@ public class ManualProjections {
         }
 
         for (Object o : results) {
-            EntityReflector ea = FieldEntityAccess.getOrIntializeReflector(entity);
-            if (entity.isInstance(o)) {
+            EntityReflector ea = FieldEntityAccess.getOrIntializeReflector(this.entity);
+            if (this.entity.isInstance(o)) {
                 projectedResults.add(ea.getProperty(o, property));
             }
             else {

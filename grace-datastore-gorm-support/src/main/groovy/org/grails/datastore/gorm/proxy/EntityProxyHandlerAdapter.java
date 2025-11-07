@@ -1,11 +1,11 @@
 /*
- * Copyright 2014 original authors
+ * Copyright 2015-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,37 +38,37 @@ public class EntityProxyHandlerAdapter implements ProxyFactory {
 
     @Override
     public boolean isProxy(Object object) {
-        return proxyHandler.isProxy(object);
+        return this.proxyHandler.isProxy(object);
     }
 
     @Override
     public boolean isInitialized(Object object) {
-        return proxyHandler.isInitialized(object);
+        return this.proxyHandler.isInitialized(object);
     }
 
     @Override
     public boolean isInitialized(Object object, String associationName) {
-        return proxyHandler.isInitialized(object, associationName);
+        return this.proxyHandler.isInitialized(object, associationName);
     }
 
     @Override
     public Object unwrap(Object object) {
-        return proxyHandler.unwrapIfProxy(object);
+        return this.proxyHandler.unwrapIfProxy(object);
     }
 
     @Override
     public Serializable getIdentifier(Object obj) {
-        return (Serializable) proxyHandler.getProxyIdentifier(obj);
+        return (Serializable) this.proxyHandler.getProxyIdentifier(obj);
     }
 
     @Override
     public Class<?> getProxiedClass(Object o) {
-        return proxyHandler.getProxiedClass(o);
+        return this.proxyHandler.getProxiedClass(o);
     }
 
     @Override
     public void initialize(Object o) {
-        proxyHandler.initialize(o);
+        this.proxyHandler.initialize(o);
     }
 
     @Override

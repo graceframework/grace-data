@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -49,6 +50,7 @@ public interface Criteria {
 
     /**
      * Creates a criterion that restricts the id to the given value
+     *
      * @param value The value
      * @return The criteria
      */
@@ -89,9 +91,8 @@ public interface Criteria {
     /**
      * Creates an "equals" Criterion based on the specified property name and value
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return The criteria
      */
     Criteria eq(String propertyName, Object propertyValue);
@@ -100,7 +101,6 @@ public interface Criteria {
      * Creates an "equals" Criterion based on the specified property name and value
      *
      * @param propertyValue The property value
-     *
      * @return The criteria
      */
     Criteria idEq(Object propertyValue);
@@ -108,9 +108,8 @@ public interface Criteria {
     /**
      * Creates a "not equals" Criterion based on the specified property name and value
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return The criteria
      */
     Criteria ne(String propertyName, Object propertyValue);
@@ -119,57 +118,62 @@ public interface Criteria {
      * Restricts the results by the given property value range (inclusive)
      *
      * @param propertyName The property name
-     *
-     * @param start The start of the range
-     * @param finish The end of the range
+     * @param start        The start of the range
+     * @param finish       The end of the range
      * @return The criteria
      */
     Criteria between(String propertyName, Object start, Object finish);
 
     /**
      * Used to restrict a value to be greater than or equal to the given value
+     *
      * @param property The property
-     * @param value The value
+     * @param value    The value
      * @return The Criterion instance
      */
     Criteria gte(String property, Object value);
 
     /**
      * Used to restrict a value to be greater than or equal to the given value
+     *
      * @param property The property
-     * @param value The value
+     * @param value    The value
      * @return The Criterion instance
      */
     Criteria ge(String property, Object value);
 
     /**
      * Used to restrict a value to be greater than or equal to the given value
+     *
      * @param property The property
-     * @param value The value
+     * @param value    The value
      * @return The Criterion instance
      */
     Criteria gt(String property, Object value);
 
     /**
      * Used to restrict a value to be less than or equal to the given value
+     *
      * @param property The property
-     * @param value The value
+     * @param value    The value
      * @return The Criterion instance
      */
     Criteria lte(String property, Object value);
 
     /**
      * Used to restrict a value to be less than or equal to the given value
+     *
      * @param property The property
-     * @param value The value
+     * @param value    The value
      * @return The Criterion instance
      */
     Criteria le(String property, Object value);
 
     /**
      * Used to restrict a value to be less than or equal to the given value
+     *
      * @param property The property
-     * @param value The value
+     * @param value    The value
      * @return The Criterion instance
      */
     Criteria lt(String property, Object value);
@@ -177,9 +181,8 @@ public interface Criteria {
     /**
      * Creates a like Criterion based on the specified property name and value
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return The criteria
      */
     Criteria like(String propertyName, Object propertyValue);
@@ -187,9 +190,8 @@ public interface Criteria {
     /**
      * Creates an ilike Criterion based on the specified property name and value. Unlike a like condition, ilike is case insensitive
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return The criteria
      */
     Criteria ilike(String propertyName, Object propertyValue);
@@ -197,23 +199,23 @@ public interface Criteria {
     /**
      * Creates an rlike Criterion based on the specified property name and value
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return The criteria
      */
     Criteria rlike(String propertyName, Object propertyValue);
 
     /**
      * Creates a logical conjunction
-     * @param callable The closure
      *
+     * @param callable The closure
      * @return This criteria
      */
     Criteria and(@DelegatesTo(Criteria.class) Closure callable);
 
     /**
      * Creates a logical disjunction
+     *
      * @param callable The closure
      * @return This criteria
      */
@@ -221,6 +223,7 @@ public interface Criteria {
 
     /**
      * Creates a logical negation
+     *
      * @param callable The closure
      * @return This criteria
      */
@@ -230,8 +233,7 @@ public interface Criteria {
      * Creates an "in" Criterion based on the specified property name and list of values
      *
      * @param propertyName The property name
-     * @param values The values
-     *
+     * @param values       The values
      * @return The criteria
      */
     Criteria in(String propertyName, Collection values);
@@ -240,8 +242,7 @@ public interface Criteria {
      * Creates an "in" Criterion using a subquery
      *
      * @param propertyName The property name
-     * @param subquery The subquery
-     *
+     * @param subquery     The subquery
      * @return The criteria
      */
     Criteria in(String propertyName, QueryableCriteria<?> subquery);
@@ -251,8 +252,7 @@ public interface Criteria {
      * Creates an "in" Criterion using a subquery
      *
      * @param propertyName The property name
-     * @param subquery The subquery
-     *
+     * @param subquery     The subquery
      * @return The criteria
      */
     Criteria inList(String propertyName, QueryableCriteria<?> subquery);
@@ -261,8 +261,7 @@ public interface Criteria {
      * Creates an "in" Criterion using a subquery
      *
      * @param propertyName The property name
-     * @param subquery The subquery
-     *
+     * @param subquery     The subquery
      * @return The criteria
      */
     Criteria in(String propertyName, Closure<?> subquery);
@@ -271,8 +270,7 @@ public interface Criteria {
      * Creates an "in" Criterion using a subquery
      *
      * @param propertyName The property name
-     * @param subquery The subquery
-     *
+     * @param subquery     The subquery
      * @return The criteria
      */
     Criteria inList(String propertyName, Closure<?> subquery);
@@ -281,8 +279,7 @@ public interface Criteria {
      * Creates an "in" Criterion based on the specified property name and list of values
      *
      * @param propertyName The property name
-     * @param values The values
-     *
+     * @param values       The values
      * @return The criteria
      */
     Criteria inList(String propertyName, Collection values);
@@ -291,8 +288,7 @@ public interface Criteria {
      * Creates an "in" Criterion based on the specified property name and list of values
      *
      * @param propertyName The property name
-     * @param values The values
-     *
+     * @param values       The values
      * @return The criteria
      */
     Criteria inList(String propertyName, Object[] values);
@@ -301,8 +297,7 @@ public interface Criteria {
      * Creates an "in" Criterion based on the specified property name and list of values
      *
      * @param propertyName The property name
-     * @param values The values
-     *
+     * @param values       The values
      * @return The criteria
      */
     Criteria in(String propertyName, Object[] values);
@@ -311,8 +306,7 @@ public interface Criteria {
      * Creates a negated "in" Criterion using a subquery
      *
      * @param propertyName The property name
-     * @param subquery The subquery
-     *
+     * @param subquery     The subquery
      * @return The criteria
      */
     Criteria notIn(String propertyName, QueryableCriteria<?> subquery);
@@ -321,8 +315,7 @@ public interface Criteria {
      * Creates a negated "in" Criterion using a subquery
      *
      * @param propertyName The property name
-     * @param subquery The subquery
-     *
+     * @param subquery     The subquery
      * @return The criteria
      */
     Criteria notIn(String propertyName, Closure<?> subquery);
@@ -347,8 +340,7 @@ public interface Criteria {
      * Orders by the specified property name and direction
      *
      * @param propertyName The property name to order by
-     * @param direction Either "asc" for ascending or "desc" for descending
-     *
+     * @param direction    Either "asc" for ascending or "desc" for descending
      * @return This criteria
      */
     Criteria order(String propertyName, String direction);
@@ -357,8 +349,7 @@ public interface Criteria {
      * Creates a Criterion that constrains a collection property by size
      *
      * @param propertyName The property name
-     * @param size The size to constrain by
-     *
+     * @param size         The size to constrain by
      * @return This criteria
      */
     Criteria sizeEq(String propertyName, int size);
@@ -367,8 +358,7 @@ public interface Criteria {
      * Creates a Criterion that constrains a collection property to be greater than the given size
      *
      * @param propertyName The property name
-     * @param size The size to constrain by
-     *
+     * @param size         The size to constrain by
      * @return This criteria
      */
     Criteria sizeGt(String propertyName, int size);
@@ -377,8 +367,7 @@ public interface Criteria {
      * Creates a Criterion that constrains a collection property to be greater than or equal to the given size
      *
      * @param propertyName The property name
-     * @param size The size to constrain by
-     *
+     * @param size         The size to constrain by
      * @return This criteria
      */
     Criteria sizeGe(String propertyName, int size);
@@ -387,8 +376,7 @@ public interface Criteria {
      * Creates a Criterion that constrains a collection property to be less than or equal to the given size
      *
      * @param propertyName The property name
-     * @param size The size to constrain by
-     *
+     * @param size         The size to constrain by
      * @return This criteria
      */
     Criteria sizeLe(String propertyName, int size);
@@ -397,8 +385,7 @@ public interface Criteria {
      * Creates a Criterion that constrains a collection property to be less than to the given size
      *
      * @param propertyName The property name
-     * @param size The size to constrain by
-     *
+     * @param size         The size to constrain by
      * @return This criteria
      */
     Criteria sizeLt(String propertyName, int size);
@@ -407,8 +394,7 @@ public interface Criteria {
      * Creates a Criterion that constrains a collection property to be not equal to the given size
      *
      * @param propertyName The property name
-     * @param size The size to constrain by
-     *
+     * @param size         The size to constrain by
      * @return This criteria
      */
     Criteria sizeNe(String propertyName, int size);
@@ -416,7 +402,7 @@ public interface Criteria {
     /**
      * Constrains a property to be equal to a specified other property
      *
-     * @param propertyName The property
+     * @param propertyName      The property
      * @param otherPropertyName The other property
      * @return This criteria
      */
@@ -425,7 +411,7 @@ public interface Criteria {
     /**
      * Constrains a property to be not equal to a specified other property
      *
-     * @param propertyName The property
+     * @param propertyName      The property
      * @param otherPropertyName The other property
      * @return This criteria
      */
@@ -434,7 +420,7 @@ public interface Criteria {
     /**
      * Constrains a property to be greater than a specified other property
      *
-     * @param propertyName The property
+     * @param propertyName      The property
      * @param otherPropertyName The other property
      * @return This criteria
      */
@@ -443,7 +429,7 @@ public interface Criteria {
     /**
      * Constrains a property to be greater than or equal to a specified other property
      *
-     * @param propertyName The property
+     * @param propertyName      The property
      * @param otherPropertyName The other property
      * @return This criteria
      */
@@ -452,7 +438,7 @@ public interface Criteria {
     /**
      * Constrains a property to be less than a specified other property
      *
-     * @param propertyName The property
+     * @param propertyName      The property
      * @param otherPropertyName The other property
      * @return This criteria
      */
@@ -461,7 +447,7 @@ public interface Criteria {
     /**
      * Constrains a property to be less than or equal to a specified other property
      *
-     * @param propertyName The property
+     * @param propertyName      The property
      * @param otherPropertyName The other property
      * @return This criteria
      */
@@ -471,9 +457,7 @@ public interface Criteria {
      * Apply an "equals" constraint to each property in the key set of a <tt>Map</tt>
      *
      * @param propertyValues a map from property names to values
-     *
      * @return Criterion
-     *
      * @see org.grails.datastore.mapping.query.Query.Conjunction
      */
     Criteria allEq(Map<String, Object> propertyValues);
@@ -484,7 +468,7 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is equals to all the given returned values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue A closure that is converted to a {@link org.grails.datastore.mapping.query.api.QueryableCriteria}
      * @return This criterion instance
      */
@@ -493,7 +477,7 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is greater than all the given returned values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue A closure that is converted to a {@link org.grails.datastore.mapping.query.api.QueryableCriteria}
      * @return This criterion instance
      */
@@ -502,7 +486,7 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is less than all the given returned values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue A closure that is converted to a {@link org.grails.datastore.mapping.query.api.QueryableCriteria}
      * @return This criterion instance
      */
@@ -511,7 +495,7 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is greater than or equals to all the given returned values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue A closure that is converted to a {@link org.grails.datastore.mapping.query.api.QueryableCriteria}
      * @return This criterion instance
      */
@@ -520,7 +504,7 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is less than or equal to all the given returned values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue A closure that is converted to a {@link org.grails.datastore.mapping.query.api.QueryableCriteria}
      * @return This criterion instance
      */
@@ -529,9 +513,8 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is equal to all the given returned values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return This Criteria instance
      */
     Criteria eqAll(String propertyName, QueryableCriteria propertyValue);
@@ -539,9 +522,8 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is greater than all the given returned values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return This Criteria instance
      */
     Criteria gtAll(String propertyName, QueryableCriteria propertyValue);
@@ -549,9 +531,8 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is less than all the given returned values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return This Criteria instance
      */
     Criteria ltAll(String propertyName, QueryableCriteria propertyValue);
@@ -559,9 +540,8 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is greater than all the given returned values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return This Criteria instance
      */
     Criteria geAll(String propertyName, QueryableCriteria propertyValue);
@@ -569,9 +549,8 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is less than all the given returned values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return This Criteria instance
      */
     Criteria leAll(String propertyName, QueryableCriteria propertyValue);
@@ -580,9 +559,8 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is greater than some of the given values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return This Criteria instance
      */
     Criteria gtSome(String propertyName, QueryableCriteria propertyValue);
@@ -590,9 +568,8 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is greater than some of the given values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return This Criteria instance
      */
     Criteria gtSome(String propertyName, Closure<?> propertyValue);
@@ -600,9 +577,8 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is greater than or equal to some of the given values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return This Criteria instance
      */
     Criteria geSome(String propertyName, QueryableCriteria propertyValue);
@@ -610,9 +586,8 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is greater than or equal to some of the given values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return This Criteria instance
      */
     Criteria geSome(String propertyName, Closure<?> propertyValue);
@@ -621,9 +596,8 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is less than some of the given values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return This Criteria instance
      */
     Criteria ltSome(String propertyName, QueryableCriteria propertyValue);
@@ -631,9 +605,8 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is less than some of the given values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return This Criteria instance
      */
     Criteria ltSome(String propertyName, Closure<?> propertyValue);
@@ -641,9 +614,8 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is less than or equal to some of the given values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return This Criteria instance
      */
     Criteria leSome(String propertyName, QueryableCriteria propertyValue);
@@ -651,21 +623,19 @@ public interface Criteria {
     /**
      * Creates a subquery criterion that ensures the given property is less than or equal to some of the given values
      *
-     * @param propertyName The property name
+     * @param propertyName  The property name
      * @param propertyValue The property value
-     *
      * @return This Criteria instance
      */
     Criteria leSome(String propertyName, Closure<?> propertyValue);
 
     /**
      * <p>Configures the second-level cache with the default usage of 'read-write' and the default include of 'all' if
-     *  the passed argument is true
+     * the passed argument is true
      *
      * <code> { cache true } </code>
      *
      * @param shouldCache True if the default cache configuration should be applied
-     *
      * @return This Criteria instance
      */
     Criteria cache(boolean shouldCache);
@@ -676,8 +646,7 @@ public interface Criteria {
      * <code> { readOnly true } </code>
      *
      * @param readOnly True to disable dirty checking
-     *
-     * @return This Criteria instance          
+     * @return This Criteria instance
      */
     Criteria readOnly(boolean readOnly);
 

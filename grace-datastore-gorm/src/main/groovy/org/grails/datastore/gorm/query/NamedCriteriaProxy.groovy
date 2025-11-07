@@ -1,11 +1,11 @@
 /*
- * Copyright 2015 original authors
+ * Copyright 2015-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,7 +41,6 @@ class NamedCriteriaProxy<D> implements GormQueryOperations<D> {
     private namedCriteriaParams
     private previousInChain
     private queryBuilder
-
 
     NamedCriteriaProxy(Closure criteriaClosure, PersistentEntity entity, List finders) {
         this.criteriaClosure = (Closure) criteriaClosure.clone()
@@ -175,7 +174,6 @@ class NamedCriteriaProxy<D> implements GormQueryOperations<D> {
         count(Collections.emptyMap(), additionalCriteria)
     }
 
-
     D findWhere(Map params) {
         def queryClosure = {
             queryBuilder = delegate
@@ -234,7 +232,6 @@ class NamedCriteriaProxy<D> implements GormQueryOperations<D> {
             }
         }
         else {
-
             try {
                 return queryBuilder."${methodName}"(*args)
             }
@@ -258,7 +255,6 @@ class NamedCriteriaProxy<D> implements GormQueryOperations<D> {
                 }
             }
         }
-
     }
 
     private Closure getPreparedCriteriaClosure(additionalCriteriaClosure = null) {

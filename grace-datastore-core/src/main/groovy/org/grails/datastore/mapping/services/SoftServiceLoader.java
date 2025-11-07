@@ -1,11 +1,11 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -144,7 +144,7 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
     }
 
     /**
-     * @param alternative An alternative type to use if the this type is not present
+     * @param alternative An alternative type to use if the type is not present
      * @param classLoader The classloader
      * @return Return the first such instance
      */
@@ -175,14 +175,15 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
     @Override
     public Iterator<ServiceDefinition<S>> iterator() {
         return new Iterator<ServiceDefinition<S>>() {
-            Iterator<ServiceDefinition<S>> loaded = loadedServices.values().iterator();
+
+            Iterator<ServiceDefinition<S>> loaded = SoftServiceLoader.this.loadedServices.values().iterator();
 
             @Override
             public boolean hasNext() {
-                if (loaded.hasNext()) {
+                if (this.loaded.hasNext()) {
                     return true;
                 }
-                if (unloadedServices.hasNext()) {
+                if (SoftServiceLoader.this.unloadedServices.hasNext()) {
                     return true;
                 }
                 return false;
@@ -194,12 +195,12 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
                     throw new NoSuchElementException();
                 }
 
-                if (loaded.hasNext()) {
-                    return loaded.next();
+                if (this.loaded.hasNext()) {
+                    return this.loaded.next();
                 }
-                if (unloadedServices.hasNext()) {
-                    ServiceDefinition<S> nextService = unloadedServices.next();
-                    loadedServices.put(nextService.getName(), nextService);
+                if (SoftServiceLoader.this.unloadedServices.hasNext()) {
+                    ServiceDefinition<S> nextService = SoftServiceLoader.this.unloadedServices.next();
+                    SoftServiceLoader.this.loadedServices.put(nextService.getName(), nextService);
                     return nextService;
                 }
                 // should not happen
@@ -230,25 +231,25 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
         @Override
         public boolean hasNext() {
 
-            if (serviceConfigs == null) {
-                String name = serviceType.getName();
+            if (this.serviceConfigs == null) {
+                String name = SoftServiceLoader.this.serviceType.getName();
                 try {
-                    serviceConfigs = classLoader.getResources(META_INF_SERVICES + '/' + name);
+                    this.serviceConfigs = SoftServiceLoader.this.classLoader.getResources(META_INF_SERVICES + '/' + name);
                 }
                 catch (IOException e) {
                     throw new ServiceConfigurationError("Failed to load resources for service: " + name, e);
                 }
             }
-            while (unprocessed == null || !unprocessed.hasNext()) {
-                if (!serviceConfigs.hasMoreElements()) {
+            while (this.unprocessed == null || !this.unprocessed.hasNext()) {
+                if (!this.serviceConfigs.hasMoreElements()) {
                     return false;
                 }
-                URL url = serviceConfigs.nextElement();
+                URL url = this.serviceConfigs.nextElement();
                 try {
                     try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
                         List<String> lines = reader.lines()
                                 .filter((line) -> line.length() != 0 && line.charAt(0) != '#')
-                                .filter(condition)
+                                .filter(SoftServiceLoader.this.condition)
                                 .map((line) -> {
                                     int i = line.indexOf('#');
                                     if (i > -1) {
@@ -257,15 +258,14 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
                                     return line;
                                 })
                                 .collect(Collectors.toList());
-                        unprocessed = lines.iterator();
-
+                        this.unprocessed = lines.iterator();
                     }
                 }
                 catch (IOException e) {
                     // ignore, can't do anything here and can't log because class used in compiler
                 }
             }
-            return unprocessed.hasNext();
+            return this.unprocessed.hasNext();
         }
 
         @Override
@@ -274,9 +274,9 @@ public final class SoftServiceLoader<S> implements Iterable<ServiceDefinition<S>
                 throw new NoSuchElementException();
             }
 
-            String nextName = unprocessed.next();
+            String nextName = this.unprocessed.next();
             try {
-                final Class<?> loadedClass = Class.forName(nextName, false, classLoader);
+                final Class<?> loadedClass = Class.forName(nextName, false, SoftServiceLoader.this.classLoader);
                 return newService(nextName, Optional.of(loadedClass));
             }
             catch (NoClassDefFoundError | ClassNotFoundException e) {

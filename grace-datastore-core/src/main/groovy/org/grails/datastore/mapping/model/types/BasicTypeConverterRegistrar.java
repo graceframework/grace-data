@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,45 +32,64 @@ public class BasicTypeConverterRegistrar {
 
     public void register(ConverterRegistry registry) {
         registry.addConverter(new Converter<Class, String>() {
+
             @Override
             public String convert(Class aClass) {
                 return aClass.getName();
             }
+
         });
 
         registry.addConverter(new Converter<Date, String>() {
+
+            @Override
             public String convert(Date date) {
                 return String.valueOf(date.getTime());
             }
+
         });
 
         registry.addConverter(new Converter<Date, Calendar>() {
+
+            @Override
             public Calendar convert(Date date) {
                 final GregorianCalendar calendar = new GregorianCalendar();
                 calendar.setTime(date);
                 return calendar;
             }
+
         });
 
         registry.addConverter(new Converter<Integer, Long>() {
+
+            @Override
             public Long convert(Integer integer) {
                 return integer.longValue();
             }
+
         });
 
         registry.addConverter(new Converter<Long, Integer>() {
+
+            @Override
             public Integer convert(Long longValue) {
                 return longValue.intValue();
             }
+
         });
 
         registry.addConverter(new Converter<Integer, Double>() {
+
+            @Override
             public Double convert(Integer integer) {
                 return integer.doubleValue();
             }
+
         });
 
         registry.addConverter(new Converter<CharSequence, Date>() {
+
+            @Override
             public Date convert(CharSequence s) {
                 try {
                     final Long time = Long.valueOf(s.toString());
@@ -79,9 +99,12 @@ public class BasicTypeConverterRegistrar {
                     throw new IllegalArgumentException(e);
                 }
             }
+
         });
 
         registry.addConverter(new Converter<CharSequence, Double>() {
+
+            @Override
             public Double convert(CharSequence s) {
                 try {
                     return Double.valueOf(s.toString());
@@ -90,9 +113,12 @@ public class BasicTypeConverterRegistrar {
                     throw new IllegalArgumentException(e);
                 }
             }
+
         });
 
         registry.addConverter(new Converter<CharSequence, Integer>() {
+
+            @Override
             public Integer convert(CharSequence s) {
                 try {
                     return Integer.valueOf(s.toString());
@@ -101,9 +127,12 @@ public class BasicTypeConverterRegistrar {
                     throw new IllegalArgumentException(e);
                 }
             }
+
         });
 
         registry.addConverter(new Converter<CharSequence, Long>() {
+
+            @Override
             public Long convert(CharSequence s) {
                 try {
                     return Long.valueOf(s.toString());
@@ -112,21 +141,30 @@ public class BasicTypeConverterRegistrar {
                     throw new IllegalArgumentException(e);
                 }
             }
+
         });
 
         registry.addConverter(new Converter<Object, String>() {
+
+            @Override
             public String convert(Object o) {
                 return o.toString();
             }
+
         });
 
         registry.addConverter(new Converter<Calendar, String>() {
+
+            @Override
             public String convert(Calendar calendar) {
                 return String.valueOf(calendar.getTime().getTime());
             }
+
         });
 
         registry.addConverter(new Converter<CharSequence, Calendar>() {
+
+            @Override
             public Calendar convert(CharSequence s) {
                 try {
                     Date date = new Date(Long.valueOf(s.toString()));
@@ -138,7 +176,9 @@ public class BasicTypeConverterRegistrar {
                     throw new IllegalArgumentException(e);
                 }
             }
+
         });
+
     }
 
 }

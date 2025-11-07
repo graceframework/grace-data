@@ -1,18 +1,18 @@
 /*
- * Copyright 2014 original authors
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.grails.datastore.mapping.proxy;
 
 import java.io.Serializable;
@@ -45,7 +45,6 @@ public class SessionEntityProxyMethodHandler extends EntityProxyMethodHandler {
 
     protected Object target;
 
-
     public SessionEntityProxyMethodHandler(Class proxyClass, Session session, Class cls, Serializable id) {
         super(proxyClass);
         this.session = session;
@@ -55,40 +54,40 @@ public class SessionEntityProxyMethodHandler extends EntityProxyMethodHandler {
 
     @Override
     protected Object resolveDelegate(Object self) {
-        if (target == null) {
+        if (this.target == null) {
             initializeTarget(self);
 
             // This tends to happen during unit testing if the proxy class is not properly mocked
             // and therefore can't be found in the session.
-            if (target == null) {
-                throw new DataIntegrityViolationException("Proxy for [" + cls.getName() + ":" + id + "] could not be initialized");
+            if (this.target == null) {
+                throw new DataIntegrityViolationException("Proxy for [" + this.cls.getName() + ":" + this.id + "] could not be initialized");
             }
         }
-        return target;
+        return this.target;
     }
 
     protected void initializeTarget() {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Lazy loading proxy for class {} with id {}", cls.getName(), id);
+            LOG.debug("Lazy loading proxy for class {} with id {}", this.cls.getName(), this.id);
         }
-        target = session.retrieve(cls, id);
+        this.target = session.retrieve(this.cls, this.id);
     }
 
     protected void initializeTarget(Object self) {
         initializeTarget();
-        if (target instanceof DirtyCheckable) {
-            ((DirtyCheckable) target).syncChangedProperties(self);
+        if (this.target instanceof DirtyCheckable) {
+            ((DirtyCheckable) this.target).syncChangedProperties(self);
         }
     }
 
     @Override
     protected Object isProxyInitiated(Object self) {
-        return target != null;
+        return this.target != null;
     }
 
     @Override
     protected Object getProxyKey(Object self) {
-        return id;
+        return this.id;
     }
 
     protected Object handleInvocationFallback(Object self, Method thisMethod, Object[] args) {

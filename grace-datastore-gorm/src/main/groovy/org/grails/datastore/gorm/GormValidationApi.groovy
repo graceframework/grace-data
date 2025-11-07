@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -45,7 +46,7 @@ import org.grails.datastore.mapping.validation.ValidationErrors
 @CompileStatic
 class GormValidationApi<D> extends AbstractGormApi<D> {
 
-    public static final String ARGUMENT_DEEP_VALIDATE = "deepValidate";
+    public static final String ARGUMENT_DEEP_VALIDATE = 'deepValidate'
 
     private Validator internalValidator
     BeforeValidateHelper beforeValidateHelper
@@ -171,14 +172,18 @@ class GormValidationApi<D> extends AbstractGormApi<D> {
     }
 
     private ValidationErrors filterErrors(ValidationErrors errors, Set validatedFields, Object target) {
-        if (!validatedFields) return errors
+        if (!validatedFields) {
+            return errors
+        }
 
         Errors result = new ValidationErrors(target)
 
         for (ObjectError error : errors.getAllErrors()) {
             if (error instanceof FieldError) {
                 FieldError fieldError = (FieldError) error
-                if (!validatedFields.contains(fieldError.getField())) continue
+                if (!validatedFields.contains(fieldError.getField())) {
+                    continue
+                }
             }
 
             result.addError(error)

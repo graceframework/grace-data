@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.services.implementers
 
 import groovy.transform.CompileStatic
@@ -62,7 +77,7 @@ abstract class AbstractServiceImplementer implements PrefixedServiceImplementer,
 
     @Override
     String resolvePrefix(MethodNode mn) {
-        return handledPrefixes.find() { String it -> mn.name.startsWith(it) }
+        return handledPrefixes.find { String it -> mn.name.startsWith(it) }
     }
 
     /**
@@ -115,48 +130,48 @@ abstract class AbstractServiceImplementer implements PrefixedServiceImplementer,
      * @return The datastore expression
      */
     protected Expression datastore() {
-        return propX(varX("this"), "targetDatastore")
+        return propX(varX('this'), 'targetDatastore')
     }
 
     /**
      * @return The datastore expression
      */
     protected Expression transactionalDatastore() {
-        return castX(ClassHelper.make(TransactionCapableDatastore), propX(varX("this"), "targetDatastore"))
+        return castX(ClassHelper.make(TransactionCapableDatastore), propX(varX('this'), 'targetDatastore'))
     }
 
     /**
      * @return The datastore expression
      */
     protected Expression multiTenantDatastore() {
-        return castX(ClassHelper.make(MultiTenantCapableDatastore), propX(varX("this"), "targetDatastore"))
+        return castX(ClassHelper.make(MultiTenantCapableDatastore), propX(varX('this'), 'targetDatastore'))
     }
 
     /**
      * @return The tenant service
      */
     protected Expression tenantService() {
-        return callD(ServiceRegistry, "targetDatastore", "getService", classX(make(TenantService)))
+        return callD(ServiceRegistry, 'targetDatastore', 'getService', classX(make(TenantService)))
     }
 
     /**
      * @return The transaction service
      */
     protected Expression transactionService() {
-        return callD(ServiceRegistry, "targetDatastore", "getService", classX(make(TransactionService)))
+        return callD(ServiceRegistry, 'targetDatastore', 'getService', classX(make(TransactionService)))
     }
 
     protected Expression findConnectionId(MethodNode methodNode) {
         if (TenantTransform.hasTenantAnnotation(methodNode)) {
-            return callD(classX(ClassHelper.make(MultiTenancySettings)), "resolveConnectionForTenantId", args(
-                    propX(multiTenantDatastore(), "multiTenancyMode"), callD(tenantService(), "currentId")
+            return callD(classX(ClassHelper.make(MultiTenancySettings)), 'resolveConnectionForTenantId', args(
+                    propX(multiTenantDatastore(), 'multiTenancyMode'), callD(tenantService(), 'currentId')
             ))
         }
         else {
             AnnotationNode ann = TransactionalTransform.findTransactionalAnnotation(methodNode)
-            Expression connectionId = ann?.getMember("connection")
+            Expression connectionId = ann?.getMember('connection')
             if (connectionId == null) {
-                connectionId = ann?.getMember("value")
+                connectionId = ann?.getMember('value')
             }
             return connectionId
         }
@@ -164,13 +179,13 @@ abstract class AbstractServiceImplementer implements PrefixedServiceImplementer,
 
     protected Expression buildInstanceApiLookup(ClassNode domainClass, Expression connectionId) {
         return AstMethodDispatchUtils.callD(
-                classX(GormEnhancer), "findInstanceApi", args(classX(domainClass), connectionId)
+                classX(GormEnhancer), 'findInstanceApi', args(classX(domainClass), connectionId)
         )
     }
 
     protected Expression buildStaticApiLookup(ClassNode domainClass, Expression connectionId) {
         return AstMethodDispatchUtils.callD(
-                classX(GormEnhancer), "findStaticApi", args(classX(domainClass), connectionId)
+                classX(GormEnhancer), 'findStaticApi', args(classX(domainClass), connectionId)
         )
     }
 

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm
 
 import groovy.transform.CompileStatic
@@ -13,13 +28,13 @@ import groovy.transform.PackageScope
 @CompileStatic
 class CurrentTenant {
 
-    private static final ThreadLocal<Serializable> currentTenantThreadLocal = new ThreadLocal<>()
+    private static final ThreadLocal<Serializable> CURRENT_TENANT_THREAD_LOCAL = new ThreadLocal<>()
 
     /**
      * @return Obtain the current tenant
      */
     static Serializable get() {
-        currentTenantThreadLocal.get()
+        CURRENT_TENANT_THREAD_LOCAL.get()
     }
 
     /**
@@ -28,11 +43,11 @@ class CurrentTenant {
      * @param tenantId The tenant id
      */
     private static void set(Serializable tenantId) {
-        currentTenantThreadLocal.set(tenantId)
+        CURRENT_TENANT_THREAD_LOCAL.set(tenantId)
     }
 
     private static void remove() {
-        currentTenantThreadLocal.remove()
+        CURRENT_TENANT_THREAD_LOCAL.remove()
     }
 
     /**
@@ -41,7 +56,7 @@ class CurrentTenant {
      * @param callable The closure
      * @return The result of the closure
      */
-    public static <T> T withTenant(Serializable tenantId, Closure<T> callable) {
+    static <T> T withTenant(Serializable tenantId, Closure<T> callable) {
         try {
             set(tenantId)
             callable.call()

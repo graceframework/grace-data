@@ -12,6 +12,7 @@ import org.springframework.context.MessageSource
  * @since 6.0
  */
 class MappingContextAwareConstraintFactory extends DefaultConstraintFactory {
+
     final MappingContext mappingContext
 
     MappingContextAwareConstraintFactory(Class<? extends Constraint> constraintClass, MessageSource messageSource, MappingContext mappingContext, List<Class> targetTypes = [Object]) {
@@ -21,7 +22,7 @@ class MappingContextAwareConstraintFactory extends DefaultConstraintFactory {
 
     @Override
     Constraint build(Class owner, String property, Object constrainingValue) {
-        if(mappingContext.getPersistentEntity(owner.name) != null) {
+        if (mappingContext.getPersistentEntity(owner.name) != null) {
             return super.build(owner, property, constrainingValue)
         }
         return null

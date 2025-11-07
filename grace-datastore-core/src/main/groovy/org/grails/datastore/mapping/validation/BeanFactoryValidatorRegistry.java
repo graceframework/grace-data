@@ -1,3 +1,19 @@
+/*
+ * Copyright 2015-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.grails.datastore.mapping.validation;
 
 import org.springframework.beans.factory.BeanFactory;
@@ -24,16 +40,16 @@ public class BeanFactoryValidatorRegistry implements ValidatorRegistry {
     @Override
     public Validator getValidator(PersistentEntity entity) {
         String validatorName = entity.getName() + "Validator";
-        if (beanFactory.containsBean(validatorName)) {
-            return beanFactory.getBean(validatorName, Validator.class);
+        if (this.beanFactory.containsBean(validatorName)) {
+            return this.beanFactory.getBean(validatorName, Validator.class);
         }
         return null;
     }
 
     @Override
     public MessageSource getMessageSource() {
-        if (beanFactory instanceof MessageSource) {
-            return (MessageSource) beanFactory;
+        if (this.beanFactory instanceof MessageSource) {
+            return (MessageSource) this.beanFactory;
         }
         else {
             return new StaticMessageSource();

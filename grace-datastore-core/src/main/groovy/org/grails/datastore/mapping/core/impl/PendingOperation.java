@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,10 +22,9 @@ import org.grails.datastore.mapping.model.PersistentEntity;
 /**
  * An operation that is pending execution.
  *
- * @author Graeme Rocher
- *
  * @param <E> The native entity type (examples could be Row, Document etc.)
  * @param <K> The native key
+ * @author Graeme Rocher
  */
 public interface PendingOperation<E, K> extends Runnable {
 
@@ -60,18 +60,21 @@ public interface PendingOperation<E, K> extends Runnable {
 
     /**
      * Operations to be executed directly prior to this operation
+     *
      * @return The operations to execute prior
      */
     List<PendingOperation<E, K>> getPreOperations();
 
     /**
      * Adds an operation to executed prior to other operations
+     *
      * @param preOperation The prior operation
      */
     void addPreOperation(PendingOperation<E, K> preOperation);
 
     /**
      * Operations to be executed directly following this operation
+     *
      * @return The operations to cascade to
      */
     List<PendingOperation<E, K>> getCascadeOperations();

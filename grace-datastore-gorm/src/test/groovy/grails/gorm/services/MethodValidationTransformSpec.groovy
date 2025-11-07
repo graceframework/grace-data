@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.services
 
 import org.grails.datastore.gorm.validation.javax.services.ValidatedService
@@ -12,7 +27,7 @@ import jakarta.validation.ParameterNameProvider
  */
 class MethodValidationTransformSpec extends Specification {
 
-    void "test simple validated property"() {
+    void 'test simple validated property'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -39,22 +54,22 @@ class Foo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
-        Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
+        when:'the impl is obtained'
+        Class impl = service.classLoader.loadClass('\$MyServiceImplementation')
 
-        then:"The impl is valid"
+        then:'The impl is valid'
         org.grails.datastore.mapping.services.Service.isAssignableFrom(impl)
         ValidatedService.isAssignableFrom(impl)
 
-        when:"The parameter data is obtained"
-        ParameterNameProvider parameterNameProvider = service.classLoader.loadClass("\$MyServiceImplementation\$ParameterNameProvider").newInstance()
+        when:'The parameter data is obtained'
+        ParameterNameProvider parameterNameProvider = service.classLoader.loadClass('\$MyServiceImplementation\$ParameterNameProvider').newInstance()
         def instance = impl.newInstance()
 
-        then:"It is correct"
+        then:'It is correct'
         parameterNameProvider != null
-        parameterNameProvider.getParameterNames(impl.getMethod("find", String)) == ["title"]
+        parameterNameProvider.getParameterNames(impl.getMethod('find', String)) == ['title']
         instance.parameterNameProvider != null
-        instance.parameterNameProvider.getParameterNames(impl.getMethod("find", String)) == ["title"]
+        instance.parameterNameProvider.getParameterNames(impl.getMethod('find', String)) == ['title']
         instance.validatorFactory != null
 
 
@@ -68,14 +83,14 @@ class Foo {
         e.constraintViolations.first().propertyPath.toString() == 'find.title'
 
         when:
-        instance.findAgain("")
+        instance.findAgain('')
 
         then:
         def e2 = thrown(ValidationException)
         e2.message
         e2.errors.hasErrors()
         e2.errors.hasFieldErrors('title')
-        e2.errors.getFieldValue('title') == ""
+        e2.errors.getFieldValue('title') == ''
     }
 }
 

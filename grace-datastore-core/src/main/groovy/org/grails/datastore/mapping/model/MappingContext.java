@@ -1,10 +1,11 @@
-/* Copyright 2004-2005 the original author or authors.
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -69,6 +70,7 @@ public interface MappingContext {
 
     /**
      * Returns true if the given entity is in an inheritance hierarchy
+     *
      * @param entity The entity
      * @return True if it is
      */
@@ -76,7 +78,8 @@ public interface MappingContext {
 
     /**
      * Obtains a child of the given root entity using the given discriminator
-     * @param root The root entity
+     *
+     * @param root          The root entity
      * @param discriminator The discriminator
      * @return The child entity or null if non exists
      */
@@ -118,8 +121,7 @@ public interface MappingContext {
      * Adds a PersistentEntity instance
      *
      * @param javaClass The Java class representing the entity
-     * @param override Whether to override an existing entity
-     *
+     * @param override  Whether to override an existing entity
      * @return The PersistentEntity instance
      */
     PersistentEntity addPersistentEntity(Class javaClass, boolean override);
@@ -135,7 +137,8 @@ public interface MappingContext {
 
     /**
      * Adds a validator to be used by the entity for validation
-     * @param entity The PersistentEntity
+     *
+     * @param entity    The PersistentEntity
      * @param validator The validator
      */
     void addEntityValidator(PersistentEntity entity, Validator validator);
@@ -161,6 +164,7 @@ public interface MappingContext {
 
     /**
      * Obtains the ConversionService instance to use for type conversion
+     *
      * @return The conversion service instance
      */
     ConversionService getConversionService();
@@ -174,6 +178,7 @@ public interface MappingContext {
 
     /**
      * Obtains a validator for the given entity
+     *
      * @param entity The entity
      * @return A validator or null if none exists for the given entity
      */
@@ -189,12 +194,14 @@ public interface MappingContext {
 
     /**
      * Obtains the MappingFactory instance
+     *
      * @return The mapping factory instance
      */
     MappingFactory getMappingFactory();
 
     /**
      * Returns whether the specified class is a persistent entity
+     *
      * @param type The type to check
      * @return True if it is
      */
@@ -202,6 +209,7 @@ public interface MappingContext {
 
     /**
      * Returns whether the specified value is a persistent entity
+     *
      * @param value The value to check
      * @return True if it is
      */
@@ -209,6 +217,7 @@ public interface MappingContext {
 
     /**
      * Factory used for creating proxies
+     *
      * @return The proxy factory
      */
     ProxyFactory getProxyFactory();
@@ -222,12 +231,14 @@ public interface MappingContext {
 
     /**
      * Factory to use for creating proxies
+     *
      * @param factory The proxy factory
      */
     void setProxyFactory(ProxyFactory factory);
 
     /**
      * Adds a new mapping context listener instance
+     *
      * @param listener The listener
      */
     void addMappingContextListener(Listener listener);
@@ -242,11 +253,10 @@ public interface MappingContext {
      */
     EntityReflector getEntityReflector(PersistentEntity entity);
 
-
     /**
      * Creates an {@link EntityAccess} instance for the given entity and instance of said entity
      *
-     * @param entity The entity
+     * @param entity   The entity
      * @param instance The instance
      * @return The {@link EntityAccess}
      */
@@ -259,6 +269,7 @@ public interface MappingContext {
 
         /**
          * Fired when a new entity is added
+         *
          * @param entity The entity
          */
         void persistentEntityAdded(PersistentEntity entity);

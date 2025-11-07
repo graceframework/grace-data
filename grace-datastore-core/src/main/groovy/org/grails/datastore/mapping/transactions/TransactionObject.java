@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,7 +34,7 @@ public class TransactionObject implements SmartTransactionObject {
     private boolean newSession;
 
     public SessionHolder getSessionHolder() {
-        return sessionHolder;
+        return this.sessionHolder;
     }
 
     public Transaction<?> getTransaction() {
@@ -41,8 +42,8 @@ public class TransactionObject implements SmartTransactionObject {
     }
 
     /**
-     * @deprecated Here for binary compatibility, doesn't actually do anything
      * @param transaction
+     * @deprecated Here for binary compatibility, doesn't actually do anything
      */
     @Deprecated
     public void setTransaction(Transaction<?> transaction) {
@@ -67,22 +68,21 @@ public class TransactionObject implements SmartTransactionObject {
     }
 
     public boolean isNewSessionHolder() {
-        return newSessionHolder;
+        return this.newSessionHolder;
     }
 
     public boolean isNewSession() {
-        return newSession;
+        return this.newSession;
     }
-
 
     @Override
     public boolean isRollbackOnly() {
-        return sessionHolder.isRollbackOnly();
+        return this.sessionHolder.isRollbackOnly();
     }
 
     @Override
     public void flush() {
-        sessionHolder.getSession().flush();
+        this.sessionHolder.getSession().flush();
     }
 
 }

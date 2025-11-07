@@ -1,10 +1,11 @@
-/* Copyright 2004-2005 the original author or authors.
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -55,20 +56,24 @@ public abstract class AbstractPersistentProperty<T extends Property> implements 
         this.type = type;
     }
 
+    @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
+    @Override
     public String getCapitilizedName() {
         return NameUtils.capitalize(getName());
     }
 
+    @Override
     public Class getType() {
-        return type;
+        return this.type;
     }
 
+    @Override
     public PersistentEntity getOwner() {
-        return owner;
+        return this.owner;
     }
 
     @Override
@@ -80,6 +85,7 @@ public abstract class AbstractPersistentProperty<T extends Property> implements 
         return getName() + ":" + getType().getName() + " (" + mappingType + ")";
     }
 
+    @Override
     public boolean isNullable() {
         final T mappedForm = getMapping().getMappedForm();
         return mappedForm != null && mappedForm.isNullable();
@@ -87,15 +93,15 @@ public abstract class AbstractPersistentProperty<T extends Property> implements 
 
     @Override
     public boolean isInherited() {
-        if (inherited == null) {
-            if (owner.isRoot()) {
-                inherited = false;
+        if (this.inherited == null) {
+            if (this.owner.isRoot()) {
+                this.inherited = false;
             }
             else {
-                PersistentEntity parentEntity = owner.getParentEntity();
+                PersistentEntity parentEntity = this.owner.getParentEntity();
                 boolean foundInParent = false;
                 while (parentEntity != null) {
-                    final PersistentProperty p = parentEntity.getPropertyByName(name);
+                    final PersistentProperty p = parentEntity.getPropertyByName(this.name);
                     if (p != null) {
                         foundInParent = true;
                         break;
@@ -103,27 +109,27 @@ public abstract class AbstractPersistentProperty<T extends Property> implements 
                     parentEntity = parentEntity.getParentEntity();
                 }
 
-                inherited = foundInParent;
+                this.inherited = foundInParent;
             }
         }
 
-        return inherited;
+        return this.inherited;
     }
 
     @Override
     public EntityReflector.PropertyReader getReader() {
-        if (reader == null) {
-            reader = getOwner().getReflector().getPropertyReader(getName());
+        if (this.reader == null) {
+            this.reader = getOwner().getReflector().getPropertyReader(getName());
         }
-        return reader;
+        return this.reader;
     }
 
     @Override
     public EntityReflector.PropertyWriter getWriter() {
-        if (writer == null) {
-            writer = getOwner().getReflector().getPropertyWriter(getName());
+        if (this.writer == null) {
+            this.writer = getOwner().getReflector().getPropertyWriter(getName());
         }
-        return writer;
+        return this.writer;
     }
 
 }

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.tests
 
 /**
@@ -5,23 +20,26 @@ package grails.gorm.tests
  */
 class QueryByAssociationSpec extends GormDatastoreSpec {
 
-    void "Test query entity by single-ended association"() {
+    void 'Test query entity by single-ended association'() {
         given:
-            def age = 40
-            ["Bob", "Fred", "Barney", "Frank"].each { new TestEntity(name:it, age: age++, child:new ChildEntity(name:"$it Child")).save() }
+        def age = 40
+        ['Bob', 'Fred', 'Barney', 'Frank'].each {
+            new TestEntity(name: it, age: age++, child: new ChildEntity(name: "$it Child")).save()
+        }
 
         when:
-            def child = ChildEntity.findByName("Barney Child")
+        def child = ChildEntity.findByName('Barney Child')
 
         then:
-            child != null
-            child.id != null
+        child != null
+        child.id != null
 
         when:
-            def t = TestEntity.findByChild(child)
+        def t = TestEntity.findByChild(child)
 
         then:
-            t != null
-            "Barney" == t.name
+        t != null
+        t.name == 'Barney'
     }
+
 }

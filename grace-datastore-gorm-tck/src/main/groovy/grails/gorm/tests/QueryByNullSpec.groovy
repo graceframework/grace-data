@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.tests
 
 class QueryByNullSpec extends GormDatastoreSpec {
@@ -5,15 +20,16 @@ class QueryByNullSpec extends GormDatastoreSpec {
     void 'Test passing null as the sole argument to a dynamic finder multiple times'() {
         // see GRAILS-3463
         when:
-            def people = Person.findAllByLastName(null)
+        def people = Person.findAllByLastName(null)
 
         then:
-            !people
+        !people
 
         when:
-            people - Person.findAllByLastName(null)
+        people - Person.findAllByLastName(null)
 
-       then:
-            !people
+        then:
+        !people
     }
+
 }

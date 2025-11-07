@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.validation
 
 import groovy.transform.CompileDynamic
@@ -116,7 +131,7 @@ class PersistentEntityValidator implements CascadingValidator, ConstrainedEntity
                 }
                 else {
                     Errors existingErrors = retrieveErrors(associatedObject)
-                    if (existingErrors != null && existingErrors.hasErrors()) {
+                    if (existingErrors?.hasErrors()) {
                         for (error in existingErrors.fieldErrors) {
                             String path = "${propertyName}." + error.field
                             errors.rejectValue(path, error.code, error.arguments, error.defaultMessage)
@@ -146,7 +161,7 @@ class PersistentEntityValidator implements CascadingValidator, ConstrainedEntity
      * @param association An association whose isOneToMeny() method returns true
      * @param propertyName The name of the property
      */
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings('rawtypes')
     protected void cascadeValidationToMany(Object parentObject, String propertyName, Association association, Errors errors, EntityReflector entityReflector, Set validatedObjects) {
         Object collection = entityReflector.getProperty(parentObject, propertyName)
         if (collection == null || !proxyHandler?.isInitialized(collection)) {
@@ -166,7 +181,6 @@ class PersistentEntityValidator implements CascadingValidator, ConstrainedEntity
             }
         }
         else if (collection instanceof Map) {
-
             for (Object entryObject in ((Map) collection).entrySet()) {
                 Map.Entry entry = (Map.Entry) entryObject
                 cascadeValidationToOne(parentObject, propertyName, association, errors, entityReflector, entry.value, entry.key, validatedObjects)
@@ -184,7 +198,7 @@ class PersistentEntityValidator implements CascadingValidator, ConstrainedEntity
      * @param propertyName The name of the property
      * @param indexOrKey
      */
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings('rawtypes')
     protected void cascadeValidationToOne(Object parentObject, String propertyName, Association association, Errors errors, EntityReflector reflector, Object associatedObject, Object indexOrKey, Set validatedObjects) {
         if (associatedObject == null) {
             return
@@ -278,7 +292,7 @@ class PersistentEntityValidator implements CascadingValidator, ConstrainedEntity
         if (indexOrKey instanceof Integer) {
             // Component is part of a Collection. Collection access string
             // e.g. path.object[1] will be appended to the nested path.
-            return nestedPath + componentName + "[" + indexOrKey + "]"
+            return nestedPath + componentName + '[' + indexOrKey + ']'
         }
 
         // Component is part of a Map. Nested path should have a key surrounded
@@ -287,7 +301,7 @@ class PersistentEntityValidator implements CascadingValidator, ConstrainedEntity
     }
 
     private void validatePropertyWithConstraint(Object obj, String propertyName, EntityReflector reflector, Errors errors, ConstrainedProperty constrainedProperty, PersistentProperty persistentProperty) {
-        int i = propertyName.lastIndexOf(".")
+        int i = propertyName.lastIndexOf('.')
         String constrainedPropertyName
         if (i > -1) {
             constrainedPropertyName = propertyName.substring(i + 1, propertyName.length())

@@ -1,11 +1,11 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -46,22 +46,22 @@ class DefaultServiceDefinition<S> implements ServiceDefinition<S> {
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     @Override
     public Class<S> getType() {
-        return loadedClass.orElseThrow(() -> new ServiceConfigurationError("Call to load() when class '" + name + "' is not present"));
+        return this.loadedClass.orElseThrow(() -> new ServiceConfigurationError("Call to load() when class '" + this.name + "' is not present"));
     }
 
     @Override
     public boolean isPresent() {
-        return loadedClass.isPresent();
+        return this.loadedClass.isPresent();
     }
 
     @Override
     public <X extends Throwable> S orElseThrow(Supplier<? extends X> exceptionSupplier) throws X {
-        final Class<S> type = loadedClass.orElseThrow(exceptionSupplier);
+        final Class<S> type = this.loadedClass.orElseThrow(exceptionSupplier);
         try {
             return type.newInstance();
         }
@@ -72,14 +72,14 @@ class DefaultServiceDefinition<S> implements ServiceDefinition<S> {
 
     @Override
     public S load() {
-        return loadedClass.map(aClass -> {
+        return this.loadedClass.map(aClass -> {
             try {
                 return aClass.newInstance();
             }
             catch (Throwable e) {
                 throw new ServiceConfigurationError("Error loading service [" + aClass.getName() + "]: " + e.getMessage(), e);
             }
-        }).orElseThrow(() -> new ServiceConfigurationError("Call to load() when class '" + name + "' is not present"));
+        }).orElseThrow(() -> new ServiceConfigurationError("Call to load() when class '" + this.name + "' is not present"));
     }
 
 }

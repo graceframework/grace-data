@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.core.connections
 
 import groovy.transform.CompileStatic
@@ -28,30 +43,33 @@ class SingletonConnectionSources<T, S extends ConnectionSourceSettings> extends 
 
     @Override
     ConnectionSource<T, S> getConnectionSource(String name) {
-        return defaultConnectionSource
+        return this.defaultConnectionSource
     }
 
     @Override
     ConnectionSource<T, S> addConnectionSource(String name, PropertyResolver configuration) {
-        throw new UnsupportedOperationException("Cannot add a connection source it a SingletonConnectionSources")
+        throw new UnsupportedOperationException('Cannot add a connection source it a SingletonConnectionSources')
     }
 
     static class NullConnectionFactory<T, S extends ConnectionSourceSettings> extends AbstractConnectionSourceFactory<T, S> {
 
         @Override
-        protected <F extends ConnectionSourceSettings> S buildSettings(String name, PropertyResolver configuration, F fallbackSettings, boolean isDefaultDataSource) {
-            throw new UnsupportedOperationException("Cannot add a connection source it a SingletonConnectionSources")
+        protected <F extends ConnectionSourceSettings> S buildSettings(String name,
+                                                                       PropertyResolver configuration,
+                                                                       F fallbackSettings, boolean isDefaultDataSource) {
+            throw new UnsupportedOperationException('Cannot add a connection source it a SingletonConnectionSources')
         }
 
         @Override
         ConnectionSource<T, S> create(String name, S settings) {
-            throw new UnsupportedOperationException("Cannot add a connection source it a SingletonConnectionSources")
+            throw new UnsupportedOperationException('Cannot add a connection source it a SingletonConnectionSources')
         }
 
         @Override
         Serializable getConnectionSourcesConfigurationKey() {
-            throw new UnsupportedOperationException("Cannot add a connection source it a SingletonConnectionSources")
+            throw new UnsupportedOperationException('Cannot add a connection source it a SingletonConnectionSources')
         }
+
     }
 
 }

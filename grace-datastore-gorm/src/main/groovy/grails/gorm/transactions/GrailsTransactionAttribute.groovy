@@ -1,11 +1,11 @@
 /*
- * Copyright 2015 original authors
+ * Copyright 2015-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,11 +34,11 @@ import org.springframework.transaction.interceptor.RuleBasedTransactionAttribute
 @Slf4j
 class GrailsTransactionAttribute extends RuleBasedTransactionAttribute {
 
-    private static final long serialVersionUID = 1L;
-    private boolean inheritRollbackOnly = true;
+    private static final long serialVersionUID = 1L
+    private boolean inheritRollbackOnly = true
 
-    public GrailsTransactionAttribute(org.springframework.transaction.interceptor.TransactionAttribute other) {
-        super();
+    GrailsTransactionAttribute(org.springframework.transaction.interceptor.TransactionAttribute other) {
+        super()
         propagationBehavior = other.propagationBehavior
         isolationLevel = other.isolationLevel
         timeout = other.timeout
@@ -46,8 +46,8 @@ class GrailsTransactionAttribute extends RuleBasedTransactionAttribute {
         name = other.name
     }
 
-    public GrailsTransactionAttribute(TransactionDefinition other) {
-        super();
+    GrailsTransactionAttribute(TransactionDefinition other) {
+        super()
         propagationBehavior = other.propagationBehavior
         isolationLevel = other.isolationLevel
         timeout = other.timeout
@@ -55,25 +55,25 @@ class GrailsTransactionAttribute extends RuleBasedTransactionAttribute {
         name = other.name
     }
 
-    public GrailsTransactionAttribute(GrailsTransactionAttribute other) {
-        this((RuleBasedTransactionAttribute) other);
+    GrailsTransactionAttribute(GrailsTransactionAttribute other) {
+        this((RuleBasedTransactionAttribute) other)
     }
 
-    public GrailsTransactionAttribute(RuleBasedTransactionAttribute other) {
+    GrailsTransactionAttribute(RuleBasedTransactionAttribute other) {
         super(other)
         if (other instanceof GrailsTransactionAttribute) {
             this.inheritRollbackOnly = ((GrailsTransactionAttribute) other).inheritRollbackOnly
         }
     }
 
-    public boolean isInheritRollbackOnly() {
-        return inheritRollbackOnly;
+    boolean isInheritRollbackOnly() {
+        return inheritRollbackOnly
     }
 
     @Override
     boolean rollbackOn(Throwable ex) {
         if (log.isTraceEnabled()) {
-            log.trace("Applying rules to determine whether transaction should rollback on $ex");
+            log.trace("Applying rules to determine whether transaction should rollback on $ex")
         }
 
         RollbackRuleAttribute winner = null
@@ -91,12 +91,12 @@ class GrailsTransactionAttribute extends RuleBasedTransactionAttribute {
         }
 
         if (log.isTraceEnabled()) {
-            log.trace("Winning rollback rule is: $winner");
+            log.trace("Winning rollback rule is: $winner")
         }
 
         // User superclass behavior (rollback on unchecked) if no rule matches.
         if (winner == null) {
-            log.trace("No relevant rollback rule found: applying default rules")
+            log.trace('No relevant rollback rule found: applying default rules')
 
             // always rollback regardless if it is a checked or unchecked exception since Groovy doesn't differentiate those
             return true
@@ -105,8 +105,8 @@ class GrailsTransactionAttribute extends RuleBasedTransactionAttribute {
         return !(winner instanceof NoRollbackRuleAttribute)
     }
 
-    public void setInheritRollbackOnly(boolean inheritRollbackOnly) {
-        this.inheritRollbackOnly = inheritRollbackOnly;
+    void setInheritRollbackOnly(boolean inheritRollbackOnly) {
+        this.inheritRollbackOnly = inheritRollbackOnly
     }
 
 }

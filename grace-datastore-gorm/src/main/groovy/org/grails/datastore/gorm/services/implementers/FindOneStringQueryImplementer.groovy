@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.services.implementers
 
 import groovy.transform.CompileStatic
@@ -31,7 +46,7 @@ class FindOneStringQueryImplementer extends AbstractStringQueryImplementer imple
         ClassNode returnType = (ClassNode) newMethodNode.getNodeMetaData(RETURN_TYPE) ?: abstractMethodNode.returnType
         String methodToExecute = getFindMethodToInvoke(domainClassNode, newMethodNode, returnType)
 
-        if (methodToExecute != "find") {
+        if (methodToExecute != 'find') {
             queryArg = args(queryArg, AstUtils.mapX(max: constX(1)))
         }
 
@@ -40,7 +55,7 @@ class FindOneStringQueryImplementer extends AbstractStringQueryImplementer imple
                 queryArg)
 
         if (!AstUtils.isDomainClass(returnType)) {
-            queryCall = callX(queryCall, "first")
+            queryCall = callX(queryCall, 'first')
         }
         returnS(
                 queryCall
@@ -49,10 +64,10 @@ class FindOneStringQueryImplementer extends AbstractStringQueryImplementer imple
 
     protected String getFindMethodToInvoke(ClassNode classNode, MethodNode methodNode, ClassNode returnType) {
         if (AstUtils.isDomainClass(returnType)) {
-            return "find"
+            return 'find'
         }
         else {
-            return "executeQuery"
+            return 'executeQuery'
         }
     }
 
@@ -61,14 +76,14 @@ class FindOneStringQueryImplementer extends AbstractStringQueryImplementer imple
         if (AstUtils.isDomainClass(returnType)) {
             return true
         }
-        else if (!AstUtils.isSubclassOfOrImplementsInterface(returnType, Iterable.name) && !returnType.isArray() && !returnType.packageName?.startsWith("rx.")) {
+        else if (!AstUtils.isSubclassOfOrImplementsInterface(returnType, Iterable.name) && !returnType.isArray() && !returnType.packageName?.startsWith('rx.')) {
             def queryAnnotation = AstUtils.findAnnotation(methodNode, getAnnotationType())
-            def query = queryAnnotation.getMember("value")
+            def query = queryAnnotation.getMember('value')
             if (query instanceof GStringExpression) {
                 GStringExpression gstring = (GStringExpression) query
                 List<ConstantExpression> strings = gstring.strings
                 ConstantExpression stem = strings.first()
-                if (stem.text.toLowerCase(Locale.ENGLISH).contains("select")) {
+                if (stem.text.toLowerCase(Locale.ENGLISH).contains('select')) {
                     return returnType != ClassHelper.VOID_TYPE
                 }
             }

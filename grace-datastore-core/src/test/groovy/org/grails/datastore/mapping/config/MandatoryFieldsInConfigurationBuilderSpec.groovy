@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.config
 
 import groovy.transform.AutoClone
@@ -14,22 +29,22 @@ class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
         PropertyResolver config = DatastoreUtils.createPropertyResolver([:])
 
         when:
-        MongoConnectionSourceSettingsBuilder builder = new MongoConnectionSourceSettingsBuilder(config, "grails.mongodb")
+        MongoConnectionSourceSettingsBuilder builder = new MongoConnectionSourceSettingsBuilder(config, 'grails.mongodb')
         builder.build()
 
         then:
         noExceptionThrown()
     }
 
-    void "if you supply mandatory fields via configuration the builder uses them"() {
+    void 'if you supply mandatory fields via configuration the builder uses them'() {
         given:
         PropertyResolver config = DatastoreUtils.createPropertyResolver([
-                "grails.mongodb.options.autoEncryptionSettings.bypassAutoEncryption": true,
-                "grails.mongodb.options.autoEncryptionSettings.keyVaultNamespace": false
+                'grails.mongodb.options.autoEncryptionSettings.bypassAutoEncryption': true,
+                'grails.mongodb.options.autoEncryptionSettings.keyVaultNamespace': false
         ])
 
         when:
-        MongoConnectionSourceSettingsBuilder builder = new MongoConnectionSourceSettingsBuilder(config, "grails.mongodb")
+        MongoConnectionSourceSettingsBuilder builder = new MongoConnectionSourceSettingsBuilder(config, 'grails.mongodb')
         MongoConnectionSourceSettings settings = builder.build()
 
         then:
@@ -107,7 +122,7 @@ class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
 
         private AutoEncryptionSettings(Builder builder) {
             this.bypassAutoEncryption = builder.bypassAutoEncryption
-            this.keyVaultNamespace = notNull("keyVaultNamespace", builder.keyVaultNamespace)
+            this.keyVaultNamespace = notNull('keyVaultNamespace', builder.keyVaultNamespace)
         }
 
         static Builder builder() {
@@ -116,7 +131,7 @@ class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
 
         static String notNull(String name, Object value) {
             if (value == null) {
-                throw new IllegalArgumentException(name + " can not be null");
+                throw new IllegalArgumentException(name + ' can not be null');
             }
             value
         }
@@ -129,7 +144,7 @@ class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
             }
 
             Builder keyVaultNamespace(String keyVaultNamespace) {
-                this.keyVaultNamespace = notNull("keyVaultNamespace", keyVaultNamespace)
+                this.keyVaultNamespace = notNull('keyVaultNamespace', keyVaultNamespace)
                 return this
             }
 

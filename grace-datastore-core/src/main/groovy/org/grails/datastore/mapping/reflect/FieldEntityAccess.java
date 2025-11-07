@@ -1,3 +1,18 @@
+/*
+ * Copyright 2015-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.reflect;
 
 import java.beans.PropertyDescriptor;
@@ -66,13 +81,13 @@ public class FieldEntityAccess implements EntityAccess {
 
     @Override
     public Object getEntity() {
-        return entity;
+        return this.entity;
     }
 
     @Override
     public Object getProperty(String name) {
-        Object object = unwrapIfProxy(persistentEntity, entity);
-        return reflector.getProperty(object, name);
+        Object object = unwrapIfProxy(this.persistentEntity, this.entity);
+        return this.reflector.getProperty(object, name);
     }
 
     @Override
@@ -82,7 +97,7 @@ public class FieldEntityAccess implements EntityAccess {
 
     @Override
     public Class getPropertyType(String name) {
-        PersistentProperty property = persistentEntity.getPropertyByName(name);
+        PersistentProperty property = this.persistentEntity.getPropertyByName(name);
         if (property != null) {
             return property.getType();
         }
@@ -91,60 +106,70 @@ public class FieldEntityAccess implements EntityAccess {
 
     @Override
     public void setProperty(String name, Object value) {
-        FieldEntityReflector.PropertyWriter writer = reflector.getPropertyWriter(name);
+        FieldEntityReflector.PropertyWriter writer = this.reflector.getPropertyWriter(name);
         Object converted;
         try {
-            converted = conversionService.convert(value, writer.propertyType());
+            converted = this.conversionService.convert(value, writer.propertyType());
         }
         catch (ConversionException e) {
-            throw new IllegalArgumentException("Cannot assign value [" + value + "] to property [" + name + "] of type [" + writer.propertyType().getName() + "] of class [" + persistentEntity.getName() + "]. The value could not be converted to the appropriate type: " + e.getMessage(), e);
+            throw new IllegalArgumentException("Cannot assign value [" + value + "] to property [" + name + "] of type [" +
+                    writer.propertyType().getName() + "] of class [" + this.persistentEntity.getName() +
+                    "]. The value could not be converted to the appropriate type: " + e.getMessage(), e);
         }
         catch (Exception e) {
-            throw new IllegalArgumentException("Cannot assign value [" + value + "] to property [" + name + "] of type [" + writer.propertyType().getName() + "] of class [" + persistentEntity.getName() + "]. The value is not an acceptable type: " + e.getMessage(), e);
+            throw new IllegalArgumentException("Cannot assign value [" + value + "] to property [" + name + "] of type [" +
+                    writer.propertyType().getName() + "] of class [" + this.persistentEntity.getName() +
+                    "]. The value is not an acceptable type: " + e.getMessage(), e);
         }
-        writer.write(entity, converted);
+        writer.write(this.entity, converted);
     }
 
     @Override
     public Object getIdentifier() {
-        return reflector.getIdentifier(entity);
+        return this.reflector.getIdentifier(this.entity);
     }
 
     @Override
     public void setIdentifier(Object id) {
         Object converted;
         try {
-            converted = conversionService.convert(id, reflector.identifierType());
+            converted = this.conversionService.convert(id, this.reflector.identifierType());
         }
         catch (ConversionException e) {
-            throw new IllegalArgumentException("Cannot assign identifier [" + id + "] to property [" + reflector.getIdentifierName() + "] of type [" + reflector.identifierType().getName() + "] of class [" + persistentEntity.getName() + "]. The value could not be converted to the appropriate type: " + e.getMessage(), e);
+            throw new IllegalArgumentException("Cannot assign identifier [" + id + "] to property [" + this.reflector.getIdentifierName() +
+                    "] of type [" + this.reflector.identifierType().getName() + "] of class [" + this.persistentEntity.getName() +
+                    "]. The value could not be converted to the appropriate type: " + e.getMessage(), e);
         }
         catch (Exception e) {
-            throw new IllegalArgumentException("Cannot assign identifier [" + id + "] to property [" + reflector.getIdentifierName() + "] of type [" + reflector.identifierType().getName() + "] of class [" + persistentEntity.getName() + "]. The identifier is not an compatible type: " + e.getMessage(), e);
+            throw new IllegalArgumentException("Cannot assign identifier [" + id + "] to property [" + this.reflector.getIdentifierName() +
+                    "] of type [" + this.reflector.identifierType().getName() + "] of class [" + this.persistentEntity.getName() +
+                    "]. The identifier is not an compatible type: " + e.getMessage(), e);
 
         }
-        reflector.setIdentifier(entity, converted);
+        this.reflector.setIdentifier(this.entity, converted);
     }
 
     @Override
     public void setIdentifierNoConversion(Object id) {
         try {
-            reflector.setIdentifier(entity, id);
+            this.reflector.setIdentifier(this.entity, id);
         }
         catch (Exception e) {
-            throw new IllegalArgumentException("Cannot assign identifier [" + id + "] to property [" + reflector.getIdentifierName() + "] of type [" + reflector.identifierType().getName() + "] of class [" + persistentEntity.getName() + "]. The identifier is not an compatible type: " + e.getMessage(), e);
+            throw new IllegalArgumentException("Cannot assign identifier [" + id + "] to property [" +
+                    this.reflector.getIdentifierName() + "] of type [" + this.reflector.identifierType().getName() + "] of class [" +
+                    this.persistentEntity.getName() + "]. The identifier is not an compatible type: " + e.getMessage(), e);
 
         }
     }
 
     @Override
     public String getIdentifierName() {
-        return reflector.getIdentifierName();
+        return this.reflector.getIdentifierName();
     }
 
     @Override
     public PersistentEntity getPersistentEntity() {
-        return persistentEntity;
+        return this.persistentEntity;
     }
 
     @Override
@@ -155,14 +180,24 @@ public class FieldEntityAccess implements EntityAccess {
     @Override
     public void setPropertyNoConversion(String name, Object value) {
         try {
-            reflector.setProperty(entity, name, value);
+            this.reflector.setProperty(this.entity, name, value);
         }
         catch (Exception e) {
             String valueType = value != null ? value.getClass().getName() : null;
-            throw new IllegalArgumentException("Cannot assign value [" + value + "] with type [" + valueType + "] to property [" + name + "] of class [" + persistentEntity.getName() + "]. The value is not an acceptable type: " + e.getMessage(), e);
+            throw new IllegalArgumentException("Cannot assign value [" + value + "] with type [" + valueType + "] to property [" + name +
+                    "] of class [" + this.persistentEntity.getName() + "]. The value is not an acceptable type: " + e.getMessage(), e);
         }
     }
 
+    private static Object unwrapIfProxy(PersistentEntity entity, Object object) {
+        if (entity != null) {
+            final ProxyHandler proxyHandler = entity.getMappingContext().getProxyHandler();
+            return proxyHandler.unwrap(object);
+        }
+        else {
+            return object;
+        }
+    }
 
     static class FieldEntityReflector implements EntityReflector {
 
@@ -191,9 +226,10 @@ public class FieldEntityAccess implements EntityAccess {
         public FieldEntityReflector(PersistentEntity entity) {
             this.entity = entity;
             PersistentProperty identity = entity.getIdentity();
-            dirtyCheckingStateField = ReflectionUtils.findField(entity.getJavaClass(), getTraitFieldName(DirtyCheckable.class, "$changedProperties"));
-            if (dirtyCheckingStateField != null) {
-                ReflectionUtils.makeAccessible(dirtyCheckingStateField);
+            this.dirtyCheckingStateField = ReflectionUtils.findField(entity.getJavaClass(),
+                    getTraitFieldName(DirtyCheckable.class, "$changedProperties"));
+            if (this.dirtyCheckingStateField != null) {
+                ReflectionUtils.makeAccessible(this.dirtyCheckingStateField);
             }
             ClassPropertyFetcher cpf = ClassPropertyFetcher.forClass(entity.getJavaClass());
             if (identity != null) {
@@ -202,12 +238,12 @@ public class FieldEntityAccess implements EntityAccess {
                 this.identifierType = identity.getType();
 
                 ReaderAndWriterMaker readerAndWriterMaker = new ReaderAndWriterMaker(cpf, identityName).make();
-                identifierReader = readerAndWriterMaker.getPropertyReader();
-                identifierWriter = readerAndWriterMaker.getPropertyWriter();
+                this.identifierReader = readerAndWriterMaker.getPropertyReader();
+                this.identifierWriter = readerAndWriterMaker.getPropertyWriter();
 
-                readerMap.put(identifierName, identifierReader);
-                if (identifierWriter != null) {
-                    writerMap.put(identifierName, identifierWriter);
+                this.readerMap.put(this.identifierName, this.identifierReader);
+                if (this.identifierWriter != null) {
+                    this.writerMap.put(this.identifierName, this.identifierWriter);
                 }
             }
             else {
@@ -222,13 +258,13 @@ public class FieldEntityAccess implements EntityAccess {
                 for (PersistentProperty property : composite) {
                     String propertyName = property.getName();
                     ReaderAndWriterMaker readerAndWriterMaker = new ReaderAndWriterMaker(cpf, propertyName).make();
-                    readerMap.put(propertyName, readerAndWriterMaker.getPropertyReader());
-                    writerMap.put(propertyName, readerAndWriterMaker.getPropertyWriter());
+                    this.readerMap.put(propertyName, readerAndWriterMaker.getPropertyReader());
+                    this.writerMap.put(propertyName, readerAndWriterMaker.getPropertyWriter());
                 }
             }
             List<PersistentProperty> properties = entity.getPersistentProperties();
-            readers = new PropertyReader[properties.size()];
-            writers = new PropertyWriter[properties.size()];
+            this.readers = new PropertyReader[properties.size()];
+            this.writers = new PropertyWriter[properties.size()];
             for (int i = 0; i < properties.size(); i++) {
                 PersistentProperty property = properties.get(i);
 
@@ -237,10 +273,10 @@ public class FieldEntityAccess implements EntityAccess {
                 PropertyReader reader = readerAndWriterMaker.getPropertyReader();
                 PropertyWriter writer = readerAndWriterMaker.getPropertyWriter();
 
-                readers[i] = reader;
-                readerMap.put(propertyName, reader);
-                writers[i] = writer;
-                writerMap.put(propertyName, writer);
+                this.readers[i] = reader;
+                this.readerMap.put(propertyName, reader);
+                this.writers[i] = writer;
+                this.writerMap.put(propertyName, writer);
             }
         }
 
@@ -253,7 +289,6 @@ public class FieldEntityAccess implements EntityAccess {
             return traitClass.getName().replace('.', '_') + "__" + fieldName;
         }
 
-
         @Override
         public PersistentEntity getPersitentEntity() {
             return this.entity;
@@ -261,9 +296,9 @@ public class FieldEntityAccess implements EntityAccess {
 
         @Override
         public Map<String, Object> getDirtyCheckingState(Object entity) {
-            if (dirtyCheckingStateField != null) {
+            if (this.dirtyCheckingStateField != null) {
                 try {
-                    return (Map<String, Object>) dirtyCheckingStateField.get(entity);
+                    return (Map<String, Object>) this.dirtyCheckingStateField.get(entity);
                 }
                 catch (Throwable e) {
                     return null;
@@ -274,29 +309,29 @@ public class FieldEntityAccess implements EntityAccess {
 
         @Override
         public FastClass fastClass() {
-            if (fastClass == null) {
-                fastClass = FastClass.create(entity.getJavaClass());
+            if (this.fastClass == null) {
+                this.fastClass = FastClass.create(this.entity.getJavaClass());
             }
-            return fastClass;
+            return this.fastClass;
         }
 
         @Override
         public PropertyReader getPropertyReader(String name) {
-            final PropertyReader reader = readerMap.get(name);
+            final PropertyReader reader = this.readerMap.get(name);
             if (reader != null) {
                 return reader;
             }
-            throw new IllegalArgumentException("Property [" + name + "] is not a valid property of " + entity.getJavaClass());
+            throw new IllegalArgumentException("Property [" + name + "] is not a valid property of " + this.entity.getJavaClass());
         }
 
         @Override
         public PropertyWriter getPropertyWriter(String name) {
-            final PropertyWriter writer = writerMap.get(name);
+            final PropertyWriter writer = this.writerMap.get(name);
             if (writer != null) {
                 return writer;
             }
             else {
-                throw new IllegalArgumentException("Property [" + name + "] is not a valid property of " + entity.getJavaClass());
+                throw new IllegalArgumentException("Property [" + name + "] is not a valid property of " + this.entity.getJavaClass());
             }
         }
 
@@ -313,44 +348,43 @@ public class FieldEntityAccess implements EntityAccess {
 
         @Override
         public Class identifierType() {
-            return identifierType;
+            return this.identifierType;
         }
 
         @Override
         public Serializable getIdentifier(Object object) {
-            if (identifierReader != null && object != null) {
-                return (Serializable) identifierReader.read(object);
+            if (this.identifierReader != null && object != null) {
+                return (Serializable) this.identifierReader.read(object);
             }
             return null;
         }
 
         @Override
         public void setIdentifier(Object object, Object value) {
-            if (identifierWriter != null) {
-                identifierWriter.write(object, value);
+            if (this.identifierWriter != null) {
+                this.identifierWriter.write(object, value);
             }
         }
 
         @Override
         public String getIdentifierName() {
-            return identifierName;
+            return this.identifierName;
         }
 
         @Override
         public Iterable<String> getPropertyNames() {
-            return readerMap.keySet();
+            return this.readerMap.keySet();
         }
 
         @Override
         public Object getProperty(Object object, int index) {
-            return readers[index].read(object);
+            return this.readers[index].read(object);
         }
 
         @Override
         public void setProperty(Object object, int index, Object value) {
-            writers[index].write(object, value);
+            this.writers[index].write(object, value);
         }
-
 
         static class ReflectMethodReader implements PropertyReader {
 
@@ -368,17 +402,17 @@ public class FieldEntityAccess implements EntityAccess {
 
             @Override
             public Method getter() {
-                return method;
+                return this.method;
             }
 
             @Override
             public Class propertyType() {
-                return method.getReturnType();
+                return this.method.getReturnType();
             }
 
             @Override
             public Object read(Object object) {
-                return ReflectionUtils.invokeMethod(method, object);
+                return ReflectionUtils.invokeMethod(this.method, object);
             }
 
         }
@@ -402,17 +436,17 @@ public class FieldEntityAccess implements EntityAccess {
 
             @Override
             public Method setter() {
-                return method;
+                return this.method;
             }
 
             @Override
             public Class propertyType() {
-                return propertyType;
+                return this.propertyType;
             }
 
             @Override
             public void write(Object object, Object value) {
-                ReflectionUtils.invokeMethod(method, object, value);
+                ReflectionUtils.invokeMethod(this.method, object, value);
             }
 
         }
@@ -431,27 +465,28 @@ public class FieldEntityAccess implements EntityAccess {
 
             @Override
             public Field field() {
-                return field;
+                return this.field;
             }
 
             @Override
             public Method getter() {
-                return getter;
+                return this.getter;
             }
 
             @Override
             public Class propertyType() {
-                return field.getType();
+                return this.field.getType();
             }
 
             @Override
             public Object read(Object object) {
                 try {
                     object = unwrapIfProxy(null, object);
-                    return field.get(object);
+                    return this.field.get(object);
                 }
                 catch (Throwable e) {
-                    throw new IllegalArgumentException("Cannot read field [" + field + "] from object [" + object + "] of type [" + object.getClass() + "]", e);
+                    throw new IllegalArgumentException("Cannot read field [" + this.field + "] from object [" +
+                            object + "] of type [" + object.getClass() + "]", e);
                 }
             }
 
@@ -471,26 +506,27 @@ public class FieldEntityAccess implements EntityAccess {
 
             @Override
             public Field field() {
-                return field;
+                return this.field;
             }
 
             @Override
             public Method setter() {
-                return setter;
+                return this.setter;
             }
 
             @Override
             public Class propertyType() {
-                return field.getType();
+                return this.field.getType();
             }
 
             @Override
             public void write(Object object, Object value) {
                 try {
-                    field.set(object, value);
+                    this.field.set(object, value);
                 }
                 catch (Throwable e) {
-                    throw new IllegalArgumentException("Cannot set field [" + field.getName() + "] of object [" + object + "] for value [" + value + "] of type [" + value.getClass().getName() + "]", e);
+                    throw new IllegalArgumentException("Cannot set field [" + this.field.getName() + "] of object [" +
+                            object + "] for value [" + value + "] of type [" + value.getClass().getName() + "]", e);
                 }
             }
 
@@ -512,34 +548,35 @@ public class FieldEntityAccess implements EntityAccess {
             }
 
             public PropertyReader getPropertyReader() {
-                return propertyReader;
+                return this.propertyReader;
             }
 
             public PropertyWriter getPropertyWriter() {
-                return propertyWriter;
+                return this.propertyWriter;
             }
 
             public ReaderAndWriterMaker make() {
-                Class javaClass = cpf.getJavaClass();
-                Field field = ReflectionUtils.findField(javaClass, propertyName);
+                Class javaClass = this.cpf.getJavaClass();
+                Field field = ReflectionUtils.findField(javaClass, this.propertyName);
                 if (field != null) {
                     ReflectionUtils.makeAccessible(field);
-                    propertyReader = new FieldReader(field, ReflectionUtils.findMethod(javaClass, NameUtils.getGetterName(propertyName)));
-                    propertyWriter = new FieldWriter(field, ReflectionUtils.findMethod(javaClass, NameUtils.getSetterName(propertyName), field.getType()));
+                    this.propertyReader = new FieldReader(field, ReflectionUtils.findMethod(javaClass, NameUtils.getGetterName(this.propertyName)));
+                    this.propertyWriter = new FieldWriter(field, ReflectionUtils.findMethod(javaClass, NameUtils.getSetterName(this.propertyName),
+                            field.getType()));
                 }
                 else {
-                    PropertyDescriptor descriptor = cpf.getPropertyDescriptor(propertyName);
+                    PropertyDescriptor descriptor = this.cpf.getPropertyDescriptor(this.propertyName);
                     Method readMethod = descriptor.getReadMethod();
 
                     Traits.TraitBridge traitBridge = readMethod.getAnnotation(Traits.TraitBridge.class);
                     String traitFieldName;
                     if (traitBridge != null) {
-                        traitFieldName = getTraitFieldName(traitBridge, propertyName);
+                        traitFieldName = getTraitFieldName(traitBridge, this.propertyName);
                     }
                     else {
                         Traits.Implemented traitImplemented = readMethod.getAnnotation(Traits.Implemented.class);
                         if (traitImplemented != null) {
-                            traitFieldName = getTraitFieldName(readMethod.getDeclaringClass(), propertyName);
+                            traitFieldName = getTraitFieldName(readMethod.getDeclaringClass(), this.propertyName);
                         }
                         else {
                             traitFieldName = null;
@@ -549,20 +586,20 @@ public class FieldEntityAccess implements EntityAccess {
                         field = ReflectionUtils.findField(javaClass, traitFieldName);
                         if (field != null) {
                             ReflectionUtils.makeAccessible(field);
-                            propertyReader = new FieldReader(field, readMethod);
-                            propertyWriter = new FieldWriter(field, descriptor.getWriteMethod());
+                            this.propertyReader = new FieldReader(field, readMethod);
+                            this.propertyWriter = new FieldWriter(field, descriptor.getWriteMethod());
                         }
                         else {
                             Method writeMethod = descriptor.getWriteMethod();
-                            propertyReader = new ReflectMethodReader(readMethod);
-                            propertyWriter = new ReflectionMethodWriter(writeMethod, descriptor.getPropertyType());
+                            this.propertyReader = new ReflectMethodReader(readMethod);
+                            this.propertyWriter = new ReflectionMethodWriter(writeMethod, descriptor.getPropertyType());
                         }
                     }
                     else {
-                        propertyReader = new ReflectMethodReader(readMethod);
+                        this.propertyReader = new ReflectMethodReader(readMethod);
                         Method writeMethod = descriptor.getWriteMethod();
                         if (writeMethod != null) {
-                            propertyWriter = new ReflectionMethodWriter(writeMethod, descriptor.getPropertyType());
+                            this.propertyWriter = new ReflectionMethodWriter(writeMethod, descriptor.getPropertyType());
                         }
                     }
                 }
@@ -571,17 +608,6 @@ public class FieldEntityAccess implements EntityAccess {
 
         }
 
-    }
-
-
-    private static Object unwrapIfProxy(PersistentEntity entity, Object object) {
-        if (entity != null) {
-            final ProxyHandler proxyHandler = entity.getMappingContext().getProxyHandler();
-            return proxyHandler.unwrap(object);
-        }
-        else {
-            return object;
-        }
     }
 
 }

@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -80,13 +81,13 @@ public abstract class DatastoreUtils {
      * in combination with <code>releaseSession</code> called when done with
      * the Session.
      *
-     * @param datastore Datastore to create the session with
+     * @param datastore   Datastore to create the session with
      * @param allowCreate whether a non-transactional Session should be created
-     * when no transactional Session can be found for the current thread
+     *                    when no transactional Session can be found for the current thread
      * @return the Datastore Session
      * @throws org.springframework.dao.DataAccessResourceFailureException if the Session couldn't be created
-     * @throws IllegalStateException if no thread-bound Session found and
-     * "allowCreate" is <code>false</code>
+     * @throws IllegalStateException                                      if no thread-bound Session found and
+     *                                                                    "allowCreate" is <code>false</code>
      */
     public static Session getSession(Datastore datastore, boolean allowCreate)
             throws DataAccessResourceFailureException, IllegalStateException {
@@ -105,13 +106,13 @@ public abstract class DatastoreUtils {
      * example when using {@link org.grails.datastore.mapping.transactions.DatastoreTransactionManager}. Will create a new
      * Session otherwise, if "allowCreate" is <code>true</code>.
      *
-     * @param datastore Datastore to create the session with
-     * Session on transaction synchronization (may be <code>null</code>)
+     * @param datastore   Datastore to create the session with
+     *                    Session on transaction synchronization (may be <code>null</code>)
      * @param allowCreate whether a non-transactional Session should be created
-     * when no transactional Session can be found for the current thread
+     *                    when no transactional Session can be found for the current thread
      * @return the Datastore Session
      * @throws IllegalStateException if no thread-bound Session found and
-     * "allowCreate" is <code>false</code>
+     *                               "allowCreate" is <code>false</code>
      */
     public static Session doGetSession(Datastore datastore, boolean allowCreate) {
         Assert.notNull(datastore, "No Datastore specified");
@@ -187,9 +188,10 @@ public abstract class DatastoreUtils {
     /**
      * Return whether the given Datastore Session is transactional, that is,
      * bound to the current thread by Spring's transaction facilities.
-     * @param session the Datastore Session to check
+     *
+     * @param session   the Datastore Session to check
      * @param datastore Datastore that the Session was created with
-     * (may be <code>null</code>)
+     *                  (may be <code>null</code>)
      * @return whether the Session is transactional
      */
     public static boolean isSessionTransactional(Session session, Datastore datastore) {
@@ -204,6 +206,7 @@ public abstract class DatastoreUtils {
     /**
      * Perform actual closing of the Session,
      * catching and logging any cleanup exceptions thrown.
+     *
      * @param session The Session instance
      */
     public static void closeSession(Session session) {
@@ -223,9 +226,10 @@ public abstract class DatastoreUtils {
     /**
      * Close the given Session, created via the given factory,
      * if it is not managed externally (i.e. not bound to the thread).
-     * @param session the Datastore Session to close (may be <code>null</code>)
+     *
+     * @param session   the Datastore Session to close (maybe <code>null</code>)
      * @param datastore Datastore that the Session was created with
-     * (may be <code>null</code>)
+     *                  (maybe <code>null</code>)
      */
     public static void releaseSession(Session session, Datastore datastore) {
         if (session == null) {
@@ -240,6 +244,7 @@ public abstract class DatastoreUtils {
     /**
      * Process all Datastore Sessions that have been registered for deferred close
      * for the given SessionFactory.
+     *
      * @param datastore the Datastore to process deferred close for
      * @see #initDeferredClose
      * @see #releaseSession
@@ -284,9 +289,10 @@ public abstract class DatastoreUtils {
 
     /**
      * Close the given Session or register it for deferred close.
-     * @param session the Datastore Session to close
+     *
+     * @param session   the Datastore Session to close
      * @param datastore Datastore that the Session was created with
-     * (may be <code>null</code>)
+     *                  (maybe <code>null</code>)
      * @see #initDeferredClose
      * @see #processDeferredClose
      */
@@ -303,8 +309,9 @@ public abstract class DatastoreUtils {
 
     /**
      * Execute the closure in the current session if it exists, or create a new one and close it otherwise.
+     *
      * @param datastore the datastore
-     * @param c the closure to execute
+     * @param c         the closure to execute
      * @return the return value from the closure
      */
     public static Object doWithSession(final Datastore datastore, final Closure c) {
@@ -323,9 +330,10 @@ public abstract class DatastoreUtils {
 
     /**
      * Execute the callback in the current session if it exists, or create a new one and close it otherwise.
-     * @param <T> the return type
+     *
+     * @param <T>       the return type
      * @param datastore the datastore
-     * @param callback the callback to execute
+     * @param callback  the callback to execute
      * @return the return value from the callback
      */
     public static <T> T execute(final Datastore datastore, final SessionCallback<T> callback) {
@@ -344,8 +352,9 @@ public abstract class DatastoreUtils {
 
     /**
      * Execute the callback in the current session if it exists, or create a new one and close it otherwise.
+     *
      * @param datastore the datastore
-     * @param callback the callback to execute
+     * @param callback  the callback to execute
      */
     public static void execute(final Datastore datastore, final VoidSessionCallback callback) {
         boolean existing = datastore.hasCurrentSession();
@@ -363,6 +372,7 @@ public abstract class DatastoreUtils {
 
     /**
      * Bind the session to the thread with a SessionHolder keyed by its Datastore.
+     *
      * @param session the session
      * @return the session (for method chaining)
      */
@@ -373,6 +383,7 @@ public abstract class DatastoreUtils {
 
     /**
      * Bind the session to the thread with a SessionHolder keyed by its Datastore.
+     *
      * @param session the session
      * @return the session (for method chaining)
      */
@@ -384,6 +395,7 @@ public abstract class DatastoreUtils {
     /**
      * Adds the session to the current SessionHolder's list of sessions, making it the current session.
      * If there's no current session, calls bindSession.
+     *
      * @param session the session
      * @return the session
      */
@@ -400,6 +412,7 @@ public abstract class DatastoreUtils {
     /**
      * Unbinds and closes a session. If it's the only session in the SessionHolder, unbinds
      * the SessionHolder, otherwise just removes the session from the holder's list.
+     *
      * @param session the session
      */
     public static void unbindSession(final Session session) {
@@ -442,7 +455,7 @@ public abstract class DatastoreUtils {
      * Prepares a property resolver and ensures it is suitable for GORM configuration
      *
      * @param propertyResolver The property resolver
-     * @param keyPrefixes The configuration prefixes
+     * @param keyPrefixes      The configuration prefixes
      * @return The property resolver
      */
     public static PropertyResolver preparePropertyResolver(PropertyResolver propertyResolver, String... keyPrefixes) {
@@ -479,8 +492,8 @@ public abstract class DatastoreUtils {
 
     /**
      * Creates a {@link PropertyResolver} from the given configuration
-     * @param configuration The configuration
      *
+     * @param configuration The configuration
      * @return A {@link PropertyResolver} instance
      */
     public static PropertyResolver createPropertyResolver(Map<String, Object> configuration) {
@@ -496,8 +509,8 @@ public abstract class DatastoreUtils {
 
     /**
      * Creates a {@link PropertyResolver} from the given configuration
-     * @param configurations The configuration
      *
+     * @param configurations The configuration
      * @return A {@link PropertyResolver} instance
      */
     public static PropertyResolver createPropertyResolvers(Map<String, Object>... configurations) {
@@ -506,13 +519,14 @@ public abstract class DatastoreUtils {
 
     /**
      * Creates a {@link PropertyResolver} from the given configuration
-     * @param configurations The configuration
      *
+     * @param configurations The configuration
      * @return A {@link PropertyResolver} instance
      */
     public static PropertyResolver createPropertyResolvers(Collection<Map<String, Object>> configurations) {
         DatastoreEnvironment env = new DatastoreEnvironment();
         env.getConversionService().addConverter(new Converter<String, Class>() {
+
             @Override
             public Class convert(String source) {
                 try {
@@ -523,12 +537,15 @@ public abstract class DatastoreUtils {
                     };
                 }
             }
+
         });
         env.getConversionService().addConverter(new Converter<String, Resource>() {
+
             @Override
             public Resource convert(String source) {
                 return new PathMatchingResourcePatternResolver().getResource(source);
             }
+
         });
         int i = 0;
         for (Map<String, Object> configuration : configurations) {

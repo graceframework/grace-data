@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.proxy
 
 
@@ -12,11 +27,11 @@ import spock.lang.Specification
  */
 class JavassistProxyFactorySpec extends Specification {
 
-    void "test is association initialized"() {
+    void 'test is association initialized'() {
         given:
         JavassistProxyFactory proxyFactory = new JavassistProxyFactory()
         def session = Mock(Session)
-        def mappingContext = new KeyValueMappingContext("test")
+        def mappingContext = new KeyValueMappingContext('test')
         mappingContext.addPersistentEntities(Book, Author)
         session.getMappingContext() >> mappingContext
         Book book = proxyFactory.createProxy(session, Book, 1L)
@@ -28,7 +43,7 @@ class JavassistProxyFactorySpec extends Specification {
         proxyFactory.getIdentifier(book) == 1L
         proxyFactory.getIdentifier(a) == null // not a proxy
         !proxyFactory.isInitialized(book)
-        !proxyFactory.isInitialized(a, "book")
+        !proxyFactory.isInitialized(a, 'book')
     }
 }
 @grails.gorm.annotation.Entity

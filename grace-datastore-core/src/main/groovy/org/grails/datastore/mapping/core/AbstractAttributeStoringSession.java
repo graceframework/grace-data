@@ -1,10 +1,11 @@
-/* Copyright (C) 2011 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,16 +30,17 @@ public abstract class AbstractAttributeStoringSession implements Session {
 
     private boolean connected = true;
 
+    @Override
     public void setAttribute(Object entity, String attributeName, Object value) {
         if (entity == null) {
             return;
         }
 
         int id = System.identityHashCode(entity);
-        Map<String, Object> attrs = attributes.get(id);
+        Map<String, Object> attrs = this.attributes.get(id);
         if (attrs == null) {
             attrs = new ConcurrentHashMap<>();
-            attributes.put(id, attrs);
+            this.attributes.put(id, attrs);
         }
 
         if (attributeName != null && value != null) {
@@ -49,12 +51,13 @@ public abstract class AbstractAttributeStoringSession implements Session {
         }
     }
 
+    @Override
     public Object getAttribute(Object entity, String attributeName) {
         if (entity == null) {
             return null;
         }
 
-        final Map<String, Object> attrs = attributes.get(System.identityHashCode(entity));
+        final Map<String, Object> attrs = this.attributes.get(System.identityHashCode(entity));
         if (attrs == null || attributeName == null) {
             return null;
         }
@@ -66,7 +69,7 @@ public abstract class AbstractAttributeStoringSession implements Session {
         if (entity == null) {
             return;
         }
-        attributes.remove(System.identityHashCode(entity));
+        this.attributes.remove(System.identityHashCode(entity));
     }
 
     /**
@@ -77,7 +80,7 @@ public abstract class AbstractAttributeStoringSession implements Session {
      */
     @Override
     public Object setSessionProperty(String property, Object value) {
-        return sessionPropertyMap.put(property, value);
+        return this.sessionPropertyMap.put(property, value);
     }
 
     /**
@@ -88,7 +91,7 @@ public abstract class AbstractAttributeStoringSession implements Session {
      */
     @Override
     public Object getSessionProperty(String property) {
-        return sessionPropertyMap.get(property);
+        return this.sessionPropertyMap.get(property);
     }
 
     /**
@@ -99,18 +102,19 @@ public abstract class AbstractAttributeStoringSession implements Session {
      */
     @Override
     public Object clearSessionProperty(String property) {
-        return sessionPropertyMap.remove(property);
+        return this.sessionPropertyMap.remove(property);
     }
 
     /**
      * Performs clear up. Subclasses should always call into this super
      * implementation.
      */
+    @Override
     public void disconnect() {
-        connected = false;
+        this.connected = false;
         try {
             clear();
-            attributes.clear();
+            this.attributes.clear();
         }
         finally {
             SessionHolder sessionHolder = (SessionHolder) TransactionSynchronizationManager.getResource(getDatastore());
@@ -128,8 +132,9 @@ public abstract class AbstractAttributeStoringSession implements Session {
         }
     }
 
+    @Override
     public boolean isConnected() {
-        return connected;
+        return this.connected;
     }
 
 }

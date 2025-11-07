@@ -1,11 +1,11 @@
 /*
- * Copyright 2015 original authors
+ * Copyright 2015-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -58,27 +58,28 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
     }
 
     public Iterator<Object> getCursor() {
-        return cursor;
+        return this.cursor;
     }
 
-
     protected void initializeFully() {
-        if (initialized) return;
+        if (this.initialized) {
+            return;
+        }
 
-        while (cursor.hasNext()) {
+        while (this.cursor.hasNext()) {
             convertObject();
         }
-        initialized = true;
+        this.initialized = true;
     }
 
 
     @Override
     public boolean isEmpty() {
-        if (initialized) {
-            return initializedObjects.isEmpty();
+        if (this.initialized) {
+            return this.initializedObjects.isEmpty();
         }
         else {
-            return initializedObjects.isEmpty() && !cursor.hasNext();
+            return this.initializedObjects.isEmpty() && !this.cursor.hasNext();
         }
     }
 
@@ -90,10 +91,10 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
         if (initializedSize > index) {
             return initializedObjects.get(index);
         }
-        else if (!initialized) {
-            while (cursor.hasNext()) {
+        else if (!this.initialized) {
+            while (this.cursor.hasNext()) {
                 Object o = convertObject();
-                if (index == internalIndex) {
+                if (index == this.internalIndex) {
                     return o;
                 }
                 else if (index < initializedSize) {
@@ -101,18 +102,18 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
                 }
 
             }
-            initialized = true;
+            this.initialized = true;
         }
         return initializedObjects.get(index);
     }
 
     protected Object convertObject() {
         final Object next = convertObject(nextDecoded());
-        if (!cursor.hasNext()) {
-            initialized = true;
+        if (!this.cursor.hasNext()) {
+            this.initialized = true;
         }
-        initializedObjects.add(next);
-        internalIndex = initializedObjects.size();
+        this.initializedObjects.add(next);
+        this.internalIndex = this.initializedObjects.size();
         return next;
     }
 
@@ -125,7 +126,7 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
     @Override
     public Object set(int index, Object o) {
         Object previous = get(index);
-        initializedObjects.set(index, o);
+        this.initializedObjects.set(index, o);
         return previous;
     }
 
@@ -149,7 +150,7 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
     @Override
     public ListIterator listIterator(int index) {
         initializeFully();
-        return initializedObjects.listIterator(index);
+        return this.initializedObjects.listIterator(index);
     }
 
     /**
@@ -159,11 +160,11 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
      */
     @Override
     public Iterator iterator() {
-        if (initialized || !initializedObjects.isEmpty()) {
-            if (!initialized) {
+        if (this.initialized || !this.initializedObjects.isEmpty()) {
+            if (!this.initialized) {
                 initializeFully();
             }
-            return initializedObjects.iterator();
+            return this.initializedObjects.iterator();
         }
 
         return new Iterator() {
@@ -172,14 +173,14 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
             Object current;
 
             public boolean hasNext() {
-                if (iteratorIndex < internalIndex) {
+                if (this.iteratorIndex < AbstractResultList.this.internalIndex) {
                     return true;
                 }
-                else if (!initialized) {
+                else if (!AbstractResultList.this.initialized) {
 
-                    boolean hasMore = cursor.hasNext();
+                    boolean hasMore = AbstractResultList.this.cursor.hasNext();
                     if (!hasMore) {
-                        initialized = true;
+                        AbstractResultList.this.initialized = true;
                     }
                     return hasMore;
                 }
@@ -188,23 +189,23 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
 
             @SuppressWarnings("unchecked")
             public Object next() {
-                if (iteratorIndex < internalIndex) {
-                    current = initializedObjects.get(iteratorIndex);
+                if (this.iteratorIndex < AbstractResultList.this.internalIndex) {
+                    this.current = AbstractResultList.this.initializedObjects.get(this.iteratorIndex);
                 }
                 else {
-                    current = convertObject();
+                    this.current = convertObject();
                 }
                 try {
-                    return current;
+                    return this.current;
                 }
                 finally {
-                    iteratorIndex++;
+                    this.iteratorIndex++;
                 }
             }
 
             public void remove() {
-                if (current != null) {
-                    initializedObjects.remove(current);
+                if (this.current != null) {
+                    AbstractResultList.this.initializedObjects.remove(this.current);
                 }
             }
         };
@@ -212,14 +213,14 @@ public abstract class AbstractResultList extends AbstractList implements Closeab
 
     @Override
     public int size() {
-        if (initialized) {
-            return initializedObjects.size();
+        if (this.initialized) {
+            return this.initializedObjects.size();
         }
         else if (this.size == null) {
             initializeFully();
-            this.size = initializedObjects.size();
+            this.size = this.initializedObjects.size();
         }
-        return size;
+        return this.size;
     }
 
 }

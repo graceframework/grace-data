@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -87,7 +88,7 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
      * @param callable The closure
      * @return The result of the closure
      */
-    public <T> T mutex(D instance, Closure<T> callable) {
+    <T> T mutex(D instance, Closure<T> callable) {
         execute({ Session session ->
             try {
                 session.lock(instance)
@@ -316,7 +317,7 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
 
     protected D doSave(D instance, Map params, Session session, boolean isInsert = false) {
         boolean hasErrors = false
-        boolean validate = params?.containsKey("validate") ? params.validate : true
+        boolean validate = params?.containsKey('validate') ? params.validate : true
         boolean shouldFlush = params?.flush ? params.flush : false
 
         if (instance instanceof GormValidateable) {
@@ -349,9 +350,9 @@ class GormInstanceApi<D> extends AbstractGormApi<D> implements GormInstanceOpera
         }
 
         if (hasErrors) {
-            boolean failOnErrorEnabled = params?.containsKey("failOnError") ? params.failOnError : failOnError
+            boolean failOnErrorEnabled = params?.containsKey('failOnError') ? params.failOnError : failOnError
             if (failOnErrorEnabled) {
-                throw validationException.newInstance("Validation error occurred during call to save()", InvokerHelper.getProperty(instance, "errors"))
+                throw validationException.newInstance('Validation error occurred during call to save()', InvokerHelper.getProperty(instance, 'errors'))
             }
             return null
         }

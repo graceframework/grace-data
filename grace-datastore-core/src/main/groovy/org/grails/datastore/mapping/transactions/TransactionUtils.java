@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -12,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.grails.datastore.mapping.transactions;
 
 import org.springframework.transaction.NoTransactionException;
@@ -26,7 +26,10 @@ import org.grails.datastore.mapping.core.Datastore;
  * @author Graeme Rocher
  * @since 1.0
  */
-public class TransactionUtils {
+public final class TransactionUtils {
+
+    private TransactionUtils() {
+    }
 
     public static boolean isTransactionPresent(Datastore datastore) {
         return getTransaction(datastore) != null;

@@ -1,10 +1,30 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.simple.connections
 
+import java.util.concurrent.ConcurrentHashMap
+
 import groovy.transform.CompileStatic
-import org.grails.datastore.mapping.core.connections.*
 import org.springframework.core.env.PropertyResolver
 
-import java.util.concurrent.ConcurrentHashMap
+import org.grails.datastore.mapping.core.connections.AbstractConnectionSourceFactory
+import org.grails.datastore.mapping.core.connections.ConnectionSource
+import org.grails.datastore.mapping.core.connections.ConnectionSourceSettings
+import org.grails.datastore.mapping.core.connections.ConnectionSourceSettingsBuilder
+import org.grails.datastore.mapping.core.connections.DefaultConnectionSource
 
 /**
  * Simple implementation that just builds {@link ConnectionSource} instances from Maps
@@ -13,14 +33,16 @@ import java.util.concurrent.ConcurrentHashMap
  * @since 6.0
  */
 @CompileStatic
-class SimpleMapConnectionSourceFactory extends AbstractConnectionSourceFactory<Map<String,Map>, ConnectionSourceSettings> {
+class SimpleMapConnectionSourceFactory extends AbstractConnectionSourceFactory<Map<String, Map>, ConnectionSourceSettings> {
+
     @Override
     ConnectionSource<Map<String, Map>, ConnectionSourceSettings> create(String name, ConnectionSourceSettings settings) {
-        return new DefaultConnectionSource<Map<String,Map>, ConnectionSourceSettings>(name, new ConcurrentHashMap<String, Map>(), settings)
+        return new DefaultConnectionSource<Map<String, Map>, ConnectionSourceSettings>(name, new ConcurrentHashMap<String, Map>(), settings)
     }
+
     @Override
     Serializable getConnectionSourcesConfigurationKey() {
-        return PREFIX + ".connections"
+        return PREFIX + '.connections'
     }
 
     @Override
@@ -28,4 +50,5 @@ class SimpleMapConnectionSourceFactory extends AbstractConnectionSourceFactory<M
         ConnectionSourceSettingsBuilder builder = new ConnectionSourceSettingsBuilder(configuration, PREFIX)
         return builder.build()
     }
+
 }

@@ -1,10 +1,11 @@
-/* Copyright 2004-2005 the original author or authors.
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -106,18 +107,19 @@ public abstract class AbstractPersistentEntity<T extends Entity> implements Pers
         this.context = context;
         this.isAbstract = Modifier.isAbstract(javaClass.getModifiers());
         this.isMultiTenant = org.grails.datastore.mapping.reflect.ClassUtils.isMultiTenant(javaClass);
-        decapitalizedName = Introspector.decapitalize(javaClass.getSimpleName());
+        this.decapitalizedName = Introspector.decapitalize(javaClass.getSimpleName());
         String classSpecified = ClassPropertyFetcher.getStaticPropertyValue(javaClass, GormProperties.MAPPING_STRATEGY, String.class);
         this.mappingStrategy = classSpecified != null ? classSpecified : GormProperties.DEFAULT_MAPPING_STRATEGY;
     }
 
     @Override
     public PersistentProperty[] getCompositeIdentity() {
-        return compositeIdentity;
+        return this.compositeIdentity;
     }
 
+    @Override
     public TenantId getTenantId() {
-        return tenantId;
+        return this.tenantId;
     }
 
     @Override
@@ -125,117 +127,122 @@ public abstract class AbstractPersistentEntity<T extends Entity> implements Pers
         return this.isMultiTenant;
     }
 
-
+    @Override
     public boolean isExternal() {
-        return external;
+        return this.external;
     }
 
     public boolean isAbstract() {
-        return isAbstract;
+        return this.isAbstract;
     }
 
     public String getMappingStrategy() {
         return this.mappingStrategy;
     }
 
+    @Override
     public void setExternal(boolean external) {
         this.external = external;
     }
 
+    @Override
     public MappingContext getMappingContext() {
-        return context;
+        return this.context;
     }
 
+    @Override
     public boolean isInitialized() {
-        return initialized;
+        return this.initialized;
     }
 
+    @Override
     public void initialize() {
         ClassMapping<T> mapping = getMapping();
-        if (!initialized) {
-            initialized = true;
+        if (!this.initialized) {
+            this.initialized = true;
 
-            final MappingConfigurationStrategy mappingSyntaxStrategy = context.getMappingSyntaxStrategy();
-            owners = mappingSyntaxStrategy.getOwningEntities(javaClass, context);
-            Class superClass = javaClass.getSuperclass();
+            final MappingConfigurationStrategy mappingSyntaxStrategy = this.context.getMappingSyntaxStrategy();
+            this.owners = mappingSyntaxStrategy.getOwningEntities(this.javaClass, this.context);
+            Class superClass = this.javaClass.getSuperclass();
             if (superClass != null &&
                     !superClass.equals(Object.class)) {
 
                 if (mappingSyntaxStrategy.isPersistentEntity(superClass)) {
-                    parentEntity = context.addPersistentEntity(superClass);
+                    this.parentEntity = this.context.addPersistentEntity(superClass);
                 }
             }
 
-            persistentProperties = mappingSyntaxStrategy.getPersistentProperties(this, context, mapping, includeIdentifiers());
+            this.persistentProperties = mappingSyntaxStrategy.getPersistentProperties(this, this.context, mapping, includeIdentifiers());
 
-            persistentPropertyNames = new ArrayList<>();
-            associations = new ArrayList();
-            embedded = new ArrayList();
+            this.persistentPropertyNames = new ArrayList<>();
+            this.associations = new ArrayList();
+            this.embedded = new ArrayList();
 
 
-            boolean multiTenancyEnabled = isMultiTenant && context.getMultiTenancyMode() == MultiTenancySettings.MultiTenancyMode.DISCRIMINATOR;
-            for (PersistentProperty persistentProperty : persistentProperties) {
+            boolean multiTenancyEnabled = this.isMultiTenant &&
+                    this.context.getMultiTenancyMode() == MultiTenancySettings.MultiTenancyMode.DISCRIMINATOR;
+            for (PersistentProperty persistentProperty : this.persistentProperties) {
                 if (multiTenancyEnabled && persistentProperty instanceof TenantId) {
                     this.tenantId = (TenantId) persistentProperty;
                 }
                 if (persistentProperty instanceof Identity) {
-                    if (compositeIdentity != null) {
-                        int l = compositeIdentity.length;
-                        compositeIdentity = Arrays.copyOf(compositeIdentity, l + 1);
-                        compositeIdentity[l] = identity;
+                    if (this.compositeIdentity != null) {
+                        int l = this.compositeIdentity.length;
+                        this.compositeIdentity = Arrays.copyOf(this.compositeIdentity, l + 1);
+                        this.compositeIdentity[l] = this.identity;
                     }
-                    else if (identity != null) {
-                        compositeIdentity = new PersistentProperty[] { identity, persistentProperty };
-                        identity = null;
+                    else if (this.identity != null) {
+                        this.compositeIdentity = new PersistentProperty[] { this.identity, persistentProperty };
+                        this.identity = null;
                     }
                     else {
-                        identity = persistentProperty;
+                        this.identity = persistentProperty;
                     }
                 }
 
                 if (!(persistentProperty instanceof OneToMany)) {
-                    persistentPropertyNames.add(persistentProperty.getName());
+                    this.persistentPropertyNames.add(persistentProperty.getName());
                 }
 
                 if (persistentProperty instanceof Association) {
-                    associations.add((Association) persistentProperty);
+                    this.associations.add((Association) persistentProperty);
                 }
                 if (persistentProperty instanceof Embedded) {
-                    embedded.add((Embedded) persistentProperty);
+                    this.embedded.add((Embedded) persistentProperty);
                 }
-                propertiesByName.put(persistentProperty.getName(), persistentProperty);
+                this.propertiesByName.put(persistentProperty.getName(), persistentProperty);
                 final String targetName = persistentProperty.getMapping().getMappedForm().getTargetName();
                 if (targetName != null) {
-                    mappedPropertiesByName.put(targetName, persistentProperty);
+                    this.mappedPropertiesByName.put(targetName, persistentProperty);
                 }
             }
-            if (associations.isEmpty()) {
-                associations = Collections.emptyList();
+            if (this.associations.isEmpty()) {
+                this.associations = Collections.emptyList();
             }
-            if (embedded.isEmpty()) {
-                embedded = Collections.emptyList();
-            }
-
-            if (identity == null && compositeIdentity == null) {
-                identity = resolveIdentifier();
+            if (this.embedded.isEmpty()) {
+                this.embedded = Collections.emptyList();
             }
 
-            if (multiTenancyEnabled && tenantId == null) {
-                throw new ConfigurationException("Class [" + javaClass.getName() + "] is multi tenant but does not specify a tenant identifier property");
+            if (this.identity == null && this.compositeIdentity == null) {
+                this.identity = resolveIdentifier();
+            }
+
+            if (multiTenancyEnabled && this.tenantId == null) {
+                throw new ConfigurationException("Class [" + this.javaClass.getName() +
+                        "] is multi tenant but does not specify a tenant identifier property");
             }
 
             if (!isExternal()) {
-
-                final T mappedForm = mapping.getMappedForm();// initialize mapping
+                final T mappedForm = mapping.getMappedForm(); // initialize mapping
 
                 if (mappedForm.isVersioned()) {
-                    version = propertiesByName.get(GormProperties.VERSION);
-                    if (version == null) {
-                        versioned = false;
+                    this.version = this.propertiesByName.get(GormProperties.VERSION);
+                    if (this.version == null) {
+                        this.versioned = false;
                     }
                 }
                 else {
-                    versioned = false;
+                    this.versioned = false;
                 }
             }
 
@@ -245,48 +252,48 @@ public abstract class AbstractPersistentEntity<T extends Entity> implements Pers
                 this.versionCompatibleType = Number.class.isAssignableFrom(type) || Date.class.isAssignableFrom(type);
             }
 
-            if (identity != null) {
-                String idName = identity.getName();
-                PersistentProperty idProp = propertiesByName.get(idName);
+            if (this.identity != null) {
+                String idName = this.identity.getName();
+                PersistentProperty idProp = this.propertiesByName.get(idName);
                 if (idProp == null) {
-                    propertiesByName.put(idName, identity);
+                    this.propertiesByName.put(idName, this.identity);
                 }
                 else {
-                    persistentProperties.remove(idProp);
-                    persistentPropertyNames.remove(idProp.getName());
+                    this.persistentProperties.remove(idProp);
+                    this.persistentPropertyNames.remove(idProp.getName());
                     if (!idProp.getName().equals(GormProperties.IDENTITY)) {
                         disableDefaultId();
                     }
                 }
             }
             IdentityMapping identifier = mapping != null ? mapping.getIdentifier() : null;
-            if (identity == null && identifier != null) {
+            if (this.identity == null && identifier != null) {
 
                 final String[] identifierName = identifier.getIdentifierName();
                 final MappingContext mappingContext = getMappingContext();
                 if (identifierName.length > 1) {
-                    compositeIdentity = mappingContext.getMappingSyntaxStrategy().getCompositeIdentity(javaClass, mappingContext);
+                    this.compositeIdentity = mappingContext.getMappingSyntaxStrategy().getCompositeIdentity(this.javaClass, mappingContext);
                 }
                 for (String in : identifierName) {
-                    final PersistentProperty p = propertiesByName.get(in);
+                    final PersistentProperty p = this.propertiesByName.get(in);
                     if (p != null) {
-                        persistentProperties.remove(p);
+                        this.persistentProperties.remove(p);
                     }
-                    persistentPropertyNames.remove(in);
+                    this.persistentPropertyNames.remove(in);
                 }
                 disableDefaultId();
             }
         }
 
-        propertiesInitialized = true;
+        this.propertiesInitialized = true;
         this.entityReflector = getMappingContext().getEntityReflector(this);
     }
 
     private void disableDefaultId() {
         PersistentProperty otherId = getPropertyByName(GormProperties.IDENTITY);
         if (otherId != null) {
-            persistentProperties.remove(otherId);
-            persistentPropertyNames.remove(GormProperties.IDENTITY);
+            this.persistentProperties.remove(otherId);
+            this.persistentPropertyNames.remove(GormProperties.IDENTITY);
         }
     }
 
@@ -311,26 +318,31 @@ public abstract class AbstractPersistentEntity<T extends Entity> implements Pers
     }
 
     protected PersistentProperty resolveIdentifier() {
-        return context.getMappingSyntaxStrategy().getIdentity(javaClass, context);
+        return this.context.getMappingSyntaxStrategy().getIdentity(this.javaClass, this.context);
     }
 
+    @Override
     public boolean hasProperty(String name, Class type) {
         final PropertyDescriptor pd = BeanUtils.getPropertyDescriptor(getJavaClass(), name);
         return pd != null && pd.getPropertyType().equals(type);
     }
 
+    @Override
     public boolean isIdentityName(String propertyName) {
         return getIdentity().getName().equals(propertyName);
     }
 
+    @Override
     public PersistentEntity getParentEntity() {
-        return parentEntity;
+        return this.parentEntity;
     }
 
+    @Override
     public String getDiscriminator() {
         return getJavaClass().getSimpleName();
     }
 
+    @Override
     public PersistentEntity getRootEntity() {
         PersistentEntity root = this;
         PersistentEntity parent = getParentEntity();
@@ -344,98 +356,139 @@ public abstract class AbstractPersistentEntity<T extends Entity> implements Pers
         return root;
     }
 
+    @Override
     public boolean isRoot() {
         return getParentEntity() == null;
     }
 
+    @Override
     public boolean isOwningEntity(PersistentEntity owner) {
-        return owner != null && owners.contains(owner.getJavaClass());
+        return owner != null && this.owners.contains(owner.getJavaClass());
     }
 
+    @Override
     public String getDecapitalizedName() {
-        return decapitalizedName;
+        return this.decapitalizedName;
     }
 
+    @Override
     public List<String> getPersistentPropertyNames() {
-        return persistentPropertyNames;
+        return this.persistentPropertyNames;
     }
 
+    @Override
     public ClassMapping<T> getMapping() {
-        return new AbstractClassMapping<Entity>(this, context) {
+        return new AbstractClassMapping<Entity>(this, this.context) {
+
             @Override
             public Entity getMappedForm() {
                 return new Entity();
             }
+
         };
     }
 
+    @Override
     public Object newInstance() {
         try {
             return getJavaClass().newInstance();
         }
-        catch (InstantiationException e) {
-            throw new EntityCreationException("Unable to create entity of type [" + getJavaClass().getName() +
-                    "]: " + e.getMessage(), e);
-        }
-        catch (IllegalAccessException e) {
+        catch (InstantiationException | IllegalAccessException e) {
             throw new EntityCreationException("Unable to create entity of type [" + getJavaClass().getName() +
                     "]: " + e.getMessage(), e);
         }
     }
 
+    @Override
     public String getName() {
-        return javaClass.getName();
+        return this.javaClass.getName();
     }
 
+    @Override
     public PersistentProperty getIdentity() {
-        return identity;
+        return this.identity;
     }
 
+    @Override
     public PersistentProperty getVersion() {
-        return version;
+        return this.version;
     }
 
+    @Override
     public boolean isVersioned() {
-        return (this.versionCompatibleType || !propertiesInitialized) && versioned;
+        return (this.versionCompatibleType || !this.propertiesInitialized) && this.versioned;
     }
 
+    @Override
     public Class getJavaClass() {
-        return javaClass;
+        return this.javaClass;
     }
 
+    @Override
     public boolean isInstance(Object obj) {
         return getJavaClass().isInstance(obj);
     }
 
+    @Override
     public List<PersistentProperty> getPersistentProperties() {
-        return persistentProperties;
+        return this.persistentProperties;
     }
 
+    @Override
     public List<Association> getAssociations() {
-        return associations;
+        return this.associations;
     }
 
     @Override
     public List<Embedded> getEmbedded() {
-        return embedded;
+        return this.embedded;
     }
 
+    @Override
     public PersistentProperty getPropertyByName(String name) {
-        PersistentProperty pp = propertiesByName.get(name);
+        PersistentProperty pp = this.propertiesByName.get(name);
         if (pp != null) {
             return pp;
         }
-        return mappedPropertiesByName.get(name);
+        return this.mappedPropertiesByName.get(name);
     }
 
-    private static class MappingProperties {
+    @Override
+    public int hashCode() {
+        return this.javaClass.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof PersistentEntity)) {
+            return false;
+        }
+        if (this == o) {
+            return true;
+        }
+
+        PersistentEntity other = (PersistentEntity) o;
+        return this.javaClass.equals(other.getJavaClass());
+    }
+
+    @Override
+    public String toString() {
+        return this.javaClass.getName();
+    }
+
+    @Override
+    public boolean addOwner(Class type) {
+        return this.owners.add(type);
+    }
+
+    private static final class MappingProperties {
 
         private Boolean version = true;
 
         private boolean intialized = false;
 
         public boolean isIntialized() {
-            return intialized;
+            return this.intialized;
         }
 
         public void setIntialized(boolean intialized) {
@@ -447,32 +500,9 @@ public abstract class AbstractPersistentEntity<T extends Entity> implements Pers
         }
 
         public boolean isVersioned() {
-            return version == null ? true : version;
+            return this.version == null ? true : this.version;
         }
 
-    }
-
-    @Override
-    public int hashCode() {
-        return javaClass.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || !(o instanceof PersistentEntity)) return false;
-        if (this == o) return true;
-
-        PersistentEntity other = (PersistentEntity) o;
-        return javaClass.equals(other.getJavaClass());
-    }
-
-    @Override
-    public String toString() {
-        return javaClass.getName();
-    }
-
-    public boolean addOwner(Class type) {
-        return owners.add(type);
     }
 
 }

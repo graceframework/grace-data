@@ -1,18 +1,11 @@
-package org.grails.compiler.gorm
-import grails.gorm.annotation.Entity
-import org.codehaus.groovy.ast.ClassNode
-import org.grails.datastore.gorm.GormEntity
-import org.grails.datastore.gorm.GormValidateable
-import org.grails.datastore.mapping.dirty.checking.DirtyCheckable
-import spock.lang.Specification
 /*
- * Copyright 2014 original authors
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,6 +13,13 @@ import spock.lang.Specification
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.grails.compiler.gorm
+import grails.gorm.annotation.Entity
+import org.codehaus.groovy.ast.ClassNode
+import org.grails.datastore.gorm.GormEntity
+import org.grails.datastore.gorm.GormValidateable
+import org.grails.datastore.mapping.dirty.checking.DirtyCheckable
+import spock.lang.Specification
 
 /**
  * @author graemerocher
@@ -27,7 +27,7 @@ import spock.lang.Specification
 class GormEntityTransformSpec extends Specification{
 
 
-    void "test parse named queries"() {
+    void 'test parse named queries'() {
         def classLoader = new GroovyClassLoader()
         when:
         Class bookClass = classLoader.parseClass('''
@@ -64,7 +64,7 @@ class Book {
 
     }
 
-    void "test parse withTransaction usage in spock"() {
+    void 'test parse withTransaction usage in spock'() {
             def classLoader = new GroovyClassLoader()
             when:
             Class bookClass = classLoader.parseClass('''
@@ -87,26 +87,26 @@ class HibernateSpecSpec extends spock.lang.Specification {
 
     void setupSpec() {
         Book.withTransaction {
-            new Book(title: "The Stand").save(flush:true)
+            new Book(title: 'The Stand').save(flush:true)
         }
     }
-    void "test hibernate spec"() {
+    void 'test hibernate spec'() {
         expect:
         Book.count() == 1
         !new Book().validate()
-        !new Book(title: "").validate()
+        !new Book(title: '').validate()
     }
 }
 
 ''')
 
-        then:"The classes are valid"
+        then:'The classes are valid'
         new ClassNode(bookClass).methods
         new ClassNode(spockClass).methods
 
     }
 
-    void "Test parse abstract GORM entity with getters and setters"() {
+    void 'Test parse abstract GORM entity with getters and setters'() {
         when:
         def cls = new GroovyClassLoader().parseClass('''
 import grails.gorm.annotation.Entity
@@ -121,12 +121,12 @@ abstract class AbstractDomain {
 
 
 ''')
-        then:"It is a valid class"
+        then:'It is a valid class'
         new ClassNode(cls).methods
     }
 
-    void "Test parse GORM entity with single char properties"() {
-        when:"A gorm entity is parsed"
+    void 'Test parse GORM entity with single char properties'() {
+        when:'A gorm entity is parsed'
         def cls = new GroovyClassLoader().parseClass('''
 import grails.gorm.annotation.Entity
 
@@ -146,12 +146,12 @@ class PersonLink {
     }
 }
 ''')
-        then:"It is a valid class"
+        then:'It is a valid class'
         new ClassNode(cls).methods
     }
 
-    void "Test parse GORM entity"() {
-        when:"A gorm entity is parsed"
+    void 'Test parse GORM entity'() {
+        when:'A gorm entity is parsed'
         def cls = new GroovyClassLoader().parseClass('''
 import grails.gorm.annotation.Entity
 
@@ -160,11 +160,11 @@ class Foo {
     String name
 }
 ''')
-        then:"It is a valid class"
+        then:'It is a valid class'
         new ClassNode(cls).methods
     }
 
-    void "Test GORM entity transformation implements"() {
+    void 'Test GORM entity transformation implements'() {
         expect:
         GormEntity.isAssignableFrom(Book)
         GormValidateable.isAssignableFrom(Book)
@@ -174,7 +174,7 @@ class Foo {
         new Book().hasProperty('authorId')
     }
 
-    void "Test property/method missing"() {
+    void 'Test property/method missing'() {
 
         when:
         Book.foo()

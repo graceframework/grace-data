@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.services
 
 import grails.gorm.multitenancy.TenantService
@@ -19,9 +34,9 @@ import spock.lang.Specification
  */
 class ServiceTransformSpec extends Specification {
 
-    void "test interface projection with an entity that implements GormEntity"() {
+    void 'test interface projection with an entity that implements GormEntity'() {
         when:
-        def klass = new GroovyClassLoader().parseClass("""
+        def klass = new GroovyClassLoader().parseClass('''
             import grails.gorm.services.Service
             import grails.gorm.annotation.Entity
             import org.grails.datastore.gorm.GormEntity
@@ -40,7 +55,7 @@ class ServiceTransformSpec extends Specification {
             interface XService {
                 IX getX(String a)
             }
-        """.stripIndent())
+        '''.stripIndent())
 
         then:
         noExceptionThrown()
@@ -50,12 +65,12 @@ class ServiceTransformSpec extends Specification {
         impl != null
 
         and:
-        impl.getMethod("getX", String).getAnnotation(Implemented).by() == FindOneInterfaceProjectionImplementer
+        impl.getMethod('getX', String).getAnnotation(Implemented).by() == FindOneInterfaceProjectionImplementer
     }
 
-    void "test interface projection with an entity that implements a marker interface"() {
+    void 'test interface projection with an entity that implements a marker interface'() {
         when:
-        def klass = new GroovyClassLoader().parseClass("""
+        def klass = new GroovyClassLoader().parseClass('''
             import grails.gorm.services.Service
             import grails.gorm.annotation.Entity
             
@@ -78,7 +93,7 @@ class ServiceTransformSpec extends Specification {
             interface ArticleService {
                 ArticleInfo getArticle(String title)
             }
-        """.stripIndent())
+        '''.stripIndent())
 
         then:
         noExceptionThrown()
@@ -91,12 +106,12 @@ class ServiceTransformSpec extends Specification {
         impl != null
 
         and:
-        impl.getMethod("getArticle", String).getAnnotation(Implemented).by() == FindOneInterfaceProjectionImplementer
+        impl.getMethod('getArticle', String).getAnnotation(Implemented).by() == FindOneInterfaceProjectionImplementer
     }
 
-    void "test interface projection that intersects with an interface implemented by the entity"() {
+    void 'test interface projection that intersects with an interface implemented by the entity'() {
         when:
-        def klass = new GroovyClassLoader().parseClass("""
+        def klass = new GroovyClassLoader().parseClass('''
             import grails.gorm.services.Service
             import grails.gorm.annotation.Entity
             
@@ -119,7 +134,7 @@ class ServiceTransformSpec extends Specification {
             interface BlogPostService {
                 BlogPostInfo getBlogPost(String title)
             }
-        """.stripIndent())
+        '''.stripIndent())
 
         then:
         noExceptionThrown()
@@ -132,10 +147,10 @@ class ServiceTransformSpec extends Specification {
         impl != null
 
         and:
-        impl.getMethod("getBlogPost", String).getAnnotation(Implemented).by() == FindOneInterfaceProjectionImplementer
+        impl.getMethod('getBlogPost', String).getAnnotation(Implemented).by() == FindOneInterfaceProjectionImplementer
     }
 
-    void "test service transformation with @CurrentTenant"() {
+    void 'test service transformation with @CurrentTenant'() {
         when:
         Class bookService =new GroovyClassLoader().parseClass('''
 import grails.gorm.multitenancy.CurrentTenant
@@ -159,17 +174,17 @@ return BookService
 ''')
         Class impl = bookService.classLoader.loadClass("\$BookServiceImplementation")
 
-        then:"The service was transformed correctly"
-        impl.getMethod("find", Serializable).getAnnotation(Implemented).by() == FindOneImplementer
+        then:'The service was transformed correctly'
+        impl.getMethod('find', Serializable).getAnnotation(Implemented).by() == FindOneImplementer
     }
 
-    void "test service transform on abstract protected methods"() {
-        when:"The service transform is applied to an abstract class"
+    void 'test service transform on abstract protected methods'() {
+        when:'The service transform is applied to an abstract class'
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
 import grails.gorm.annotation.Entity
 
-@Service(name="fooService", value=Foo)
+@Service(name='fooService', value=Foo)
 abstract class AbstractMyService implements FooService {
 
     AbstractMyService anotherFooService 
@@ -184,7 +199,7 @@ abstract class AbstractMyService implements FooService {
     Foo delete(Serializable id) {
         def foo = Foo.get(id)
         foo?.delete()
-        foo?.title = "DELETED"
+        foo?.title = 'DELETED'
         return foo
     }
 }
@@ -202,17 +217,17 @@ class Foo {
         !service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$AbstractMyServiceImplementation")
 
-        then:"The impl is valid - protected methods should have no transaction"
-        impl.getMethod("readFoo", Serializable).getAnnotation(ReadOnly) != null
-        impl.getMethod("findFoo", Serializable).getAnnotation(ReadOnly) == null
+        then:'The impl is valid - protected methods should have no transaction'
+        impl.getMethod('readFoo', Serializable).getAnnotation(ReadOnly) != null
+        impl.getMethod('findFoo', Serializable).getAnnotation(ReadOnly) == null
         org.grails.datastore.mapping.services.Service.isAssignableFrom(impl)
 
     }
 
-    void "test dynamic finder interface projection"() {
+    void 'test dynamic finder interface projection'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -238,14 +253,14 @@ interface IFoo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
-        impl.getMethod("findByNameLike", String).getAnnotation(ReadOnly) != null
+        then:'The impl is valid'
+        impl.getMethod('findByNameLike', String).getAnnotation(ReadOnly) != null
     }
 
-    void "test dynamic finder interface projection that returns a list"() {
+    void 'test dynamic finder interface projection that returns a list'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -271,14 +286,14 @@ interface IFoo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
-        impl.getMethod("findByNameLike", String).getAnnotation(ReadOnly) != null
+        then:'The impl is valid'
+        impl.getMethod('findByNameLike', String).getAnnotation(ReadOnly) != null
     }
 
-    void "test interface projection with @Query"() {
+    void 'test interface projection with @Query'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -287,7 +302,7 @@ import static jakarta.persistence.criteria.JoinType.*
 
 @Service(Foo)
 interface MyService {
-    @Query("from $Foo as f where f.title like $title")
+    @Query('from $Foo as f where f.title like $title')
     IFoo search(String title)
 }
 @Entity
@@ -305,14 +320,14 @@ interface IFoo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
-        impl.getMethod("search", String).getAnnotation(ReadOnly) != null
+        then:'The impl is valid'
+        impl.getMethod('search', String).getAnnotation(ReadOnly) != null
     }
 
-    void "test interface projection"() {
+    void 'test interface projection'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -338,14 +353,14 @@ interface IFoo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
-        impl.getMethod("find", String).getAnnotation(ReadOnly) != null
+        then:'The impl is valid'
+        impl.getMethod('find', String).getAnnotation(ReadOnly) != null
     }
 
-    void "test interface projection that returns a list"() {
+    void 'test interface projection that returns a list'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -371,15 +386,15 @@ interface IFoo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
-        impl.getMethod("find", String).getAnnotation(ReadOnly) != null
+        then:'The impl is valid'
+        impl.getMethod('find', String).getAnnotation(ReadOnly) != null
     }
 
 
-    void "test count method"() {
+    void 'test count method'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -408,14 +423,14 @@ class Foo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
-        impl.getMethod("count", String).getAnnotation(ReadOnly) != null
+        then:'The impl is valid'
+        impl.getMethod('count', String).getAnnotation(ReadOnly) != null
     }
 
-    void "test countBy method"() {
+    void 'test countBy method'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -440,14 +455,14 @@ class Foo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
-        impl.getMethod("countByTitle", String).getAnnotation(ReadOnly) != null
+        then:'The impl is valid'
+        impl.getMethod('countByTitle', String).getAnnotation(ReadOnly) != null
     }
 
-    void "test simple list method"() {
+    void 'test simple list method'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -470,15 +485,15 @@ class Foo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
-        impl.getMethod("listFoos").getAnnotation(ReadOnly) != null
-        impl.getMethod("listFoos").getAnnotation(Implemented).by() == FindAllImplementer
+        then:'The impl is valid'
+        impl.getMethod('listFoos').getAnnotation(ReadOnly) != null
+        impl.getMethod('listFoos').getAnnotation(Implemented).by() == FindAllImplementer
     }
 
-    void "test @Join on finder"() {
+    void 'test @Join on finder'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -510,14 +525,14 @@ class Bar {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
-        impl.getMethod("find", String).getAnnotation(ReadOnly) != null
+        then:'The impl is valid'
+        impl.getMethod('find', String).getAnnotation(ReadOnly) != null
     }
 
-    void "test @Query invalid property"() {
+    void 'test @Query invalid property'() {
         when:"The service transform is applied to an interface it can't implement"
         new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -535,14 +550,14 @@ class Foo {
 }
 ''')
 
-        then:"A compilation error occurred"
+        then:'A compilation error occurred'
         def e = thrown(MultipleCompilationErrorsException)
         e.message.normalize().contains '''[Static type checking] - The variable [wrong] is undeclared.
  @ line 8, column 48.
    $Foo as f where f.title like $wrong")'''
     }
 
-    void "test @Query invalid domain"() {
+    void 'test @Query invalid domain'() {
         when:"The service transform is applied to an interface it can't implement"
         new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -560,7 +575,7 @@ class Foo {
 }
 ''')
 
-        then:"A compilation error occurred"
+        then:'A compilation error occurred'
         def e = thrown(MultipleCompilationErrorsException)
         e.message.normalize().contains '''Invalid query class [java.lang.String]. Referenced classes in queries must be domain classes
  @ line 8, column 19.
@@ -568,7 +583,7 @@ class Foo {
                      ^'''
     }
 
-    void "test simple @Query annotation"() {
+    void 'test simple @Query annotation'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -591,14 +606,14 @@ class Foo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
+        then:'The impl is valid'
         org.grails.datastore.mapping.services.Service.isAssignableFrom(impl)
     }
 
-    void "test @Query annotation with projection"() {
+    void 'test @Query annotation with projection'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -622,15 +637,15 @@ class Foo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
+        then:'The impl is valid'
         org.grails.datastore.mapping.services.Service.isAssignableFrom(impl)
     }
 
 
-    void "test @Query update annotation"() {
+    void 'test @Query update annotation'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -656,15 +671,15 @@ class Foo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
-        impl.getMethod("updateTitle", String, String).getAnnotation(Transactional)
+        then:'The impl is valid'
+        impl.getMethod('updateTitle', String, String).getAnnotation(Transactional)
         org.grails.datastore.mapping.services.Service.isAssignableFrom(impl)
     }
 
-    void "test @Query update annotation using id attribute"() {
+    void 'test @Query update annotation using id attribute'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -690,23 +705,23 @@ class Foo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
-        impl.getMethod("updateTitle", String, Long).getAnnotation(Transactional)
+        then:'The impl is valid'
+        impl.getMethod('updateTitle', String, Long).getAnnotation(Transactional)
         org.grails.datastore.mapping.services.Service.isAssignableFrom(impl)
     }
 
 
-    void "test @Query update annotation with default transaction attributes at class level"() {
+    void 'test @Query update annotation with default transaction attributes at class level'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
 import grails.gorm.annotation.Entity
 import grails.gorm.transactions.*
 @Service(Foo)
-@Transactional("foo")
+@Transactional('foo')
 interface MyService {
 
     @Query("update ${Foo foo} set ${foo.title} = $newTitle where $foo.title = $oldTitle") 
@@ -726,22 +741,22 @@ class Foo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
         def instance = impl.newInstance()
 
-        then:"The impl is valid"
-        impl.getAnnotation(Transactional).value() == "foo"
+        then:'The impl is valid'
+        impl.getAnnotation(Transactional).value() == 'foo'
         org.grails.datastore.mapping.services.Service.isAssignableFrom(impl)
 
         when:
-        instance.kill("blah")
+        instance.kill('blah')
 
         then:
         thrown(IllegalStateException)
     }
 
-    void "test @Query annotation with declared variables"() {
+    void 'test @Query annotation with declared variables'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -764,15 +779,15 @@ class Foo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
+        then:'The impl is valid'
         org.grails.datastore.mapping.services.Service.isAssignableFrom(impl)
     }
 
 
-    void "test @Query invalid variable property"() {
+    void 'test @Query invalid variable property'() {
         when:"The service transform is applied to an interface it can't implement"
         new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -790,7 +805,7 @@ class Foo {
 }
 ''')
 
-        then:"A compilation error occurred"
+        then:'A compilation error occurred'
         def e = thrown(MultipleCompilationErrorsException)
         e.message.normalize().contains '''No property [tit] existing for domain class [Foo]
  @ line 8, column 34.
@@ -825,15 +840,15 @@ class Foo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
 
-        then:"The impl is valid"
+        then:'The impl is valid'
         org.grails.datastore.mapping.services.Service.isAssignableFrom(impl)
     }
 
-    void "test implement abstract class"() {
-        when:"The service transform is applied to an abstract class"
+    void 'test implement abstract class'() {
+        when:'The service transform is applied to an abstract class'
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
 import grails.gorm.annotation.Entity
@@ -849,7 +864,7 @@ abstract class AbstractMyService implements MyService {
     Foo delete(Serializable id) {
         def foo = Foo.get(id)
         foo?.delete()
-        foo?.title = "DELETED"
+        foo?.title = 'DELETED'
         return foo
     }
 }
@@ -884,13 +899,13 @@ class Foo {
         !service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
+        when:'the impl is obtained'
         Class impl = service.classLoader.loadClass("\$AbstractMyServiceImplementation")
 
-        then:"The impl is valid"
-        impl.getMethod("deleteMoreFoos", String).getAnnotation(Transactional) != null
-        impl.getMethod("delete", Serializable).getAnnotation(Transactional) != null
-        impl.getMethod("readFoo", Serializable).getAnnotation(ReadOnly) != null
+        then:'The impl is valid'
+        impl.getMethod('deleteMoreFoos', String).getAnnotation(Transactional) != null
+        impl.getMethod('delete', Serializable).getAnnotation(Transactional) != null
+        impl.getMethod('readFoo', Serializable).getAnnotation(ReadOnly) != null
         org.grails.datastore.mapping.services.Service.isAssignableFrom(impl)
 
         when:
@@ -901,7 +916,7 @@ class Foo {
         e.message == 'No GORM implementations configured. Ensure GORM has been initialized correctly'
     }
 
-    void "test implement interface"() {
+    void 'test implement interface'() {
         when:"The service transform is applied to an interface it can't implement"
         Class service = new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -939,13 +954,13 @@ class Foo {
         service.isInterface()
         println service.classLoader.loadedClasses
 
-        when:"the impl is obtained"
-        Class impl = service.classLoader.loadClass("\$MyServiceImplementation")
+        when:'the impl is obtained'
+        Class impl = service.classLoader.loadClass('\$MyServiceImplementation')
 
-        then:"The impl is valid"
+        then:'The impl is valid'
         impl.getAnnotation(Service) != null
         impl.getAnnotation(Service).name() == 'myService'
-        impl.getMethod("deleteMoreFoos", String).getAnnotation(Transactional) != null
+        impl.getMethod('deleteMoreFoos', String).getAnnotation(Transactional) != null
         org.grails.datastore.mapping.services.Service.isAssignableFrom(impl)
 
         when:
@@ -967,7 +982,7 @@ interface MyService {
 }
 ''')
 
-        then:"A compilation error occurred"
+        then:'A compilation error occurred'
         def e = thrown(MultipleCompilationErrorsException)
         e.message.normalize().contains '''No implementations possible for method 'void foo()'. Please use an abstract class instead and provide an implementation.
  @ line 6, column 5.
@@ -975,7 +990,7 @@ interface MyService {
        ^'''
     }
 
-    void "test service transform applied with a dynamic finder for a non-existent property"() {
+    void 'test service transform applied with a dynamic finder for a non-existent property'() {
         when:"The service transform is applied to an interface it can't implement"
         new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -992,7 +1007,7 @@ class Foo {
 }
 ''')
 
-        then:"A compilation error occurred"
+        then:'A compilation error occurred'
         def e = thrown(MultipleCompilationErrorsException)
         e.message.normalize().contains '''Cannot implement finder for non-existent property [tit] of class [Foo]
  @ line 8, column 5.
@@ -1000,7 +1015,7 @@ class Foo {
     }
 
 
-    void "test service transform applied with a dynamic finder for a property of the wrong type"() {
+    void 'test service transform applied with a dynamic finder for a property of the wrong type'() {
         when:"The service transform is applied to an interface it can't implement"
         new GroovyClassLoader().parseClass('''
 import grails.gorm.services.*
@@ -1017,7 +1032,7 @@ class Foo {
 }
 ''')
 
-        then:"A compilation error occurred"
+        then:'A compilation error occurred'
         def e = thrown(MultipleCompilationErrorsException)
         e.message.normalize().contains '''Cannot implement method for argument [title]. No property exists on domain class [Foo]
  @ line 8, column 5.
@@ -1025,7 +1040,7 @@ class Foo {
        ^'''
     }
 
-    void "test service transform"() {
+    void 'test service transform'() {
         given:
         ServiceRegistry reg = new DefaultServiceRegistry(Mock(Datastore), false)
         reg.initialize()

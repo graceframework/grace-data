@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.validation.constraints;
 
 import org.springframework.context.MessageSource;
@@ -16,18 +31,17 @@ public class NullableConstraint extends AbstractVetoingConstraint {
 
     private final boolean nullable;
 
-    public NullableConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
+    public NullableConstraint(Class<?> constraintOwningClass, String constraintPropertyName,
+            Object constraintParameter, MessageSource messageSource) {
         super(constraintOwningClass, constraintPropertyName, constraintParameter, messageSource);
         this.nullable = (boolean) this.constraintParameter;
     }
 
     public boolean isNullable() {
-        return nullable;
+        return this.nullable;
     }
 
-    /* (non-Javadoc)
-     * @see org.codehaus.groovy.grails.validation.Constraint#supports(java.lang.Class)
-     */
+    @Override
     @SuppressWarnings("rawtypes")
     public boolean supports(Class type) {
         return type != null && !type.isPrimitive();
@@ -44,6 +58,7 @@ public class NullableConstraint extends AbstractVetoingConstraint {
         return constraintParameter;
     }
 
+    @Override
     public String getName() {
         return ConstrainedProperty.NULLABLE_CONSTRAINT;
     }
@@ -56,7 +71,7 @@ public class NullableConstraint extends AbstractVetoingConstraint {
     @Override
     protected boolean processValidateWithVetoing(Object target, Object propertyValue, Errors errors) {
         if (propertyValue == null) {
-            if (!nullable) {
+            if (!this.nullable) {
                 Object[] args = new Object[] { constraintPropertyName, constraintOwningClass };
                 rejectValue(target, errors, ConstrainedProperty.DEFAULT_NULL_MESSAGE_CODE,
                         ConstrainedProperty.NULLABLE_CONSTRAINT, args);

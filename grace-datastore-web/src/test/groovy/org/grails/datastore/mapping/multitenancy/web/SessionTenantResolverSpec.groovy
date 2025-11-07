@@ -1,30 +1,44 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.multitenancy.web
 
-import org.grails.datastore.mapping.core.connections.ConnectionSource
-import org.grails.datastore.mapping.multitenancy.exceptions.TenantNotFoundException
 import org.springframework.mock.web.MockHttpServletRequest
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletWebRequest
 import spock.lang.Specification
+
+import org.grails.datastore.mapping.multitenancy.exceptions.TenantNotFoundException
 
 /**
  * Created by graemerocher on 15/07/2016.
  */
 class SessionTenantResolverSpec extends Specification {
 
-    void "Test subdomain resolver throws an exception outside a web request"() {
+    void 'Test subdomain resolver throws an exception outside a web request'() {
         when:
         new SessionTenantResolver().resolveTenantIdentifier()
 
         then:
         def e = thrown(TenantNotFoundException)
-        e.message == "Tenant could not be resolved outside a web request"
+        e.message == 'Tenant could not be resolved outside a web request'
     }
 
-
-    void "Test not tenant id found"() {
+    void 'Test not tenant id found'() {
         setup:
-        def request = new MockHttpServletRequest("GET", "/foo")
+        def request = new MockHttpServletRequest('GET', '/foo')
         RequestContextHolder.setRequestAttributes(new ServletWebRequest(request))
 
         when:
@@ -32,29 +46,26 @@ class SessionTenantResolverSpec extends Specification {
 
         then:
         def e = thrown(TenantNotFoundException)
-        e.message == "No tenantId found"
+        e.message == 'No tenantId found'
 
         cleanup:
         RequestContextHolder.setRequestAttributes(null)
-
     }
 
-    void "Test that the subdomain is the tenant id when a request is present"() {
-
+    void 'Test that the subdomain is the tenant id when a request is present'() {
         setup:
-        def request = new MockHttpServletRequest("GET", "/foo")
-        request.getSession(true).setAttribute(SessionTenantResolver.ATTRIBUTE, "foo")
+        def request = new MockHttpServletRequest('GET', '/foo')
+        request.getSession(true).setAttribute(SessionTenantResolver.ATTRIBUTE, 'foo')
         RequestContextHolder.setRequestAttributes(new ServletWebRequest(request))
-
 
         when:
         def tenantId = new SessionTenantResolver().resolveTenantIdentifier()
 
         then:
-        tenantId == "foo"
+        tenantId == 'foo'
 
         cleanup:
         RequestContextHolder.setRequestAttributes(null)
     }
-}
 
+}

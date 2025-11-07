@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.validation.constraints.builder;
 
 import java.lang.reflect.Modifier;
@@ -65,18 +80,18 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
 
     private boolean defaultNullable = false;
 
-
-    public ConstrainedPropertyBuilder(MappingContext mappingContext, ConstraintRegistry constraintRegistry, Class targetClass, Map<String, Object> defaultConstraints) {
+    public ConstrainedPropertyBuilder(MappingContext mappingContext, ConstraintRegistry constraintRegistry,
+            Class targetClass, Map<String, Object> defaultConstraints) {
         this.targetClass = targetClass;
         this.mappingContext = mappingContext;
-        classPropertyFetcher = ClassPropertyFetcher.forClass(targetClass);
-        targetMetaClass = GroovySystem.getMetaClassRegistry().getMetaClass(targetClass);
+        this.classPropertyFetcher = ClassPropertyFetcher.forClass(targetClass);
+        this.targetMetaClass = GroovySystem.getMetaClassRegistry().getMetaClass(targetClass);
         this.constraintRegistry = constraintRegistry;
         this.defaultConstraints = defaultConstraints;
     }
 
     public String getSharedConstraint(String propertyName) {
-        return sharedConstraints.get(propertyName);
+        return this.sharedConstraints.get(propertyName);
     }
 
     @Override
@@ -85,7 +100,7 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
             return super.doInvokeMethod(methodName, name, args);
         }
         catch (MissingMethodException e) {
-            return targetMetaClass.invokeMethod(targetClass, methodName, args);
+            return this.targetMetaClass.invokeMethod(this.targetClass, methodName, args);
         }
     }
 
@@ -95,7 +110,7 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
             return super.getProperty(property);
         }
         catch (MissingPropertyException e) {
-            return targetMetaClass.getProperty(targetClass, property);
+            return this.targetMetaClass.getProperty(this.targetClass, property);
         }
     }
 
@@ -105,7 +120,7 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
             super.setProperty(property, newValue);
         }
         catch (MissingPropertyException e) {
-            targetMetaClass.setProperty(targetClass, property, newValue);
+            this.targetMetaClass.setProperty(this.targetClass, property, newValue);
         }
     }
 
@@ -113,7 +128,7 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
         Class<?> propertyType = null;
 
         // First try to use the persistent entity mappings
-        PersistentEntity persistentEntity = mappingContext.getPersistentEntity(targetClass.getName());
+        PersistentEntity persistentEntity = this.mappingContext.getPersistentEntity(this.targetClass.getName());
         if (persistentEntity != null) {
             PersistentProperty persistentProperty = persistentEntity.getPropertyByName(propertyName);
             if (persistentProperty != null) {
@@ -122,7 +137,7 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
         }
         // Fall back to just using the meta properties
         if (propertyType == null) {
-            propertyType = classPropertyFetcher.getPropertyType(propertyName);
+            propertyType = this.classPropertyFetcher.getPropertyType(propertyName);
         }
 
         return propertyType;
@@ -135,27 +150,27 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
         try {
             String property = (String) name;
             DefaultConstrainedProperty cp;
-            if (constrainedProperties.containsKey(property)) {
-                cp = (DefaultConstrainedProperty) constrainedProperties.get(property);
+            if (this.constrainedProperties.containsKey(property)) {
+                cp = (DefaultConstrainedProperty) this.constrainedProperties.get(property);
             }
             else {
                 Class<?> propertyType = determinePropertyType(property);
                 if (propertyType == null) {
-                    if (!allowDynamic) {
-                        throw new MissingMethodException(property, targetClass, new Object[] { attributes }, true);
+                    if (!this.allowDynamic) {
+                        throw new MissingMethodException(property, this.targetClass, new Object[] { attributes }, true);
                     }
                     // assume in dynamic use types are strings
                     propertyType = CharSequence.class;
                 }
-                cp = new DefaultConstrainedProperty(targetClass, property, propertyType, constraintRegistry);
-                cp.setOrder(order++);
-                constrainedProperties.put(property, cp);
+                cp = new DefaultConstrainedProperty(this.targetClass, property, propertyType, this.constraintRegistry);
+                cp.setOrder(this.order++);
+                this.constrainedProperties.put(property, cp);
             }
 
             if (cp.getPropertyType() == null) {
                 if (!IMPORT_FROM_CONSTRAINT.equals(name)) {
                     LOG.warn("Property [" + cp.getPropertyName() + "] not found in domain class " +
-                            targetClass.getName() + "; cannot apply constraints: " + attributes);
+                            this.targetClass.getName() + "; cannot apply constraints: " + attributes);
                 }
                 return cp;
             }
@@ -165,7 +180,7 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
                 final Object value = attributes.get(constraintName);
                 if (SHARED_CONSTRAINT.equals(constraintName)) {
                     if (value != null) {
-                        sharedConstraints.put(property, value.toString());
+                        this.sharedConstraints.put(property, value.toString());
                     }
                     continue;
                 }
@@ -173,10 +188,10 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
                     cp.applyConstraint(constraintName, value);
                 }
                 else {
-                    if (!constraintRegistry.findConstraintFactories(constraintName).isEmpty()) {
+                    if (!this.constraintRegistry.findConstraintFactories(constraintName).isEmpty()) {
                         // constraint is registered but doesn't support this property's type
                         LOG.warn("Property [" + cp.getPropertyName() + "] of domain class " +
-                                targetClass.getName() + " has type [" + cp.getPropertyType().getName() +
+                                this.targetClass.getName() + " has type [" + cp.getPropertyType().getName() +
                                 "] and doesn't support constraint [" + constraintName +
                                 "]. This constraint will not be checked during validation.");
                     }
@@ -191,7 +206,7 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
             return cp;
         }
         catch (InvalidPropertyException ipe) {
-            throw new MissingMethodException((String) name, targetClass, new Object[] { attributes });
+            throw new MissingMethodException((String) name, this.targetClass, new Object[] { attributes });
         }
     }
 
@@ -201,16 +216,16 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
         if (IMPORT_FROM_CONSTRAINT.equals(name) && (value instanceof Class)) {
             return handleImportFrom(attributes, (Class) value);
         }
-        throw new MissingMethodException((String) name, targetClass, new Object[] { attributes, value });
+        throw new MissingMethodException((String) name, this.targetClass, new Object[] { attributes, value });
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private Object handleImportFrom(Map attributes, Class importFromClazz) {
 
-        Map importFromConstrainedProperties = new DefaultConstraintEvaluator(constraintRegistry, mappingContext, defaultConstraints)
-                .evaluate(importFromClazz, defaultNullable);
+        Map importFromConstrainedProperties = new DefaultConstraintEvaluator(this.constraintRegistry, this.mappingContext, this.defaultConstraints)
+                .evaluate(importFromClazz, this.defaultNullable);
 
-        List<MetaProperty> metaProperties = classPropertyFetcher.getMetaProperties();
+        List<MetaProperty> metaProperties = this.classPropertyFetcher.getMetaProperties();
 
         List toBeIncludedPropertyNamesParam = (List) attributes.get("include");
         List toBeExcludedPropertyNamesParam = (List) attributes.get("exclude");
@@ -289,7 +304,7 @@ public class ConstrainedPropertyBuilder extends BuilderSupport {
     }
 
     public Map<String, ConstrainedProperty> getConstrainedProperties() {
-        return constrainedProperties;
+        return this.constrainedProperties;
     }
 
     public void setAllowDynamic(boolean allowDynamic) {

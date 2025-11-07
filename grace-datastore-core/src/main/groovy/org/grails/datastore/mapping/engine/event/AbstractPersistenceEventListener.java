@@ -1,10 +1,11 @@
-/* Copyright (C) 2011 SpringSource
+/*
+ * Copyright 2011-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,9 +32,11 @@ public abstract class AbstractPersistenceEventListener implements PersistenceEve
 
     /**
      * {@inheritDoc}
+     *
      * @see org.springframework.context.ApplicationListener#onApplicationEvent(
      *org.springframework.context.ApplicationEvent)
      */
+    @Override
     public final void onApplicationEvent(ApplicationEvent e) {
         if (e instanceof AbstractPersistenceEvent) {
 
@@ -56,18 +59,20 @@ public abstract class AbstractPersistenceEventListener implements PersistenceEve
 
     protected boolean isValidSource(AbstractPersistenceEvent event) {
         Object source = event.getSource();
-        return (source instanceof Datastore) && source.equals(datastore);
+        return (source instanceof Datastore) && source.equals(this.datastore);
     }
 
     protected abstract void onPersistenceEvent(AbstractPersistenceEvent event);
 
+    @Override
     public int getOrder() {
         return DEFAULT_ORDER;
     }
 
+    @Override
     public boolean supportsSourceType(final Class<?> sourceType) {
         // ensure that this listener only handles its events (e.g. if Mongo and Redis are both installed)
-        return datastore.getClass().isAssignableFrom(sourceType);
+        return this.datastore.getClass().isAssignableFrom(sourceType);
     }
 
 }

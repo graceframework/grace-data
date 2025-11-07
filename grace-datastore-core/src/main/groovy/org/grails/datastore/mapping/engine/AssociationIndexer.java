@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,7 +19,7 @@ import java.util.List;
 
 /**
  * Responsible for creating indices for associations used in queries.
- *
+ * <p>
  * An instance may be specific to a particular association of a particular native instance of an entity (the parent
  * of the association).
  *
@@ -31,10 +32,11 @@ public interface AssociationIndexer<K, T> extends AssociationQueryExecutor<K, T>
      * Creates an index queryable via the primary key. This is called *before* the entity that this association
      * indexer is part of is persisted, but after the native entry has been updated ready to be persisted.
      * This allows the index to be placed in the native instance itself, e.g. in a document database.
-     *
+     * <p>
      * Usually, for a particular association type, only this OR {@link #index(Object, java.util.List)} will be
      * implemented.
-     * @param primaryKey The primary key
+     *
+     * @param primaryKey  The primary key
      * @param foreignKeys The foreign keys
      */
     void preIndex(K primaryKey, List<T> foreignKeys);
@@ -42,16 +44,18 @@ public interface AssociationIndexer<K, T> extends AssociationQueryExecutor<K, T>
     /**
      * Creates an index queryable via the primary key. This is called *after* the entity this association indexer
      * is part of has been persisted.
-     *
+     * <p>
      * Usually, for a particular association type, only this OR {@link #preIndex(Object, java.util.List)} will be
      * implemented.
-     * @param primaryKey The primary key
+     *
+     * @param primaryKey  The primary key
      * @param foreignKeys The foreign keys
      */
     void index(K primaryKey, List<T> foreignKeys);
 
     /**
      * Index a single foreign key
+     *
      * @param primaryKey The primaryKey
      * @param foreignKey The foreignKey
      */

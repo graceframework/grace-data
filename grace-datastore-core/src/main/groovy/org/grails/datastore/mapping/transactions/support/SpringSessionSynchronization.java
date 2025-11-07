@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,56 +53,63 @@ public class SpringSessionSynchronization implements TransactionSynchronization 
      * transaction. Else, fall back to the default thread-bound Session.
      */
     private Session getCurrentSession() {
-        return sessionHolder.getSession();
+        return this.sessionHolder.getSession();
     }
 
+    @Override
     public void suspend() {
-        if (holderActive) {
-            TransactionSynchronizationManager.unbindResource(datastore);
+        if (this.holderActive) {
+            TransactionSynchronizationManager.unbindResource(this.datastore);
             getCurrentSession().disconnect();
         }
     }
 
+    @Override
     public void resume() {
-        if (holderActive) {
-            TransactionSynchronizationManager.bindResource(datastore, sessionHolder);
+        if (this.holderActive) {
+            TransactionSynchronizationManager.bindResource(this.datastore, this.sessionHolder);
         }
     }
 
+    @Override
     public void flush() {
         // do nothing
     }
 
+    @Override
     public void beforeCommit(boolean readOnly) throws DataAccessException {
         // do nothing
     }
 
+    @Override
     public void beforeCompletion() {
-        if (newSession) {
+        if (this.newSession) {
             // Default behavior: unbind and close the thread-bound Hibernate Session.
-            TransactionSynchronizationManager.unbindResource(datastore);
-            holderActive = false;
+            TransactionSynchronizationManager.unbindResource(this.datastore);
+            this.holderActive = false;
         }
     }
 
+    @Override
     public void afterCommit() {
     }
 
+    @Override
     public void afterCompletion(int status) {
         // No Hibernate TransactionManagerLookup: apply afterTransactionCompletion callback.
         // Always perform explicit afterTransactionCompletion callback for pre-bound Session,
         // even with Hibernate TransactionManagerLookup (which only applies to new Sessions).
-        Session session = sessionHolder.getSession();
+        Session session = this.sessionHolder.getSession();
         // Close the Hibernate Session here if necessary
         // (closed in beforeCompletion in case of TransactionManagerLookup).
-        if (newSession) {
-            DatastoreUtils.closeSessionOrRegisterDeferredClose(session, datastore);
+        if (this.newSession) {
+            DatastoreUtils.closeSessionOrRegisterDeferredClose(session, this.datastore);
         }
         else {
             session.disconnect();
         }
-        if (sessionHolder.doesNotHoldNonDefaultSession()) {
-            sessionHolder.setSynchronizedWithTransaction(false);
+        if (this.sessionHolder.doesNotHoldNonDefaultSession()) {
+            this.sessionHolder.setSynchronizedWithTransaction(false);
         }
     }
 

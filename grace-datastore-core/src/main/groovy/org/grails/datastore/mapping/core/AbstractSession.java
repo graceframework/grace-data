@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,10 +27,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import jakarta.persistence.FlushModeType;
-
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.RemovalListener;
+import jakarta.persistence.FlushModeType;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.context.ApplicationEventPublisher;
@@ -194,8 +194,8 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
     }
 
     public void addPostFlushOperation(Runnable runnable) {
-        if (runnable != null && !postFlushOperations.contains(runnable)) {
-            postFlushOperations.add(runnable);
+        if (runnable != null && !this.postFlushOperations.contains(runnable)) {
+            this.postFlushOperations.add(runnable);
         }
     }
 
@@ -204,10 +204,10 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         if (o != null) {
             registerPending(o);
         }
-        Collection<PendingInsert> inserts = pendingInserts.get(insert.getEntity());
+        Collection<PendingInsert> inserts = this.pendingInserts.get(insert.getEntity());
         if (inserts == null) {
             inserts = new ConcurrentLinkedQueue<>();
-            pendingInserts.put(insert.getEntity(), inserts);
+            this.pendingInserts.put(insert.getEntity(), inserts);
         }
 
         inserts.add(insert);
@@ -217,10 +217,10 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
     public boolean isPendingAlready(Object obj) {
         Serializable id = getPersister(obj).getObjectIdentifier(obj);
         if (id != null) {
-            return objectsPendingOperations.contains(id);
+            return this.objectsPendingOperations.contains(id);
         }
         else {
-            return objectsPendingOperations.contains(System.identityHashCode(obj));
+            return this.objectsPendingOperations.contains(System.identityHashCode(obj));
         }
     }
 
@@ -229,29 +229,30 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         if (obj != null) {
             Serializable id = getPersister(obj).getObjectIdentifier(obj);
             if (id != null) {
-                if (!objectsPendingOperations.contains(id)) {
-                    objectsPendingOperations.add(id);
+                if (!this.objectsPendingOperations.contains(id)) {
+                    this.objectsPendingOperations.add(id);
                 }
             }
             else {
-                final int identityHashCode = System.identityHashCode(obj);
-                if (!objectsPendingOperations.contains(identityHashCode)) {
-                    objectsPendingOperations.add(identityHashCode);
+                int identityHashCode = System.identityHashCode(obj);
+                if (!this.objectsPendingOperations.contains(identityHashCode)) {
+                    this.objectsPendingOperations.add(identityHashCode);
                 }
             }
         }
     }
 
+    @Override
     public void addPendingUpdate(PendingUpdate update) {
         final Object o = update.getObject();
         if (o != null) {
             registerPending(o);
         }
 
-        Collection<PendingUpdate> inserts = pendingUpdates.get(update.getEntity());
+        Collection<PendingUpdate> inserts = this.pendingUpdates.get(update.getEntity());
         if (inserts == null) {
             inserts = new ConcurrentLinkedQueue<>();
-            pendingUpdates.put(update.getEntity(), inserts);
+            this.pendingUpdates.put(update.getEntity(), inserts);
         }
 
         inserts.add(update);
@@ -263,22 +264,28 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
             registerPending(o);
         }
 
-        Collection<PendingDelete> deletes = pendingDeletes.get(delete.getEntity());
+        Collection<PendingDelete> deletes = this.pendingDeletes.get(delete.getEntity());
         if (deletes == null) {
             deletes = new ConcurrentLinkedQueue<>();
-            pendingDeletes.put(delete.getEntity(), deletes);
+            this.pendingDeletes.put(delete.getEntity(), deletes);
         }
 
         deletes.add(delete);
     }
 
+    @Override
     public Object getCachedEntry(PersistentEntity entity, Serializable key) {
-        if (isStateless(entity)) return null;
+        if (isStateless(entity)) {
+            return null;
+        }
         return getCachedEntry(entity, key, false);
     }
 
+    @Override
     public Object getCachedEntry(PersistentEntity entity, Serializable key, boolean forDirtyCheck) {
-        if (isStateless(entity)) return null;
+        if (isStateless(entity)) {
+            return null;
+        }
         if (key == null) {
             return null;
         }
@@ -286,8 +293,11 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         return getEntryCache(entity.getJavaClass(), forDirtyCheck).get(key);
     }
 
+    @Override
     public void cacheEntry(PersistentEntity entity, Serializable key, Object entry) {
-        if (isStateless(entity)) return;
+        if (isStateless(entity)) {
+            return;
+        }
         if (key == null || entry == null) {
             return;
         }
@@ -296,92 +306,111 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         cacheEntry(key, entry, getEntryCache(entity.getJavaClass(), false), false);
     }
 
+    @Override
     public boolean isStateless(PersistentEntity entity) {
         Entity mappedForm = entity != null ? entity.getMapping().getMappedForm() : null;
         return isStateless() || (mappedForm != null && mappedForm.isStateless());
     }
 
     protected void cacheEntry(Serializable key, Object entry, Map<Serializable, Object> entryCache, boolean forDirtyCheck) {
-        if (isStateless()) return;
+        if (isStateless()) {
+            return;
+        }
         entryCache.put(key, entry);
     }
 
+    @Override
     public Collection getCachedCollection(PersistentEntity entity, Serializable key, String name) {
-        if (isStateless(entity)) return null;
+        if (isStateless(entity)) {
+            return null;
+        }
         if (key == null || name == null) {
             return null;
         }
 
-        return firstLevelCollectionCache.get(
+        return this.firstLevelCollectionCache.get(
                 new CollectionKey(entity.getJavaClass(), key, name));
     }
 
+    @Override
     public void cacheCollection(PersistentEntity entity, Serializable key, Collection collection, String name) {
-        if (isStateless(entity)) return;
+        if (isStateless(entity)) {
+            return;
+        }
         if (key == null || collection == null || name == null) {
             return;
         }
 
-        firstLevelCollectionCache.put(
+        this.firstLevelCollectionCache.put(
                 new CollectionKey(entity.getJavaClass(), key, name),
                 collection);
     }
 
+    @Override
     public Map<PersistentEntity, Collection<PendingInsert>> getPendingInserts() {
-        return pendingInserts;
+        return this.pendingInserts;
     }
 
+    @Override
     public Map<PersistentEntity, Collection<PendingUpdate>> getPendingUpdates() {
-        return pendingUpdates;
+        return this.pendingUpdates;
     }
 
+    @Override
     public Map<PersistentEntity, Collection<PendingDelete>> getPendingDeletes() {
-        return pendingDeletes;
+        return this.pendingDeletes;
     }
 
+    @Override
     public FlushModeType getFlushMode() {
-        return flushMode;
+        return this.flushMode;
     }
 
+    @Override
     public void setFlushMode(FlushModeType flushMode) {
         this.flushMode = flushMode;
     }
 
+    @Override
     public Datastore getDatastore() {
-        return datastore;
+        return this.datastore;
     }
 
+    @Override
     public MappingContext getMappingContext() {
-        return mappingContext;
+        return this.mappingContext;
     }
 
+    @Override
     public void flush() {
-        if (flushActive) return;
+        if (this.flushActive) {
+            return;
+        }
 
         boolean hasInserts;
         try {
-            if (exceptionOccurred) {
+            if (this.exceptionOccurred) {
                 throw new InvalidDataAccessResourceUsageException(
                         "Do not flush() the Session after an exception occurs");
             }
 
-            flushActive = true;
+            this.flushActive = true;
 
             hasInserts = hasUpdates();
             if (hasInserts) {
-                flushPendingInserts(pendingInserts);
-                flushPendingUpdates(pendingUpdates);
-                flushPendingDeletes(pendingDeletes);
+                flushPendingInserts(this.pendingInserts);
+                flushPendingUpdates(this.pendingUpdates);
+                flushPendingDeletes(this.pendingDeletes);
 
-                firstLevelCollectionCache.clear();
+                this.firstLevelCollectionCache.clear();
 
-                executePendings(postFlushOperations);
+                executePendings(this.postFlushOperations);
             }
 
         }
         finally {
             clearPendingOperations();
-            flushActive = false;
+            this.flushActive = false;
         }
         postFlush(hasInserts);
     }
@@ -393,6 +422,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         }
     }
 
+    @Override
     public boolean isDirty(Object instance) {
         if (instance == null) {
             return false;
@@ -467,14 +497,15 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
             }
             catch (RuntimeException e) {
                 setFlushMode(FlushModeType.COMMIT);
-                exceptionOccurred = true;
+                this.exceptionOccurred = true;
                 throw e;
             }
         }
     }
 
     private boolean hasUpdates() {
-        return !pendingInserts.isEmpty() || !pendingUpdates.isEmpty() || !pendingDeletes.isEmpty() || !postFlushOperations.isEmpty();
+        return !this.pendingInserts.isEmpty() || !this.pendingUpdates.isEmpty() ||
+                !this.pendingDeletes.isEmpty() || !this.postFlushOperations.isEmpty();
     }
 
     protected void postFlush(boolean hasUpdates) {
@@ -489,27 +520,28 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         }
         catch (RuntimeException e) {
             setFlushMode(FlushModeType.COMMIT);
-            exceptionOccurred = true;
+            this.exceptionOccurred = true;
             throw e;
         }
     }
 
+    @Override
     public void clear() {
-        clearMaps(firstLevelCache);
-        clearMaps(firstLevelEntryCache);
-        clearMaps(firstLevelEntryCacheDirtyCheck);
-        firstLevelCollectionCache.clear();
+        clearMaps(this.firstLevelCache);
+        clearMaps(this.firstLevelEntryCache);
+        clearMaps(this.firstLevelEntryCacheDirtyCheck);
+        this.firstLevelCollectionCache.clear();
         clearPendingOperations();
-        attributes.clear();
-        exceptionOccurred = false;
+        this.attributes.clear();
+        this.exceptionOccurred = false;
     }
 
     protected void clearPendingOperations() {
-        objectsPendingOperations.clear();
-        pendingInserts.clear();
-        pendingUpdates.clear();
-        pendingDeletes.clear();
-        postFlushOperations.clear();
+        this.objectsPendingOperations.clear();
+        this.pendingInserts.clear();
+        this.pendingUpdates.clear();
+        this.pendingDeletes.clear();
+        this.postFlushOperations.clear();
     }
 
     private void clearMaps(Map<Class, Map<Serializable, Object>> mapOfMaps) {
@@ -518,8 +550,11 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         }
     }
 
-    public final Persister getPersister(Object o) {
-        if (o == null) return null;
+    @Override
+    public Persister getPersister(Object o) {
+        if (o == null) {
+            return null;
+        }
         Class cls;
         if (o instanceof Class) {
             cls = (Class) o;
@@ -530,14 +565,14 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         else {
             cls = o.getClass();
         }
-        Persister p = persisters.get(cls);
+        Persister p = this.persisters.get(cls);
         if (p == null) {
             p = createPersister(cls, getMappingContext());
             if (p != null) {
                 if (!isStateless(((EntityPersister) p).getPersistentEntity())) {
-                    firstLevelCache.put(cls, new ConcurrentHashMap<Serializable, Object>());
+                    this.firstLevelCache.put(cls, new ConcurrentHashMap<Serializable, Object>());
                 }
-                persisters.put(cls, p);
+                this.persisters.put(cls, p);
             }
         }
         return p;
@@ -545,6 +580,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
 
     protected abstract Persister createPersister(Class cls, MappingContext mappingContext);
 
+    @Override
     public boolean contains(Object o) {
         if (o == null || isStateless()) {
             return false;
@@ -559,6 +595,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         }
     }
 
+    @Override
     public boolean isCached(Class type, Serializable key) {
         PersistentEntity entity = getMappingContext().getPersistentEntity(type.getName());
         if (type == null || key == null || isStateless(entity)) {
@@ -568,29 +605,38 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         return getInstanceCache(type).containsKey(key);
     }
 
+    @Override
     public void cacheInstance(Class type, Serializable key, Object instance) {
         if (type == null || key == null || instance == null) {
             return;
         }
-        if (isStateless(getMappingContext().getPersistentEntity(type.getName()))) return;
+        if (isStateless(getMappingContext().getPersistentEntity(type.getName()))) {
+            return;
+        }
         getInstanceCache(type).put(key, instance);
     }
 
+    @Override
     public Object getCachedInstance(Class type, Serializable key) {
-        if (isStateless()) return null;
+        if (isStateless()) {
+            return null;
+        }
         if (type == null || key == null) {
             return null;
         }
-        if (isStateless(getMappingContext().getPersistentEntity(type.getName()))) return null;
+        if (isStateless(getMappingContext().getPersistentEntity(type.getName()))) {
+            return null;
+        }
         return getInstanceCache(type).get(key);
     }
 
+    @Override
     public void clear(Object o) {
         if (o == null || isStateless()) {
             return;
         }
 
-        final Map<Serializable, Object> cache = firstLevelCache.get(o.getClass());
+        final Map<Serializable, Object> cache = this.firstLevelCache.get(o.getClass());
         if (cache != null) {
             Persister persister = getPersister(o);
             Serializable key = persister.getObjectIdentifier(o);
@@ -601,6 +647,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         removeAttributesForEntity(o);
     }
 
+    @Override
     public void attach(Object o) {
         if (o == null) {
             return;
@@ -624,6 +671,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         cacheInstance(o.getClass(), identifier, o);
     }
 
+    @Override
     public Serializable persist(Object o) {
         Assert.notNull(o, "Cannot persist null object");
         Persister persister = getPersister(o);
@@ -651,6 +699,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         return key;
     }
 
+    @Override
     public void refresh(Object o) {
         Assert.notNull(o, "Cannot persist null object");
         Persister persister = getPersister(o);
@@ -663,6 +712,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         cacheObject(key, o);
     }
 
+    @Override
     public Object retrieve(Class type, Serializable key) {
         if (key == null || type == null || NULL.equals(key)) {
             return null;
@@ -709,6 +759,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         return key;
     }
 
+    @Override
     public Object proxy(Class type, Serializable key) {
         if (key == null || type == null) {
             return null;
@@ -729,17 +780,20 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         return o;
     }
 
+    @Override
     public void lock(Object o) {
         throw new UnsupportedOperationException("Datastore [" + getClass().getName() + "] does not support locking.");
     }
 
+    @Override
     public Object lock(Class type, Serializable key) {
         throw new UnsupportedOperationException("Datastore [" + getClass().getName() + "] does not support locking.");
     }
 
+    @Override
     public void unlock(Object o) {
         if (o != null) {
-            lockedObjects.remove(o);
+            this.lockedObjects.remove(o);
         }
     }
 
@@ -750,6 +804,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
      *
      * @param criteria The criteria
      */
+    @Override
     public long deleteAll(QueryableCriteria criteria) {
         List list = criteria.list();
         delete(list);
@@ -764,6 +819,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
      * @param criteria   The criteria
      * @param properties The properties
      */
+    @Override
     public long updateAll(QueryableCriteria criteria, Map<String, Object> properties) {
         List list = criteria.list();
         for (Object o : list) {
@@ -776,6 +832,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         return list.size();
     }
 
+    @Override
     public void delete(final Object obj) {
         if (obj == null) {
             return;
@@ -790,13 +847,14 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         clear(obj);
     }
 
+    @Override
     public void delete(final Iterable objects) {
         if (objects == null) {
             return;
         }
 
         // sort the objects into sets by Persister, in case the objects are of different types.
-        Map<Persister, List> toDelete = new HashMap<Persister, List>();
+        Map<Persister, List> toDelete = new HashMap<>();
         for (Object object : objects) {
             if (object == null) {
                 continue;
@@ -818,6 +876,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         }
     }
 
+    @Override
     public List<Serializable> persist(Iterable objects) {
         if (objects == null) {
             return Collections.emptyList();
@@ -839,6 +898,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         return p.persist(objects);
     }
 
+    @Override
     public List retrieveAll(Class type, Iterable keys) {
         EntityPersister p = (EntityPersister) getPersister(type);
         if (p == null) {
@@ -847,7 +907,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         }
 
         List list = new ArrayList();
-        List<Serializable> toRetrieve = new ArrayList<Serializable>();
+        List<Serializable> toRetrieve = new ArrayList<>();
         final Map<Serializable, Object> cache = getInstanceCache(type);
         for (Object key : keys) {
             Serializable serializable = (Serializable) key;
@@ -859,7 +919,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         }
         List<Object> retrieved = p.retrieveAll(toRetrieve);
         Iterator<Serializable> keyIterator = toRetrieve.iterator();
-        Map<Serializable, Object> retrievedMap = new HashMap<Serializable, Object>();
+        Map<Serializable, Object> retrievedMap = new HashMap<>();
         for (Object o : retrieved) {
             final Serializable identifier = p.getObjectIdentifier(o);
             if (identifier != null) {
@@ -872,7 +932,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
             if (o == null) {
                 if (keyIterator.hasNext()) {
                     Serializable key = keyIterator.next();
-                    key = (Serializable) mappingContext.getConversionService().convert(key, p.getPersistentEntity().getIdentity().getType());
+                    key = (Serializable) this.mappingContext.getConversionService().convert(key, p.getPersistentEntity().getIdentity().getType());
                     final Object next = retrievedMap.get(key);
                     list.set(i, next);
                     cacheInstance(type, key, next);
@@ -882,6 +942,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         return list;
     }
 
+    @Override
     public List retrieveAll(Class type, Serializable... keys) {
         Persister p = getPersister(type);
         if (p == null) {
@@ -891,6 +952,7 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         return retrieveAll(type, Arrays.asList(keys));
     }
 
+    @Override
     public Query createQuery(Class type) {
         Persister p = getPersister(type);
         if (p == null) {
@@ -901,41 +963,43 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         return p.createQuery();
     }
 
+    @Override
     public final Transaction beginTransaction() {
         return beginTransaction(new DefaultTransactionDefinition());
     }
 
     @Override
     public Transaction beginTransaction(TransactionDefinition definition) {
-        transaction = beginTransactionInternal();
-        return transaction;
+        this.transaction = beginTransactionInternal();
+        return this.transaction;
     }
 
     protected abstract Transaction beginTransactionInternal();
 
+    @Override
     public Transaction getTransaction() {
-        if (transaction == null) {
+        if (this.transaction == null) {
             throw new NoTransactionException("Transaction not started. Call beginTransaction() first");
         }
-        return transaction;
+        return this.transaction;
     }
 
     @Override
     public boolean hasTransaction() {
-        return transaction != null;
+        return this.transaction != null;
     }
 
     private Map<Serializable, Object> getInstanceCache(Class c) {
-        Map<Serializable, Object> cache = firstLevelCache.get(c);
+        Map<Serializable, Object> cache = this.firstLevelCache.get(c);
         if (cache == null) {
             cache = new ConcurrentHashMap<>();
-            firstLevelCache.put(c, cache);
+            this.firstLevelCache.put(c, cache);
         }
         return cache;
     }
 
     private Map<Serializable, Object> getEntryCache(Class c, boolean forDirtyCheck) {
-        Map<Class, Map<Serializable, Object>> caches = forDirtyCheck ? firstLevelEntryCacheDirtyCheck : firstLevelEntryCache;
+        Map<Class, Map<Serializable, Object>> caches = forDirtyCheck ? this.firstLevelEntryCacheDirtyCheck : this.firstLevelEntryCache;
         Map<Serializable, Object> cache = caches.get(c);
         if (cache == null) {
             cache = new ConcurrentHashMap<>();
@@ -954,11 +1018,12 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
      *
      * @param isSynchronizedWithTransaction True if it is
      */
+    @Override
     public void setSynchronizedWithTransaction(boolean isSynchronizedWithTransaction) {
         this.isSynchronizedWithTransaction = isSynchronizedWithTransaction;
     }
 
-    private static class CollectionKey {
+    private static final class CollectionKey {
 
         final Class clazz;
 
@@ -975,23 +1040,23 @@ public abstract class AbstractSession<N> extends AbstractAttributeStoringSession
         @Override
         public int hashCode() {
             int value = 17;
-            value = value * 37 + clazz.getName().hashCode();
-            value = value * 37 + key.hashCode();
-            value = value * 37 + collectionName.hashCode();
+            value = value * 37 + this.clazz.getName().hashCode();
+            value = value * 37 + this.key.hashCode();
+            value = value * 37 + this.collectionName.hashCode();
             return value;
         }
 
         @Override
         public boolean equals(Object obj) {
             CollectionKey other = (CollectionKey) obj;
-            return other.clazz.getName() == clazz.getName() &&
-                    other.key.equals(key) &&
-                    other.collectionName.equals(collectionName);
+            return other.clazz.getName() == this.clazz.getName() &&
+                    other.key.equals(this.key) &&
+                    other.collectionName.equals(this.collectionName);
         }
 
         @Override
         public String toString() {
-            return clazz.getName() + ':' + key + ':' + collectionName;
+            return this.clazz.getName() + ':' + this.key + ':' + this.collectionName;
         }
 
     }

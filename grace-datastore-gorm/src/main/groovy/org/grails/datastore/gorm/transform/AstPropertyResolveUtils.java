@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.transform;
 
 import java.util.ArrayList;
@@ -32,7 +47,7 @@ public class AstPropertyResolveUtils {
     protected static Map<String, Map<String, ClassNode>> cachedClassProperties = new HashMap<>();
 
     /**
-     * Resolves the type of of the given property
+     * Resolves the type of the given property
      *
      * @param classNode The class node
      * @param propertyName The property
@@ -93,18 +108,25 @@ public class AstPropertyResolveUtils {
                 populatePropertiesForClassNode(currentNode, cachedProperties, isDomainClass, !isDomainClass);
                 currentNode = currentNode.getSuperClass();
             }
-        } return cachedProperties;
+        }
+        return cachedProperties;
     }
 
-    private static void populatePropertiesForClassNode(ClassNode classNode, Map<String, ClassNode> cachedProperties, boolean isDomainClass, boolean allowAbstract) {
+    private static void populatePropertiesForClassNode(ClassNode classNode, Map<String, ClassNode> cachedProperties,
+            boolean isDomainClass, boolean allowAbstract) {
         List<MethodNode> methods = classNode.getMethods();
         for (MethodNode method : methods) {
             String methodName = method.getName();
             if (AstUtils.isGetter(method)) {
-                if (!allowAbstract && method.isAbstract()) continue;
+                if (!allowAbstract && method.isAbstract()) {
+                    continue;
+                }
                 String propertyName = NameUtils.getPropertyNameForGetterOrSetter(methodName);
-                if (GormProperties.META_CLASS.equals(propertyName)) continue;
-                if (isDomainClass && (GormProperties.HAS_MANY.equals(propertyName) || GormProperties.BELONGS_TO.equals(propertyName) || GormProperties.HAS_ONE.equals(propertyName))) {
+                if (GormProperties.META_CLASS.equals(propertyName)) {
+                    continue;
+                }
+                if (isDomainClass && (GormProperties.HAS_MANY.equals(propertyName) || GormProperties.BELONGS_TO.equals(propertyName) ||
+                        GormProperties.HAS_ONE.equals(propertyName))) {
                     FieldNode field = classNode.getField(propertyName);
                     if (field != null) {
                         populatePropertiesForInitialExpression(cachedProperties, field.getInitialExpression());
@@ -119,8 +141,11 @@ public class AstPropertyResolveUtils {
         List<PropertyNode> properties = classNode.getProperties();
         for (PropertyNode property : properties) {
             String propertyName = property.getName();
-            if (propertyName.equals(GormProperties.META_CLASS)) continue;
-            if (isDomainClass && (GormProperties.HAS_MANY.equals(propertyName) || GormProperties.BELONGS_TO.equals(propertyName) || GormProperties.HAS_ONE.equals(propertyName))) {
+            if (propertyName.equals(GormProperties.META_CLASS)) {
+                continue;
+            }
+            if (isDomainClass && (GormProperties.HAS_MANY.equals(propertyName) || GormProperties.BELONGS_TO.equals(propertyName) ||
+                    GormProperties.HAS_ONE.equals(propertyName))) {
                 Expression initialExpression = property.getInitialExpression();
                 populatePropertiesForInitialExpression(cachedProperties, initialExpression);
             }
@@ -137,7 +162,8 @@ public class AstPropertyResolveUtils {
         }
     }
 
-    private static void cachePropertiesForAssociationMetadata(Map<String, ClassNode> cachedProperties, ClassPropertyFetcher propertyFetcher, String associationMetadataName) {
+    private static void cachePropertiesForAssociationMetadata(Map<String, ClassNode> cachedProperties, ClassPropertyFetcher propertyFetcher,
+            String associationMetadataName) {
         if (propertyFetcher.isReadableProperty(associationMetadataName)) {
             Object propertyValue = propertyFetcher.getPropertyValue(associationMetadataName);
             if (propertyValue instanceof Map) {

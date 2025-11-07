@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,6 +18,7 @@ package org.grails.datastore.mapping.simple;
 import java.util.Map;
 
 import org.springframework.context.ApplicationEventPublisher;
+
 import org.grails.datastore.mapping.core.AbstractSession;
 import org.grails.datastore.mapping.engine.Persister;
 import org.grails.datastore.mapping.model.MappingContext;
@@ -36,7 +38,7 @@ public class SimpleMapSession extends AbstractSession<Map> {
     private Map<String, Map> datastore;
 
     public SimpleMapSession(SimpleMapDatastore datastore, MappingContext mappingContext,
-               ApplicationEventPublisher publisher) {
+            ApplicationEventPublisher publisher) {
         super(datastore, mappingContext, publisher);
         this.datastore = datastore.getBackingMap();
     }
@@ -53,7 +55,7 @@ public class SimpleMapSession extends AbstractSession<Map> {
             return null;
         }
         return new SimpleMapEntityPersister(mappingContext, entity, this,
-            (SimpleMapDatastore) getDatastore(), publisher);
+                (SimpleMapDatastore) getDatastore(), publisher);
     }
 
     public Map<String, Map> getBackingMap() {
@@ -70,6 +72,7 @@ public class SimpleMapSession extends AbstractSession<Map> {
     }
 
     private class MockTransaction implements Transaction {
+
         public MockTransaction(SimpleMapSession simpleMapSession) {
         }
 
@@ -92,5 +95,7 @@ public class SimpleMapSession extends AbstractSession<Map> {
         public void setTimeout(int timeout) {
             // do nothing
         }
+
     }
+
 }

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2015-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.dirty.checking
 
 import groovy.transform.CompileStatic
@@ -27,45 +42,45 @@ class DirtyCheckingMap implements Map, DirtyCheckableCollection {
 
     @Override
     boolean hasGrown() {
-        return size() > originalSize
+        return size() > this.originalSize
     }
 
     @Override
     boolean hasShrunk() {
-        return size() < originalSize
+        return size() < this.originalSize
     }
 
     @Override
     boolean hasChangedSize() {
-        return size() != originalSize
+        return size() != this.originalSize
     }
 
     boolean hasChanged() {
-        parent.hasChanged(property)
+        this.parent.hasChanged(this.property)
     }
 
     @Override
     Object put(Object key, Object value) {
-        parent.markDirty(property)
-        target.put(key, value)
+        this.parent.markDirty(this.property)
+        this.target.put(key, value)
     }
 
     @Override
     Object remove(Object key) {
-        parent.markDirty(property)
-        target.remove key
+        this.parent.markDirty(this.property)
+        this.target.remove key
     }
 
     @Override
     void putAll(Map m) {
-        parent.markDirty(property)
-        target.putAll(m)
+        this.parent.markDirty(this.property)
+        this.target.putAll(m)
     }
 
     @Override
     void clear() {
-        parent.markDirty(property)
-        target.clear()
+        this.parent.markDirty(this.property)
+        this.target.clear()
     }
 
 }

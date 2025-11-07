@@ -1,10 +1,11 @@
-/* Copyright 2016 the original author or authors.
+/*
+ * Copyright 2016-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,10 +35,10 @@ public class ConfigurationUtils {
     /**
      * Finds services of the given type from configuration or via {@link ServiceLoader}
      *
-     * @param configuration The configuration
+     * @param configuration    The configuration
      * @param configurationKey The configuration key
-     * @param serviceType The type of service
-     * @param <T> The service type
+     * @param serviceType      The type of service
+     * @param <T>              The service type
      * @return A list of services
      */
     public static <T> Iterable<T> findServices(PropertyResolver configuration, String configurationKey, Class<T> serviceType) {
@@ -49,8 +50,8 @@ public class ConfigurationUtils {
      * Finds services of the given type from the given list or via {@link ServiceLoader}
      *
      * @param servicesList The list of services
-     * @param serviceType The type of service
-     * @param <T> The service type
+     * @param serviceType  The type of service
+     * @param <T>          The service type
      * @return A list of services
      */
     public static <T> Iterable<T> findServices(List servicesList, Class<T> serviceType) {

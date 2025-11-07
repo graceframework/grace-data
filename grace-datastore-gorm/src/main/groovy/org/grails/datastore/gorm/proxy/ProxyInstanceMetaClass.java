@@ -1,10 +1,11 @@
-/* Copyright 2014 the original author or authors.
+/*
+ * Copyright 2015-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -65,16 +66,16 @@ public class ProxyInstanceMetaClass extends DelegatingMetaClass {
      * @return target.
      */
     public Object getProxyTarget() {
-        if (proxyTarget == null) {
-            proxyTarget = session.retrieve(getTheClass(), getKey());
-            if (proxyTarget == null) {
+        if (this.proxyTarget == null) {
+            this.proxyTarget = this.session.retrieve(getTheClass(), getKey());
+            if (this.proxyTarget == null) {
                 throw new DataIntegrityViolationException(
                         "Error loading association [" + getKey() + "] of type [" + getTheClass() +
                                 "]. Associated instance no longer exists.");
             }
         }
 
-        return proxyTarget;
+        return this.proxyTarget;
     }
 
     /**
@@ -113,11 +114,11 @@ public class ProxyInstanceMetaClass extends DelegatingMetaClass {
     }
 
     public Serializable getKey() {
-        return key;
+        return this.key;
     }
 
     public boolean isProxyInitiated() {
-        return proxyTarget != null;
+        return this.proxyTarget != null;
     }
 
     @Override
@@ -139,7 +140,7 @@ public class ProxyInstanceMetaClass extends DelegatingMetaClass {
         }
         else if (property.equals("class") || property.equals("domainClass")) {
             // return correct class only if loaded, otherwise hope for the best
-            return delegate.getProperty(isProxyInitiated() ? proxyTarget : object, property);
+            return delegate.getProperty(isProxyInitiated() ? this.proxyTarget : object, property);
         }
         else {
             return delegate.getProperty(getProxyTarget(), property);

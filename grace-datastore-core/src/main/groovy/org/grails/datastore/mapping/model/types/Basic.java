@@ -1,10 +1,11 @@
-/* Copyright (C) 2011 SpringSource
+/*
+ * Copyright 2011-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -64,7 +65,7 @@ public abstract class Basic<T extends Property> extends ToMany<T> {
             this.componentType = type.getComponentType();
         }
 
-        if (componentType == null) {
+        if (this.componentType == null) {
             List<Map> maps = ClassPropertyFetcher.getStaticPropertyValuesFromInheritanceHierarchy(ownerClass, GormProperties.HAS_MANY, Map.class);
 
             for (Map map : maps) {
@@ -76,7 +77,7 @@ public abstract class Basic<T extends Property> extends ToMany<T> {
                     }
                 }
             }
-            if (componentType == null) {
+            if (this.componentType == null) {
                 this.componentType = Object.class;
             }
         }
@@ -84,7 +85,7 @@ public abstract class Basic<T extends Property> extends ToMany<T> {
     }
 
     public Class getComponentType() {
-        return componentType;
+        return this.componentType;
     }
 
     @Override
@@ -112,7 +113,7 @@ public abstract class Basic<T extends Property> extends ToMany<T> {
      */
     @SuppressWarnings("rawtypes")
     public CustomTypeMarshaller getCustomTypeMarshaller() {
-        return customTypeMarshaller;
+        return this.customTypeMarshaller;
     }
 
     public void setCustomTypeMarshaller(CustomTypeMarshaller customTypeMarshaller) {

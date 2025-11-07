@@ -1,11 +1,11 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -311,7 +311,6 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
                     if (otherSide instanceof ManyToMany) {
                         Collection otherSideValue = (Collection) associationReflector.getProperty(arg, otherSide.name)
                         otherSideValue?.remove(this)
-
                     }
                     else {
                         if (arg instanceof DirtyCheckable) {
@@ -322,9 +321,8 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
                 }
             }
             else {
-                throw new IllegalArgumentException("")
+                throw new IllegalArgumentException('')
             }
-
         }
         return (D) this
     }
@@ -338,7 +336,7 @@ trait GormEntity<D> implements GormValidateable, DirtyCheckable, GormEntityApi<D
      */
     D addTo(String associationName, Object arg) {
         final PersistentEntity entity = getGormPersistentEntity()
-        final def prop = entity.getPropertyByName(associationName)
+        final prop = entity.getPropertyByName(associationName)
         final D targetObject = (D) this
 
         final MappingContext mappingContext = entity.mappingContext

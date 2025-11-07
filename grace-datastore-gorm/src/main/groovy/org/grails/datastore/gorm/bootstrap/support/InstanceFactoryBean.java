@@ -1,11 +1,11 @@
 /*
- * Copyright 2015 original authors
+ * Copyright 2015-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,9 +19,8 @@ import org.springframework.beans.factory.FactoryBean;
 
 /**
  * Simple singleton instance implementation of Spring's FactoryBean interface
- *
+ * <p>
  * mainly useful in unit tests
- *
  */
 public class InstanceFactoryBean<T> implements FactoryBean<T> {
 
@@ -50,7 +49,7 @@ public class InstanceFactoryBean<T> implements FactoryBean<T> {
 
     @Override
     public T getObject() {
-        return object;
+        return this.object;
     }
 
 
@@ -60,7 +59,7 @@ public class InstanceFactoryBean<T> implements FactoryBean<T> {
 
     @Override
     public Class<?> getObjectType() {
-        return objectType != null ? objectType : object.getClass();
+        return this.objectType != null ? this.objectType : this.object.getClass();
     }
 
     public void setObjectType(Class<?> objectType) {

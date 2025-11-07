@@ -1,22 +1,38 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.validation
 
-import spock.lang.Ignore
+import org.springframework.context.support.StaticMessageSource
+import spock.lang.AutoCleanup
+import spock.lang.Specification
 
 import grails.gorm.annotation.Entity
 import grails.gorm.transactions.Transactional
+
 import org.grails.datastore.gorm.validation.constraints.MappingContextAwareConstraintFactory
 import org.grails.datastore.gorm.validation.constraints.builtin.UniqueConstraint
 import org.grails.datastore.gorm.validation.constraints.registry.ConstraintRegistry
 import org.grails.datastore.gorm.validation.constraints.registry.DefaultValidatorRegistry
 import org.grails.datastore.mapping.simple.SimpleMapDatastore
-import org.springframework.context.support.StaticMessageSource
-import spock.lang.AutoCleanup
-import spock.lang.Specification
 
 @Transactional
 class UniqueConstraintSpec extends Specification {
 
-    @AutoCleanup SimpleMapDatastore datastore = new SimpleMapDatastore(
+    @AutoCleanup
+    SimpleMapDatastore datastore = new SimpleMapDatastore(
             Channel,
             DefaultChannel,
             ListChannel,
@@ -32,7 +48,7 @@ class UniqueConstraintSpec extends Specification {
 
         def messageSource = new StaticMessageSource()
         constraintRegistry.addConstraintFactory(
-                new MappingContextAwareConstraintFactory(UniqueConstraint.class, messageSource, datastore.mappingContext)
+                new MappingContextAwareConstraintFactory(UniqueConstraint, messageSource, datastore.mappingContext)
         )
 
         datastore.mappingContext.setValidatorRegistry(constraintRegistry)
@@ -52,7 +68,6 @@ class UniqueConstraintSpec extends Specification {
         !defaultChannel2.validate()
         defaultChannel2.hasErrors()
         defaultChannel2.errors.getFieldError('name').code == 'unique'
-
     }
 
 //    void "test unique constraint checks parent field"() {
@@ -93,10 +108,9 @@ class UniqueConstraintSpec extends Specification {
         !defaultChannel2.validate()
         defaultChannel2.hasErrors()
         defaultChannel2.errors.getFieldError('name').code == 'unique'
-
     }
 
-    void "unique constraint works in sibling classes"() {
+    void 'unique constraint works in sibling classes'() {
         given: 'an existing channel'
         def testOrg = new Organization(name: 'Test 1')
         testOrg.defaultChannel.organization = testOrg
@@ -141,8 +155,8 @@ class UniqueConstraintSpec extends Specification {
         then: 'that org is also valid'
         testOrg2.save(failOnError: true, flush: true)
     }
-}
 
+}
 
 @Entity
 class Channel {
@@ -153,6 +167,7 @@ class Channel {
     static constraints = {
         name size: 1..80, unique: 'organization'
     }
+
 }
 
 @Entity
@@ -162,10 +177,9 @@ class DefaultChannel extends Channel {
     }
 
     def beforeValidate() {
-        if (!name) {
-            name = 'Default'
-        }
+        name = name ?: 'Default'
     }
+
 }
 
 @Entity
@@ -173,22 +187,25 @@ class ListChannel extends Channel {
 
     static constraints = {
     }
-}
 
+}
 
 @Entity
 class OtherListChannel extends ListChannel {
 
     static constraints = {
     }
+
 }
 
 @Entity
 class Organization {
+
     String name
 
     DefaultChannel defaultChannel = new DefaultChannel()
 
     static hasOne = [defaultChannel: DefaultChannel]
     static hasMany = [channels: Channel]
+
 }

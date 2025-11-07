@@ -1,11 +1,11 @@
 /*
- * Copyright 2017 the original author or authors.
+ * Copyright 2017-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -46,9 +46,9 @@ import org.grails.datastore.mapping.core.connections.ConnectionSourcesProvider;
  * <p>For specific information about the semantics of this annotation's attributes,
  * consider the {@link org.springframework.transaction.TransactionDefinition} and
  * {@link org.springframework.transaction.interceptor.TransactionAttribute} javadocs.
+ *
  * @author Graeme Rocher
  * @author Juergen Hoeller
- *
  * @since 6.1
  */
 @Target({ ElementType.METHOD, ElementType.TYPE })
@@ -71,6 +71,7 @@ public @interface Transactional {
     /**
      * The transaction propagation type.
      * Defaults to {@link org.springframework.transaction.annotation.Propagation#REQUIRED}.
+     *
      * @see org.springframework.transaction.interceptor.TransactionAttribute#getPropagationBehavior()
      */
     Propagation propagation() default Propagation.REQUIRED;
@@ -78,6 +79,7 @@ public @interface Transactional {
     /**
      * The transaction isolation level.
      * Defaults to {@link org.springframework.transaction.annotation.Isolation#DEFAULT}.
+     *
      * @see org.springframework.transaction.interceptor.TransactionAttribute#getIsolationLevel()
      */
     Isolation isolation() default Isolation.DEFAULT;
@@ -85,6 +87,7 @@ public @interface Transactional {
     /**
      * The timeout for this transaction.
      * Defaults to the default timeout of the underlying transaction system.
+     *
      * @see org.springframework.transaction.interceptor.TransactionAttribute#getTimeout()
      */
     int timeout() default TransactionDefinition.TIMEOUT_DEFAULT;
@@ -96,6 +99,7 @@ public @interface Transactional {
      * it will <i>not necessarily</i> cause failure of write access attempts.
      * A transaction manager which cannot interpret the read-only hint will
      * <i>not</i> throw an exception when asked for a read-only transaction.
+     *
      * @see org.springframework.transaction.interceptor.TransactionAttribute#isReadOnly()
      */
     boolean readOnly() default false;
@@ -149,16 +153,18 @@ public @interface Transactional {
 
 
     /**
-     * In Spring, when there are nested transaction calls, the execution of the outermost callback will throw UnexpectedRollbackException if TransactionStatus.setRollbackOnly() was called in a nested transaction callback.
-     *
-     * This feature will make the setRollbackOnly state get inherited to parent level transaction template calls and therefore prevent UnexpectedRollbackException.
+     * In Spring, when there are nested transaction calls, the execution of the outermost callback will throw UnexpectedRollbackException
+     * if TransactionStatus.setRollbackOnly() was called in a nested transaction callback.
+     * <p>
+     * This feature will make the setRollbackOnly state get inherited to parent level transaction template calls
+     * and therefore prevent UnexpectedRollbackException.
      * The default value is true.
-     *
      */
     boolean inheritRollbackOnly() default true;
 
     /**
-     * If you are using multiple GORM implementations and wish to create a transaction for a specific implementation then use this. For example {@code @Transactional(forDatastore=HibernateDatastore) }
+     * If you are using multiple GORM implementations and wish to create a transaction for a specific implementation then use this.
+     * For example {@code @Transactional(forDatastore=HibernateDatastore) }
      *
      * @return The type of the datastore
      */

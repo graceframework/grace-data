@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,22 +24,21 @@ import org.grails.datastore.mapping.model.PersistentEntity;
 /**
  * Base implementation of the {@link PendingOperation} interface.
  *
- * @author Graeme Rocher
- *
  * @param <E> The native entity type (examples could be Row, Document etc.)
  * @param <K> The native key
+ * @author Graeme Rocher
  */
 public abstract class PendingOperationAdapter<E, K> implements PendingOperation<E, K> {
 
-    protected PersistentEntity entity;
+    protected final PersistentEntity entity;
 
-    protected K nativeKey;
+    protected final K nativeKey;
 
-    protected E nativeEntry;
+    protected final E nativeEntry;
 
-    private final List<PendingOperation<E, K>> pendingOperations = new LinkedList<PendingOperation<E, K>>();
+    private final List<PendingOperation<E, K>> pendingOperations = new LinkedList<>();
 
-    private final List<PendingOperation<E, K>> preOperations = new LinkedList<PendingOperation<E, K>>();
+    private final List<PendingOperation<E, K>> preOperations = new LinkedList<>();
 
     private boolean vetoed;
 
@@ -60,7 +60,7 @@ public abstract class PendingOperationAdapter<E, K> implements PendingOperation<
     }
 
     public boolean isVetoed() {
-        return vetoed;
+        return this.vetoed;
     }
 
     public void setVetoed(boolean vetoed) {
@@ -68,36 +68,36 @@ public abstract class PendingOperationAdapter<E, K> implements PendingOperation<
     }
 
     public List<PendingOperation<E, K>> getPreOperations() {
-        return Collections.unmodifiableList(preOperations);
+        return Collections.unmodifiableList(this.preOperations);
     }
 
     public void addPreOperation(PendingOperation<E, K> preOperation) {
-        preOperations.add(preOperation);
+        this.preOperations.add(preOperation);
     }
 
     public List<PendingOperation<E, K>> getCascadeOperations() {
-        return pendingOperations;
+        return this.pendingOperations;
     }
 
     public void addCascadeOperation(PendingOperation<E, K> pendingOperation) {
-        pendingOperations.add(pendingOperation);
+        this.pendingOperations.add(pendingOperation);
     }
 
     public K getNativeKey() {
-        return nativeKey;
+        return this.nativeKey;
     }
 
     public PersistentEntity getEntity() {
-        return entity;
+        return this.entity;
     }
 
     public E getNativeEntry() {
-        return nativeEntry;
+        return this.nativeEntry;
     }
 
     @Override
     public Object getObject() {
-        return nativeEntry;
+        return this.nativeEntry;
     }
 
 }

@@ -1,10 +1,11 @@
-/* Copyright (C) 2011 SpringSource
+/*
+ * Copyright 2011-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -91,6 +92,7 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
             public PersistentEntity getIndexedEntity() {
                 return association.getAssociatedEntity();
             }
+
         };
     }
 
@@ -128,140 +130,157 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
 
     @Override
     public int getOriginalSize() {
-        return originalSize;
+        return this.originalSize;
     }
 
     @Override
     public boolean hasGrown() {
-        return isInitialized() && (size() > originalSize);
+        return isInitialized() && (size() > this.originalSize);
     }
 
     @Override
     public boolean hasShrunk() {
-        return isInitialized() && (size() < originalSize);
+        return isInitialized() && (size() < this.originalSize);
     }
 
     @Override
     public boolean hasChangedSize() {
-        return isInitialized() && (size() != originalSize);
+        return isInitialized() && (size() != this.originalSize);
     }
-
 
     /* Collection methods */
 
+    @Override
     public Iterator iterator() {
         initialize();
 
-        final Iterator iterator = collection.iterator();
+        final Iterator iterator = this.collection.iterator();
         return new Iterator() {
+
+            @Override
             public boolean hasNext() {
                 return iterator.hasNext();
             }
 
+            @Override
             public Object next() {
                 return iterator.next();
             }
 
+            @Override
             public void remove() {
                 iterator.remove();
                 markDirty();
             }
+
         };
     }
 
+    @Override
     public int size() {
         initialize();
-        return collection.size();
+        return this.collection.size();
     }
 
+    @Override
     public boolean isEmpty() {
         initialize();
-        return collection.isEmpty();
+        return this.collection.isEmpty();
     }
 
+    @Override
     public boolean contains(Object o) {
         initialize();
-        return collection.contains(o);
+        return this.collection.contains(o);
     }
 
+    @Override
     public boolean add(Object o) {
         initialize();
-        boolean added = collection.add(o);
+        boolean added = this.collection.add(o);
         if (added) {
             markDirty();
         }
         return added;
     }
 
+    @Override
     public boolean remove(Object o) {
         initialize();
-        boolean remove = collection.remove(o);
+        boolean remove = this.collection.remove(o);
         if (remove) {
             markDirty();
         }
         return remove;
     }
 
+    @Override
     public void clear() {
         initialize();
-        collection.clear();
+        this.collection.clear();
         markDirty();
     }
 
     @Override
     public boolean equals(Object o) {
         initialize();
-        return collection.equals(o);
+        return this.collection.equals(o);
     }
 
     @Override
     public int hashCode() {
         initialize();
-        return collection.hashCode();
+        return this.collection.hashCode();
     }
 
     @Override
     public String toString() {
         initialize();
-        return collection.toString();
+        return this.collection.toString();
     }
 
+    @Override
     public boolean removeAll(Collection c) {
         initialize();
-        boolean changed = collection.removeAll(c);
+        boolean changed = this.collection.removeAll(c);
         if (changed) {
             markDirty();
         }
         return changed;
     }
 
+    @Override
     public Object[] toArray() {
         initialize();
-        return collection.toArray();
+        return this.collection.toArray();
     }
 
+    @Override
     public Object[] toArray(Object[] a) {
         initialize();
-        return collection.toArray(a);
+        return this.collection.toArray(a);
     }
 
+    @Override
     public boolean containsAll(Collection c) {
         initialize();
-        return collection.containsAll(c);
+        return this.collection.containsAll(c);
     }
 
+    @Override
     public boolean addAll(Collection c) {
         initialize();
-        boolean changed = collection.addAll(c);
+        boolean changed = this.collection.addAll(c);
         if (changed) {
             markDirty();
         }
         return changed;
     }
 
+    @Override
     public boolean retainAll(Collection c) {
         initialize();
-        boolean changed = collection.retainAll(c);
+        boolean changed = this.collection.retainAll(c);
         if (changed) {
             markDirty();
         }
@@ -270,16 +289,20 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
 
     /* PersistentCollection methods */
 
+    @Override
     public boolean isInitialized() {
-        return initialized;
+        return this.initialized;
     }
 
     protected void setInitializing(Boolean initializing) {
         this.initializing = initializing;
     }
 
+    @Override
     public void initialize() {
-        if (initializing != null) return;
+        if (this.initializing != null) {
+            return;
+        }
 
         setInitializing(Boolean.TRUE);
 
@@ -294,10 +317,10 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
                         " should have been initialized before serialization.");
             }
 
-            initialized = true;
+            this.initialized = true;
 
             final Class childType = this.childType;
-            if (associationKey == null) {
+            if (this.associationKey == null) {
                 final Collection keys = this.keys;
                 if (keys != null) {
 
@@ -305,9 +328,9 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
                 }
             }
             else {
-                List results = indexer.query(associationKey);
-                if (indexer.doesReturnKeys()) {
-                    PersistentEntity entity = indexer.getIndexedEntity();
+                List results = this.indexer.query(this.associationKey);
+                if (this.indexer.doesReturnKeys()) {
+                    PersistentEntity entity = this.indexer.getIndexedEntity();
 
                     // This should really only happen for unit testing since entities are
                     // mocked selectively and may not always be registered in the indexer. In this
@@ -332,7 +355,7 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
 
     protected void loadInverseChildKeys(Session session, Class childType, Collection keys) {
         if (!keys.isEmpty()) {
-            if (proxyEntities) {
+            if (this.proxyEntities) {
                 for (Object key : keys) {
                     add(
                             session.proxy(childType, (Serializable) key)
@@ -345,22 +368,25 @@ public abstract class AbstractPersistentCollection implements PersistentCollecti
         }
     }
 
+    @Override
     public boolean isDirty() {
-        return dirty;
+        return this.dirty;
     }
 
+    @Override
     public void resetDirty() {
-        dirty = false;
+        this.dirty = false;
     }
 
+    @Override
     public void markDirty() {
         if (!currentlyInitializing()) {
-            dirty = true;
+            this.dirty = true;
         }
     }
 
     protected boolean currentlyInitializing() {
-        return initializing != null && initializing.equals(Boolean.TRUE);
+        return this.initializing != null && this.initializing.equals(Boolean.TRUE);
     }
 
 }

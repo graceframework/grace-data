@@ -1,11 +1,11 @@
 /*
- * Copyright 2016 original authors
+ * Copyright 2016-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,11 +21,9 @@ import java.io.InputStream;
 
 import org.springframework.asm.AnnotationVisitor;
 import org.springframework.asm.SpringAsmInfo;
-import org.springframework.asm.Type;
 import org.springframework.core.io.Resource;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.ClassMetadata;
-//import org.springframework.core.type.classreading.AnnotationMetadataReadingVisitor;
 import org.springframework.core.type.classreading.MetadataReader;
 
 /**
@@ -45,8 +43,8 @@ public class AnnotationMetadataReader implements MetadataReader {
     /**
      * Constructs a new annotation metadata reader
      *
-     * @param resource The resource
-     * @param classLoader The classloader
+     * @param resource            The resource
+     * @param classLoader         The classloader
      * @param readAttributeValues Whether to read the attributes in addition or just the annotation class names
      * @throws IOException
      */
@@ -64,26 +62,6 @@ public class AnnotationMetadataReader implements MetadataReader {
             is.close();
         }
 
-//        AnnotationMetadataReadingVisitor visitor;
-//
-//        if (readAttributeValues) {
-//            visitor = new AnnotationMetadataReadingVisitor(classLoader);
-//        }
-//        else {
-//            visitor = new AnnotationMetadataReadingVisitor(classLoader) {
-//                @Override
-//                public AnnotationVisitor visitAnnotation(final String desc, boolean visible) {
-//                    String className = Type.getType(desc).getClassName();
-//                    this.annotationSet.add(className);
-//                    return new EmptyAnnotationVisitor();
-//                }
-//            };
-//        }
-//        classReader.accept(visitor, ClassReader.SKIP_DEBUG);
-//
-//        this.annotationMetadata = visitor;
-//        // (since AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisitor)
-//        this.classMetadata = visitor;
         this.resource = resource;
     }
 

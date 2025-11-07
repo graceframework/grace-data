@@ -1,11 +1,11 @@
 /*
- * Copyright 2015 original authors
+ * Copyright 2015-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,14 +27,14 @@ import java.util.Map;
  */
 public class ClassUtils {
 
-    public static final Map<Class<?>, Class<?>> PRIMITIVE_TYPE_COMPATIBLE_CLASSES = new HashMap<Class<?>, Class<?>>();
+    public static final Map<Class<?>, Class<?>> PRIMITIVE_TYPE_COMPATIBLE_CLASSES = new HashMap<>();
 
     /**
      * Just add two entries to the class compatibility map
      * @param left
      * @param right
      */
-    private static final void registerPrimitiveClassPair(Class<?> left, Class<?> right) {
+    private static void registerPrimitiveClassPair(Class<?> left, Class<?> right) {
         PRIMITIVE_TYPE_COMPATIBLE_CLASSES.put(left, right);
         PRIMITIVE_TYPE_COMPATIBLE_CLASSES.put(right, left);
     }
@@ -55,7 +55,7 @@ public class ClassUtils {
      * and can be loaded. Will return {@code false} if either the class or
      * one of its dependencies is not present or cannot be loaded.
      * @param className the name of the class to check
-     * (may be {@code null}, which indicates the default class loader)
+     * (maybe {@code null}, which indicates the default class loader)
      * @return whether the specified class is present
      */
     public static boolean isPresent(String className) {
@@ -103,7 +103,7 @@ public class ClassUtils {
      * one of its dependencies is not present or cannot be loaded.
      * @param className the name of the class to check
      * @param classLoader the class loader to use
-     * (may be {@code null}, which indicates the default class loader)
+     * (maybe {@code null}, which indicates the default class loader)
      * @return whether the specified class is present
      */
     public static boolean isPresent(String className, ClassLoader classLoader) {
@@ -125,10 +125,14 @@ public class ClassUtils {
      * @return A boolean value which will be false if the map is null, the map doesn't contain the key or the value is false
      */
     public static boolean getBooleanFromMap(String key, Map<?, ?> map) {
-        if (map == null) return false;
+        if (map == null) {
+            return false;
+        }
         if (map.containsKey(key)) {
             Object o = map.get(key);
-            if (o == null) return false;
+            if (o == null) {
+                return false;
+            }
             if (o instanceof Boolean) {
                 return (Boolean) o;
             }
@@ -147,7 +151,6 @@ public class ClassUtils {
             }
         }
         return false;
-
     }
 
     /**

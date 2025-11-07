@@ -1,10 +1,11 @@
-/* Copyright 2004-2005 the original author or authors.
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -43,9 +44,11 @@ import org.grails.datastore.mapping.validation.CascadeValidateType;
 @SuppressWarnings("rawtypes")
 public abstract class Association<T extends Property> extends AbstractPersistentProperty<T> {
 
-    private static final Set<CascadeType> DEFAULT_OWNER_CASCADE = Collections.unmodifiableSet(new HashSet<>(Collections.singletonList(CascadeType.ALL)));
+    private static final Set<CascadeType> DEFAULT_OWNER_CASCADE =
+            Collections.unmodifiableSet(new HashSet<>(Collections.singletonList(CascadeType.ALL)));
 
-    private static final Set<CascadeType> DEFAULT_CHILD_CASCADE = Collections.unmodifiableSet(new HashSet<>(Collections.singletonList(CascadeType.PERSIST)));
+    private static final Set<CascadeType> DEFAULT_CHILD_CASCADE =
+            Collections.unmodifiableSet(new HashSet<>(Collections.singletonList(CascadeType.PERSIST)));
 
     private PersistentEntity associatedEntity;
 
@@ -93,38 +96,40 @@ public abstract class Association<T extends Property> extends AbstractPersistent
      * @return True if the association is bidirectional
      */
     public boolean isBidirectional() {
-        return associatedEntity != null && referencedPropertyName != null;
+        return this.associatedEntity != null && this.referencedPropertyName != null;
     }
 
     /**
      * @return Whether orphaned entities should be removed when cascading deletes to this association
      */
     public boolean isOrphanRemoval() {
-        return orphanRemoval;
+        return this.orphanRemoval;
     }
 
     /**
      * @return The inverse side or null if the association is not bidirectional
      */
     public Association getInverseSide() {
-        final PersistentProperty associatedProperty = associatedEntity.getPropertyByName(referencedPropertyName);
-        if (associatedProperty == null) return null;
+        final PersistentProperty associatedProperty = this.associatedEntity.getPropertyByName(this.referencedPropertyName);
+        if (associatedProperty == null) {
+            return null;
+        }
         if (associatedProperty instanceof Association) {
             return (Association) associatedProperty;
         }
-        throw new IllegalMappingException("The inverse side [" + associatedEntity.getName() + "." +
+        throw new IllegalMappingException("The inverse side [" + this.associatedEntity.getName() + "." +
                 associatedProperty.getName() + "] of the association [" + getOwner().getName() + "." +
                 getName() + "] is not valid. Associations can only map to other entities and collection types.");
     }
 
     /**
-     * Returns true if the this association cascade for the given cascade operation
+     * Returns true if this association cascade for the given cascade operation
      *
      * @param cascadeOperation The cascadeOperation
      * @return True if it does
      */
     public boolean doesCascade(CascadeType cascadeOperation) {
-        return doesCascade(new CascadeType[] { cascadeOperation });
+        return doesCascade(new CascadeType[]{cascadeOperation});
     }
 
     /**
@@ -201,7 +206,7 @@ public abstract class Association<T extends Property> extends AbstractPersistent
      * @return True if this property is the owning side
      */
     public boolean isOwningSide() {
-        return owningSide;
+        return this.owningSide;
     }
 
     /**
@@ -223,14 +228,15 @@ public abstract class Association<T extends Property> extends AbstractPersistent
     }
 
     /**
-     * @return The entity associated with the this association
+     * @return The entity associated entity with the association
      */
     public PersistentEntity getAssociatedEntity() {
-        return associatedEntity;
+        return this.associatedEntity;
     }
 
     /**
      * Sets the name of the inverse property
+     *
      * @param referencedPropertyName The referenced property name
      */
     public void setReferencedPropertyName(String referencedPropertyName) {
@@ -241,7 +247,7 @@ public abstract class Association<T extends Property> extends AbstractPersistent
      * @return Returns the name of the inverse property or null if this association is unidirectional
      */
     public String getReferencedPropertyName() {
-        return referencedPropertyName;
+        return this.referencedPropertyName;
     }
 
     @Override
@@ -265,17 +271,17 @@ public abstract class Association<T extends Property> extends AbstractPersistent
     }
 
     protected Set<CascadeType> getCascadeOperations() {
-        if (cascadeOperations == null) {
+        if (this.cascadeOperations == null) {
             buildCascadeOperations();
         }
-        return cascadeOperations;
+        return this.cascadeOperations;
     }
 
     protected CascadeValidateType getCascadeValidateOperation() {
-        if (cascadeValidateType == null) {
-            cascadeValidateType = initializeCascadeValidateType();
+        if (this.cascadeValidateType == null) {
+            this.cascadeValidateType = initializeCascadeValidateType();
         }
-        return cascadeValidateType;
+        return this.cascadeValidateType;
     }
 
     /**

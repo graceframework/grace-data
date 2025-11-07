@@ -1,10 +1,11 @@
-/* Copyright 2011 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -64,6 +65,7 @@ public interface PersistentEntity extends Initializable {
 
     /**
      * Whether this PersistentEntity is mapped using a different store. Used for cross store persistence.
+     *
      * @param external true if this entity is externally mapped
      */
     void setExternal(boolean external);
@@ -91,6 +93,7 @@ public interface PersistentEntity extends Initializable {
 
     /**
      * A list of properties to be persisted
+     *
      * @return A list of PersistentProperty instances
      */
     List<PersistentProperty> getPersistentProperties();
@@ -142,12 +145,14 @@ public interface PersistentEntity extends Initializable {
 
     /**
      * Constructs a new instance
+     *
      * @return The new instnace
      */
     Object newInstance();
 
     /**
      * A list of property names that a persistent
+     *
      * @return A List of strings
      */
     List<String> getPersistentPropertyNames();
@@ -168,36 +173,42 @@ public interface PersistentEntity extends Initializable {
 
     /**
      * Returns the parent entity of this entity
+     *
      * @return The ParentEntity instance
      */
     PersistentEntity getParentEntity();
 
     /**
      * Obtains the root entity of an inheritance hierarchy
+     *
      * @return The root entity
      */
     PersistentEntity getRootEntity();
 
     /**
      * Whether this entity is a root entity
+     *
      * @return True if it is a root entity
      */
     boolean isRoot();
 
     /**
      * The discriminator used when persisting subclasses of an inheritance hierarchy
+     *
      * @return The discriminator
      */
     String getDiscriminator();
 
     /**
      * Obtains the MappingContext where this PersistentEntity is defined
+     *
      * @return The MappingContext instance
      */
     MappingContext getMappingContext();
 
     /**
      * Checks whether an entity has a bean property of the given name and type
+     *
      * @param name The name
      * @param type The type
      * @return True if it does
@@ -206,6 +217,7 @@ public interface PersistentEntity extends Initializable {
 
     /**
      * True if the given property is the identifier
+     *
      * @param propertyName the property name
      * @return True if it is the identifier
      */
@@ -218,6 +230,7 @@ public interface PersistentEntity extends Initializable {
 
     /**
      * Add a class to the owners list of this PersistentEntity
+     *
      * @param type The class to add
      * @return True if the operation was successful
      */

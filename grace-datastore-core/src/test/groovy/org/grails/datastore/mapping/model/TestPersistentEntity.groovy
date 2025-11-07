@@ -21,7 +21,7 @@ class TestPersistentEntity extends AbstractPersistentEntity {
     ClassMapping getMapping() { new TestClassMapping(this, context) }
 
     public class TestClassMapping extends AbstractClassMapping<Entity> {
-        private Entity mappedForm;
+        private Entity mappedForm
 
         TestClassMapping(PersistentEntity entity, MappingContext context) {
             super(entity, context)
@@ -30,7 +30,7 @@ class TestPersistentEntity extends AbstractPersistentEntity {
 
         @Override
         public Entity getMappedForm() {
-            return mappedForm;
+            return mappedForm
         }
     }
 }

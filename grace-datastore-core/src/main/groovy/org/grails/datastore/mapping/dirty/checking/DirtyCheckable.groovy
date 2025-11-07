@@ -1,8 +1,22 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.dirty.checking
 
-import jakarta.persistence.Transient
-
 import groovy.transform.CompileStatic
+import jakarta.persistence.Transient
 
 import org.grails.datastore.mapping.proxy.EntityProxy
 
@@ -20,11 +34,12 @@ trait DirtyCheckable {
     private transient Map<String, Object> $changedProperties
 
     /**
-     * Indicates that the instance should start tacking changes. Note that if the instance is dirty this will clear any previously tracked
+     * Indicates that the instance should start tacking changes.
+     * Note that if the instance is dirty this will clear any previously tracked
      * changes
      */
     void trackChanges() {
-        $changedProperties = new LinkedHashMap<String, Object>()
+        this.$changedProperties = new LinkedHashMap<String, Object>()
     }
 
     /**
@@ -34,7 +49,7 @@ trait DirtyCheckable {
      */
     void syncChangedProperties(Object o) {
         if (o instanceof DirtyCheckable) {
-            o.trackChanges($changedProperties)
+            o.trackChanges(this.$changedProperties)
         }
     }
 
@@ -44,7 +59,7 @@ trait DirtyCheckable {
      * @param changedProperties The changes.
      */
     void trackChanges(Map<String, Object> changedProperties) {
-        $changedProperties = changedProperties
+        this.$changedProperties = changedProperties
     }
 
     /**
@@ -55,7 +70,9 @@ trait DirtyCheckable {
             return false
         }
         else {
-            return $changedProperties == null || DirtyCheckingSupport.DIRTY_CLASS_MARKER.is($changedProperties) || !$changedProperties.isEmpty()
+            return this.$changedProperties == null ||
+                    DirtyCheckingSupport.DIRTY_CLASS_MARKER.is(this.$changedProperties) ||
+                    !this.$changedProperties.isEmpty()
         }
     }
 
@@ -68,16 +85,19 @@ trait DirtyCheckable {
             return false
         }
         else {
-            return $changedProperties == null || DirtyCheckingSupport.DIRTY_CLASS_MARKER.is($changedProperties) || $changedProperties?.containsKey(propertyName)
+            return this.$changedProperties == null ||
+                    DirtyCheckingSupport.DIRTY_CLASS_MARKER.is(this.$changedProperties) ||
+                    this.$changedProperties?.containsKey(propertyName)
         }
     }
 
     /**
-     * Marks the whole class and all its properties as dirty. When called any future call to any of the hasChanged methods will return true.
+     * Marks the whole class and all its properties as dirty.
+     * When called any future call to any of the hasChanged methods will return true.
      */
     void markDirty() {
-        if ($changedProperties != null && $changedProperties.isEmpty()) {
-            $changedProperties = DirtyCheckingSupport.DIRTY_CLASS_MARKER
+        if (this.$changedProperties != null && this.$changedProperties.isEmpty()) {
+            this.$changedProperties = DirtyCheckingSupport.DIRTY_CLASS_MARKER
         }
     }
 
@@ -86,11 +106,11 @@ trait DirtyCheckable {
      * @param propertyName The property name
      */
     void markDirty(String propertyName) {
-        if ($changedProperties != null && !$changedProperties.containsKey(propertyName)) {
-            if (DirtyCheckingSupport.DIRTY_CLASS_MARKER.is($changedProperties)) {
+        if (this.$changedProperties != null && !this.$changedProperties.containsKey(propertyName)) {
+            if (DirtyCheckingSupport.DIRTY_CLASS_MARKER.is(this.$changedProperties)) {
                 trackChanges()
             }
-            $changedProperties.put propertyName, ((GroovyObject) this).getProperty(propertyName)
+            this.$changedProperties.put propertyName, ((GroovyObject) this).getProperty(propertyName)
         }
     }
 
@@ -100,7 +120,7 @@ trait DirtyCheckable {
      * @param newValue The new value
      */
     void markDirty(String propertyName, newValue) {
-        if ($changedProperties != null && !$changedProperties.containsKey(propertyName)) {
+        if (this.$changedProperties != null && !this.$changedProperties.containsKey(propertyName)) {
             def oldValue = ((GroovyObject) this).getProperty(propertyName)
             markDirty(propertyName, newValue, oldValue)
         }
@@ -112,15 +132,15 @@ trait DirtyCheckable {
      * @param newValue The new value
      */
     void markDirty(String propertyName, newValue, oldValue) {
-        if ($changedProperties != null && !$changedProperties.containsKey(propertyName)) {
+        if (this.$changedProperties != null && !this.$changedProperties.containsKey(propertyName)) {
             boolean isNull = newValue == null
             if ((isNull && oldValue != null) ||
                     (!isNull && oldValue == null) ||
                     (!isNull && !newValue.equals(oldValue))) {
-                if (DirtyCheckingSupport.DIRTY_CLASS_MARKER.is($changedProperties)) {
+                if (DirtyCheckingSupport.DIRTY_CLASS_MARKER.is(this.$changedProperties)) {
                     trackChanges()
                 }
-                $changedProperties.put propertyName, oldValue
+                this.$changedProperties.put propertyName, oldValue
             }
         }
     }
@@ -133,9 +153,8 @@ trait DirtyCheckable {
             return Collections.emptyList()
         }
 
-        if ($changedProperties != null) {
-            return Collections.unmodifiableList(
-                    $changedProperties.keySet().toList()
+        if (this.$changedProperties != null) {
+            return Collections.unmodifiableList(this.$changedProperties.keySet().toList()
             )
         }
         return Collections.emptyList()
@@ -148,8 +167,8 @@ trait DirtyCheckable {
      * @return The original value
      */
     Object getOriginalValue(String propertyName) {
-        if ($changedProperties != null && $changedProperties.containsKey(propertyName)) {
-            return $changedProperties.get(propertyName)
+        if (this.$changedProperties != null && this.$changedProperties.containsKey(propertyName)) {
+            return this.$changedProperties.get(propertyName)
         }
         else {
             return null

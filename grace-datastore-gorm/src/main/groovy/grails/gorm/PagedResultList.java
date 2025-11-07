@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +33,7 @@ import org.grails.datastore.mapping.query.Query;
  * @author Graeme Rocher
  * @since 1.0
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings({ "unchecked" })
 public class PagedResultList<E> implements Serializable, List<E> {
 
     private static final long serialVersionUID = -5820655628956173929L;
@@ -45,7 +46,7 @@ public class PagedResultList<E> implements Serializable, List<E> {
 
     public PagedResultList(Query query) {
         this.query = query;
-        this.resultList = query == null ? Collections.<E>emptyList() : query.list();
+        this.resultList = query == null ? Collections.emptyList() : query.list();
     }
 
     /**
@@ -53,71 +54,71 @@ public class PagedResultList<E> implements Serializable, List<E> {
      */
     public int getTotalCount() {
         initialize();
-        return totalCount;
+        return this.totalCount;
     }
 
     @Override
     public E get(int i) {
-        return resultList.get(i);
+        return this.resultList.get(i);
     }
 
     @Override
     public E set(int i, E o) {
-        return resultList.set(i, o);
+        return this.resultList.set(i, o);
     }
 
     @Override
     public E remove(int i) {
-        return resultList.remove(i);
+        return this.resultList.remove(i);
     }
 
     @Override
     public int indexOf(Object o) {
-        return resultList.indexOf(o);
+        return this.resultList.indexOf(o);
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return resultList.lastIndexOf(o);
+        return this.resultList.lastIndexOf(o);
     }
 
     @Override
     public ListIterator<E> listIterator() {
-        return resultList.listIterator();
+        return this.resultList.listIterator();
     }
 
     @Override
     public ListIterator<E> listIterator(int index) {
-        return resultList.listIterator(index);
+        return this.resultList.listIterator(index);
     }
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-        return resultList.subList(fromIndex, toIndex);
+        return this.resultList.subList(fromIndex, toIndex);
     }
 
     @Override
     public void add(int i, E o) {
-        resultList.add(i, o);
+        this.resultList.add(i, o);
     }
 
     protected void initialize() {
-        if (totalCount == Integer.MIN_VALUE) {
-            if (query == null) {
-                totalCount = 0;
+        if (this.totalCount == Integer.MIN_VALUE) {
+            if (this.query == null) {
+                this.totalCount = 0;
             }
             else {
-                Query newQuery = (Query) query.clone();
+                Query newQuery = (Query) this.query.clone();
                 newQuery.projections().count();
                 Number result = (Number) newQuery.singleResult();
-                totalCount = result == null ? 0 : result.intValue();
+                this.totalCount = result == null ? 0 : result.intValue();
             }
         }
     }
 
     @Override
     public int size() {
-        return resultList.size();
+        return this.resultList.size();
     }
 
     @Override
@@ -127,72 +128,72 @@ public class PagedResultList<E> implements Serializable, List<E> {
 
     @Override
     public boolean contains(Object o) {
-        return resultList.contains(o);
+        return this.resultList.contains(o);
     }
 
     @Override
     public Iterator<E> iterator() {
-        return resultList.iterator();
+        return this.resultList.iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return resultList.toArray();
+        return this.resultList.toArray();
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        return resultList.toArray(a);
+        return this.resultList.toArray(a);
     }
 
     @Override
     public boolean add(E e) {
-        return resultList.add(e);
+        return this.resultList.add(e);
     }
 
     @Override
     public boolean remove(Object o) {
-        return resultList.remove(o);
+        return this.resultList.remove(o);
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return resultList.containsAll(c);
+        return this.resultList.containsAll(c);
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        return resultList.addAll(c);
+        return this.resultList.addAll(c);
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        return resultList.addAll(index, c);
+        return this.resultList.addAll(index, c);
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return resultList.removeAll(c);
+        return this.resultList.removeAll(c);
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return resultList.retainAll(c);
+        return this.resultList.retainAll(c);
     }
 
     @Override
     public void clear() {
-        resultList.clear();
+        this.resultList.clear();
     }
 
     @Override
     public boolean equals(Object o) {
-        return resultList.equals(o);
+        return this.resultList.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return resultList.hashCode();
+        return this.resultList.hashCode();
     }
 
     private void writeObject(ObjectOutputStream out) throws IOException {

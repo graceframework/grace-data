@@ -1,11 +1,11 @@
 /*
- * Copyright 2015 original authors
+ * Copyright 2015-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,42 +52,43 @@ public class AssociationQueryProxyHandler extends EntityProxyMethodHandler {
 
     @Override
     protected Object isProxyInitiated(Object self) {
-        return target != null;
+        return this.target != null;
     }
 
     @Override
     protected Object getProxyKey(Object self) {
-        return associationKey;
+        return this.associationKey;
     }
-
 
     @Override
     protected Object resolveDelegate(Object self) {
-        if (target == null) {
-            final List results = executor.query(associationKey);
-            if (executor.doesReturnKeys()) {
+        if (this.target == null) {
+            final List results = this.executor.query(this.associationKey);
+            if (this.executor.doesReturnKeys()) {
                 if (!results.isEmpty()) {
-                    target = session.retrieve(executor.getIndexedEntity().getJavaClass(), (Serializable) results.get(0));
+                    this.target = this.session.retrieve(this.executor.getIndexedEntity().getJavaClass(), (Serializable) results.get(0));
                 }
             }
             else {
                 if (!results.isEmpty()) {
-                    target = results.get(0);
+                    this.target = results.get(0);
                 }
             }
 
             // This tends to happen during unit testing if the proxy class is not properly mocked
             // and therefore can't be found in the session.
-            if (target == null) {
-                throw new DataIntegrityViolationException("Proxy for [" + proxyClass.getName() + "] for association [" + executor.getIndexedEntity().getName() + "] could not be initialized");
+            if (this.target == null) {
+                throw new DataIntegrityViolationException("Proxy for [" + proxyClass.getName() + "] for association [" +
+                        this.executor.getIndexedEntity().getName() + "] could not be initialized");
             }
-            if (target instanceof DirtyCheckable) {
-                ((DirtyCheckable) target).syncChangedProperties(self);
+            if (this.target instanceof DirtyCheckable) {
+                ((DirtyCheckable) this.target).syncChangedProperties(self);
             }
         }
-        return target;
+        return this.target;
     }
 
+    @Override
     protected Object handleInvocationFallback(Object self, Method thisMethod, Object[] args) {
         Object actualTarget = getProxyTarget(self);
         if (!thisMethod.getDeclaringClass().isInstance(actualTarget)) {

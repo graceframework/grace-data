@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.services.implementers
 
 import java.lang.reflect.Modifier
@@ -37,7 +52,7 @@ import static org.codehaus.groovy.ast.tools.GeneralUtils.varX
 trait InterfaceProjectionBuilder {
 
     boolean isInterfaceProjection(ClassNode domainClass, MethodNode methodNode, ClassNode returnType) {
-        if (returnType.isInterface() && !returnType.packageName?.startsWith("java.")) {
+        if (returnType.isInterface() && !returnType.packageName?.startsWith('java.')) {
             List<String> interfacePropertyNames = AstPropertyResolveUtils.getPropertyNames(returnType)
 
             for (prop in interfacePropertyNames) {
@@ -57,14 +72,14 @@ trait InterfaceProjectionBuilder {
 
     MethodNode buildInterfaceImpl(ClassNode interfaceNode, ClassNode declaringClass, ClassNode targetDomainClass, MethodNode abstractMethodNode) {
         List<Expression> getterNames = (List<Expression>) AstPropertyResolveUtils.getPropertyNames(interfaceNode)
-                .collect() {
+                .collect {
                     new ConstantExpression(NameUtils.getGetterName(it)) as Expression
                 }
         String innerClassName = "${declaringClass.name}\$${interfaceNode.nameWithoutPackage}"
         InnerClassNode innerClassNode = (InnerClassNode) declaringClass.innerClasses.find { InnerClassNode inner -> inner.name == innerClassName }
 
         MethodNode methodTarget
-        Parameter domainClassParam = param(targetDomainClass.plainNodeReference, "target")
+        Parameter domainClassParam = param(targetDomainClass.plainNodeReference, 'target')
         Parameter[] params = params(domainClassParam)
         if (innerClassNode == null) {
             innerClassNode = new InnerClassNode(declaringClass, innerClassName, Modifier.STATIC | Modifier.PRIVATE, ClassHelper.OBJECT_TYPE, [interfaceNode.plainNodeReference] as ClassNode[], null)
@@ -75,8 +90,8 @@ trait InterfaceProjectionBuilder {
                     assignS(varX(field), varX(domainClassParam))
             ))
             AnnotationNode delegateAnn = new AnnotationNode(new ClassNode(Delegate))
-            delegateAnn.setMember("includes", new ListExpression(getterNames))
-            delegateAnn.setMember("interfaces", new ConstantExpression(false))
+            delegateAnn.setMember('includes', new ListExpression(getterNames))
+            delegateAnn.setMember('interfaces', new ConstantExpression(false))
             ModuleNode module = abstractMethodNode.declaringClass.module
             new DelegateASTTransformation().visit(
                     [delegateAnn, field] as ASTNode[],
@@ -89,4 +104,5 @@ trait InterfaceProjectionBuilder {
         }
         return methodTarget
     }
+
 }

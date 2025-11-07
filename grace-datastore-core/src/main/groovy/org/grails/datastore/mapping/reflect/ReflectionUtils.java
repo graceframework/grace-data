@@ -1,10 +1,11 @@
-/* Copyright 2004-2005 the original author or authors.
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -44,6 +45,7 @@ public class ReflectionUtils {
 
     /**
      * Just add two entries to the class compatibility map
+     *
      * @param left
      * @param right
      */
@@ -67,7 +69,7 @@ public class ReflectionUtils {
      * Make the given field accessible, explicitly setting it accessible if necessary.
      * The <code>setAccessible(true)</code> method is only called when actually necessary,
      * to avoid unnecessary conflicts with a JVM SecurityManager (if active).
-     *
+     * <p>
      * Based on the same method in Spring core.
      *
      * @param field the field to make accessible
@@ -84,7 +86,7 @@ public class ReflectionUtils {
      * Make the given method accessible, explicitly setting it accessible if necessary.
      * The <code>setAccessible(true)</code> method is only called when actually necessary,
      * to avoid unnecessary conflicts with a JVM SecurityManager (if active).
-     *
+     * <p>
      * Based on the same method in Spring core.
      *
      * @param method the method to make accessible
@@ -98,13 +100,13 @@ public class ReflectionUtils {
     }
 
     /**
-     * <p>Tests whether or not the left hand type is compatible with the right hand type in Groovy
+     * <p>Tests weather or not the left hand type is compatible with the right hand type in Groovy
      * terms, i.e. can the left type be assigned a value of the right hand type in Groovy.</p>
      * <p>This handles Java primitive type equivalence and uses isAssignableFrom for all other types,
      * with a bit of magic for native types and polymorphism i.e. Number assigned an int.
      * If either parameter is null an exception is thrown</p>
      *
-     * @param leftType The type of the left hand part of a notional assignment
+     * @param leftType  The type of the left hand part of a notional assignment
      * @param rightType The type of the right hand part of a notional assignment
      * @return True if values of the right hand type can be assigned in Groovy to variables of the left hand type.
      */
@@ -149,32 +151,24 @@ public class ReflectionUtils {
      * @param clazz The class
      * @return The instantiated object or null if the class parameter was null
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public static <T> T instantiate(Class<T> clazz) {
-        if (clazz == null) return null;
+        if (clazz == null) {
+            return null;
+        }
         try {
             return clazz.getConstructor(EMPTY_CLASS_ARRAY).newInstance();
         }
-        catch (IllegalAccessException e) {
-            throw new InstantiationException(e.getClass().getName() + " error creating instance of class [" + e.getMessage() + "]: " + e.getMessage(), e);
-        }
-        catch (InvocationTargetException e) {
-            throw new InstantiationException(e.getClass().getName() + " error creating instance of class [" + e.getMessage() + "]: " + e.getMessage(), e);
-        }
-        catch (NoSuchMethodException e) {
-            throw new InstantiationException(e.getClass().getName() + " error creating instance of class [" + e.getMessage() + "]: " + e.getMessage(), e);
-        }
-        catch (java.lang.InstantiationException e) {
-            throw new InstantiationException(e.getClass().getName() + " error creating instance of class [" + e.getMessage() + "]: " + e.getMessage(), e);
+        catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | java.lang.InstantiationException e) {
+            throw new InstantiationException(e.getClass().getName() + " error creating instance of class [" +
+                    e.getMessage() + "]: " + e.getMessage(), e);
         }
     }
 
     /**
      * Retrieves all the properties of the given class for the given type
      *
-     * @param clazz The class to retrieve the properties from
+     * @param clazz        The class to retrieve the properties from
      * @param propertyType The type of the properties you wish to retrieve
-     *
      * @return An array of PropertyDescriptor instances
      */
     public static PropertyDescriptor[] getPropertiesOfType(Class<?> clazz, Class<?> propertyType) {
@@ -182,7 +176,7 @@ public class ReflectionUtils {
             return new PropertyDescriptor[0];
         }
 
-        Set<PropertyDescriptor> properties = new HashSet<PropertyDescriptor>();
+        Set<PropertyDescriptor> properties = new HashSet<>();
         try {
             for (PropertyDescriptor descriptor : BeanUtils.getPropertyDescriptors(clazz)) {
                 Class<?> currentPropertyType = descriptor.getPropertyType();
@@ -205,33 +199,47 @@ public class ReflectionUtils {
     /**
      * Returns true if the name of the method specified and the number of arguments make it a javabean property
      *
-     * @param name True if its a Javabean property
+     * @param name True if it's a Javabean property
      * @param args The arguments
      * @return true if it is a javabean property method
      */
     public static boolean isGetter(String name, Class<?>[] args) {
-        if (!StringUtils.hasText(name) || args == null) return false;
-        if (args.length != 0) return false;
+        if (!StringUtils.hasText(name) || args == null) {
+            return false;
+        }
+        if (args.length != 0) {
+            return false;
+        }
 
         if (name.startsWith("get")) {
             name = name.substring(3);
-            if (name.length() > 0 && Character.isUpperCase(name.charAt(0))) return true;
+            if (name.length() > 0 && Character.isUpperCase(name.charAt(0))) {
+                return true;
+            }
         }
         else if (name.startsWith("is")) {
             name = name.substring(2);
-            if (name.length() > 0 && Character.isUpperCase(name.charAt(0))) return true;
+            if (name.length() > 0 && Character.isUpperCase(name.charAt(0))) {
+                return true;
+            }
         }
         return false;
     }
 
     @SuppressWarnings("rawtypes")
     public static boolean isSetter(String name, Class[] args) {
-        if (!StringUtils.hasText(name) || args == null) return false;
+        if (!StringUtils.hasText(name) || args == null) {
+            return false;
+        }
 
         if (name.startsWith("set")) {
-            if (args.length != 1) return false;
+            if (args.length != 1) {
+                return false;
+            }
             name = name.substring(3);
-            if (name.length() > 0 && Character.isUpperCase(name.charAt(0))) return true;
+            if (name.length() > 0 && Character.isUpperCase(name.charAt(0))) {
+                return true;
+            }
         }
 
         return false;

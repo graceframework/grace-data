@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,15 +26,14 @@ import org.grails.datastore.mapping.core.Session;
  * No other resource level transaction management is provided.
  * </p>
  *
- * @author graemerocher
- *
  * @param <T>
+ * @author graemerocher
  */
 public class SessionOnlyTransaction<T> implements Transaction<T> {
 
-    private T nativeInterface;
+    private final T nativeInterface;
 
-    private Session session;
+    private final Session session;
 
     private boolean active = true;
 
@@ -42,36 +42,41 @@ public class SessionOnlyTransaction<T> implements Transaction<T> {
         this.session = session;
     }
 
+    @Override
     public void commit() {
-        if (active) {
+        if (this.active) {
             try {
-                session.flush();
+                this.session.flush();
             }
             finally {
-                active = false;
+                this.active = false;
             }
         }
     }
 
+    @Override
     public void rollback() {
-        if (active) {
+        if (this.active) {
             try {
-                session.clear();
+                this.session.clear();
             }
             finally {
-                active = false;
+                this.active = false;
             }
         }
     }
 
+    @Override
     public T getNativeTransaction() {
-        return nativeInterface;
+        return this.nativeInterface;
     }
 
+    @Override
     public boolean isActive() {
-        return active;
+        return this.active;
     }
 
+    @Override
     public void setTimeout(int timeout) {
         // do nothing
     }

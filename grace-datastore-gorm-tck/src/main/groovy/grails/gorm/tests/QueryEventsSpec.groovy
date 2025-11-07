@@ -1,18 +1,36 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.tests
 
-import grails.gorm.DetachedCriteria
-import org.grails.datastore.mapping.query.event.AbstractQueryEvent
-import org.grails.datastore.mapping.query.event.PostQueryEvent
-import org.grails.datastore.mapping.query.event.PreQueryEvent
 import org.springframework.context.ApplicationEvent
 import org.springframework.context.event.SmartApplicationListener
 import spock.lang.Ignore
+
+import grails.gorm.DetachedCriteria
+
+import org.grails.datastore.mapping.query.event.AbstractQueryEvent
+import org.grails.datastore.mapping.query.event.PostQueryEvent
+import org.grails.datastore.mapping.query.event.PreQueryEvent
 
 /**
  * Tests for query events.
  */
 @Ignore
 class QueryEventsSpec extends GormDatastoreSpec {
+
     SpecQueryEventListener listener
 
     @Override
@@ -25,7 +43,7 @@ class QueryEventsSpec extends GormDatastoreSpec {
         session.datastore.applicationContext.addApplicationListener(listener)
     }
 
-    void "pre-events are fired before queries are run"() {
+    void 'pre-events are fired before queries are run'() {
         when:
         TestEntity.findByName 'bob'
         then:
@@ -35,17 +53,17 @@ class QueryEventsSpec extends GormDatastoreSpec {
         listener.PreExecution == 1
 
         when:
-        TestEntity.where {name == 'bob'}.list()
+        TestEntity.where { name == 'bob' }.list()
         then:
         listener.PreExecution == 2
 
         when:
-        new DetachedCriteria(TestEntity).build({name == 'bob'}).list()
+        new DetachedCriteria(TestEntity).build({ name == 'bob' }).list()
         then:
         listener.PreExecution == 3
     }
 
-    void "post-events are fired after queries are run"() {
+    void 'post-events are fired after queries are run'() {
         given:
         def entity = new TestEntity(name: 'bob').save(flush: true)
         new TestEntity(name: 'mark').save(flush: true)
@@ -63,12 +81,12 @@ class QueryEventsSpec extends GormDatastoreSpec {
         listener.PostExecution == 1
 
         when:
-        TestEntity.where {name == 'bob'}.list()
+        TestEntity.where { name == 'bob' }.list()
         then:
         listener.PostExecution == 2
 
         when:
-        new DetachedCriteria(TestEntity).build({name == 'bob'}).list()
+        new DetachedCriteria(TestEntity).build({ name == 'bob' }).list()
         then:
         listener.PostExecution == 3
     }
@@ -77,14 +95,14 @@ class QueryEventsSpec extends GormDatastoreSpec {
 
         List<AbstractQueryEvent> events = []
 
-        int PreExecution,
-            PostExecution
+        int preExecution
+        int postExecution
 
         @Override
         void onApplicationEvent(ApplicationEvent event) {
             AbstractQueryEvent e = event as AbstractQueryEvent
             def typeName = e.eventType.name()
-            this."$typeName"++
+            this."${typeName.uncapitalize()}"++
             events << event
         }
 
@@ -102,6 +120,7 @@ class QueryEventsSpec extends GormDatastoreSpec {
         boolean supportsEventType(Class<? extends ApplicationEvent> eventType) {
             return eventType in [PreQueryEvent, PostQueryEvent]
         }
-    }
-}
 
+    }
+
+}

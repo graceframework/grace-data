@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -42,7 +43,7 @@ public class KeyValueMappingContext extends AbstractMappingContext {
     @Override
     public void setCanInitializeEntities(boolean canInitializeEntities) {
         super.setCanInitializeEntities(canInitializeEntities);
-        syntaxStrategy.setCanExpandMappingContext(false);
+        this.syntaxStrategy.setCanExpandMappingContext(false);
     }
 
     /**
@@ -54,7 +55,7 @@ public class KeyValueMappingContext extends AbstractMappingContext {
         Assert.notNull(keyspace, "Argument [keyspace] cannot be null");
         this.keyspace = keyspace;
         initializeDefaultMappingFactory(keyspace);
-        syntaxStrategy = new JpaMappingConfigurationStrategy(mappingFactory);
+        this.syntaxStrategy = new JpaMappingConfigurationStrategy(this.mappingFactory);
         super.initialize(new ConnectionSourceSettings());
     }
 
@@ -67,16 +68,16 @@ public class KeyValueMappingContext extends AbstractMappingContext {
         Assert.notNull(keyspace, "Argument [keyspace] cannot be null");
         this.keyspace = keyspace;
         initializeDefaultMappingFactory(keyspace);
-        syntaxStrategy = new JpaMappingConfigurationStrategy(this.mappingFactory);
+        this.syntaxStrategy = new JpaMappingConfigurationStrategy(this.mappingFactory);
         super.initialize(settings);
     }
 
     public String getKeyspace() {
-        return keyspace;
+        return this.keyspace;
     }
 
     protected void initializeDefaultMappingFactory(String keyspace) {
-        mappingFactory = new GormKeyValueMappingFactory(keyspace);
+        this.mappingFactory = new GormKeyValueMappingFactory(keyspace);
     }
 
     public void setMappingFactory(MappingFactory<Family, KeyValue> mappingFactory) {
@@ -88,12 +89,12 @@ public class KeyValueMappingContext extends AbstractMappingContext {
     }
 
     public MappingConfigurationStrategy getMappingSyntaxStrategy() {
-        return syntaxStrategy;
+        return this.syntaxStrategy;
     }
 
     @Override
     public MappingFactory<Family, KeyValue> getMappingFactory() {
-        return mappingFactory;
+        return this.mappingFactory;
     }
 
     @Override

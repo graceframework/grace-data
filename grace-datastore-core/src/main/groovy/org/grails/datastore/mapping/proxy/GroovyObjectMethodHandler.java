@@ -1,11 +1,11 @@
 /*
- * Copyright 2013 the original author or authors.
+ * Copyright 2013-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,7 +23,7 @@ import org.codehaus.groovy.runtime.InvokerHelper;
 
 /**
  * Javassist MethodHandler for handling GroovyObject methods
- *
+ * <p>
  * delegates getProperty, setProperty &amp; invokeMethod to super class's MetaClass
  *
  * @author Lari Hotari
@@ -135,10 +135,10 @@ public class GroovyObjectMethodHandler implements MethodHandler {
     }
 
     public MetaClass getThisMetaClass() {
-        if (metaClass == null) {
-            metaClass = InvokerHelper.getMetaClass(proxyClass);
+        if (this.metaClass == null) {
+            this.metaClass = InvokerHelper.getMetaClass(this.proxyClass);
         }
-        return metaClass;
+        return this.metaClass;
     }
 
     public void setThisMetaClass(MetaClass metaClass) {

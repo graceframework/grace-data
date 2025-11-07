@@ -1,3 +1,18 @@
+/*
+ * Copyright 2012-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.core.connections
 
 import groovy.transform.CompileStatic
@@ -14,39 +29,42 @@ import org.grails.datastore.mapping.core.DatastoreUtils
 @CompileStatic
 class StaticConnectionSources<T, S extends ConnectionSourceSettings> extends AbstractConnectionSources<T, S> {
 
-    protected final Map<String, ConnectionSource<T, S>> connectionSourceMap = new LinkedHashMap<>();
+    protected final Map<String, ConnectionSource<T, S>> connectionSourceMap = new LinkedHashMap<>()
 
-    StaticConnectionSources(ConnectionSource<T, S> defaultConnectionSource, Iterable<ConnectionSource<T, S>> otherConnectionSources, PropertyResolver configuration = DatastoreUtils.createPropertyResolver(null)) {
+    StaticConnectionSources(ConnectionSource<T, S> defaultConnectionSource, Iterable<ConnectionSource<T, S>> otherConnectionSources,
+                            PropertyResolver configuration = DatastoreUtils.createPropertyResolver(null)) {
         super(defaultConnectionSource, new SingletonConnectionSources.NullConnectionFactory<T, S>(), configuration)
 
-        connectionSourceMap.put(ConnectionSource.DEFAULT, defaultConnectionSource)
+        this.connectionSourceMap.put(ConnectionSource.DEFAULT, defaultConnectionSource)
         for (ConnectionSource<T, S> source in otherConnectionSources) {
-            connectionSourceMap.put(source.name, source)
+            this.connectionSourceMap.put(source.name, source)
         }
     }
 
     @Override
     Iterable<ConnectionSource<T, S>> getAllConnectionSources() {
-        return connectionSourceMap.values()
+        return this.connectionSourceMap.values()
     }
 
     @Override
     ConnectionSource<T, S> getConnectionSource(String name) {
-        return connectionSourceMap.get(name)
+        return this.connectionSourceMap.get(name)
     }
 
     @Override
     ConnectionSource<T, S> addConnectionSource(String name, PropertyResolver configuration) {
-        throw new UnsupportedOperationException("Cannot add a connection source it a SingletonConnectionSources")
+        throw new UnsupportedOperationException('Cannot add a connection source it a SingletonConnectionSources')
     }
 
     @Override
-    protected Iterable<String> getConnectionSourceNames(ConnectionSourceFactory<T, S> connectionSourceFactory, PropertyResolver configuration) {
-        return connectionSourceMap.keySet()
+    protected Iterable<String> getConnectionSourceNames(ConnectionSourceFactory<T, S> connectionSourceFactory,
+                                                        PropertyResolver configuration) {
+        return this.connectionSourceMap.keySet()
     }
 
     @Override
     Iterator<ConnectionSource<T, S>> iterator() {
-        return connectionSourceMap.values().iterator()
+        return this.connectionSourceMap.values().iterator()
     }
+
 }

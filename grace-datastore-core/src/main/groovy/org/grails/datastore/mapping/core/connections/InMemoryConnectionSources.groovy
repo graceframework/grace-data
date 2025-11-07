@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.core.connections
 
 import java.util.concurrent.ConcurrentHashMap
@@ -23,7 +38,10 @@ class InMemoryConnectionSources<T, S extends ConnectionSourceSettings> extends A
         this.connectionSourceMap.put(ConnectionSource.DEFAULT, defaultConnectionSource)
 
         for (String name : getConnectionSourceNames(connectionSourceFactory, configuration)) {
-            if (name.equals("dataSource")) continue // data source is reserved name for the default
+            if (name == 'dataSource') {
+                // data source is reserved name for the default
+                continue
+            }
             ConnectionSource<T, S> connectionSource = connectionSourceFactory.create(name, configuration, defaultConnectionSource.getSettings())
             if (connectionSource != null) {
                 this.connectionSourceMap.put(name, connectionSource)
@@ -44,19 +62,20 @@ class InMemoryConnectionSources<T, S extends ConnectionSourceSettings> extends A
     @Override
     ConnectionSource<T, S> addConnectionSource(String name, PropertyResolver configuration) {
         if (name == null) {
-            throw new IllegalArgumentException("Argument [name] cannot be null")
+            throw new IllegalArgumentException('Argument [name] cannot be null')
         }
         if (configuration == null) {
-            throw new IllegalArgumentException("Argument [configuration] cannot be null")
+            throw new IllegalArgumentException('Argument [configuration] cannot be null')
         }
 
-        ConnectionSource<T, S> connectionSource = connectionSourceFactory.createRuntime(name, configuration, (S) this.defaultConnectionSource.getSettings())
+        ConnectionSource<T, S> connectionSource =
+                this.connectionSourceFactory.createRuntime(name, configuration, (S) this.defaultConnectionSource.getSettings())
         if (connectionSource == null) {
-            throw new IllegalStateException("ConnectionSource factory returned null")
+            throw new IllegalStateException('ConnectionSource factory returned null')
         }
         this.connectionSourceMap.put(name, connectionSource)
 
-        for (listener in listeners) {
+        for (listener in this.listeners) {
             listener.newConnectionSource(connectionSource)
         }
         return connectionSource

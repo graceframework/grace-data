@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,17 +37,17 @@ import org.grails.datastore.mapping.model.PropertyMapping;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public abstract class AbstractKeyValueEntityPersister<T, K> extends NativeEntryEntityPersister<T, K> {
 
-    protected String entityFamily;
+    protected final String entityFamily;
 
     protected AbstractKeyValueEntityPersister(MappingContext context, PersistentEntity entity,
             Session session, ApplicationEventPublisher publisher) {
         super(context, entity, session, publisher);
-        entityFamily = getFamily(entity, classMapping);
+        this.entityFamily = getFamily(entity, classMapping);
     }
 
     @Override
     public String getEntityFamily() {
-        return entityFamily;
+        return this.entityFamily;
     }
 
     @Override
@@ -72,7 +73,9 @@ public abstract class AbstractKeyValueEntityPersister<T, K> extends NativeEntryE
         if (cm.getMappedForm() != null) {
             table = cm.getMappedForm().getFamily();
         }
-        if (table == null) table = persistentEntity.getJavaClass().getName();
+        if (table == null) {
+            table = persistentEntity.getJavaClass().getName();
+        }
         return table;
     }
 
@@ -81,7 +84,9 @@ public abstract class AbstractKeyValueEntityPersister<T, K> extends NativeEntryE
         if (cm.getMappedForm() != null) {
             keyspace = cm.getMappedForm().getKeyspace();
         }
-        if (keyspace == null) keyspace = defaultValue;
+        if (keyspace == null) {
+            keyspace = defaultValue;
+        }
         return keyspace;
     }
 

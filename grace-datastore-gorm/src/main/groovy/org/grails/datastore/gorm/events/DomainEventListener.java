@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -54,7 +55,7 @@ import org.grails.datastore.mapping.model.config.GormProperties;
 public class DomainEventListener extends AbstractPersistenceEventListener
         implements MappingContext.Listener {
 
-    private Map<PersistentEntity, Map<String, Method>> entityEvents = new ConcurrentHashMap<PersistentEntity, Map<String, Method>>();
+    private final Map<PersistentEntity, Map<String, Method>> entityEvents = new ConcurrentHashMap<>();
 
     @SuppressWarnings("rawtypes")
     public static final Class[] ZERO_PARAMS = {};
@@ -89,10 +90,11 @@ public class DomainEventListener extends AbstractPersistenceEventListener
 
         datastore.getMappingContext().addMappingContextListener(this);
         if (datastore instanceof ConnectionSourcesProvider) {
-            autowireEntities = ((ConnectionSourcesProvider) datastore).getConnectionSources().getDefaultConnectionSource().getSettings().isAutowire();
+            this.autowireEntities = ((ConnectionSourcesProvider) datastore).getConnectionSources()
+                    .getDefaultConnectionSource().getSettings().isAutowire();
         }
         else {
-            autowireEntities = false;
+            this.autowireEntities = false;
         }
     }
 
@@ -102,7 +104,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
         for (PersistentEntity entity : mappingContext.getPersistentEntities()) {
             createEventCaches(entity);
         }
-        autowireEntities = connectionSourcesProvider.getConnectionSources().getDefaultConnectionSource().getSettings().isAutowire();
+        this.autowireEntities = connectionSourcesProvider.getConnectionSources().getDefaultConnectionSource().getSettings().isAutowire();
         mappingContext.addMappingContextListener(this);
     }
 
@@ -149,7 +151,8 @@ public class DomainEventListener extends AbstractPersistenceEventListener
     }
 
     /**
-     * @deprecated Use {@link #beforeInsert(org.grails.datastore.mapping.model.PersistentEntity, org.grails.datastore.mapping.engine.EntityAccess, org.grails.datastore.mapping.engine.event.PreInsertEvent)} instead
+     * @deprecated Use {@link #beforeInsert(org.grails.datastore.mapping.model.PersistentEntity,
+     * org.grails.datastore.mapping.engine.EntityAccess, org.grails.datastore.mapping.engine.event.PreInsertEvent)} instead
      */
     public boolean beforeInsert(final PersistentEntity entity, final EntityAccess ea) {
         return beforeInsert(entity, ea, null);
@@ -245,7 +248,7 @@ public class DomainEventListener extends AbstractPersistenceEventListener
 
     public void afterLoad(final PersistentEntity entity, final EntityAccess ea, PostLoadEvent event) {
         activateDirtyChecking(ea);
-        if (autowireEntities || (entity != null && entity.getMapping().getMappedForm().isAutowire())) {
+        if (this.autowireEntities || (entity != null && entity.getMapping().getMappedForm().isAutowire())) {
             autowireBeanProperties(ea.getEntity());
         }
         invokeEvent(EVENT_AFTER_LOAD, entity, ea, event);
@@ -261,24 +264,28 @@ public class DomainEventListener extends AbstractPersistenceEventListener
 
     /**
      * {@inheritDoc}
+     *
      * @see org.grails.datastore.mapping.model.MappingContext.Listener#persistentEntityAdded(
      *org.grails.datastore.mapping.model.PersistentEntity)
      */
+    @Override
     public void persistentEntityAdded(PersistentEntity entity) {
         createEventCaches(entity);
     }
 
     /**
      * {@inheritDoc}
+     *
      * @see org.springframework.context.event.SmartApplicationListener#supportsEventType(
      *java.lang.Class)
      */
+    @Override
     public boolean supportsEventType(Class<? extends ApplicationEvent> eventType) {
         return AbstractPersistenceEvent.class.isAssignableFrom(eventType);
     }
 
     private boolean invokeEvent(String eventName, PersistentEntity entity, EntityAccess ea, ApplicationEvent event) {
-        final Map<String, Method> events = entityEvents.get(entity);
+        final Map<String, Method> events = this.entityEvents.get(entity);
         if (events == null) {
             return true;
         }
@@ -312,8 +319,8 @@ public class DomainEventListener extends AbstractPersistenceEventListener
 
     private void createEventCaches(PersistentEntity entity) {
         Class<?> javaClass = entity.getJavaClass();
-        final ConcurrentHashMap<String, Method> events = new ConcurrentHashMap<String, Method>();
-        entityEvents.put(entity, events);
+        final ConcurrentHashMap<String, Method> events = new ConcurrentHashMap<>();
+        this.entityEvents.put(entity, events);
 
         findAndCacheEvent(EVENT_BEFORE_INSERT, javaClass, events);
         findAndCacheEvent(EVENT_BEFORE_UPDATE, javaClass, events);

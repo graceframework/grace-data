@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -42,84 +43,94 @@ public class PersistentList extends AbstractPersistentCollection implements List
 
     public PersistentList(Collection keys, Class childType, Session session) {
         super(keys, childType, session, new ArrayList());
-        list = (List) collection;
+        this.list = (List) collection;
     }
 
     public PersistentList(Serializable associationKey, Session session, AssociationQueryExecutor indexer) {
         super(associationKey, session, indexer, new ArrayList());
-        list = (List) collection;
+        this.list = (List) collection;
     }
 
     public PersistentList(Association association, Serializable associationKey, Session session) {
         super(association, associationKey, session, new ArrayList());
-        list = (List) collection;
+        this.list = (List) collection;
     }
 
+    @Override
     public int indexOf(Object o) {
         initialize();
-        return list.indexOf(o);
+        return this.list.indexOf(o);
     }
 
+    @Override
     public int lastIndexOf(Object o) {
         initialize();
-        return list.lastIndexOf(o);
+        return this.list.lastIndexOf(o);
     }
 
+    @Override
     public Object get(int index) {
         initialize();
-        return list.get(index);
+        return this.list.get(index);
     }
 
+    @Override
     public Object set(int index, Object element) {
         initialize();
-        Object replaced = list.set(index, element);
+        Object replaced = this.list.set(index, element);
         if (replaced != element) {
             markDirty();
         }
         return replaced;
     }
 
+    @Override
     public void add(int index, Object element) {
         initialize();
-        list.add(index, element);
+        this.list.add(index, element);
         markDirty();
     }
 
+    @Override
     public Object remove(int index) {
         initialize();
         int size = size();
-        Object removed = list.remove(index);
+        Object removed = this.list.remove(index);
         if (size != size()) {
             markDirty();
         }
         return removed;
     }
 
+    @Override
     public boolean addAll(int index, Collection c) {
         initialize();
-        boolean changed = list.addAll(index, c);
+        boolean changed = this.list.addAll(index, c);
         if (changed) {
             markDirty();
         }
         return changed;
     }
 
+    @Override
     public ListIterator listIterator() {
         initialize();
-        return new PersistentListIterator(list.listIterator());
+        return new PersistentListIterator(this.list.listIterator());
     }
 
+    @Override
     public ListIterator listIterator(int index) {
         initialize();
-        return new PersistentListIterator(list.listIterator(index));
+        return new PersistentListIterator(this.list.listIterator(index));
     }
 
+    @Override
     public List subList(int fromIndex, int toIndex) {
         initialize();
-        return list.subList(fromIndex, toIndex); // not modification-aware
+        return this.list.subList(fromIndex, toIndex); // not modification-aware
     }
 
-    private class PersistentListIterator implements ListIterator {
+    private final class PersistentListIterator implements ListIterator {
 
         private final ListIterator iterator;
 
@@ -127,42 +138,51 @@ public class PersistentList extends AbstractPersistentCollection implements List
             this.iterator = iterator;
         }
 
+        @Override
         public boolean hasNext() {
-            return iterator.hasNext();
+            return this.iterator.hasNext();
         }
 
+        @Override
         public Object next() {
-            return iterator.next();
+            return this.iterator.next();
         }
 
+        @Override
         public boolean hasPrevious() {
-            return iterator.hasPrevious();
+            return this.iterator.hasPrevious();
         }
 
+        @Override
         public Object previous() {
-            return iterator.previous();
+            return this.iterator.previous();
         }
 
+        @Override
         public int nextIndex() {
-            return iterator.nextIndex();
+            return this.iterator.nextIndex();
         }
 
+        @Override
         public int previousIndex() {
-            return iterator.previousIndex();
+            return this.iterator.previousIndex();
         }
 
+        @Override
         public void remove() {
-            iterator.remove();
+            this.iterator.remove();
             markDirty();
         }
 
+        @Override
         public void set(Object e) {
-            iterator.set(e);
+            this.iterator.set(e);
             markDirty(); // assume changed
         }
 
+        @Override
         public void add(Object e) {
-            iterator.add(e);
+            this.iterator.add(e);
             markDirty();
         }
 

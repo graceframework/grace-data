@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.support;
 
 import java.lang.reflect.Field;
@@ -110,20 +125,20 @@ public abstract class EventTriggerCaller {
     boolean resolveReturnValue(Object retval) {
         if (retval instanceof Boolean) {
             boolean returnValue = (Boolean) retval;
-            return invertBooleanReturnValue ? !returnValue : returnValue;
+            return this.invertBooleanReturnValue ? !returnValue : returnValue;
         }
         return false;
     }
 
     public boolean isInvertBooleanReturnValue() {
-        return invertBooleanReturnValue;
+        return this.invertBooleanReturnValue;
     }
 
     public void setInvertBooleanReturnValue(boolean invertBooleanReturnValue) {
         this.invertBooleanReturnValue = invertBooleanReturnValue;
     }
 
-    private static class NoopCaller extends EventTriggerCaller {
+    private static final class NoopCaller extends EventTriggerCaller {
 
         @Override
         public boolean call(Object entity, Object[] argumentArray) {
@@ -149,13 +164,13 @@ public abstract class EventTriggerCaller {
 
         @Override
         public boolean call(Object entity, Object[] argumentArray) {
-            Object[] arguments = new Object[numberOfParameters];
+            Object[] arguments = new Object[this.numberOfParameters];
             if (argumentArray != null) {
                 for (int i = 0; i < argumentArray.length && i < arguments.length; i++) {
                     arguments[i] = argumentArray[i];
                 }
             }
-            Object retval = ReflectionUtils.invokeMethod(method, entity, arguments);
+            Object retval = ReflectionUtils.invokeMethod(this.method, entity, arguments);
             return resolveReturnValue(retval);
         }
 
@@ -174,18 +189,18 @@ public abstract class EventTriggerCaller {
 
         @Override
         public boolean call(Object entity, Object[] argumentArray) {
-            Object retval = method.doMethodInvoke(entity, numberOfParameters > 0 ? argumentArray : EMPTY_ARRAY);
+            Object retval = this.method.doMethodInvoke(entity, this.numberOfParameters > 0 ? argumentArray : EMPTY_ARRAY);
             return resolveReturnValue(retval);
         }
 
     }
 
-    private static abstract class ClosureCaller extends EventTriggerCaller {
+    private abstract static class ClosureCaller extends EventTriggerCaller {
 
         boolean cloneFirst = false;
 
         Object callClosure(Object entity, Closure<?> callable, Object[] argumentArray) {
-            if (cloneFirst) {
+            if (this.cloneFirst) {
                 callable = (Closure<?>) callable.clone();
             }
             callable.setResolveStrategy(Closure.DELEGATE_FIRST);
@@ -202,17 +217,17 @@ public abstract class EventTriggerCaller {
         FieldClosureCaller(Field field) {
             this.field = field;
             if (Modifier.isStatic(field.getModifiers())) {
-                cloneFirst = true;
+                this.cloneFirst = true;
             }
         }
 
         @Override
         public boolean call(Object entity, Object[] argumentArray) {
-            Object fieldval = ReflectionUtils.getField(field, entity);
+            Object fieldval = ReflectionUtils.getField(this.field, entity);
             if (fieldval instanceof Closure) {
                 return resolveReturnValue(callClosure(entity, (Closure<?>) fieldval, argumentArray));
             }
-            LOG.error("Field " + field + " is not Closure or method.");
+            LOG.error("Field " + this.field + " is not Closure or method.");
             return false;
         }
 
@@ -231,11 +246,11 @@ public abstract class EventTriggerCaller {
 
         @Override
         public boolean call(Object entity, Object[] argumentArray) {
-            Object fieldval = metaProperty.getProperty(entity);
+            Object fieldval = this.metaProperty.getProperty(entity);
             if (fieldval instanceof Closure) {
                 return resolveReturnValue(callClosure(entity, (Closure<?>) fieldval, argumentArray));
             }
-            LOG.error("Field " + metaProperty + " is not Closure.");
+            LOG.error("Field " + this.metaProperty + " is not Closure.");
             return false;
         }
 

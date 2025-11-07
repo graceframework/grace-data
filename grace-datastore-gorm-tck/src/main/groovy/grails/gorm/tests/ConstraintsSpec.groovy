@@ -1,14 +1,29 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.tests
 
 import grails.gorm.annotation.Entity
 
 class ConstraintsSpec extends GormDatastoreSpec {
 
-    void "Test constraints with static default values"() {
-        given: "A Test class with static constraint values"
-        def ce = new ConstrainedEntity(num: 1000, str: "ABC")
+    void 'Test constraints with static default values'() {
+        given: 'A Test class with static constraint values'
+        def ce = new ConstrainedEntity(num: 1000, str: 'ABC')
 
-        when: "saved is called"
+        when: 'saved is called'
         ce.save()
 
         then:
@@ -19,21 +34,21 @@ class ConstraintsSpec extends GormDatastoreSpec {
     List getDomainClasses() {
         [ConstrainedEntity]
     }
+
 }
 
-@SuppressWarnings(["ClashingTraitMethods", "UnnecessaryQualifiedReference"])
+@SuppressWarnings(['ClashingTraitMethods', 'UnnecessaryQualifiedReference'])
 @Entity
 class ConstrainedEntity implements Serializable {
 
     static final int MAX_VALUE = 1000
-    static final List<String> ALLOWABLE_VALUES = ['ABC','DEF','GHI']
+    static final List<String> ALLOWABLE_VALUES = ['ABC', 'DEF', 'GHI']
 
     Long id
     Integer num
     String str
 
     static constraints = {
-
         num(maxSize: ConstrainedEntity.MAX_VALUE)
         str validator: { val, obj ->
             if (val != null && !ConstrainedEntity.ALLOWABLE_VALUES.contains(val)) {
@@ -41,4 +56,5 @@ class ConstrainedEntity implements Serializable {
             }
         }
     }
+
 }

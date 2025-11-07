@@ -1,11 +1,11 @@
 /*
- * Copyright 2017 the original author or authors.
+ * Copyright 2017-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,11 +40,11 @@ abstract class AbstractGormASTTransformation extends AbstractASTTransformation i
     @Override
     final void visit(ASTNode[] astNodes, SourceUnit source) {
         if (!(astNodes[0] instanceof AnnotationNode) || !(astNodes[1] instanceof AnnotatedNode)) {
-            throw new RuntimeException("Internal error: wrong types: ${astNodes[0].getClass()} / ${astNodes[1].getClass()}");
+            throw new RuntimeException("Internal error: wrong types: ${astNodes[0].getClass()} / ${astNodes[1].getClass()}")
         }
 
-        AnnotatedNode annotatedNode = (AnnotatedNode) astNodes[1];
-        AnnotationNode annotationNode = (AnnotationNode) astNodes[0];
+        AnnotatedNode annotatedNode = (AnnotatedNode) astNodes[1]
+        AnnotationNode annotationNode = (AnnotationNode) astNodes[0]
 
         if (!isValidAnnotation(annotationNode, annotatedNode)) {
             return

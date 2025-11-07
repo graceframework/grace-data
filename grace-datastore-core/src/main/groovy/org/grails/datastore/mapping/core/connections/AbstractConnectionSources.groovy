@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.core.connections
 
 import groovy.transform.CompileDynamic
@@ -15,21 +30,21 @@ import org.grails.datastore.mapping.core.DatastoreUtils
 @CompileStatic
 abstract class AbstractConnectionSources<T, S extends ConnectionSourceSettings> implements ConnectionSources<T, S> {
 
-    protected final ConnectionSource<T, S> defaultConnectionSource;
-    protected final ConnectionSourceFactory<T, S> connectionSourceFactory;
-    protected final PropertyResolver configuration;
+    protected final ConnectionSource<T, S> defaultConnectionSource
+    protected final ConnectionSourceFactory<T, S> connectionSourceFactory
+    protected final PropertyResolver configuration
     protected final Collection<ConnectionSourcesListener<T, S>> listeners = []
 
     AbstractConnectionSources(ConnectionSource<T, S> defaultConnectionSource, ConnectionSourceFactory<T, S> connectionSourceFactory,
                               PropertyResolver configuration) {
         if (connectionSourceFactory == null) {
-            throw new IllegalArgumentException("Argument [connectionSourceFactory] cannot be null");
+            throw new IllegalArgumentException('Argument [connectionSourceFactory] cannot be null')
         }
         if (defaultConnectionSource == null) {
-            throw new IllegalStateException("The default ConnectionSource cannot be null!");
+            throw new IllegalStateException('The default ConnectionSource cannot be null!')
         }
         if (configuration == null) {
-            this.configuration = DatastoreUtils.createPropertyResolver(Collections.emptyMap());
+            this.configuration = DatastoreUtils.createPropertyResolver(Collections.emptyMap())
         }
         else {
             this.configuration = configuration
@@ -53,45 +68,45 @@ abstract class AbstractConnectionSources<T, S extends ConnectionSourceSettings> 
     protected Iterable<String> getConnectionSourceNames(ConnectionSourceFactory<T, S> connectionSourceFactory, PropertyResolver configuration) {
         Map<String, Object> allConnectionSources = configuration.getProperty(
                 connectionSourceFactory.getConnectionSourcesConfigurationKey().toString(),
-                Map.class, Collections.emptyMap());
-        return toValidConnectionSourceNames(allConnectionSources);
+                Map, Collections.emptyMap())
+        return toValidConnectionSourceNames(allConnectionSources)
     }
 
     static Set<String> toValidConnectionSourceNames(Map<String, Object> allConnectionSources) {
-        Set<String> names = allConnectionSources.keySet();
-        Set<String> newNames = new LinkedHashSet<>();
+        Set<String> names = allConnectionSources.keySet()
+        Set<String> newNames = new LinkedHashSet<>()
         for (String name : names) {
-            int i = name.indexOf('.');
+            int i = name.indexOf('.')
             if (i > -1) {
-                newNames.add(name.substring(0, i));
+                newNames.add(name.substring(0, i))
             }
             else {
-                newNames.add(name);
+                newNames.add(name)
             }
         }
-        return newNames;
+        return newNames
     }
 
     @Override
     ConnectionSourceFactory<T, S> getFactory() {
-        return this.connectionSourceFactory;
+        return this.connectionSourceFactory
     }
 
     @Override
     ConnectionSource<T, S> getDefaultConnectionSource() {
-        return this.defaultConnectionSource;
+        return this.defaultConnectionSource
     }
 
     @Override
     void close() throws IOException {
-        for (ConnectionSource connectionSource : allConnectionSources) {
+        for (ConnectionSource connectionSource : this.allConnectionSources) {
             connectionSource.close()
         }
     }
 
     @Override
     Iterator<ConnectionSource<T, S>> iterator() {
-        allConnectionSources.iterator()
+        this.allConnectionSources.iterator()
     }
 
     @Override
@@ -102,7 +117,7 @@ abstract class AbstractConnectionSources<T, S extends ConnectionSourceSettings> 
 
     @Override
     ConnectionSources<T, S> addListener(ConnectionSourcesListener<T, S> listener) {
-        listeners.add(listener)
+        this.listeners.add(listener)
         return this
     }
 

@@ -35,7 +35,7 @@ ruleset {
     EmptySwitchStatement
     EmptySynchronizedStatement
     EmptyTryBlock
-    EmptyWhileStatement
+    // EmptyWhileStatement
     // EqualsAndHashCode
     EqualsOverloaded
     ExplicitGarbageCollection
@@ -112,7 +112,7 @@ ruleset {
     // ImplicitClosureParameter
     // ImplicitReturnStatement
     InvertedCondition
-    InvertedIfElse
+    // InvertedIfElse
     // LongLiteralWithLowerCaseL
     // MethodParameterTypeRequired
     // MethodReturnTypeRequired
@@ -206,7 +206,7 @@ ruleset {
     ConsecutiveBlankLines
     FileEndsWithoutNewline
     Indentation
-    LineLength(length: 150)
+    LineLength(length: 350)
     MissingBlankLineAfterImports
     MissingBlankLineAfterPackage
     MissingBlankLineBeforeAnnotatedField
@@ -351,7 +351,7 @@ ruleset {
     FieldName(ignoreFieldNames: 'serialVersionUID,log,logger')
     InterfaceName
     InterfaceNameSameAsSuperInterface
-    MethodName
+    MethodName(regex: '[a-z]\\w*|.*[ #].*')
     ObjectOverrideMisspelledMethodName
     PackageName
     PackageNameMatchesFilePath
@@ -392,7 +392,7 @@ ruleset {
     ConsecutiveStringConcatenation
     UnnecessaryBigDecimalInstantiation
     UnnecessaryBigIntegerInstantiation
-    UnnecessaryBooleanExpression
+    // UnnecessaryBooleanExpression
     UnnecessaryBooleanInstantiation
     UnnecessaryCallForLastElement
     UnnecessaryCallToSubstring
@@ -406,7 +406,7 @@ ruleset {
     UnnecessaryDefInVariableDeclaration
     UnnecessaryDotClass
     UnnecessaryDoubleInstantiation
-    UnnecessaryElseStatement
+    // UnnecessaryElseStatement
     UnnecessaryFinalOnPrivateMethod
     UnnecessaryFloatInstantiation
     UnnecessaryGString
@@ -424,7 +424,7 @@ ruleset {
     UnnecessaryPackageReference
     UnnecessaryParenthesesForMethodCallWithClosure
     UnnecessaryPublicModifier
-    UnnecessaryReturnKeyword
+    // UnnecessaryReturnKeyword
     UnnecessarySafeNavigationOperator
     UnnecessarySelfAssignment
     UnnecessarySemicolon

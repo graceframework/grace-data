@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.model
 
 import grails.gorm.annotation.Entity
@@ -30,19 +45,19 @@ class GormMappingInheritanceTests {
 
         def user = context.getPersistentEntity(SpecialUser.name)
 
-        Association foesAssociation = user.getPropertyByName("foes")
+        Association foesAssociation = user.getPropertyByName('foes')
         assert (foesAssociation instanceof OneToMany)
         assert !foesAssociation.isBidirectional()
 
-        Association friendsAssociation = user.getPropertyByName("friends")
+        Association friendsAssociation = user.getPropertyByName('friends')
         assert (friendsAssociation instanceof OneToMany)
         assert !friendsAssociation.isBidirectional()
 
-        Association bestBuddyAssociation = user.getPropertyByName("bestBuddy")
+        Association bestBuddyAssociation = user.getPropertyByName('bestBuddy')
         assert (bestBuddyAssociation instanceof OneToOne)
         assert !bestBuddyAssociation.isBidirectional()
 
-        Association specialFriendsAssociation = user.getPropertyByName("specialFriends")
+        Association specialFriendsAssociation = user.getPropertyByName('specialFriends')
         assert (specialFriendsAssociation instanceof OneToMany)
         assert !specialFriendsAssociation.isBidirectional()
 
@@ -78,7 +93,7 @@ class GormMappingInheritanceTests {
         assertEquals 3, context.persistentEntities.size()
 
         def derivedChild = context.getPersistentEntity(DerivedChild.name)
-        Association parentAssociation = derivedChild.getPropertyByName("parent")
+        Association parentAssociation = derivedChild.getPropertyByName('parent')
         assertTrue parentAssociation instanceof ManyToOne
         assertTrue parentAssociation.bidirectional
         assertEquals parentAssociation.associatedEntity, context.getPersistentEntity(Parent.name)
@@ -92,11 +107,11 @@ class GormMappingInheritanceTests {
         assertEquals 2, context.persistentEntities.size()
 
         def test = context.getPersistentEntity(MappingTest2.name)
-        PersistentProperty property = test.getPropertyByName("toIndex1")
+        PersistentProperty property = test.getPropertyByName('toIndex1')
         assertTrue property.mapping.mappedForm.index
-        property = test.getPropertyByName("toIndex2")
+        property = test.getPropertyByName('toIndex2')
         assertTrue property.mapping.mappedForm.index
-        property = test.getPropertyByName("doNotIndex")
+        property = test.getPropertyByName('doNotIndex')
         assertFalse property.mapping.mappedForm.index
     }
 }

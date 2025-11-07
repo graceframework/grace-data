@@ -1,10 +1,11 @@
-/* Copyright 2016 the original author or authors.
+/*
+ * Copyright 2016-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,6 +42,7 @@ class ClasspathEntityScanner {
      * The annotations to scan
      */
     List<Class<? extends Annotation>> annotations = [Entity]
+
     /**
      * The classloader to use
      */
@@ -52,9 +54,9 @@ class ClasspathEntityScanner {
     List<String> ignoredPackages = ['com', 'net', '', 'org', 'java', 'javax', 'groovy']
 
     ClasspathEntityScanner() {
-        if (ClassUtils.isPresent("grails.persistence.Entity")) {
+        if (ClassUtils.isPresent('grails.persistence.Entity')) {
             try {
-                annotations.add((Class<? extends Annotation>) Class.forName("grails.persistence.Entity"))
+                annotations.add((Class<? extends Annotation>) Class.forName('grails.persistence.Entity'))
             }
             catch (Throwable e) {
                 log.error("Annotation [grails.persistence.Entity] found on classpath, but could not be loaded: ${e.message}", e)
@@ -80,7 +82,8 @@ class ClasspathEntityScanner {
         for (Package p in packages) {
             def packageName = p.name
             if (ignoredPackages.contains(packageName)) {
-                log.error("Package [$packageName] will not be scanned as it is too generic and will slow down startup time. Use a more specific package")
+                log.error("Package [$packageName] will not be scanned as it is too generic and will slow down startup time. " +
+                        'Use a more specific package')
             }
             else {
                 for (BeanDefinition candidate in componentProvider.findCandidateComponents(packageName)) {

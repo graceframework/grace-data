@@ -1,11 +1,11 @@
 /*
- * Copyright 2010-2022 the original author or authors.
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -86,7 +86,6 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
             ConnectionSource<?, ConnectionSourceSettings> defaultConnectionSource = connectionSources.defaultConnectionSource
             qualifier = defaultConnectionSource.name
             multiTenancyMode = defaultConnectionSource.settings.multiTenancy.mode
-
         }
         else {
             connectionSources = null
@@ -178,7 +177,6 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
                         argumentsForMethod = varArgs[0]
                     }
                     else {
-
                         argumentsForMethod = varArgs
                     }
                 }
@@ -206,6 +204,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
     DetachedCriteria<D> whereLazy(Closure callable) {
         new DetachedCriteria<D>(persistentClass).buildLazy(callable)
     }
+
     /**
      *
      * @param callable Callable closure containing detached criteria definition
@@ -432,7 +431,6 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
             execute({ Session session ->
                 InvokerHelper.invokeMethod(criteriaBuilder, 'get', callable)
             } as SessionCallback)
-
         }
         else {
             execute({ Session session ->
@@ -548,13 +546,13 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
     void delete(D instance, Map params) {
         GormEnhancer.findInstanceApi(persistentClass, defaultQualifier).delete(instance, params)
     }
+
     /**
      * Counts the number of persisted entities
      * @return The number of persisted entities
      */
     Integer count() {
         (Integer) execute({ Session session ->
-
             def q = session.createQuery(persistentClass)
             q.projections().count()
             def result = q.singleResult()
@@ -1009,7 +1007,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
      * @return The result of the closure execution
      */
     public <T> T withTransaction(TransactionDefinition definition, Closure<T> callable) {
-        Assert.notNull transactionManager, "No transactionManager bean configured"
+        Assert.notNull transactionManager, 'No transactionManager bean configured'
 
         if (!callable) {
             return
@@ -1047,7 +1045,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
             }
         }
         else {
-            throw new UnsupportedOperationException("Stateless sessions not supported by implementation")
+            throw new UnsupportedOperationException('Stateless sessions not supported by implementation')
         }
     }
 
@@ -1063,7 +1061,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
 
     @Override
     List executeQuery(CharSequence query, Map params, Map args) {
-        unsupported("executeQuery")
+        unsupported('executeQuery')
         return null
     }
 
@@ -1079,7 +1077,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
 
     @Override
     List executeQuery(CharSequence query, Collection params, Map args) {
-        unsupported("executeQuery")
+        unsupported('executeQuery')
         return null
     }
 
@@ -1095,7 +1093,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
 
     @Override
     Integer executeUpdate(CharSequence query, Map params, Map args) {
-        unsupported("executeUpdate")
+        unsupported('executeUpdate')
         return null
     }
 
@@ -1111,7 +1109,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
 
     @Override
     Integer executeUpdate(CharSequence query, Collection params, Map args) {
-        unsupported("executeUpdate")
+        unsupported('executeUpdate')
         return null
     }
 
@@ -1127,7 +1125,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
 
     @Override
     D find(CharSequence query, Map params, Map args) {
-        unsupported("find")
+        unsupported('find')
         return null
     }
 
@@ -1143,7 +1141,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
 
     @Override
     D find(CharSequence query, Collection params, Map args) {
-        unsupported("find")
+        unsupported('find')
         return null
     }
 
@@ -1159,7 +1157,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
 
     @Override
     List<D> findAll(CharSequence query, Map params, Map args) {
-        unsupported("findAll")
+        unsupported('findAll')
         return null
     }
 
@@ -1175,7 +1173,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
 
     @Override
     List<D> findAll(CharSequence query, Collection params, Map args) {
-        unsupported("findAll")
+        unsupported('findAll')
         return null
     }
 
@@ -1204,7 +1202,7 @@ class GormStaticApi<D> extends AbstractGormApi<D> implements GormAllOperations<D
             def persistentMetaClass = GroovySystem.metaClassRegistry.getMetaClass(persistentClass)
             result = (D) persistentMetaClass.invokeConstructor(queryMap)
             if (shouldSave) {
-                InvokerHelper.invokeMethod(result, "save", null)
+                InvokerHelper.invokeMethod(result, 'save', null)
             }
         }
         result

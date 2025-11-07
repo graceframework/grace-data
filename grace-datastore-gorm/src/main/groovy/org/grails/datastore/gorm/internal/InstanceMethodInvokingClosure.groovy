@@ -19,14 +19,16 @@ import groovy.transform.CompileStatic
 /**
  * Not public API. Used by GormEnhancer
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings('rawtypes')
 @CompileStatic
 class InstanceMethodInvokingClosure extends MethodInvokingClosure {
 
     InstanceMethodInvokingClosure(apiDelegate, Class<?> persistentClass, String methodName, Class[] parameterTypes) {
         super(apiDelegate, methodName, parameterTypes)
-        Class[] metaMethodParams = ([persistentClass] + (parameterTypes as List<Class>)) as Class[]
-        super.metaMethod = pickMetaMethod(apiDelegate.getMetaClass(), methodName, metaMethodParams, false)
+        List<Class<?>> metaMethodParams = new ArrayList<>()
+        metaMethodParams.add(persistentClass)
+        metaMethodParams.addAll(parameterTypes)
+        super.metaMethod = pickMetaMethod(apiDelegate.getMetaClass(), methodName, metaMethodParams.toArray(new Class[0]), false)
     }
 
     @Override

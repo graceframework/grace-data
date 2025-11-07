@@ -1,10 +1,11 @@
-/* Copyright (C) 2011 SpringSource
+/*
+ * Copyright 2011-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,7 +29,6 @@ import org.grails.datastore.mapping.model.PersistentEntity;
 /**
  * @author Burt Beckwith
  */
-@SuppressWarnings("serial")
 public abstract class AbstractPersistenceEvent extends ApplicationEvent {
 
     public static final String ONLOAD_EVENT = "onLoad";
@@ -88,10 +88,10 @@ public abstract class AbstractPersistenceEvent extends ApplicationEvent {
     protected AbstractPersistenceEvent(final Datastore source, final Object entity) {
         super(source);
         MappingContext mappingContext = source.getMappingContext();
-        entityObject = mappingContext.getProxyHandler().unwrap(entity);
-        this.entity = mappingContext.getPersistentEntity(entityObject.getClass().getName());
+        this.entityObject = mappingContext.getProxyHandler().unwrap(entity);
+        this.entity = mappingContext.getPersistentEntity(this.entityObject.getClass().getName());
         if (this.entity != null) {
-            this.entityAccess = mappingContext.createEntityAccess(this.entity, entityObject);
+            this.entityAccess = mappingContext.createEntityAccess(this.entity, this.entityObject);
         }
         else {
             this.entityAccess = null;
@@ -99,31 +99,31 @@ public abstract class AbstractPersistenceEvent extends ApplicationEvent {
     }
 
     public Object getEntityObject() {
-        return entityObject;
+        return this.entityObject;
     }
 
     public PersistentEntity getEntity() {
-        return entity;
+        return this.entity;
     }
 
     public EntityAccess getEntityAccess() {
-        return entityAccess;
+        return this.entityAccess;
     }
 
     public void cancel() {
-        cancelled = true;
+        this.cancelled = true;
     }
 
     public boolean isCancelled() {
-        return cancelled;
+        return this.cancelled;
     }
 
     public void addExcludedListenerName(final String name) {
-        excludedListenerNames.add(name);
+        this.excludedListenerNames.add(name);
     }
 
     public boolean isListenerExcluded(final String name) {
-        return excludedListenerNames.contains(name);
+        return this.excludedListenerNames.contains(name);
     }
 
     public void setNativeEvent(final Serializable nativeEvent) {
@@ -131,7 +131,7 @@ public abstract class AbstractPersistenceEvent extends ApplicationEvent {
     }
 
     public Serializable getNativeEvent() {
-        return nativeEvent;
+        return this.nativeEvent;
     }
 
     public abstract EventType getEventType();

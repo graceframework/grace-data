@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,10 +31,10 @@ public interface ProxyFactory extends ProxyHandler {
     /**
      * Creates a proxy
      *
-     * @param <T> The type of the proxy to create
+     * @param <T>     The type of the proxy to create
      * @param session The session instance
-     * @param type The type of the proxy to create
-     * @param key The key to proxy
+     * @param type    The type of the proxy to create
+     * @param key     The key to proxy
      * @return A proxy instance
      */
     <T> T createProxy(Session session, Class<T> type, Serializable key);
@@ -41,9 +42,9 @@ public interface ProxyFactory extends ProxyHandler {
     /**
      * Creates a proxy
      *
-     * @param <T> The type of the proxy to create
-     * @param session The session instance
-     * @param executor The query executor
+     * @param <T>            The type of the proxy to create
+     * @param session        The session instance
+     * @param executor       The query executor
      * @param associationKey The key to proxy
      * @return A proxy instance
      */

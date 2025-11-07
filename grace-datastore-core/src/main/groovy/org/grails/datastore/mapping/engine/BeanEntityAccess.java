@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,7 +37,7 @@ import org.grails.datastore.mapping.reflect.ClassPropertyFetcher;
  * @author Graeme Rocher
  * @since 1.0
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class BeanEntityAccess implements EntityAccess {
 
     private static final Set EXCLUDED_PROPERTIES = ClassPropertyFetcher.EXCLUDED_PROPERTIES;
@@ -50,31 +51,31 @@ public class BeanEntityAccess implements EntityAccess {
     public BeanEntityAccess(PersistentEntity persistentEntity, Object entity) {
         this.entity = entity;
         this.persistentEntity = persistentEntity;
-        beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(entity);
+        this.beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(entity);
     }
 
     @Override
     public Object getEntity() {
-        return entity;
+        return this.entity;
     }
 
     public void setConversionService(ConversionService conversionService) {
-        beanWrapper.setConversionService(conversionService);
+        this.beanWrapper.setConversionService(conversionService);
     }
 
     @Override
     public Object getProperty(String name) {
-        return beanWrapper.getPropertyValue(name);
+        return this.beanWrapper.getPropertyValue(name);
     }
 
     @Override
     public Object getPropertyValue(String name) {
-        return beanWrapper.getPropertyValue(name);
+        return this.beanWrapper.getPropertyValue(name);
     }
 
     @Override
     public Class getPropertyType(String name) {
-        return beanWrapper.getPropertyType(name);
+        return this.beanWrapper.getPropertyType(name);
     }
 
     @Override
@@ -82,22 +83,22 @@ public class BeanEntityAccess implements EntityAccess {
         Class type = getPropertyType(name);
         if (value == null) {
             if (!type.isPrimitive()) {
-                beanWrapper.setPropertyValue(name, value);
+                this.beanWrapper.setPropertyValue(name, value);
             }
         }
         else {
-            beanWrapper.setPropertyValue(name, value);
+            this.beanWrapper.setPropertyValue(name, value);
         }
 
     }
 
     @Override
     public Object getIdentifier() {
-        String idName = getIdentifierName(persistentEntity.getMapping());
+        String idName = getIdentifierName(this.persistentEntity.getMapping());
         if (idName != null) {
             return getProperty(idName);
         }
-        PersistentProperty identity = persistentEntity.getIdentity();
+        PersistentProperty identity = this.persistentEntity.getIdentity();
         if (identity != null) {
             return getProperty(identity.getName());
         }
@@ -106,13 +107,13 @@ public class BeanEntityAccess implements EntityAccess {
 
     @Override
     public void setIdentifier(Object id) {
-        String idName = getIdentifierName(persistentEntity.getMapping());
+        String idName = getIdentifierName(this.persistentEntity.getMapping());
         setProperty(idName, id);
     }
 
     @Override
     public void setIdentifierNoConversion(Object id) {
-        String idName = getIdentifierName(persistentEntity.getMapping());
+        String idName = getIdentifierName(this.persistentEntity.getMapping());
         setPropertyNoConversion(idName, id);
     }
 
@@ -129,22 +130,22 @@ public class BeanEntityAccess implements EntityAccess {
 
     @Override
     public String getIdentifierName() {
-        return getIdentifierName(persistentEntity.getMapping());
+        return getIdentifierName(this.persistentEntity.getMapping());
     }
 
     @Override
     public PersistentEntity getPersistentEntity() {
-        return persistentEntity;
+        return this.persistentEntity;
     }
 
     public void setPropertyNoConversion(String name, Object value) {
-        final PropertyDescriptor pd = beanWrapper.getPropertyDescriptor(name);
+        final PropertyDescriptor pd = this.beanWrapper.getPropertyDescriptor(name);
         if (pd == null) {
             return;
         }
         final Method writeMethod = pd.getWriteMethod();
         if (writeMethod != null) {
-            ReflectionUtils.invokeMethod(writeMethod, beanWrapper.getWrappedInstance(), value);
+            ReflectionUtils.invokeMethod(writeMethod, this.beanWrapper.getWrappedInstance(), value);
         }
     }
 
@@ -153,14 +154,14 @@ public class BeanEntityAccess implements EntityAccess {
      */
     @Override
     public void refresh() {
-        final PropertyDescriptor[] descriptors = beanWrapper.getPropertyDescriptors();
+        final PropertyDescriptor[] descriptors = this.beanWrapper.getPropertyDescriptors();
         for (PropertyDescriptor descriptor : descriptors) {
             final String name = descriptor.getName();
             if (EXCLUDED_PROPERTIES.contains(name)) {
                 continue;
             }
 
-            if (!beanWrapper.isReadableProperty(name) || !beanWrapper.isWritableProperty(name)) {
+            if (!this.beanWrapper.isReadableProperty(name) || !this.beanWrapper.isWritableProperty(name)) {
                 continue;
             }
 

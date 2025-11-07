@@ -1,10 +1,27 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.tests
+
+import spock.lang.Issue
 
 import grails.gorm.DetachedCriteria
 import grails.gorm.annotation.Entity
+
 import org.grails.datastore.gorm.query.criteria.DetachedAssociationCriteria
 import org.grails.datastore.mapping.query.Query
-import spock.lang.Issue
 
 /**
  * Created by graemerocher on 02/11/16.
@@ -12,20 +29,20 @@ import spock.lang.Issue
 class DetachedCriteriaAssociationQuerySpec extends GormDatastoreSpec {
 
     @Issue('https://github.com/grails/grails-data-mapping/issues/776')
-    void "test that detached nested criteria work for association queries"() {
-        when:"an object is queried with a detached association query"
-        new BookA(genre: new Genre(description: "horror").save()).save(flush:true)
+    void 'test that detached nested criteria work for association queries'() {
+        when: 'an object is queried with a detached association query'
+        new BookA(genre: new Genre(description: 'horror').save()).save(flush: true)
         DetachedCriteria<BookA> query = BookA.where {
             genre {
                 or {
-                    eq("id", 0)
-                    eq("description", "horror")
+                    eq('id', 0)
+                    eq('description', 'horror')
                 }
             }
         }
         BookA book = query.get()
 
-        then:"The query worked"
+        then: 'The query worked'
         query.criteria.size() == 1
         query.criteria.get(0) instanceof DetachedAssociationCriteria
         query.criteria.get(0).association.name == 'genre'
@@ -43,14 +60,19 @@ class DetachedCriteriaAssociationQuerySpec extends GormDatastoreSpec {
     List getDomainClasses() {
         [BookA, Genre]
     }
+
 }
 
 @Entity
 class BookA {
+
     Genre genre
+
 }
 
 @Entity
 class Genre {
+
     String description
+
 }

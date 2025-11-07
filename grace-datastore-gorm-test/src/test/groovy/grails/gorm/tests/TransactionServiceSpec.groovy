@@ -1,36 +1,56 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package grails.gorm.tests
 
-import grails.gorm.transactions.TransactionService
-import org.grails.datastore.mapping.simple.SimpleMapDatastore
 import org.springframework.transaction.TransactionStatus
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
+
+import grails.gorm.transactions.TransactionService
+
+import org.grails.datastore.mapping.simple.SimpleMapDatastore
 
 /**
  * Created by graemerocher on 11/01/2017.
  */
 class TransactionServiceSpec extends Specification {
 
-    @Shared @AutoCleanup SimpleMapDatastore datastore = new SimpleMapDatastore()
+    @Shared
+    @AutoCleanup
+    SimpleMapDatastore datastore = new SimpleMapDatastore()
 
-    void "test use transaction service"() {
-        when:"the tx service is retrieved"
+    void 'test use transaction service'() {
+        when: 'the tx service is retrieved'
         TransactionService txService = datastore.getService(TransactionService)
         TransactionStatus status = txService.withTransaction { TransactionStatus status -> status }
 
-        then:"The transaction status is correct"
+        then: 'The transaction status is correct'
         status.completed
         status.isNewTransaction()
         !status.isRollbackOnly()
 
-        when:"rollback is used"
+        when: 'rollback is used'
         status = txService.withRollback { TransactionStatus ts ->
             ts
         }
 
-        then:"The transaction was rolled back"
+        then: 'The transaction was rolled back'
         status.completed
         status.isRollbackOnly()
     }
+
 }

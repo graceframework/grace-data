@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.validation.constraints;
 
 import java.lang.reflect.Array;
@@ -20,7 +35,8 @@ public class SizeConstraint extends AbstractConstraint {
 
     private IntRange range;
 
-    public SizeConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
+    public SizeConstraint(Class<?> constraintOwningClass, String constraintPropertyName,
+            Object constraintParameter, MessageSource messageSource) {
         super(constraintOwningClass, constraintPropertyName, constraintParameter, messageSource);
         this.range = (IntRange) this.constraintParameter;
     }
@@ -29,12 +45,10 @@ public class SizeConstraint extends AbstractConstraint {
      * @return Returns the range.
      */
     public IntRange getRange() {
-        return range;
+        return this.range;
     }
 
-    /* (non-Javadoc)
-     * @see org.grails.validation.Constraint#supports(java.lang.Class)
-     */
+    @Override
     @SuppressWarnings("rawtypes")
     public boolean supports(Class type) {
         return type != null && (
@@ -54,6 +68,7 @@ public class SizeConstraint extends AbstractConstraint {
         return constraintParameter;
     }
 
+    @Override
     public String getName() {
         return ConstrainedProperty.SIZE_CONSTRAINT;
     }
@@ -61,7 +76,7 @@ public class SizeConstraint extends AbstractConstraint {
     @Override
     protected void processValidate(Object target, Object propertyValue, Errors errors) {
         Object[] args = { constraintPropertyName, constraintOwningClass, propertyValue,
-                range.getFrom(), range.getTo() };
+                this.range.getFrom(), this.range.getTo() };
 
         int size;
         if (propertyValue.getClass().isArray()) {
@@ -74,11 +89,11 @@ public class SizeConstraint extends AbstractConstraint {
             size = ((String) propertyValue).length();
         }
 
-        if (!range.contains(size)) {
-            if (range.getFrom().compareTo(size) == 1) {
+        if (!this.range.contains(size)) {
+            if (this.range.getFrom().compareTo(size) == 1) {
                 rejectValue(args, errors, target, ConstrainedProperty.TOOSMALL_SUFFIX);
             }
-            else if (range.getTo().compareTo(size) == -1) {
+            else if (this.range.getTo().compareTo(size) == -1) {
                 rejectValue(args, errors, target, ConstrainedProperty.TOOBIG_SUFFIX);
             }
         }

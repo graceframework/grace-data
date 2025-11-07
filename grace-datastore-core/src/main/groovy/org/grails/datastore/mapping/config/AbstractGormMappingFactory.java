@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -39,7 +40,7 @@ import org.grails.datastore.mapping.reflect.ClassPropertyFetcher;
  *
  * @author Graeme Rocher
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class AbstractGormMappingFactory<R extends Entity, T extends Property> extends MappingFactory<R, T> {
 
     protected Map<PersistentEntity, Map<String, T>> entityToPropertyMap = new HashMap<>();
@@ -76,19 +77,19 @@ public abstract class AbstractGormMappingFactory<R extends Entity, T extends Pro
 
     @Override
     public R createMappedForm(PersistentEntity entity) {
-        if (entityToMapping.containsKey(entity)) {
-            return entityToMapping.get(entity);
+        if (this.entityToMapping.containsKey(entity)) {
+            return this.entityToMapping.get(entity);
         }
         else {
             R family = BeanUtils.instantiateClass(getEntityMappedFormType());
-            entityToMapping.put(entity, family);
+            this.entityToMapping.put(entity, family);
             MappingConfigurationBuilder builder = createConfigurationBuilder(entity, family);
 
-            if (defaultMapping != null) {
-                evaluateWithContext(builder, defaultMapping);
+            if (this.defaultMapping != null) {
+                evaluateWithContext(builder, this.defaultMapping);
             }
-            if (defaultConstraints != null) {
-                evaluateWithContext(builder, defaultConstraints);
+            if (this.defaultConstraints != null) {
+                evaluateWithContext(builder, this.defaultConstraints);
             }
             List<Object> values = ClassPropertyFetcher.getStaticPropertyValuesFromInheritanceHierarchy(entity.getJavaClass(),
                     GormProperties.MAPPING, Object.class);
@@ -108,14 +109,14 @@ public abstract class AbstractGormMappingFactory<R extends Entity, T extends Pro
             }
             Map properties = builder.getProperties();
 
-            entityToPropertyMap.put(entity, properties);
+            this.entityToPropertyMap.put(entity, properties);
             return family;
         }
     }
 
     protected void evaluateWithContext(MappingConfigurationBuilder builder, Closure value) {
-        if (contextObject != null) {
-            builder.evaluate(value, contextObject);
+        if (this.contextObject != null) {
+            builder.evaluate(value, this.contextObject);
         }
         else {
             builder.evaluate(value);
@@ -123,7 +124,7 @@ public abstract class AbstractGormMappingFactory<R extends Entity, T extends Pro
     }
 
     protected MappingConfigurationBuilder createConfigurationBuilder(PersistentEntity entity, R family) {
-        family.setVersion(versionByDefault);
+        family.setVersion(this.versionByDefault);
         return new DefaultMappingConfigurationBuilder(family, getPropertyMappedFormType());
     }
 
@@ -138,7 +139,7 @@ public abstract class AbstractGormMappingFactory<R extends Entity, T extends Pro
     @Override
     public boolean isTenantId(PersistentEntity entity, MappingContext context, PropertyDescriptor descriptor) {
         if (entity.isMultiTenant()) {
-            Map<String, T> props = entityToPropertyMap.get(entity);
+            Map<String, T> props = this.entityToPropertyMap.get(entity);
             if (props != null && props.containsKey(GormProperties.TENANT_IDENTITY)) {
                 T tenantIdProp = props.get(GormProperties.TENANT_IDENTITY);
                 String propertyName = tenantIdProp.getName();
@@ -155,7 +156,7 @@ public abstract class AbstractGormMappingFactory<R extends Entity, T extends Pro
 
     @Override
     public IdentityMapping createIdentityMapping(ClassMapping classMapping) {
-        Map<String, T> props = entityToPropertyMap.get(classMapping.getEntity());
+        Map<String, T> props = this.entityToPropertyMap.get(classMapping.getEntity());
         if (props != null) {
             T property = props.get(IDENTITY_PROPERTY);
             IdentityMapping customIdentityMapping = getIdentityMappedForm(classMapping, property);
@@ -177,7 +178,7 @@ public abstract class AbstractGormMappingFactory<R extends Entity, T extends Pro
 
     @Override
     public T createMappedForm(PersistentProperty mpp) {
-        Map<String, T> properties = entityToPropertyMap.get(mpp.getOwner());
+        Map<String, T> properties = this.entityToPropertyMap.get(mpp.getOwner());
         if (properties != null && properties.containsKey(mpp.getName())) {
             return properties.get(mpp.getName());
         }

@@ -30,7 +30,7 @@ import java.lang.reflect.Modifier
  */
 class GormEntityTraitSpec extends Specification {
 
-    void "Test dynamic parse"(){
+    void 'Test dynamic parse'(){
         when:
         def cls = new GroovyClassLoader().parseClass('''
 import grails.gorm.annotation.Entity
@@ -68,8 +68,8 @@ class Publisher {
 
         then:
         cls.transients.contains('authorId')
-        cls.getMethod("getKingBooks").returnType == GormQueryOperations
-        Modifier.isStatic(cls.getMethod("getKingBooks").modifiers)
+        cls.getMethod('getKingBooks').returnType == GormQueryOperations
+        Modifier.isStatic(cls.getMethod('getKingBooks').modifiers)
         GormEntity.isAssignableFrom(cls)
         GormValidateable.isAssignableFrom(cls)
         DirtyCheckable.isAssignableFrom(cls)
@@ -83,10 +83,10 @@ class Publisher {
         }
 
         then:
-        m.returnType.name.contains("Book")
+        m.returnType.name.contains('Book')
     }
 
-    void "Test dynamic parse 2"(){
+    void 'Test dynamic parse 2'(){
         def cl = new GroovyClassLoader()
         when:
         def cls = cl.parseClass('''
@@ -118,7 +118,7 @@ class SubMember extends Member {
     void setTransientProperty(String transientProperty) {
         this.transientProperty = transientProperty
     }
-    static transients = ["transientProperty"]
+    static transients = ['transientProperty']
 }
 
 ''')
@@ -130,7 +130,7 @@ class SubMember extends Member {
         GormValidateable.isAssignableFrom(cls)
         DirtyCheckable.isAssignableFrom(cls)
         cls.getAnnotation(grails.gorm.annotation.Entity)
-        ClassPropertyFetcher.forClass(SubMember).getStaticPropertyValuesFromInheritanceHierarchy(GormProperties.TRANSIENT, Collection) ==  [[], ["transientProperty"]]
+        ClassPropertyFetcher.forClass(SubMember).getStaticPropertyValuesFromInheritanceHierarchy(GormProperties.TRANSIENT, Collection) ==  [[], ['transientProperty']]
     }
 
     void "test that a class marked with @Artefact('Domain') is enhanced with GormEntityTraitSpec"() {
@@ -138,7 +138,7 @@ class SubMember extends Member {
         GormEntity.isAssignableFrom QueryMethodArtefactDomain
     }
 
-    void "test that a class marked with @Entity is enhanced with GormEntityTraitSpec"() {
+    void 'test that a class marked with @Entity is enhanced with GormEntityTraitSpec'() {
         expect:
         GormEntity.isAssignableFrom QueryMethodEntityDomain
     }

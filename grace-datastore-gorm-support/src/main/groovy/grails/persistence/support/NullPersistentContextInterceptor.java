@@ -24,38 +24,47 @@ package grails.persistence.support;
  */
 public class NullPersistentContextInterceptor implements PersistenceContextInterceptor {
 
+    @Override
     public void init() {
         // NOOP
     }
 
+    @Override
     public void destroy() {
         // NOOP
     }
 
+    @Override
     public void disconnect() {
         // NOOP
     }
 
+    @Override
     public void reconnect() {
         // NOOP
     }
 
+    @Override
     public void flush() {
         // NOOP
     }
 
+    @Override
     public void clear() {
         // NOOP
     }
 
+    @Override
     public void setReadOnly() {
         // NOOP
     }
 
+    @Override
     public void setReadWrite() {
         // NOOP
     }
 
+    @Override
     public boolean isOpen() {
         return false;
     }

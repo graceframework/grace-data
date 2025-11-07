@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.core.grailsversion
 
 import groovy.transform.CompileStatic
@@ -47,11 +62,11 @@ class GrailsVersion implements Comparable<GrailsVersion> {
 
     @Override
     String toString() {
-        return versionText
+        return this.versionText
     }
 
     GrailsVersion(String version) {
-        String[] parts = version.split("\\.")
+        String[] parts = version.split('\\.')
         if (parts.length >= 3) {
             this.versionText = version
             this.major = parts[0].toInteger()
@@ -60,16 +75,16 @@ class GrailsVersion implements Comparable<GrailsVersion> {
                 this.snapshot = new Snapshot(parts[3])
             }
             else if (parts[2].contains('-')) {
-                String[] subParts = parts[2].split("-")
+                String[] subParts = parts[2].split('-')
                 this.patch = subParts.first() as int
-                this.snapshot = new Snapshot(subParts[1..-1].join("-"))
+                this.snapshot = new Snapshot(subParts[1..-1].join('-'))
             }
             else {
                 this.patch = parts[2].toInteger()
             }
         }
         else {
-            throw new IllegalArgumentException("GrailsVersion only supports comparison of versions with 3 or 4 parts")
+            throw new IllegalArgumentException('GrailsVersion only supports comparison of versions with 3 or 4 parts')
         }
     }
 
@@ -153,8 +168,8 @@ class GrailsVersion implements Comparable<GrailsVersion> {
         if (currentVersion != null) {
             return currentVersion
         }
-        else if (ClassUtils.isPresent("grails.util.BuildSettings")) {
-            currentVersion = new GrailsVersion(Class.forName("grails.util.BuildSettings").package.implementationVersion)
+        else if (ClassUtils.isPresent('grails.util.BuildSettings')) {
+            currentVersion = new GrailsVersion(Class.forName('grails.util.BuildSettings').package.implementationVersion)
             return currentVersion
         }
         else {
@@ -163,7 +178,7 @@ class GrailsVersion implements Comparable<GrailsVersion> {
     }
 
     boolean isSnapshot() {
-        snapshot != null
+        this.snapshot != null
     }
 
     @Override

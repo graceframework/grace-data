@@ -1,11 +1,11 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,19 +31,19 @@ import org.grails.datastore.mapping.model.PersistentProperty
  */
 @CompileStatic
 trait GormEntityDirtyCheckable extends DirtyCheckable {
-    
+
     @Override
     @Generated
     boolean hasChanged(String propertyName) {
         PersistentEntity entity = currentGormInstanceApi().persistentEntity
-        
+
         PersistentProperty persistentProperty = entity.getPropertyByName(propertyName)
         if (!persistentProperty) {
-            // Not persistent property, transient. We don't track changes for transients 
+            // Not persistent property, transient. We don't track changes for transients
             return false
         }
-        
-        Property propertyMapping = persistentProperty.getMapping().getMappedForm() 
+
+        Property propertyMapping = persistentProperty.getMapping().getMappedForm()
         if (propertyMapping.derived) {
             // Derived property cannot be changed, ex. sql formula
             return false
@@ -56,4 +56,5 @@ trait GormEntityDirtyCheckable extends DirtyCheckable {
     private GormInstanceApi currentGormInstanceApi() {
         (GormInstanceApi) GormEnhancer.findInstanceApi(getClass())
     }
+
 }

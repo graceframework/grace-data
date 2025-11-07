@@ -1,10 +1,11 @@
-/* Copyright 2004-2005 the original author or authors.
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -87,7 +88,7 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
     public static final Set<String> SIMPLE_TYPES;
 
     static {
-        SIMPLE_TYPES = Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(
+        SIMPLE_TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
                 boolean.class.getName(),
                 long.class.getName(),
                 short.class.getName(),
@@ -141,16 +142,18 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
     private Map<Class, Collection<CustomTypeMarshaller>> typeConverterMap = new ConcurrentHashMap<>();
 
     public void registerCustomType(CustomTypeMarshaller marshallerCustom) {
-        Collection<CustomTypeMarshaller> marshallers = typeConverterMap.get(marshallerCustom.getTargetType());
+        Collection<CustomTypeMarshaller> marshallers = this.typeConverterMap.get(marshallerCustom.getTargetType());
         if (marshallers == null) {
             marshallers = new ConcurrentLinkedQueue<>();
-            typeConverterMap.put(marshallerCustom.getTargetType(), marshallers);
+            this.typeConverterMap.put(marshallerCustom.getTargetType(), marshallers);
         }
         marshallers.add(marshallerCustom);
     }
 
     public boolean isSimpleType(Class propType) {
-        if (propType == null) return false;
+        if (propType == null) {
+            return false;
+        }
         if (propType.isEnum()) {
             // Check if prop (any enum) supports custom type marshaller.
             if (isCustomType(propType)) {
@@ -179,6 +182,7 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
 
     /**
      * Creates the mapped form of a PersistentProperty instance
+     *
      * @param mpp The PersistentProperty instance
      * @return The mapped form
      */
@@ -187,44 +191,50 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
     /**
      * Creates an identifier property
      *
-     * @param owner The owner
+     * @param owner   The owner
      * @param context The context
-     * @param pd The PropertyDescriptor
+     * @param pd      The PropertyDescriptor
      * @return An Identity instance
      */
     public Identity<T> createIdentity(PersistentEntity owner, MappingContext context, PropertyDescriptor pd) {
         return new Identity<T>(owner, context, pd) {
+
             PropertyMapping<T> propertyMapping = createPropertyMapping(this, owner);
 
+            @Override
             public PropertyMapping<T> getMapping() {
-                return propertyMapping;
+                return this.propertyMapping;
             }
+
         };
     }
 
     /**
      * Creates the tenant identifier property
      *
-     * @param owner The owner
+     * @param owner   The owner
      * @param context The context
-     * @param pd The PropertyDescriptor
+     * @param pd      The PropertyDescriptor
      * @return An Identity instance
      */
     public TenantId<T> createTenantId(PersistentEntity owner, MappingContext context, PropertyDescriptor pd) {
-        return new TenantId<T>(owner, context, pd) {
+        return new TenantId<>(owner, context, pd) {
+
             PropertyMapping<T> propertyMapping = createDerivedPropertyMapping(this, owner);
 
+            @Override
             public PropertyMapping<T> getMapping() {
-                return propertyMapping;
+                return this.propertyMapping;
             }
+
         };
     }
 
     /**
      * Return whether the given property descriptor is the tenant id
      *
-     * @param entity The entity
-     * @param context The context
+     * @param entity     The entity
+     * @param context    The context
      * @param descriptor The descriptor
      * @return True if it is
      */
@@ -233,9 +243,9 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
     /**
      * Creates a custom prpoerty type
      *
-     * @param owner The owner
+     * @param owner   The owner
      * @param context The context
-     * @param pd The PropertyDescriptor
+     * @param pd      The PropertyDescriptor
      * @return A custom property type
      */
     public Custom<T> createCustom(PersistentEntity owner, MappingContext context, PropertyDescriptor pd) {
@@ -248,12 +258,15 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
         if (customTypeMarshaller == null && !allowArbitraryCustomTypes()) {
             throw new IllegalStateException("Cannot create a custom type without a type converter for type " + propertyType);
         }
-        return new Custom<T>(owner, context, pd, customTypeMarshaller) {
+        return new Custom<>(owner, context, pd, customTypeMarshaller) {
+
             PropertyMapping<T> propertyMapping = createPropertyMapping(this, owner);
 
+            @Override
             public PropertyMapping<T> getMapping() {
-                return propertyMapping;
+                return this.propertyMapping;
             }
+
         };
     }
 
@@ -262,7 +275,7 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
     }
 
     protected CustomTypeMarshaller findCustomType(MappingContext context, Class<?> propertyType) {
-        final Collection<CustomTypeMarshaller> allMarshallers = typeConverterMap.get(propertyType);
+        final Collection<CustomTypeMarshaller> allMarshallers = this.typeConverterMap.get(propertyType);
         if (allMarshallers != null) {
             for (CustomTypeMarshaller marshaller : allMarshallers) {
                 if (marshaller.supports(context)) {
@@ -286,48 +299,59 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
     /**
      * Creates a simple property type used for mapping basic types such as String, long, integer etc.
      *
-     * @param owner The owner
+     * @param owner   The owner
      * @param context The MappingContext
-     * @param pd The PropertyDescriptor
+     * @param pd      The PropertyDescriptor
      * @return A Simple property type
      */
     public Simple<T> createSimple(PersistentEntity owner, MappingContext context, PropertyDescriptor pd) {
-        return new Simple<T>(owner, context, pd) {
+        return new Simple<>(owner, context, pd) {
+
             PropertyMapping<T> propertyMapping = createPropertyMapping(this, owner);
 
+            @Override
             public PropertyMapping<T> getMapping() {
-                return propertyMapping;
+                return this.propertyMapping;
             }
+
         };
     }
 
     protected PropertyMapping<T> createPropertyMapping(final PersistentProperty<T> property, final PersistentEntity owner) {
-        return new PropertyMapping<T>() {
+        return new PropertyMapping<>() {
+
             private T mappedForm = createMappedForm(property);
 
+            @Override
             public ClassMapping getClassMapping() {
                 return owner.getMapping();
             }
 
+            @Override
             public T getMappedForm() {
-                return mappedForm;
+                return this.mappedForm;
             }
+
         };
     }
 
     private PropertyMapping<T> createDerivedPropertyMapping(final PersistentProperty<T> property, final PersistentEntity owner) {
         final T mappedFormObject = createMappedForm(property);
         mappedFormObject.setDerived(true);
-        return new PropertyMapping<T>() {
+        return new PropertyMapping<>() {
+
             private T mappedForm = mappedFormObject;
 
+            @Override
             public ClassMapping getClassMapping() {
                 return owner.getMapping();
             }
 
+            @Override
             public T getMappedForm() {
-                return mappedForm;
+                return this.mappedForm;
             }
+
         };
     }
 
@@ -335,40 +359,45 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
     /**
      * Creates a one-to-one association type used for mapping a one-to-one association between entities
      *
-     * @param entity The entity
-     * @param context The context
+     * @param entity   The entity
+     * @param context  The context
      * @param property The property
      * @return The ToOne instance
      */
     public ToOne createOneToOne(PersistentEntity entity, MappingContext context, PropertyDescriptor property) {
         return new OneToOne<T>(entity, context, property) {
+
             PropertyMapping<T> propertyMapping = createPropertyMapping(this, owner);
 
+            @Override
             public PropertyMapping getMapping() {
-                return propertyMapping;
+                return this.propertyMapping;
             }
 
             @Override
             public String toString() {
                 return associationtoString("one-to-one: ", this);
             }
+
         };
     }
 
     /**
      * Creates a many-to-one association type used for a mapping a many-to-one association between entities
      *
-     * @param entity The entity
-     * @param context The context
+     * @param entity   The entity
+     * @param context  The context
      * @param property The property
      * @return The ToOne instance
      */
     public ToOne createManyToOne(PersistentEntity entity, MappingContext context, PropertyDescriptor property) {
         return new ManyToOne<T>(entity, context, property) {
+
             PropertyMapping<T> propertyMapping = createPropertyMapping(this, owner);
 
+            @Override
             public PropertyMapping getMapping() {
-                return propertyMapping;
+                return this.propertyMapping;
             }
 
             @Override
@@ -377,120 +406,132 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
             }
 
         };
-
     }
 
     /**
      * Creates a {@link OneToMany} type used to model a one-to-many association between entities
      *
-     * @param entity The entity
-     * @param context The context
+     * @param entity   The entity
+     * @param context  The context
      * @param property The property
      * @return The {@link OneToMany} instance
      */
     public OneToMany createOneToMany(PersistentEntity entity, MappingContext context, PropertyDescriptor property) {
         return new OneToMany<T>(entity, context, property) {
+
             PropertyMapping<T> propertyMapping = createPropertyMapping(this, owner);
 
+            @Override
             public PropertyMapping getMapping() {
-                return propertyMapping;
+                return this.propertyMapping;
             }
 
             @Override
             public String toString() {
                 return associationtoString("one-to-many: ", this);
             }
-        };
 
+        };
     }
 
     /**
      * Creates a {@link ManyToMany} type used to model a many-to-many association between entities
      *
-     * @param entity The entity
-     * @param context The context
+     * @param entity   The entity
+     * @param context  The context
      * @param property The property
      * @return The {@link ManyToMany} instance
      */
     public ManyToMany createManyToMany(PersistentEntity entity, MappingContext context, PropertyDescriptor property) {
         return new ManyToMany<T>(entity, context, property) {
+
             PropertyMapping<T> propertyMapping = createPropertyMapping(this, owner);
 
             public PropertyMapping getMapping() {
-                return propertyMapping;
+                return this.propertyMapping;
             }
 
             @Override
             public String toString() {
                 return associationtoString("many-to-many: ", this);
             }
+
         };
     }
 
     /**
      * Creates an {@link Embedded} type used to model an embedded association (composition)
      *
-     * @param entity The entity
-     * @param context The context
+     * @param entity   The entity
+     * @param context  The context
      * @param property The property
      * @return The {@link Embedded} instance
      */
     public Embedded createEmbedded(PersistentEntity entity,
             MappingContext context, PropertyDescriptor property) {
         return new Embedded<T>(entity, context, property) {
+
             PropertyMapping<T> propertyMapping = createPropertyMapping(this, owner);
 
+            @Override
             public PropertyMapping getMapping() {
-                return propertyMapping;
+                return this.propertyMapping;
             }
 
             @Override
             public String toString() {
                 return associationtoString("embedded: ", this);
             }
+
         };
     }
 
     /**
      * Creates an {@link EmbeddedCollection} type used to model an embedded collection association (composition).
      *
-     * @param entity The entity
-     * @param context The context
+     * @param entity   The entity
+     * @param context  The context
      * @param property The property
      * @return The {@link Embedded} instance
      */
     public EmbeddedCollection createEmbeddedCollection(PersistentEntity entity,
             MappingContext context, PropertyDescriptor property) {
         return new EmbeddedCollection<T>(entity, context, property) {
+
             PropertyMapping<T> propertyMapping = createPropertyMapping(this, owner);
 
+            @Override
             public PropertyMapping getMapping() {
-                return propertyMapping;
+                return this.propertyMapping;
             }
 
             @Override
             public String toString() {
                 return associationtoString("embedded: ", this);
             }
+
         };
     }
 
     /**
      * Creates a {@link Basic} collection type
      *
-     * @param entity The entity
-     * @param context The context
+     * @param entity   The entity
+     * @param context  The context
      * @param property The property
      * @return The Basic collection type
      */
     public Basic createBasicCollection(PersistentEntity entity,
             MappingContext context, PropertyDescriptor property, Class collectionType) {
         Basic basic = new Basic(entity, context, property) {
+
             PropertyMapping<T> propertyMapping = createPropertyMapping(this, owner);
 
+            @Override
             public PropertyMapping getMapping() {
-                return propertyMapping;
+                return this.propertyMapping;
             }
+
         };
 
         CustomTypeMarshaller customTypeMarshaller = findCustomType(context, property.getPropertyType());
@@ -518,12 +559,12 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
     }
 
     public boolean isCustomType(Class<?> propertyType) {
-        if (typeConverterMap.containsKey(propertyType)) {
+        if (this.typeConverterMap.containsKey(propertyType)) {
             return true;
         }
         if (propertyType.isEnum()) {
             // Check if enum itself supports custom type.
-            return typeConverterMap.containsKey(Enum.class);
+            return this.typeConverterMap.containsKey(Enum.class);
         }
         return false;
     }
@@ -535,6 +576,7 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
     public IdentityMapping createDefaultIdentityMapping(final ClassMapping classMapping) {
         return new IdentityMapping() {
 
+            @Override
             public String[] getIdentifierName() {
                 PersistentProperty identity = classMapping.getEntity().getIdentity();
                 String propertyName = identity != null ? identity.getMapping().getMappedForm().getName() : null;
@@ -551,13 +593,16 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
                 return ValueGenerator.AUTO;
             }
 
+            @Override
             public ClassMapping getClassMapping() {
                 return classMapping;
             }
 
+            @Override
             public Property getMappedForm() {
                 return classMapping.getEntity().getIdentity().getMapping().getMappedForm();
             }
+
         };
     }
 
@@ -566,6 +611,7 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
         final String generator = property != null ? property.getGenerator() : null;
         return new IdentityMapping() {
 
+            @Override
             public String[] getIdentifierName() {
                 if (targetName != null) {
                     return new String[] { targetName };
@@ -580,10 +626,12 @@ public abstract class MappingFactory<R extends Entity, T extends Property> {
                 return generator != null ? ValueGenerator.valueOf(generator) : ValueGenerator.AUTO;
             }
 
+            @Override
             public ClassMapping getClassMapping() {
                 return classMapping;
             }
 
+            @Override
             public Property getMappedForm() {
                 return property;
             }

@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -45,19 +46,23 @@ public class ManualEntityOrdering {
 
     PersistentEntity entity;
 
-    private static Map<String, Method> cachedReadMethods = new ConcurrentHashMap<String, Method>();
+    private static Map<String, Method> cachedReadMethods = new ConcurrentHashMap<>();
 
     public ManualEntityOrdering(PersistentEntity entity) {
         this.entity = entity;
     }
 
     public PersistentEntity getEntity() {
-        return entity;
+        return this.entity;
     }
 
     public List applyOrder(List results, List<Query.Order> orderDefinition) {
-        if (results == null) return null;
-        if (orderDefinition == null) return results;
+        if (results == null) {
+            return null;
+        }
+        if (orderDefinition == null) {
+            return results;
+        }
         for (Query.Order order : orderDefinition) {
             results = applyOrder(results, order);
         }
@@ -97,11 +102,11 @@ public class ManualEntityOrdering {
             final PersistentProperty finalProperty = property;
             Collections.sort(results, new Comparator() {
 
+                @Override
                 public int compare(Object o1, Object o2) {
-
                     if (entity.isInstance(o1) && entity.isInstance(o2)) {
                         final String propertyName = finalProperty.getName();
-                        Method readMethod = cachedReadMethods.get(propertyName);
+                        Method readMethod = ManualEntityOrdering.cachedReadMethods.get(propertyName);
                         if (readMethod == null) {
                             BeanWrapper b = PropertyAccessorFactory.forBeanPropertyAccess(o1);
                             final PropertyDescriptor pd = b.getPropertyDescriptor(propertyName);
@@ -109,7 +114,7 @@ public class ManualEntityOrdering {
                                 readMethod = pd.getReadMethod();
                                 if (readMethod != null) {
                                     ReflectionUtils.makeAccessible(readMethod);
-                                    cachedReadMethods.put(propertyName, readMethod);
+                                    ManualEntityOrdering.cachedReadMethods.put(propertyName, readMethod);
                                 }
                             }
                         }
@@ -120,9 +125,15 @@ public class ManualEntityOrdering {
                                 Object left = ReflectionUtils.invokeMethod(readMethod, o1);
                                 Object right = ReflectionUtils.invokeMethod(readMethod, o2);
 
-                                if (left == null && right == null) return 0;
-                                if (left != null && right == null) return 1;
-                                if (left == null) return -1;
+                                if (left == null && right == null) {
+                                    return 0;
+                                }
+                                if (left != null && right == null) {
+                                    return 1;
+                                }
+                                if (left == null) {
+                                    return -1;
+                                }
                                 if ((left instanceof Comparable) && (right instanceof Comparable)) {
                                     return ((Comparable) left).compareTo(right);
                                 }
@@ -131,6 +142,7 @@ public class ManualEntityOrdering {
                     }
                     return 0;
                 }
+
             });
         }
 

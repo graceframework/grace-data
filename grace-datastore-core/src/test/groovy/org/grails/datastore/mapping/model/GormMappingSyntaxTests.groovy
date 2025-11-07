@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.model
 
 import grails.gorm.annotation.Entity
@@ -60,7 +75,7 @@ class GormMappingSyntaxTests {
 
         def testEntity = context.getPersistentEntity(TestEntity.name)
 
-        def association = testEntity.getPropertyByName("second")
+        def association = testEntity.getPropertyByName('second')
 
         assert association != null
 
@@ -87,7 +102,7 @@ class GormMappingSyntaxTests {
 
         assert publisher != null
 
-        Association oneToMany = publisher.getPropertyByName("authors")
+        Association oneToMany = publisher.getPropertyByName('authors')
         assert oneToMany != null
         assert !oneToMany.bidirectional
         assert !oneToMany.owningSide
@@ -104,7 +119,7 @@ class GormMappingSyntaxTests {
         def book = context.getPersistentEntity(Book.name)
 
         assert book != null
-        Association authorAssociation = book.getPropertyByName("author")
+        Association authorAssociation = book.getPropertyByName('author')
 
         assert authorAssociation != null
         assert (authorAssociation instanceof ManyToOne)
@@ -114,7 +129,7 @@ class GormMappingSyntaxTests {
         Association inverse = authorAssociation.inverseSide
         assert inverse != null
 
-        assert "books" == inverse.name
+        assert 'books' == inverse.name
         assert Author == inverse.owner.javaClass
         assert inverse.inverseSide != null
         assert inverse.bidirectional
@@ -142,15 +157,15 @@ class GormMappingSyntaxTests {
 
         def user = context.getPersistentEntity(User.name)
 
-        Association foesAssociation = user.getPropertyByName("foes")
+        Association foesAssociation = user.getPropertyByName('foes')
         assert (foesAssociation instanceof OneToMany)
         assert !foesAssociation.isBidirectional()
 
-        Association friendsAssociation = user.getPropertyByName("friends")
+        Association friendsAssociation = user.getPropertyByName('friends')
         assert (friendsAssociation instanceof OneToMany)
         assert !friendsAssociation.isBidirectional()
 
-        Association bestBuddyAssociation = user.getPropertyByName("bestBuddy")
+        Association bestBuddyAssociation = user.getPropertyByName('bestBuddy')
         assert (bestBuddyAssociation instanceof OneToOne)
         assert !bestBuddyAssociation.isBidirectional()
 

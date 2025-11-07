@@ -1,18 +1,11 @@
-package org.grails.datastore.gorm
-
-import grails.gorm.tests.GormDatastoreSpec
-import grails.gorm.annotation.Entity
-import org.grails.datastore.mapping.model.types.Association
-import spock.lang.Issue
-
 /*
- * Copyright 2014 original authors
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,6 +13,14 @@ import spock.lang.Issue
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.grails.datastore.gorm
+
+import spock.lang.Issue
+
+import grails.gorm.annotation.Entity
+import grails.gorm.tests.GormDatastoreSpec
+
+import org.grails.datastore.mapping.model.types.Association
 
 /**
  * @author graemerocher
@@ -29,17 +30,17 @@ class MappedByNoneSpec extends GormDatastoreSpec {
 
     void "Test that mapped by with a value of 'none' disables the mapping"() {
         given: "A unidirectional associated mapped with 'none'"
-            Association association = session.mappingContext.getPersistentEntity(SoftballTeamPreference.name).getPropertyByName("players")
+        Association association = session.mappingContext.getPersistentEntity(SoftballTeamPreference.name).getPropertyByName('players')
 
-        expect:"The association to be unidirectional"
-            !association.isBidirectional()
-
+        expect: 'The association to be unidirectional'
+        !association.isBidirectional()
     }
 
     @Override
     List getDomainClasses() {
         [Player, SoftballTeamPreference]
     }
+
 }
 
 @Entity
@@ -49,10 +50,12 @@ class Player {
     String name
     SoftballTeamPreference softballTeampreference
     static hasOne = [softballTeampreference: SoftballTeamPreference]
+
 }
 
 @Entity
 class SoftballTeamPreference {
+
     Long id
     Set players
     Player owner
@@ -60,8 +63,8 @@ class SoftballTeamPreference {
     static constraints = {
     }
 
-
     static belongsTo = [owner: Player]
     static hasMany = [players: Player]
-    static mappedBy = [players: "none"]
+    static mappedBy = [players: 'none']
+
 }

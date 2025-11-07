@@ -1,3 +1,18 @@
+/*
+ * Copyright 2016-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.model.config;
 
 import java.beans.PropertyDescriptor;
@@ -9,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import groovy.lang.MetaProperty;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -19,8 +35,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
-
-import groovy.lang.MetaProperty;
 
 import org.grails.datastore.mapping.config.Property;
 import org.grails.datastore.mapping.engine.internal.MappingUtils;
@@ -38,7 +52,6 @@ import org.grails.datastore.mapping.model.types.ToOne;
 import org.grails.datastore.mapping.reflect.ClassPropertyFetcher;
 
 @SuppressWarnings({ "rawtypes", "unchecked", "Duplicates" })
-@Deprecated(since = "2022.2.3", forRemoval = true)
 public class JpaMappingConfigurationStrategy extends GormMappingConfigurationStrategy {
 
     public JpaMappingConfigurationStrategy(MappingFactory propertyFactory) {
@@ -50,7 +63,8 @@ public class JpaMappingConfigurationStrategy extends GormMappingConfigurationStr
     }
 
     @Override
-    public List<PersistentProperty> getPersistentProperties(PersistentEntity entity, MappingContext context, ClassMapping classMapping, boolean includeIdentifiers) {
+    public List<PersistentProperty> getPersistentProperties(PersistentEntity entity, MappingContext context, ClassMapping classMapping,
+            boolean includeIdentifiers) {
         Class entityClass = entity.getJavaClass();
         if (!isJpaEntity(entityClass)) {
             return super.getPersistentProperties(entity, context, classMapping, includeIdentifiers);
@@ -86,7 +100,9 @@ public class JpaMappingConfigurationStrategy extends GormMappingConfigurationStr
                 continue;
             }
 
-            if (isExcludedProperty(propertyName, classMapping, new ArrayList<>(), includeIdentifiers)) continue;
+            if (isExcludedProperty(propertyName, classMapping, new ArrayList<>(), includeIdentifiers)) {
+                continue;
+            }
 
             Class<?> propertyType = descriptor.getPropertyType();
 
@@ -140,7 +156,8 @@ public class JpaMappingConfigurationStrategy extends GormMappingConfigurationStr
     }
 
 
-    protected Association establishRelationshipForCollection(PropertyDescriptor property, Field field, PersistentEntity entity, MappingContext context, boolean embedded) {
+    protected Association establishRelationshipForCollection(PropertyDescriptor property, Field field, PersistentEntity entity,
+            MappingContext context, boolean embedded) {
         Class javaClass = entity.getJavaClass();
         Class genericClass = MappingUtils.getGenericTypeForProperty(javaClass, property.getName());
         Class relatedClassType = null;
@@ -224,7 +241,8 @@ public class JpaMappingConfigurationStrategy extends GormMappingConfigurationStr
         return association;
     }
 
-    private ToOne establishDomainClassRelationship(PersistentEntity entity, PropertyDescriptor property, Field field, MappingContext context, boolean embedded) {
+    private ToOne establishDomainClassRelationship(PersistentEntity entity, PropertyDescriptor property, Field field, MappingContext context,
+            boolean embedded) {
         ToOne association = null;
         Class propType = property.getPropertyType();
 
@@ -312,11 +330,13 @@ public class JpaMappingConfigurationStrategy extends GormMappingConfigurationStr
         }
 
         return new IdentityMapping() {
+
             String[] idPropertiesArray;
 
+            @Override
             public String[] getIdentifierName() {
-                if (idPropertiesArray != null) {
-                    return idPropertiesArray;
+                if (this.idPropertiesArray != null) {
+                    return this.idPropertiesArray;
                 }
 
                 List<String> idProperties = new ArrayList<>();
@@ -344,8 +364,8 @@ public class JpaMappingConfigurationStrategy extends GormMappingConfigurationStr
                     // default to just use 'id'
                     idProperties.add(GormProperties.IDENTITY);
                 }
-                idPropertiesArray = idProperties.toArray(new String[idProperties.size()]);
-                return idPropertiesArray;
+                this.idPropertiesArray = idProperties.toArray(new String[idProperties.size()]);
+                return this.idPropertiesArray;
             }
 
             @Override
@@ -353,13 +373,16 @@ public class JpaMappingConfigurationStrategy extends GormMappingConfigurationStr
                 return ValueGenerator.AUTO;
             }
 
+            @Override
             public ClassMapping getClassMapping() {
                 return classMapping;
             }
 
+            @Override
             public Property getMappedForm() {
                 return classMapping.getEntity().getIdentity().getMapping().getMappedForm();
             }
+
         };
     }
 

@@ -1,10 +1,11 @@
-/* Copyright (C) 2010 SpringSource
+/*
+ * Copyright 2010-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,7 +28,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.FlushModeType;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.criteria.JoinType;
-
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.util.Assert;
@@ -85,9 +85,11 @@ public abstract class Query implements Cloneable {
     @Override
     public Object clone() {
         Session session = getSession();
-        if (session == null) throw new IllegalStateException("Cannot clone a stateless query");
-        Query newQuery = session.createQuery(entity.getJavaClass());
-        for (Criterion criterion : criteria.getCriteria()) {
+        if (session == null) {
+            throw new IllegalStateException("Cannot clone a stateless query");
+        }
+        Query newQuery = session.createQuery(this.entity.getJavaClass());
+        for (Criterion criterion : this.criteria.getCriteria()) {
             newQuery.add(criterion);
         }
         return newQuery;
@@ -97,7 +99,7 @@ public abstract class Query implements Cloneable {
      * @return The criteria defined by this query
      */
     public Junction getCriteria() {
-        return criteria;
+        return this.criteria;
     }
 
     /**
@@ -107,7 +109,7 @@ public abstract class Query implements Cloneable {
      * @return The query
      */
     public Query join(String property) {
-        fetchStrategies.put(property, FetchType.EAGER);
+        this.fetchStrategies.put(property, FetchType.EAGER);
         return this;
     }
 
@@ -118,8 +120,8 @@ public abstract class Query implements Cloneable {
      * @return The query
      */
     public Query join(String property, JoinType joinType) {
-        fetchStrategies.put(property, FetchType.EAGER);
-        joinTypes.put(property, joinType);
+        this.fetchStrategies.put(property, FetchType.EAGER);
+        this.joinTypes.put(property, joinType);
         return this;
     }
 
@@ -130,7 +132,7 @@ public abstract class Query implements Cloneable {
      * @return The query
      */
     public Query select(String property) {
-        fetchStrategies.put(property, FetchType.LAZY);
+        this.fetchStrategies.put(property, FetchType.LAZY);
         return this;
     }
 
@@ -141,7 +143,7 @@ public abstract class Query implements Cloneable {
      * @return The query
      */
     public Query cache(boolean cache) {
-        queryCache = cache;
+        this.queryCache = cache;
         return this;
     }
 
@@ -152,7 +154,7 @@ public abstract class Query implements Cloneable {
      * @return The query
      */
     public Query lock(boolean lock) {
-        lockResult = LockModeType.PESSIMISTIC_WRITE;
+        this.lockResult = LockModeType.PESSIMISTIC_WRITE;
         return this;
     }
 
@@ -163,12 +165,12 @@ public abstract class Query implements Cloneable {
      * @return The query
      */
     public Query lock(LockModeType lock) {
-        lockResult = lock;
+        this.lockResult = lock;
         return this;
     }
 
     public ProjectionList projections() {
-        return projections;
+        return this.projections;
     }
 
     /**
@@ -177,7 +179,7 @@ public abstract class Query implements Cloneable {
      * @param criterion The criterion instance
      */
     public void add(Criterion criterion) {
-        Junction currentJunction = criteria;
+        Junction currentJunction = this.criteria;
         add(currentJunction, criterion);
     }
 
@@ -185,7 +187,7 @@ public abstract class Query implements Cloneable {
      * Adds the specified criterion instance to the given junction
      *
      * @param currentJunction The junction to add the criterion to
-     * @param criterion The criterion instance
+     * @param criterion       The criterion instance
      */
     public void add(Junction currentJunction, Criterion criterion) {
         addToJunction(currentJunction, criterion);
@@ -195,40 +197,43 @@ public abstract class Query implements Cloneable {
      * @return The session that created the query
      */
     public Session getSession() {
-        return session;
+        return this.session;
     }
 
     /**
      * @return The PersistentEntity being query
      */
     public PersistentEntity getEntity() {
-        return entity;
+        return this.entity;
     }
 
     /**
      * Creates a disjunction (OR) query
+     *
      * @return The Junction instance
      */
     public Junction disjunction() {
-        Junction currentJunction = criteria;
+        Junction currentJunction = this.criteria;
         return disjunction(currentJunction);
     }
 
     /**
      * Creates a conjunction (AND) query
+     *
      * @return The Junction instance
      */
     public Junction conjunction() {
-        Junction currentJunction = criteria;
+        Junction currentJunction = this.criteria;
         return conjunction(currentJunction);
     }
 
     /**
      * Creates a negation of several criterion
+     *
      * @return The negation
      */
     public Junction negation() {
-        Junction currentJunction = criteria;
+        Junction currentJunction = this.criteria;
         return negation(currentJunction);
     }
 
@@ -240,6 +245,7 @@ public abstract class Query implements Cloneable {
 
     /**
      * Defines the maximum number of results to return
+     *
      * @param max The max results
      * @return This query instance
      */
@@ -250,6 +256,7 @@ public abstract class Query implements Cloneable {
 
     /**
      * Defines the maximum number of results to return
+     *
      * @param max The max results
      * @return This query instance
      */
@@ -259,6 +266,7 @@ public abstract class Query implements Cloneable {
 
     /**
      * Defines the offset (the first result index) of the query
+     *
      * @param offset The offset
      * @return This query instance
      */
@@ -269,6 +277,7 @@ public abstract class Query implements Cloneable {
 
     /**
      * Defines the offset (the first result index) of the query
+     *
      * @param offset The offset
      * @return This query instance
      */
@@ -278,38 +287,40 @@ public abstract class Query implements Cloneable {
 
     /**
      * Specifies the order of results
+     *
      * @param order The order object
      * @return The Query instance
      */
     public Query order(Order order) {
         if (order != null) {
-            orderBy.add(order);
+            this.orderBy.add(order);
         }
         return this;
     }
 
     /**
      * Gets the Order entries for this query
+     *
      * @return The order entries
      */
     public List<Order> getOrderBy() {
-        return orderBy;
+        return this.orderBy;
     }
 
     /**
      * Restricts the results by the given properties value
      *
      * @param property The name of the property
-     * @param value The value to restrict by
+     * @param value    The value to restrict by
      * @return This query instance
      */
     public Query eq(String property, Object value) {
-        Object resolved = resolvePropertyValue(entity, property, value);
+        Object resolved = resolvePropertyValue(this.entity, property, value);
         if (resolved == value) {
-            criteria.add(Restrictions.eq(property, value));
+            this.criteria.add(Restrictions.eq(property, value));
         }
         else {
-            criteria.add(Restrictions.eq(property, resolved));
+            this.criteria.add(Restrictions.eq(property, resolved));
         }
         return this;
     }
@@ -336,7 +347,7 @@ public abstract class Query implements Cloneable {
         Junction conjunction = conjunction();
         for (String property : values.keySet()) {
             Object value = values.get(property);
-            Object resolved = resolvePropertyValue(entity, property, value);
+            Object resolved = resolvePropertyValue(this.entity, property, value);
             conjunction.add(Restrictions.eq(property, resolved));
         }
         return this;
@@ -348,7 +359,7 @@ public abstract class Query implements Cloneable {
      * @param property The property name
      */
     public Query isEmpty(String property) {
-        criteria.add(Restrictions.isEmpty(property));
+        this.criteria.add(Restrictions.isEmpty(property));
         return this;
     }
 
@@ -358,7 +369,7 @@ public abstract class Query implements Cloneable {
      * @param property The property name
      */
     public Query isNotEmpty(String property) {
-        criteria.add(Restrictions.isNotEmpty(property));
+        this.criteria.add(Restrictions.isNotEmpty(property));
         return this;
     }
 
@@ -368,7 +379,7 @@ public abstract class Query implements Cloneable {
      * @param property The property name
      */
     public Query isNull(String property) {
-        criteria.add(Restrictions.isNull(property));
+        this.criteria.add(Restrictions.isNull(property));
         return this;
     }
 
@@ -378,7 +389,7 @@ public abstract class Query implements Cloneable {
      * @param property The property name
      */
     public Query isNotNull(String property) {
-        criteria.add(Restrictions.isNotNull(property));
+        this.criteria.add(Restrictions.isNotNull(property));
         return this;
     }
 
@@ -389,10 +400,10 @@ public abstract class Query implements Cloneable {
      * @return The Query instance
      */
     public AssociationQuery createQuery(String associationName) {
-        final PersistentProperty property = entity.getPropertyByName(associationName);
+        final PersistentProperty property = this.entity.getPropertyByName(associationName);
         if (property == null || !(property instanceof Association)) {
             throw new InvalidDataAccessResourceUsageException("Cannot query association [" +
-                    associationName + "] of class [" + entity +
+                    associationName + "] of class [" + this.entity +
                     "]. The specified property is not an association.");
         }
 
@@ -400,7 +411,7 @@ public abstract class Query implements Cloneable {
 
         final PersistentEntity associatedEntity = association.getAssociatedEntity();
 
-        return new AssociationQuery(session, associatedEntity, association);
+        return new AssociationQuery(this.session, associatedEntity, association);
     }
 
     /**
@@ -412,7 +423,7 @@ public abstract class Query implements Cloneable {
     public Query idEq(Object value) {
         value = resolveIdIfEntity(value);
 
-        criteria.add(Restrictions.idEq(value));
+        this.criteria.add(Restrictions.idEq(value));
         return this;
     }
 
@@ -420,11 +431,11 @@ public abstract class Query implements Cloneable {
      * Used to restrict a value to be greater than the given value
      *
      * @param property The name of the property
-     * @param value The value to restrict by
+     * @param value    The value to restrict by
      * @return This query instance
      */
     public Query gt(String property, Object value) {
-        criteria.add(Restrictions.gt(property, value));
+        this.criteria.add(Restrictions.gt(property, value));
         return this;
     }
 
@@ -432,11 +443,11 @@ public abstract class Query implements Cloneable {
      * Used to restrict a value to be greater than or equal to the given value
      *
      * @param property The name of the property
-     * @param value The value to restrict by
+     * @param value    The value to restrict by
      * @return This query instance
      */
     public Query gte(String property, Object value) {
-        criteria.add(Restrictions.gte(property, value));
+        this.criteria.add(Restrictions.gte(property, value));
         return this;
     }
 
@@ -444,11 +455,11 @@ public abstract class Query implements Cloneable {
      * Used to restrict a value to be less than or equal to the given value
      *
      * @param property The name of the property
-     * @param value The value to restrict by
+     * @param value    The value to restrict by
      * @return This query instance
      */
     public Query lte(String property, Object value) {
-        criteria.add(Restrictions.lte(property, value));
+        this.criteria.add(Restrictions.lte(property, value));
         return this;
     }
 
@@ -456,7 +467,7 @@ public abstract class Query implements Cloneable {
      * Used to restrict a value to be greater than or equal to the given value
      *
      * @param property The name of the property
-     * @param value The value to restrict by
+     * @param value    The value to restrict by
      * @return This query instance
      */
     public Query ge(String property, Object value) {
@@ -467,7 +478,7 @@ public abstract class Query implements Cloneable {
      * Used to restrict a value to be less than or equal to the given value
      *
      * @param property The name of the property
-     * @param value The value to restrict by
+     * @param value    The value to restrict by
      * @return This query instance
      */
     public Query le(String property, Object value) {
@@ -478,11 +489,11 @@ public abstract class Query implements Cloneable {
      * Used to restrict a value to be less than the given value
      *
      * @param property The name of the property
-     * @param value The value to restrict by
+     * @param value    The value to restrict by
      * @return This query instance
      */
     public Query lt(String property, Object value) {
-        criteria.add(Restrictions.lt(property, value));
+        this.criteria.add(Restrictions.lt(property, value));
         return this;
     }
 
@@ -490,11 +501,11 @@ public abstract class Query implements Cloneable {
      * Restricts the results by the given property values
      *
      * @param property The name of the property
-     * @param values The values to restrict by
+     * @param values   The values to restrict by
      * @return This query instance
      */
     public Query in(String property, List values) {
-        criteria.add(Restrictions.in(property, values));
+        this.criteria.add(Restrictions.in(property, values));
         return this;
     }
 
@@ -502,12 +513,12 @@ public abstract class Query implements Cloneable {
      * Restricts the results by the given property value range
      *
      * @param property The name of the property
-     * @param start The start of the range
-     * @param end The end of the range
+     * @param start    The start of the range
+     * @param end      The end of the range
      * @return This query instance
      */
     public Query between(String property, Object start, Object end) {
-        criteria.add(Restrictions.between(property, start, end));
+        this.criteria.add(Restrictions.between(property, start, end));
         return this;
     }
 
@@ -515,11 +526,11 @@ public abstract class Query implements Cloneable {
      * Restricts the results by the given properties value
      *
      * @param property The name of the property
-     * @param expr The expression to restrict by
+     * @param expr     The expression to restrict by
      * @return This query instance
      */
     public Query like(String property, String expr) {
-        criteria.add(Restrictions.like(property, expr));
+        this.criteria.add(Restrictions.like(property, expr));
         return this;
     }
 
@@ -527,11 +538,11 @@ public abstract class Query implements Cloneable {
      * Restricts the results by the given properties value
      *
      * @param property The name of the property
-     * @param expr The expression to restrict by
+     * @param expr     The expression to restrict by
      * @return This query instance
      */
     public Query ilike(String property, String expr) {
-        criteria.add(Restrictions.ilike(property, expr));
+        this.criteria.add(Restrictions.ilike(property, expr));
         return this;
     }
 
@@ -539,11 +550,11 @@ public abstract class Query implements Cloneable {
      * Restricts the results by the given properties value
      *
      * @param property The name of the property
-     * @param expr The expression to restrict by
+     * @param expr     The expression to restrict by
      * @return This query instance
      */
     public Query rlike(String property, String expr) {
-        criteria.add(Restrictions.rlike(property, expr));
+        this.criteria.add(Restrictions.rlike(property, expr));
         return this;
     }
 
@@ -557,7 +568,7 @@ public abstract class Query implements Cloneable {
     public Query and(Criterion a, Criterion b) {
         Assert.notNull(a, "Left hand side of AND cannot be null");
         Assert.notNull(b, "Right hand side of AND cannot be null");
-        criteria.add(Restrictions.and(a, b));
+        this.criteria.add(Restrictions.and(a, b));
         return this;
     }
 
@@ -571,7 +582,7 @@ public abstract class Query implements Cloneable {
     public Query or(Criterion a, Criterion b) {
         Assert.notNull(a, "Left hand side of AND cannot be null");
         Assert.notNull(b, "Right hand side of AND cannot be null");
-        criteria.add(Restrictions.or(a, b));
+        this.criteria.add(Restrictions.or(a, b));
         return this;
     }
 
@@ -581,16 +592,17 @@ public abstract class Query implements Cloneable {
      * @return The results
      */
     public List list() {
-        uniqueResult = false;
+        this.uniqueResult = false;
         return doList();
     }
 
     /**
      * Executes the query returning a single result or null
+     *
      * @return The result
      */
     public Object singleResult() {
-        uniqueResult = true;
+        this.uniqueResult = true;
         List results = doList();
         return results.isEmpty() ? null : results.get(0);
     }
@@ -598,12 +610,12 @@ public abstract class Query implements Cloneable {
     private List doList() {
         flushBeforeQuery();
 
-        ApplicationEventPublisher publisher = session.getDatastore().getApplicationEventPublisher();
+        ApplicationEventPublisher publisher = this.session.getDatastore().getApplicationEventPublisher();
         if (publisher != null) {
             publisher.publishEvent(new PreQueryEvent(this));
         }
 
-        List results = executeQuery(entity, criteria);
+        List results = executeQuery(this.entity, this.criteria);
 
         if (publisher != null) {
             PostQueryEvent postQueryEvent = new PostQueryEvent(this, results);
@@ -633,12 +645,12 @@ public abstract class Query implements Cloneable {
      * @return A specific strategy or lazy by default
      */
     protected FetchType fetchStrategy(String property) {
-        final FetchType fetchType = fetchStrategies.get(property);
+        final FetchType fetchType = this.fetchStrategies.get(property);
         if (fetchType != null) {
             return fetchType;
         }
         else {
-            final PersistentProperty prop = entity.getPropertyByName(property);
+            final PersistentProperty prop = this.entity.getPropertyByName(property);
             if (prop != null) {
                 return prop.getMapping().getMappedForm().getFetchStrategy();
             }
@@ -650,15 +662,15 @@ public abstract class Query implements Cloneable {
      * Subclasses should implement this to provide the concrete implementation
      * of querying
      *
-     * @param entity The entity
+     * @param entity   The entity
      * @param criteria The criteria
      * @return The results
      */
     protected abstract List executeQuery(PersistentEntity entity, Junction criteria);
 
     protected Object resolveIdIfEntity(Object value) {
-        // use the object id as the value if its a persistent entity
-        MappingContext mappingContext = entity.getMappingContext();
+        // use the object id as the value if it's a persistent entity
+        MappingContext mappingContext = this.entity.getMappingContext();
         if (mappingContext.getProxyFactory().isProxy(value)) {
             return mappingContext.getProxyFactory().getIdentifier(value);
         }
@@ -666,7 +678,7 @@ public abstract class Query implements Cloneable {
     }
 
     private Serializable findInstanceId(Object value) {
-        MappingContext ctx = entity.getMappingContext();
+        MappingContext ctx = this.entity.getMappingContext();
         PersistentEntity pe = ctx.getPersistentEntity(value.getClass().getName());
         return ctx.getEntityReflector(pe).getIdentifier(value);
     }
@@ -690,7 +702,9 @@ public abstract class Query implements Cloneable {
      * @return The pattern
      */
     public static String patternToRegex(Object value) {
-        if (value == null) value = "null";
+        if (value == null) {
+            value = "null";
+        }
 
         String[] array = value.toString().split("%", -1);
         for (int i = 0; i < array.length; i++) {
@@ -712,8 +726,8 @@ public abstract class Query implements Cloneable {
      */
     protected void flushBeforeQuery() {
         // flush before query execution in FlushModeType.AUTO
-        if (session != null && session.getFlushMode() == FlushModeType.AUTO) {
-            session.flush();
+        if (this.session != null && this.session.getFlushMode() == FlushModeType.AUTO) {
+            this.session.flush();
         }
     }
 
@@ -724,7 +738,7 @@ public abstract class Query implements Cloneable {
         if (criterion instanceof PropertyCriterion) {
             final PropertyCriterion pc = (PropertyCriterion) criterion;
             String property = pc.getProperty();
-            Object value = resolvePropertyValue(entity, property, pc.getValue());
+            Object value = resolvePropertyValue(this.entity, property, pc.getValue());
             pc.setValue(value);
         }
         if (criterion instanceof AssociationCriteria) {
@@ -759,7 +773,7 @@ public abstract class Query implements Cloneable {
     /**
      * Represents a criterion to be used in a criteria query
      */
-    public static interface Criterion {
+    public interface Criterion {
 
     }
 
@@ -794,21 +808,21 @@ public abstract class Query implements Cloneable {
         }
 
         public boolean isIgnoreCase() {
-            return ignoreCase;
+            return this.ignoreCase;
         }
 
         /**
          * @return The direction order by
          */
         public Direction getDirection() {
-            return direction;
+            return this.direction;
         }
 
         /**
          * @return The property name to order by
          */
         public String getProperty() {
-            return property;
+            return this.property;
         }
 
         /**
@@ -834,7 +848,7 @@ public abstract class Query implements Cloneable {
         /**
          * Represents the direction of the ordering
          */
-        public static enum Direction {
+        public enum Direction {
             ASC, DESC
         }
 
@@ -896,7 +910,7 @@ public abstract class Query implements Cloneable {
         }
 
         public String getProperty() {
-            return name;
+            return this.name;
         }
 
     }
@@ -914,7 +928,7 @@ public abstract class Query implements Cloneable {
         }
 
         public String getOtherProperty() {
-            return otherProperty;
+            return this.otherProperty;
         }
 
     }
@@ -980,7 +994,7 @@ public abstract class Query implements Cloneable {
         }
 
         public Object getValue() {
-            return value;
+            return this.value;
         }
 
         public void setValue(Object v) {
@@ -1257,11 +1271,11 @@ public abstract class Query implements Cloneable {
         }
 
         public Collection getValues() {
-            return Collections.unmodifiableCollection(values);
+            return Collections.unmodifiableCollection(this.values);
         }
 
         public QueryableCriteria getSubquery() {
-            return subquery;
+            return this.subquery;
         }
 
     }
@@ -1284,7 +1298,7 @@ public abstract class Query implements Cloneable {
         }
 
         public QueryableCriteria getSubquery() {
-            return subquery;
+            return this.subquery;
         }
 
     }
@@ -1301,7 +1315,7 @@ public abstract class Query implements Cloneable {
         }
 
         public QueryableCriteria getSubquery() {
-            return subquery;
+            return this.subquery;
         }
 
     }
@@ -1318,7 +1332,7 @@ public abstract class Query implements Cloneable {
         }
 
         public QueryableCriteria getSubquery() {
-            return subquery;
+            return this.subquery;
         }
 
     }
@@ -1387,15 +1401,15 @@ public abstract class Query implements Cloneable {
 
         @Override
         public String getProperty() {
-            return property;
+            return this.property;
         }
 
         public Object getFrom() {
-            return from;
+            return this.from;
         }
 
         public Object getTo() {
-            return to;
+            return this.to;
         }
 
     }
@@ -1442,7 +1456,7 @@ public abstract class Query implements Cloneable {
 
     }
 
-    public static abstract class Junction implements Criterion {
+    public static class Junction implements Criterion {
 
         private List<Criterion> criteria = new ArrayList<Criterion>();
 
@@ -1455,17 +1469,17 @@ public abstract class Query implements Cloneable {
 
         public Junction add(Criterion c) {
             if (c != null) {
-                criteria.add(c);
+                this.criteria.add(c);
             }
             return this;
         }
 
         public List<Criterion> getCriteria() {
-            return criteria;
+            return this.criteria;
         }
 
         public boolean isEmpty() {
-            return criteria.isEmpty();
+            return this.criteria.isEmpty();
         }
 
     }
@@ -1542,7 +1556,7 @@ public abstract class Query implements Cloneable {
         }
 
         public String getPropertyName() {
-            return propertyName;
+            return this.propertyName;
         }
 
     }
@@ -1615,7 +1629,6 @@ public abstract class Query implements Cloneable {
 
     }
 
-
     /**
      * A list of projections
      */
@@ -1624,24 +1637,27 @@ public abstract class Query implements Cloneable {
         private List<Projection> projections = new ArrayList();
 
         public List<Projection> getProjectionList() {
-            return Collections.unmodifiableList(projections);
+            return Collections.unmodifiableList(this.projections);
         }
 
         public ProjectionList add(Projection p) {
-            projections.add(p);
+            this.projections.add(p);
             return this;
         }
 
+        @Override
         public org.grails.datastore.mapping.query.api.ProjectionList id() {
             add(Projections.id());
             return this;
         }
 
+        @Override
         public org.grails.datastore.mapping.query.api.ProjectionList count() {
             add(Projections.count());
             return this;
         }
 
+        @Override
         public org.grails.datastore.mapping.query.api.ProjectionList countDistinct(String property) {
             add(Projections.countDistinct(property));
             return this;
@@ -1654,27 +1670,32 @@ public abstract class Query implements Cloneable {
         }
 
         public boolean isEmpty() {
-            return projections.isEmpty();
+            return this.projections.isEmpty();
         }
 
+        @Override
         public ProjectionList distinct() {
             return this;
         }
 
+        @Override
         public org.grails.datastore.mapping.query.api.ProjectionList distinct(String property) {
             add(Projections.distinct(property));
             return this;
         }
 
+        @Override
         public org.grails.datastore.mapping.query.api.ProjectionList rowCount() {
             return count();
         }
 
         /**
          * A projection that obtains the value of a property of an entity
+         *
          * @param name The name of the property
          * @return The PropertyProjection instance
          */
+        @Override
         public org.grails.datastore.mapping.query.api.ProjectionList property(String name) {
             add(Projections.property(name));
             return this;
@@ -1686,6 +1707,7 @@ public abstract class Query implements Cloneable {
          * @param name The name of the property
          * @return The PropertyProjection instance
          */
+        @Override
         public org.grails.datastore.mapping.query.api.ProjectionList sum(String name) {
             add(Projections.sum(name));
             return this;
@@ -1697,6 +1719,7 @@ public abstract class Query implements Cloneable {
          * @param name The name of the property
          * @return The PropertyProjection instance
          */
+        @Override
         public org.grails.datastore.mapping.query.api.ProjectionList min(String name) {
             add(Projections.min(name));
             return this;
@@ -1708,6 +1731,7 @@ public abstract class Query implements Cloneable {
          * @param name The name of the property
          * @return The PropertyProjection instance
          */
+        @Override
         public org.grails.datastore.mapping.query.api.ProjectionList max(String name) {
             add(Projections.max(name));
             return this;
@@ -1719,6 +1743,7 @@ public abstract class Query implements Cloneable {
          * @param name The name of the property
          * @return The PropertyProjection instance
          */
+        @Override
         public org.grails.datastore.mapping.query.api.ProjectionList avg(String name) {
             add(Projections.avg(name));
             return this;

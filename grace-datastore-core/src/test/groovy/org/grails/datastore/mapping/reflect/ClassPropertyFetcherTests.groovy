@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.mapping.reflect
 
 import org.grails.datastore.mapping.keyvalue.mapping.config.KeyValueMappingFactory
@@ -16,7 +31,7 @@ class ClassPropertyFetcherTests  {
     void testGetProperty() {
         def cpf = ClassPropertyFetcher.forClass(Foo)
 
-        assert 'foo' == cpf.getPropertyValue("name")
+        assert 'foo' == cpf.getPropertyValue('name')
         assert cpf.getPropertiesAssignableToType(CharSequence).size() == 1
         assert cpf.getPropertiesAssignableToType(String).size() == 1
     }
@@ -28,8 +43,8 @@ class ClassPropertyFetcherTests  {
         def tsc = ClassPropertyFetcher.forClass(TransientSubChild)
 
         assert tp.getStaticPropertyValuesFromInheritanceHierarchy(GormProperties.TRANSIENT, Collection) == [[]]
-        assert tc.getStaticPropertyValuesFromInheritanceHierarchy(GormProperties.TRANSIENT, Collection) == [[], ["transientProperty"]]
-        assert tsc.getStaticPropertyValuesFromInheritanceHierarchy(GormProperties.TRANSIENT, Collection) == [[], ["transientProperty"], ["bar"]]
+        assert tc.getStaticPropertyValuesFromInheritanceHierarchy(GormProperties.TRANSIENT, Collection) == [[], ['transientProperty']]
+        assert tsc.getStaticPropertyValuesFromInheritanceHierarchy(GormProperties.TRANSIENT, Collection) == [[], ['transientProperty'], ['bar']]
     }
 
 
@@ -39,7 +54,7 @@ class ClassPropertyFetcherTests  {
 
         def metaProperties = cpf.getMetaProperties()
 
-        assert DomainWithTrait.getDeclaredMethod("getFrom").returnType == DomainWithTrait
+        assert DomainWithTrait.getDeclaredMethod('getFrom').returnType == DomainWithTrait
         assert metaProperties.size() == 2
 
         def prop = metaProperties.find { it.name == 'from' }
@@ -47,7 +62,7 @@ class ClassPropertyFetcherTests  {
         assert prop != null
         assert prop.type == DomainWithTrait
 
-        KeyValueMappingFactory mappingFactory = new KeyValueMappingFactory("test")
+        KeyValueMappingFactory mappingFactory = new KeyValueMappingFactory('test')
 
         PropertyDescriptor descriptor = mappingFactory.createPropertyDescriptor(DomainWithTrait, prop)
         assert descriptor != null
@@ -73,10 +88,10 @@ class ClassPropertyFetcherTests  {
         GroovyObject mc = (GroovyObject)Foo.metaClass
 
         // Wrap the getter and setter similar to how they'd be wrapped for hibernate proxy handling
-        mc.setProperty("getBar", {->
+        mc.setProperty('getBar', {->
             delegate.@bar
         })
-        mc.setProperty("setBar", {
+        mc.setProperty('setBar', {
             delegate.@bar = it
         })
 
@@ -89,7 +104,7 @@ class ClassPropertyFetcherTests  {
     }
 
     static class Foo {
-        static String name = "foo"
+        static String name = 'foo'
 
         String bar
     }
@@ -120,7 +135,7 @@ class TransientChild extends TransientParent {
     void setTransientProperty(String transientProperty) {
         this.transientProperty = transientProperty
     }
-    static transients = ["transientProperty"]
+    static transients = ['transientProperty']
 }
 
 class TransientSubChild extends TransientChild {
@@ -128,7 +143,7 @@ class TransientSubChild extends TransientChild {
     String foo
     String bar
 
-    static transients = ["bar"]
+    static transients = ['bar']
 }
 
 class DomainWithMultipleSetter {

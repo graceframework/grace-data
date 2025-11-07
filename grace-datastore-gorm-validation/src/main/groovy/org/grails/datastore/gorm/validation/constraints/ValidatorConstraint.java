@@ -1,3 +1,18 @@
+/*
+ * Copyright 2010-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.validation.constraints;
 
 import java.util.Collection;
@@ -38,11 +53,12 @@ public class ValidatorConstraint extends AbstractConstraint {
 
     private final int numValidatorParams;
 
-    public ValidatorConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter, MessageSource messageSource) {
+    public ValidatorConstraint(Class<?> constraintOwningClass, String constraintPropertyName, Object constraintParameter,
+            MessageSource messageSource) {
         super(constraintOwningClass, constraintPropertyName, constraintParameter, messageSource);
-        validator = (Closure<?>) this.constraintParameter;
-        Class<?>[] params = validator.getParameterTypes();
-        numValidatorParams = params.length;
+        this.validator = (Closure<?>) this.constraintParameter;
+        Class<?>[] params = this.validator.getParameterTypes();
+        this.numValidatorParams = params.length;
     }
 
     @Override
@@ -56,11 +72,15 @@ public class ValidatorConstraint extends AbstractConstraint {
         Class<?>[] params = validator.getParameterTypes();
         // Groovy should always force one parameter, but let's check anyway...
         if (params.length == 0) {
-            throw new IllegalArgumentException("Parameter for constraint [" + ConstrainedProperty.VALIDATOR_CONSTRAINT + "] of property [" + constraintPropertyName + "] of class [" + constraintOwningClass + "] must be a Closure taking at least 1 parameter (value, [object])");
+            throw new IllegalArgumentException("Parameter for constraint [" + ConstrainedProperty.VALIDATOR_CONSTRAINT +
+                    "] of property [" + constraintPropertyName + "] of class [" + constraintOwningClass +
+                    "] must be a Closure taking at least 1 parameter (value, [object])");
         }
 
         if (params.length > 3) {
-            throw new IllegalArgumentException("Parameter for constraint [" + ConstrainedProperty.VALIDATOR_CONSTRAINT + "] of property [" + constraintPropertyName + "] of class [" + constraintOwningClass + "] must be a Closure taking no more than 3 parameters (value, [object, [errors]])");
+            throw new IllegalArgumentException("Parameter for constraint [" + ConstrainedProperty.VALIDATOR_CONSTRAINT +
+                    "] of property [" + constraintPropertyName + "] of class [" + constraintOwningClass +
+                    "] must be a Closure taking no more than 3 parameters (value, [object, [errors]])");
         }
         return constraintParameter;
     }
@@ -77,16 +97,16 @@ public class ValidatorConstraint extends AbstractConstraint {
 
     @Override
     protected void processValidate(Object target, Object propertyValue, Errors errors) {
-        if (validator == null) {
+        if (this.validator == null) {
             return;
         }
 
-        Object[] params = new Object[numValidatorParams];
+        Object[] params = new Object[this.numValidatorParams];
         params[0] = propertyValue;
-        if (numValidatorParams >= 2) {
+        if (this.numValidatorParams >= 2) {
             params[1] = target;
         }
-        if (numValidatorParams == 3) {
+        if (this.numValidatorParams == 3) {
             params[2] = errors;
         }
 
@@ -95,12 +115,12 @@ public class ValidatorConstraint extends AbstractConstraint {
         // delegate as if they were already defined as local variables.
         final ValidatorDelegate delegate = new ValidatorDelegate();
         delegate.setPropertyName(getPropertyName());
-        validator.setDelegate(delegate);
+        this.validator.setDelegate(delegate);
 
         // Execute the custom validation.
-        final Object result = validator.call(params);
+        final Object result = this.validator.call(params);
 
-        if (numValidatorParams == 3) {
+        if (this.numValidatorParams == 3) {
             // If the closure has been passed the errors
             // object no further action has to be taken.
             return;
@@ -151,22 +171,24 @@ public class ValidatorConstraint extends AbstractConstraint {
         }
     }
 
+    @Override
     public String getName() {
         return ConstrainedProperty.VALIDATOR_CONSTRAINT;
     }
 
+    @Override
     @SuppressWarnings("rawtypes")
     public boolean supports(Class type) {
         return type != null;
     }
 
-    private static class ValidatorDelegate {
+    private static final class ValidatorDelegate {
 
         private String propertyName;
 
         @SuppressWarnings("unused")
         public String getPropertyName() {
-            return propertyName;
+            return this.propertyName;
         }
 
         public void setPropertyName(String propertyName) {

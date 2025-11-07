@@ -1,10 +1,11 @@
-/* Copyright (C) 2011 SpringSource
+/*
+ * Copyright 2011-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -38,7 +39,7 @@ import org.grails.datastore.mapping.model.PropertyMapping;
  * @author Graeme Rocher
  * @since 1.0
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class MappingUtils {
 
     private static final String PROPERTY_SET_PREFIX = "set";
@@ -47,6 +48,7 @@ public class MappingUtils {
 
     /**
      * Retrieves the name of a setter for the specified property name
+     *
      * @param propertyName The property name
      * @return The setter equivalent
      */
@@ -57,6 +59,7 @@ public class MappingUtils {
 
     /**
      * Calculate the name for a getter method to retrieve the specified property
+     *
      * @param propertyName
      * @return The name for the getter method for this property, if it were to exist, i.e. getConstraints
      */
@@ -77,6 +80,7 @@ public class MappingUtils {
         }
         return suffix;
     }
+
     public static String getTargetKey(PersistentProperty property) {
         PropertyMapping<Property> mapping = property.getMapping();
         String targetName;
@@ -93,6 +97,7 @@ public class MappingUtils {
 
     /**
      * Creates a concrete collection for the supplied interface
+     *
      * @param interfaceType The interface
      * @return ArrayList for List, TreeSet for SortedSet, LinkedHashSet for Set etc.
      */
@@ -115,7 +120,8 @@ public class MappingUtils {
 
     /**
      * Get a declared field, searching super classes for the field if it is not found in the class.
-     * @param javaClass The class to search.
+     *
+     * @param javaClass    The class to search.
      * @param propertyName The name of the field.
      * @return The field, or null if it couldn't be found.
      */

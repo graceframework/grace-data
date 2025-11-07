@@ -1,11 +1,11 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,10 +17,9 @@ package org.grails.datastore.mapping.query.api;
 
 import java.util.Map;
 
-import jakarta.persistence.criteria.JoinType;
-
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
+import jakarta.persistence.criteria.JoinType;
 
 /**
  *
@@ -29,7 +28,6 @@ import groovy.lang.DelegatesTo;
  *
  */
 public interface BuildableCriteria extends Criteria {
-
 
     /**
      * @return The class the criteria applies to
@@ -79,8 +77,8 @@ public interface BuildableCriteria extends Criteria {
 
     /**
      * Defines and executes a list query in a single call. Example: Foo.createCriteria().list { }
-     * @param closure The closure to execute
      *
+     * @param closure The closure to execute
      * @return The result
      */
     Object list(@DelegatesTo(Criteria.class) Closure closure);
@@ -88,18 +86,17 @@ public interface BuildableCriteria extends Criteria {
     /**
      * Defines and executes a list query in a single call. Example: Foo.createCriteria().list { }
      *
-     * @param params pagination parameters (max, offset, etc...)
+     * @param params  pagination parameters (max, offset, etc...)
      * @param closure The closure to execute
-     *
      * @return The result
      */
     Object list(Map params, @DelegatesTo(Criteria.class) Closure closure);
 
     /**
      * Defines and executes a list distinct query in a single call. Example: Foo.createCriteria().listDistinct { }
-     * @param closure The closure to execute
      *
-     * @return The result 
+     * @param closure The closure to execute
+     * @return The result
      */
     Object listDistinct(@DelegatesTo(Criteria.class) Closure closure);
 
@@ -107,7 +104,6 @@ public interface BuildableCriteria extends Criteria {
      * Defines and executes a scroll query in a single call. Example: Foo.createCriteria().scroll { }
      *
      * @param closure The closure to execute
-     *
      * @return A scrollable result set
      */
     Object scroll(@DelegatesTo(Criteria.class) Closure closure);
@@ -116,7 +112,6 @@ public interface BuildableCriteria extends Criteria {
      * Defines and executes a get query ( a single result) in a single call. Example: Foo.createCriteria().get { }
      *
      * @param closure The closure to execute
-     *
      * @return A single result
      */
     Object get(@DelegatesTo(Criteria.class) Closure closure);

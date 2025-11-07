@@ -22,6 +22,7 @@ import java.util.regex.Pattern
 import groovy.transform.CompileStatic
 import groovy.transform.Memoized
 import groovy.transform.TypeChecked
+import org.apache.groovy.util.BeanUtils
 import org.codehaus.groovy.ast.ASTNode
 import org.codehaus.groovy.ast.AnnotatedNode
 import org.codehaus.groovy.ast.AnnotationNode
@@ -48,7 +49,6 @@ import org.codehaus.groovy.classgen.VariableScopeVisitor
 import org.codehaus.groovy.control.Janitor
 import org.codehaus.groovy.control.SourceUnit
 import org.codehaus.groovy.control.messages.SyntaxErrorMessage
-import org.codehaus.groovy.runtime.MetaClassHelper
 import org.codehaus.groovy.syntax.SyntaxException
 import org.codehaus.groovy.syntax.Token
 import org.codehaus.groovy.syntax.Types
@@ -68,25 +68,27 @@ import static org.codehaus.groovy.ast.tools.GenericsUtils.correctToGenericsSpecR
 @CompileStatic
 class AstUtils {
 
-    private static final String SPEC_CLASS = "spock.lang.Specification"
+    private static final String SPEC_CLASS = 'spock.lang.Specification'
     private static final Class<?>[] EMPTY_JAVA_CLASS_ARRAY = []
-    private static final Class<?>[] OBJECT_CLASS_ARG = [Object.class]
+    private static final Class<?>[] OBJECT_CLASS_ARG = [Object]
 
-    public static final String META_DATA_KEY_GRAILS_APP_DIR = "GRAILS_APP_DIR"
-    public static final String META_DATA_KEY_PROJECT_DIR = "PROJECT_DIR"
+    public static final String META_DATA_KEY_GRAILS_APP_DIR = 'GRAILS_APP_DIR'
+    public static final String META_DATA_KEY_PROJECT_DIR = 'PROJECT_DIR'
 
     public static final ClassNode COMPILE_STATIC_TYPE = ClassHelper.make(CompileStatic)
     public static final ClassNode TYPE_CHECKED_TYPE = ClassHelper.make(TypeChecked)
     public static final Object TRANSFORM_APPLIED_MARKER = new Object()
-    public static final String DOMAIN_TYPE = "Domain"
+    public static final String DOMAIN_TYPE = 'Domain'
     public static final Parameter[] ZERO_PARAMETERS = new Parameter[0]
     public static final ClassNode[] EMPTY_CLASS_ARRAY = new ClassNode[0]
     public static final Token ASSIGNMENT_OPERATOR = Token.newSymbol(Types.ASSIGNMENT_OPERATOR, 0, 0)
     public static final ArgumentListExpression ZERO_ARGUMENTS = new ArgumentListExpression()
-    public static final ClassNode OBJECT_CLASS_NODE = new ClassNode(Object.class).getPlainNodeReference()
+    public static final ClassNode OBJECT_CLASS_NODE = new ClassNode(Object).getPlainNodeReference()
 
     private static final Set<String> TRANSFORMED_CLASSES = new HashSet<String>()
-    private static final Set<String> ENTITY_ANNOTATIONS = ["grails.persistence.Entity", "grails.gorm.annotation.Entity"] as Set<String>
+    private static final Set<String> ENTITY_ANNOTATIONS = [
+            'grails.persistence.Entity', 'grails.gorm.annotation.Entity'
+    ] as Set<String>
 
     /**
      * @return The names of the transformed entities for this context
@@ -105,19 +107,23 @@ class AstUtils {
      * The name of the Grails application directory
      */
 
-    public static final String GRAILS_APP_DIR = "grails-app"
+    public static final String GRAILS_APP_DIR = 'grails-app'
 
-    public static final String REGEX_FILE_SEPARATOR = "[\\\\/]" // backslashes need escaping in regexes
+    public static final String REGEX_FILE_SEPARATOR = '[\\\\/]' // backslashes need escaping in regexes
 
     /*
      Domain path is always matched against the normalized File representation of an URL and
      can therefore work with slashes as separators.
      */
-    public static Pattern DOMAIN_PATH_PATTERN = Pattern.compile(".+" + REGEX_FILE_SEPARATOR + GRAILS_APP_DIR + REGEX_FILE_SEPARATOR + "domain" + REGEX_FILE_SEPARATOR + "(.+)\\.(groovy|java)")
+    public static final Pattern DOMAIN_PATH_PATTERN =
+            Pattern.compile('.+' + REGEX_FILE_SEPARATOR + GRAILS_APP_DIR + REGEX_FILE_SEPARATOR + 'domain' +
+                                    REGEX_FILE_SEPARATOR + '(.+)\\.(groovy|java)')
 
-    private static Pattern DOMAIN_PATH_PATTERN_NEW = Pattern.compile(".+" + REGEX_FILE_SEPARATOR + "app" + REGEX_FILE_SEPARATOR + "domain" + REGEX_FILE_SEPARATOR + "(.+)\\.(groovy|java)")
+    private static final Pattern DOMAIN_PATH_PATTERN_NEW =
+            Pattern.compile('.+' + REGEX_FILE_SEPARATOR + 'app' + REGEX_FILE_SEPARATOR + 'domain' +
+                                    REGEX_FILE_SEPARATOR + '(.+)\\.(groovy|java)')
 
-    private static final Map<String, ClassNode> emptyGenericsPlaceHoldersMap = Collections.emptyMap()
+    private static final Map<String, ClassNode> EMPTY_GENERICS_PLACE_HOLDERS_MAP = Collections.emptyMap()
 
     /**
      * Checks whether the file referenced by the given url is a domain class
@@ -126,9 +132,11 @@ class AstUtils {
      * @return true if it is a domain class
      * @deprecated since 2024.0, in favor of #isDomainClass(ClassNode)
      */
-    @Deprecated(since = "2024.0.0", forRemoval = true)
+    @Deprecated(since = '2024.0.0', forRemoval = true)
     static boolean isDomainClass(URL url) {
-        if (url == null) return false
+        if (url == null) {
+            return false
+        }
 
         return DOMAIN_PATH_PATTERN.matcher(url.getFile()).find() || DOMAIN_PATH_PATTERN_NEW.matcher(url.getFile()).find()
     }
@@ -163,7 +171,7 @@ class AstUtils {
     static List<MethodNode> findAllUnimplementedAbstractMethods(ClassNode classNode) {
         List<MethodNode> methods = []
         findAbstractMethodsInternal(classNode, methods, true)
-        return methods.findAll() { MethodNode mn ->
+        return methods.findAll { MethodNode mn ->
             def method = classNode.getMethod(mn.name, mn.parameters)
             return method == null || method.isAbstract()
         }
@@ -184,7 +192,8 @@ class AstUtils {
                 if (traitBridge != null || isInternal) {
                     continue
                 }
-                if (Modifier.isAbstract(modifiers) && (Modifier.isPublic(modifiers) || (Modifier.isProtected(modifiers) && includeProtected)) && !m.isSynthetic()) {
+                if (Modifier.isAbstract(modifiers) &&
+                        (Modifier.isPublic(modifiers) || (Modifier.isProtected(modifiers) && includeProtected)) && !m.isSynthetic()) {
                     methods.add(m)
                 }
             }
@@ -206,7 +215,9 @@ class AstUtils {
      * @param targetClassNode
      * @return The method call expression
      */
-    static MethodCallExpression buildGetPropertyExpression(final Expression objectExpression, final String propertyName, final ClassNode targetClassNode) {
+    static MethodCallExpression buildGetPropertyExpression(final Expression objectExpression,
+                                                           final String propertyName,
+                                                           final ClassNode targetClassNode) {
         return buildGetPropertyExpression(objectExpression, propertyName, targetClassNode, false)
     }
 
@@ -219,8 +230,9 @@ class AstUtils {
      * @param useBooleanGetter
      * @return The method call expression
      */
-    static MethodCallExpression buildGetPropertyExpression(final Expression objectExpression, final String propertyName, final ClassNode targetClassNode, final boolean useBooleanGetter) {
-        String methodName = (useBooleanGetter ? "is" : "get") + MetaClassHelper.capitalize(propertyName)
+    static MethodCallExpression buildGetPropertyExpression(final Expression objectExpression, final String propertyName,
+                                                           final ClassNode targetClassNode, final boolean useBooleanGetter) {
+        String methodName = (useBooleanGetter ? 'is' : 'get') + BeanUtils.capitalize(propertyName)
         MethodCallExpression methodCallExpression = new MethodCallExpression(objectExpression, methodName, MethodCallExpression.NO_ARGUMENTS)
         MethodNode getterMethod = targetClassNode.getGetterMethod(methodName)
         if (getterMethod != null) {
@@ -238,9 +250,11 @@ class AstUtils {
      * @param valueExpression
      * @return The method call expression
      */
-    static MethodCallExpression buildSetPropertyExpression(final Expression objectExpression, final String propertyName, final ClassNode targetClassNode, final Expression valueExpression) {
-        String methodName = "set" + MetaClassHelper.capitalize(propertyName)
-        MethodCallExpression methodCallExpression = new MethodCallExpression(objectExpression, methodName, new ArgumentListExpression(valueExpression))
+    static MethodCallExpression buildSetPropertyExpression(final Expression objectExpression, final String propertyName,
+                                                           final ClassNode targetClassNode, final Expression valueExpression) {
+        String methodName = 'set' + BeanUtils.capitalize(propertyName)
+        MethodCallExpression methodCallExpression = new MethodCallExpression(objectExpression, methodName,
+                                                                             new ArgumentListExpression(valueExpression))
         MethodNode setterMethod = targetClassNode.getSetterMethod(methodName)
         if (setterMethod != null) {
             methodCallExpression.setMethodTarget(setterMethod)
@@ -293,7 +307,6 @@ class AstUtils {
         AstAnnotationUtils.hasJunitAnnotation(md)
     }
 
-
     /**
      * Returns true if MethodNode is marked with annotationClass
      * @param methodNode A MethodNode to inspect
@@ -335,7 +348,8 @@ class AstUtils {
         Parameter[] newParameterTypes = new Parameter[parameterTypes.length]
         for (int i = 0; i < parameterTypes.length; i++) {
             Parameter parameterType = parameterTypes[i]
-            Parameter newParameter = new Parameter(replaceGenericsPlaceholders(parameterType.getType(), genericsPlaceholders), parameterType.getName(), parameterType.getInitialExpression())
+            Parameter newParameter = new Parameter(replaceGenericsPlaceholders(parameterType.getType(), genericsPlaceholders),
+                                                   parameterType.getName(), parameterType.getInitialExpression())
             copyAnnotations(parameterType, newParameter)
             newParameterTypes[i] = newParameter
         }
@@ -387,8 +401,9 @@ class AstUtils {
     static boolean isEnum(ClassNode classNode) {
         ClassNode parent = classNode.getSuperClass()
         while (parent != null) {
-            if (parent.getName().equals("java.lang.Enum"))
+            if (parent.getName() == 'java.lang.Enum') {
                 return true
+            }
             parent = parent.getSuperClass()
         }
         return false
@@ -418,7 +433,9 @@ class AstUtils {
         ClassNode superClass = cn.getSuperClass()
         while (pn == null && superClass != null) {
             pn = superClass.getProperty(name)
-            if (pn != null) return pn
+            if (pn != null) {
+                return pn
+            }
             superClass = superClass.getSuperClass()
         }
         return pn
@@ -438,14 +455,14 @@ class AstUtils {
         if (annotations != null && !annotations.isEmpty()) {
             for (AnnotationNode annotation : annotations) {
                 String className = annotation.getClassNode().getName()
-                if (ENTITY_ANNOTATIONS.any() { String ann -> ann.equals(className) }) {
+                if (ENTITY_ANNOTATIONS.any { String ann -> (ann == className) }) {
                     return true
                 }
             }
         }
 
         // Second, check whether this class implements the GormEntity interface
-        if (implementsInterface(classNode, "org.grails.datastore.gorm.GormEntity")) {
+        if (implementsInterface(classNode, 'org.grails.datastore.gorm.GormEntity')) {
             return true
         }
 
@@ -468,7 +485,7 @@ class AstUtils {
         if (filename == null || projectDir == null || grailsAppDir == null) {
             return false
         }
-        if (filename.startsWith(grailsAppDir + File.separatorChar + "domain")) {
+        if (filename.startsWith(grailsAppDir + File.separatorChar + 'domain')) {
             return true
         }
 
@@ -476,12 +493,12 @@ class AstUtils {
     }
 
     static ClassNode nonGeneric(ClassNode type) {
-        return replaceGenericsPlaceholders(type, emptyGenericsPlaceHoldersMap)
+        return replaceGenericsPlaceholders(type, EMPTY_GENERICS_PLACE_HOLDERS_MAP)
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings('unchecked')
     static ClassNode nonGeneric(ClassNode type, final ClassNode wildcardReplacement) {
-        return replaceGenericsPlaceholders(type, emptyGenericsPlaceHoldersMap, wildcardReplacement)
+        return replaceGenericsPlaceholders(type, EMPTY_GENERICS_PLACE_HOLDERS_MAP, wildcardReplacement)
     }
 
     static ClassNode replaceGenericsPlaceholders(ClassNode type, Map<String, ClassNode> genericsPlaceholders) {
@@ -509,13 +526,13 @@ class AstUtils {
                 return placeHolderType.getPlainNodeReference()
             }
             else {
-                return ClassHelper.make(Object.class).getPlainNodeReference()
+                return ClassHelper.make(Object).getPlainNodeReference()
             }
         }
 
         final ClassNode nonGen = type.getPlainNodeReference()
 
-        if ("java.lang.Object".equals(type.getName())) {
+        if (type.getName() == 'java.lang.Object') {
             nonGen.setGenericsPlaceHolder(false)
             nonGen.setGenericsTypes(null)
             nonGen.setUsingGenerics(false)
@@ -534,7 +551,7 @@ class AstUtils {
                                 copiedGenericsType = new GenericsType(placeHolderType.getPlainNodeReference())
                             }
                             else {
-                                copiedGenericsType = new GenericsType(ClassHelper.make(Object.class).getPlainNodeReference())
+                                copiedGenericsType = new GenericsType(ClassHelper.make(Object).getPlainNodeReference())
                             }
                         }
                         else {
@@ -557,8 +574,9 @@ class AstUtils {
         try {
             implementsTrait = classNode.declaresInterface(traitClassNode)
         }
-        catch (Throwable e) {
-            // if we reach this point, the trait injector could not be loaded due to missing dependencies (for example missing servlet-api). This is ok, as we want to be able to compile against non-servlet environments.
+        catch (Throwable ignore) {
+            // if we reach this point, the trait injector could not be loaded due to missing dependencies (for example missing servlet-api).
+            // This is ok, as we want to be able to compile against non-servlet environments.
             traitNotLoaded = true
         }
         if (!implementsTrait && !traitNotLoaded) {
@@ -579,7 +597,7 @@ class AstUtils {
         }
 
         ClassNode parent = classNode.getSuperClass()
-        while (parent != null && !parent.name.equals("java.lang.Object")) {
+        while (parent != null && parent.name != 'java.lang.Object') {
             if (hasProperty(parent, propertyName)) {
                 return true
             }
@@ -602,7 +620,9 @@ class AstUtils {
         }
 
         final MethodNode method = classNode.getMethod(NameUtils.getGetterName(propertyName), Parameter.EMPTY_ARRAY)
-        if (method != null) return true
+        if (method != null) {
+            return true
+        }
 
         // check read-only field with setter
         if (classNode.getField(propertyName) != null && !classNode.getMethods(NameUtils.getSetterName(propertyName)).isEmpty()) {
@@ -610,7 +630,7 @@ class AstUtils {
         }
 
         for (PropertyNode pn in classNode.getProperties()) {
-            if (pn.name.equals(propertyName) && !pn.isPrivate()) {
+            if (pn.name == propertyName && !pn.isPrivate()) {
                 return true
             }
         }
@@ -631,10 +651,12 @@ class AstUtils {
         }
 
         final MethodNode method = classNode.getMethod(NameUtils.getGetterName(propertyName), Parameter.EMPTY_ARRAY)
-        if (method != null) return method.returnType
+        if (method != null) {
+            return method.returnType
+        }
 
         for (PropertyNode pn in classNode.getProperties()) {
-            if (pn.name.equals(propertyName) && !pn.isPrivate()) {
+            if (pn.name == propertyName && !pn.isPrivate()) {
                 return pn.type
             }
         }
@@ -645,7 +667,7 @@ class AstUtils {
     static ClassNode getFurthestUnresolvedParent(ClassNode classNode) {
         ClassNode parent = classNode.getSuperClass()
 
-        while (parent != null && !parent.name.equals("java.lang.Object") && !parent.isResolved()) {
+        while (parent != null && parent.name != 'java.lang.Object' && !parent.isResolved()) {
             classNode = parent
             parent = parent.getSuperClass()
         }
@@ -653,7 +675,7 @@ class AstUtils {
     }
 
     /**
-     * Adds an annotation to the give nclass node if it doesn't already exist
+     * Adds an annotation to the give class node if it doesn't already exist
      *
      * @param classNode The class node
      * @param annotationClass The annotation class
@@ -676,7 +698,7 @@ class AstUtils {
      * @return A new this variable
      */
     static VariableExpression varThis() {
-        return new VariableExpression("this")
+        return new VariableExpression('this')
     }
 
     /**
@@ -685,15 +707,20 @@ class AstUtils {
      * @param annotatedNode The class node
      * @param annotationClass The annotation class
      */
-    static AnnotationNode addAnnotationOrGetExisting(AnnotatedNode annotatedNode, Class<? extends Annotation> annotationClass, Map<String, Object> members) {
+    static AnnotationNode addAnnotationOrGetExisting(AnnotatedNode annotatedNode,
+                                                     Class<? extends Annotation> annotationClass,
+                                                     Map<String, Object> members) {
         AstAnnotationUtils.addAnnotationOrGetExisting(annotatedNode, annotationClass, members)
     }
 
-    static AnnotationNode addAnnotationOrGetExisting(AnnotatedNode annotatedNode, ClassNode annotationClassNode) {
+    static AnnotationNode addAnnotationOrGetExisting(AnnotatedNode annotatedNode,
+                                                     ClassNode annotationClassNode) {
         AstAnnotationUtils.addAnnotationOrGetExisting(annotatedNode, annotationClassNode)
     }
 
-    static AnnotationNode addAnnotationOrGetExisting(AnnotatedNode annotatedNode, ClassNode annotationClassNode, Map<String, Object> members) {
+    static AnnotationNode addAnnotationOrGetExisting(AnnotatedNode annotatedNode,
+                                                     ClassNode annotationClassNode,
+                                                     Map<String, Object> members) {
         AstAnnotationUtils.addAnnotationOrGetExisting(annotatedNode, annotationClassNode, members)
     }
 
@@ -701,7 +728,8 @@ class AstUtils {
         AstAnnotationUtils.findAnnotation(classNode, type)
     }
 
-    static AnnotationNode findAnnotation(AnnotatedNode annotationClassNode, List<AnnotationNode> annotations) {
+    static AnnotationNode findAnnotation(AnnotatedNode annotationClassNode,
+                                         List<AnnotationNode> annotations) {
         AstAnnotationUtils.findAnnotation(annotationClassNode, annotations)
     }
 
@@ -717,14 +745,14 @@ class AstUtils {
         return method != null && (method.isPublic() || method.isProtected()) && !method.isAbstract()
     }
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings('rawtypes')
     static boolean implementsOrInheritsZeroArgMethod(ClassNode classNode, String methodName) {
         if (implementsZeroArgMethod(classNode, methodName)) {
             return true
         }
 
         ClassNode parent = classNode.getSuperClass()
-        while (parent != null && !parent.name.equals("java.lang.Object")) {
+        while (parent != null && parent.name != 'java.lang.Object') {
             if (implementsZeroArgMethod(parent, methodName)) {
                 return true
             }
@@ -732,7 +760,6 @@ class AstUtils {
         }
         return false
     }
-
 
     static boolean isSubclassOfOrImplementsInterface(ClassNode childClass, ClassNode superClass) {
         String superClassName = superClass.getName()
@@ -751,7 +778,9 @@ class AstUtils {
      * @return True if it is a subclass
      */
     static boolean isSubclassOf(ClassNode classNode, String parentClassName) {
-        if (classNode.name == parentClassName) return true
+        if (classNode.name == parentClassName) {
+            return true
+        }
         ClassNode currentSuper = classNode.getSuperClass()
         while (currentSuper != null) {
             if (currentSuper.getName() == parentClassName) {
@@ -764,7 +793,6 @@ class AstUtils {
             else {
                 currentSuper = currentSuper.getSuperClass()
             }
-
         }
         return false
     }
@@ -807,13 +835,15 @@ class AstUtils {
      * @return True if it is
      */
     static boolean isGroovyType(ClassNode type) {
-        return type.isPrimaryClassNode() || implementsInterface(type, "groovy.lang.GroovyObject")
+        return type.isPrimaryClassNode() || implementsInterface(type, 'groovy.lang.GroovyObject')
     }
 
     static ClassNode findInterface(ClassNode classNode, String interfaceName) {
         ClassNode currentClassNode = classNode
-        if (currentClassNode.name == interfaceName) return classNode
-        while (currentClassNode != null && !currentClassNode.getName().equals(OBJECT_CLASS_NODE.getName())) {
+        if (currentClassNode.name == interfaceName) {
+            return classNode
+        }
+        while (currentClassNode != null && currentClassNode.getName() != OBJECT_CLASS_NODE.getName()) {
             ClassNode[] interfaces = currentClassNode.getInterfaces()
 
             def interfaceNode = implementsInterfaceInternal(interfaces, interfaceName)
@@ -827,31 +857,29 @@ class AstUtils {
 
     private static ClassNode implementsInterfaceInternal(ClassNode[] interfaces, String interfaceName) {
         for (ClassNode anInterface : interfaces) {
-            if (anInterface.getName().equals(interfaceName)) {
+            if (anInterface.getName() == interfaceName) {
                 return anInterface
             }
             ClassNode[] childInterfaces = anInterface.getInterfaces()
             if (childInterfaces != null && childInterfaces.length > 0) {
                 return implementsInterfaceInternal(childInterfaces, interfaceName)
             }
-
         }
         return null
     }
 
     static void warning(final SourceUnit sourceUnit, final ASTNode node, final String warningMessage) {
         final String sample = sourceUnit.getSample(node.getLineNumber(), node.getColumnNumber(), new Janitor())
-        System.err.println("WARNING: " + warningMessage + "\n\n" + sample)
+        System.err.println('WARNING: ' + warningMessage + '\n\n' + sample)
     }
 
     static void error(SourceUnit sourceUnit, ASTNode expr, String errorMessage) {
         sourceUnit.getErrorCollector().addErrorAndContinue(new SyntaxErrorMessage(
                 new SyntaxException(errorMessage + '\n', expr.getLineNumber(), expr.getColumnNumber(),
-                        expr.getLastLineNumber(), expr.getLastColumnNumber()),
+                                    expr.getLastLineNumber(), expr.getLastColumnNumber()),
                 sourceUnit)
         )
     }
-
 
     static boolean isSetter(MethodNode declaredMethod) {
         return declaredMethod.getParameters().length == 1 && ReflectionUtils.isSetter(declaredMethod.getName(), OBJECT_CLASS_ARG)
@@ -872,7 +900,6 @@ class AstUtils {
             }
         }
         else if (type.isArray()) {
-
             ClassNode componentType = type.componentType
             if (componentType != null && isDomainClass(componentType)) {
                 isCompatibleReturnType = true
@@ -936,6 +963,7 @@ class AstUtils {
                 }
                 return super.transform(exp)
             }
+
         }
         variableTransformer.visitClosureExpression(closureExpression)
         return closureExpression

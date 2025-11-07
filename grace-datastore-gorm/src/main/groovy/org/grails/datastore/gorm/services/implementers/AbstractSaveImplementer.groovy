@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.services.implementers
 
 import groovy.transform.CompileStatic
@@ -32,7 +47,8 @@ import static org.grails.datastore.gorm.transform.AstMethodDispatchUtils.namedAr
 @CompileStatic
 abstract class AbstractSaveImplementer extends AbstractWriteOperationImplementer {
 
-    protected Statement bindParametersAndSave(ClassNode domainClassNode, MethodNode abstractMethodNode, Parameter[] parameters, BlockStatement body, VariableExpression entityVar) {
+    protected Statement bindParametersAndSave(ClassNode domainClassNode, MethodNode abstractMethodNode,
+            Parameter[] parameters, BlockStatement body, VariableExpression entityVar) {
         Expression argsExpression = null
 
         for (Parameter parameter in parameters) {
@@ -49,7 +65,8 @@ abstract class AbstractSaveImplementer extends AbstractWriteOperationImplementer
                 AstUtils.error(
                         abstractMethodNode.declaringClass.module.context,
                         abstractMethodNode,
-                        "Cannot implement method for argument [${parameterName}]. No property exists on domain class [$domainClassNode.name]"
+                        "Cannot implement method for argument [${parameterName}]. " +
+                                "No property exists on domain class [$domainClassNode.name]"
                 )
             }
         }
@@ -60,7 +77,7 @@ abstract class AbstractSaveImplementer extends AbstractWriteOperationImplementer
                     declS(saveArgs, namedArgs(failOnError: ConstantExpression.TRUE))
             )
             body.addStatement(
-                    stmt(callX(saveArgs, "putAll", argsExpression))
+                    stmt(callX(saveArgs, 'putAll', argsExpression))
             )
         }
         else {
@@ -69,10 +86,10 @@ abstract class AbstractSaveImplementer extends AbstractWriteOperationImplementer
 
         Expression connectionId = findConnectionId(abstractMethodNode)
         if (connectionId != null) {
-            returnS(callX(buildInstanceApiLookup(domainClassNode, connectionId), "save", args(entityVar, saveArgs)))
+            returnS(callX(buildInstanceApiLookup(domainClassNode, connectionId), 'save', args(entityVar, saveArgs)))
         }
         else {
-            return returnS(callX(entityVar, "save", saveArgs))
+            return returnS(callX(entityVar, 'save', saveArgs))
         }
     }
 

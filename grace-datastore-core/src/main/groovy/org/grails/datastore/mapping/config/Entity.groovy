@@ -1,10 +1,11 @@
-/* Copyright 2013 the original author or authors.
+/*
+ * Copyright 2013-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -39,10 +40,12 @@ class Entity<P extends Property> {
      * @return Whether the entity state should be held in the session or not
      */
     boolean stateless = false
+
     /**
      * @return Whether automatic time stamps should be applied to 'lastUpdate' and 'dateCreated' properties
      */
     boolean autoTimestamp = true
+
     /**
      * @return Whether the entity should be autowired
      */
@@ -62,11 +65,11 @@ class Entity<P extends Property> {
      * @return The property configurations
      */
     Map<String, P> getPropertyConfigs() {
-        return propertyConfigs
+        return this.propertyConfigs
     }
 
     Object getSort() {
-        return defaultSort
+        return this.defaultSort
     }
 
     Entity<P> setSort(Object defaultSort) {
@@ -130,7 +133,7 @@ class Entity<P extends Property> {
      * @return Whether this entity is versioned
      */
     boolean isVersioned() {
-        return version
+        return this.version
     }
 
     /**
@@ -138,7 +141,7 @@ class Entity<P extends Property> {
      * @param name The name of the property
      * @return
      */
-    P getPropertyConfig(String name) { propertyConfigs[name] }
+    P getPropertyConfig(String name) { this.propertyConfigs[name] }
 
     /**
      * Define the identity config
@@ -232,7 +235,7 @@ class Entity<P extends Property> {
      * @return This mapping
      */
     P property(@DelegatesTo(type = 'P') Closure propertyConfig) {
-        if (propertyConfigs.containsKey('*')) {
+        if (this.propertyConfigs.containsKey('*')) {
             P cloned = cloneGlobalConstraint()
             return Property.configureExisting(cloned, propertyConfig)
         }
@@ -249,7 +252,7 @@ class Entity<P extends Property> {
      * @return This mapping
      */
     P property(Map propertyConfig) {
-        if (propertyConfigs.containsKey('*')) {
+        if (this.propertyConfigs.containsKey('*')) {
             // apply global constraints constraints
             P cloned = cloneGlobalConstraint()
             return Property.configureExisting(cloned, propertyConfig)
@@ -278,7 +281,7 @@ class Entity<P extends Property> {
             property(name, (Closure) val)
         }
         else if (val instanceof Property) {
-            propertyConfigs[name] = ((P) val)
+            this.propertyConfigs[name] = ((P) val)
         }
         else {
             throw new MissingPropertyException(name, Entity)
@@ -292,17 +295,13 @@ class Entity<P extends Property> {
                 property(name, (Closure) args[0])
             }
             else if (args[0] instanceof Property) {
-                propertyConfigs[name] = (P) args[0]
+                this.propertyConfigs[name] = (P) args[0]
             }
             else if (args[0] instanceof Map) {
                 P property = getOrInitializePropertyConfig(name)
                 Map namedArgs = (Map) args[0]
                 if (args[-1] instanceof Closure) {
-                    Property.configureExisting(
-                            property,
-                            ((Closure) args[-1])
-                    )
-
+                    Property.configureExisting(property, ((Closure) args[-1]))
                 }
                 Property.configureExisting(property, namedArgs)
             }
@@ -316,20 +315,20 @@ class Entity<P extends Property> {
     }
 
     protected P getOrInitializePropertyConfig(String name) {
-        P pc = propertyConfigs[name]
-        if (pc == null && propertyConfigs.containsKey('*')) {
+        P pc = this.propertyConfigs[name]
+        if (pc == null && this.propertyConfigs.containsKey('*')) {
             // apply global constraints constraints
-            P globalConstraints = propertyConfigs.get('*')
+            P globalConstraints = this.propertyConfigs.get('*')
             if (globalConstraints != null) {
                 pc = (P) globalConstraints.clone()
             }
         }
         else {
-            pc = propertyConfigs[name]
+            pc = this.propertyConfigs[name]
         }
         if (pc == null) {
             pc = newProperty()
-            propertyConfigs[name] = pc
+            this.propertyConfigs[name] = pc
         }
         return pc
     }
@@ -340,7 +339,7 @@ class Entity<P extends Property> {
 
     protected P cloneGlobalConstraint() {
         // apply global constraints constraints
-        P globalConstraints = propertyConfigs.get('*')
+        P globalConstraints = this.propertyConfigs.get('*')
         P cloned = (P) globalConstraints.clone()
         return cloned
     }

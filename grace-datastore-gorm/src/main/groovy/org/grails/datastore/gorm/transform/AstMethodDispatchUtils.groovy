@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017-2025 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.grails.datastore.gorm.transform
 
 import groovy.transform.CompileStatic
@@ -42,6 +57,7 @@ class AstMethodDispatchUtils extends GeneralUtils {
         }
         return expression
     }
+
     /**
      * Make a direct method call on this object for the given name and arguments
      *
@@ -93,7 +109,7 @@ class AstMethodDispatchUtils extends GeneralUtils {
      * @return The expression
      */
     static MethodCallExpression callThisD(ClassNode thisType, String methodName, Expression arguments) {
-        MethodCallExpression methodCall = callX(varX("this", thisType), methodName, arguments)
+        MethodCallExpression methodCall = callX(varX('this', thisType), methodName, arguments)
         Parameter[] params = paramsForArgs(arguments)
         MethodNode mn = thisType.getDeclaredMethod(methodName, params)
         if (mn != null) {
@@ -115,7 +131,7 @@ class AstMethodDispatchUtils extends GeneralUtils {
         }
         else {
             def type = expression instanceof ClassExpression ? ClassHelper.CLASS_Type : expression.type
-            return params(param(type, "p"))
+            return params(param(type, 'p'))
         }
     }
 

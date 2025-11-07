@@ -1,11 +1,11 @@
 /*
- * Copyright 2017 the original author or authors.
+ * Copyright 2017-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,8 +40,9 @@ import org.grails.datastore.mapping.transactions.TransactionCapableDatastore
 class DefaultTransactionService implements TransactionService, Service {
 
     @Override
-    def <T> T withTransaction(
-            @ClosureParams(value = SimpleType.class, options = "org.springframework.transaction.TransactionStatus") Closure<T> callable) {
+    <T> T withTransaction(
+            @ClosureParams(value = SimpleType,
+                    options = 'org.springframework.transaction.TransactionStatus') Closure<T> callable) {
         if (datastore instanceof TransactionCapableDatastore) {
             GrailsTransactionTemplate template = new GrailsTransactionTemplate(((TransactionCapableDatastore) datastore).transactionManager)
             return template.execute(callable)
@@ -52,8 +53,9 @@ class DefaultTransactionService implements TransactionService, Service {
     }
 
     @Override
-    def <T> T withRollback(
-            @ClosureParams(value = SimpleType.class, options = "org.springframework.transaction.TransactionStatus") Closure<T> callable) {
+    <T> T withRollback(
+            @ClosureParams(value = SimpleType,
+                    options = 'org.springframework.transaction.TransactionStatus') Closure<T> callable) {
         if (datastore instanceof TransactionCapableDatastore) {
             GrailsTransactionTemplate template = new GrailsTransactionTemplate(((TransactionCapableDatastore) datastore).transactionManager)
             return template.executeAndRollback(callable)
@@ -64,8 +66,9 @@ class DefaultTransactionService implements TransactionService, Service {
     }
 
     @Override
-    def <T> T withNewTransaction(
-            @ClosureParams(value = SimpleType.class, options = "org.springframework.transaction.TransactionStatus") Closure<T> callable) {
+    <T> T withNewTransaction(
+            @ClosureParams(value = SimpleType,
+                    options = 'org.springframework.transaction.TransactionStatus') Closure<T> callable) {
         if (datastore instanceof TransactionCapableDatastore) {
             PlatformTransactionManager transactionManager = ((TransactionCapableDatastore) datastore).transactionManager
             def txDef = new CustomizableRollbackTransactionAttribute(propagationBehavior: TransactionDefinition.PROPAGATION_REQUIRES_NEW)
@@ -78,8 +81,8 @@ class DefaultTransactionService implements TransactionService, Service {
     }
 
     @Override
-    def <T> T withTransaction(TransactionDefinition definition,
-                              @ClosureParams(value = SimpleType.class, options = "org.springframework.transaction.TransactionStatus") Closure<T> callable) {
+    <T> T withTransaction(TransactionDefinition definition,
+            @ClosureParams(value = SimpleType, options = 'org.springframework.transaction.TransactionStatus') Closure<T> callable) {
         if (datastore instanceof TransactionCapableDatastore) {
             PlatformTransactionManager transactionManager = ((TransactionCapableDatastore) datastore).transactionManager
             GrailsTransactionTemplate template = new GrailsTransactionTemplate(transactionManager, definition)
@@ -91,8 +94,8 @@ class DefaultTransactionService implements TransactionService, Service {
     }
 
     @Override
-    def <T> T withTransaction(Map definition,
-                              @ClosureParams(value = SimpleType.class, options = "org.springframework.transaction.TransactionStatus") Closure<T> callable) {
+    <T> T withTransaction(Map definition,
+            @ClosureParams(value = SimpleType, options = 'org.springframework.transaction.TransactionStatus') Closure<T> callable) {
         if (datastore instanceof TransactionCapableDatastore) {
             PlatformTransactionManager transactionManager = ((TransactionCapableDatastore) datastore).transactionManager
             def txDef = newDefinition(definition)
@@ -110,8 +113,10 @@ class DefaultTransactionService implements TransactionService, Service {
     }
 
     @Override
-    def <T> T withRollback(TransactionDefinition definition,
-                           @ClosureParams(value = SimpleType.class, options = "org.springframework.transaction.TransactionStatus") Closure<T> callable) {
+    <T> T withRollback(TransactionDefinition definition,
+            @ClosureParams(
+                    value = SimpleType,
+                    options = 'org.springframework.transaction.TransactionStatus') Closure<T> callable) {
         if (datastore instanceof TransactionCapableDatastore) {
             PlatformTransactionManager transactionManager = ((TransactionCapableDatastore) datastore).transactionManager
             GrailsTransactionTemplate template = new GrailsTransactionTemplate(transactionManager, definition)
@@ -123,8 +128,10 @@ class DefaultTransactionService implements TransactionService, Service {
     }
 
     @Override
-    def <T> T withNewTransaction(TransactionDefinition definition,
-                                 @ClosureParams(value = SimpleType.class, options = "org.springframework.transaction.TransactionStatus") Closure<T> callable) {
+    <T> T withNewTransaction(TransactionDefinition definition,
+            @ClosureParams(
+                    value = SimpleType,
+                    options = 'org.springframework.transaction.TransactionStatus') Closure<T> callable) {
         if (datastore instanceof TransactionCapableDatastore) {
             PlatformTransactionManager transactionManager = ((TransactionCapableDatastore) datastore).transactionManager
             def txDef = new CustomizableRollbackTransactionAttribute(definition)

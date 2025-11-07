@@ -1,11 +1,11 @@
 /*
- * Copyright 2015 original authors
+ * Copyright 2015-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,6 +35,7 @@ public interface ProxyHandler {
 
     /**
      * Checks whether a given proxy is initialized
+     *
      * @param object The object to check
      * @return True if it is
      */
@@ -50,6 +51,7 @@ public interface ProxyHandler {
 
     /**
      * Unwraps the given proxy if it is one
+     *
      * @param object The object
      * @return The unwrapped proxy
      */
@@ -57,6 +59,7 @@ public interface ProxyHandler {
 
     /**
      * Obtains the identifier of an object without initializing the proxy if it is one
+     *
      * @param obj The object
      * @return The identifier
      */
@@ -64,6 +67,7 @@ public interface ProxyHandler {
 
     /**
      * Get the class being proxied
+     *
      * @param o The object
      * @return The class being proxied
      */
@@ -71,6 +75,7 @@ public interface ProxyHandler {
 
     /**
      * Initialises the given object
+     *
      * @param o The object to initialize
      */
     void initialize(Object o);
