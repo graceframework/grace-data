@@ -30,4 +30,5 @@ class ModificationTrackingEntityAccessSpec extends Specification {
         then:
         1 * target.getProperty('foo')
     }
+
 }

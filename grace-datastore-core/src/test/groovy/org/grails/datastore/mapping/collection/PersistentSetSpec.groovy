@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2025 the original author or authors.
+ * Copyright 2015-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,16 +28,16 @@ class PersistentSetSpec extends Specification {
     @Issue('GRAILS-11929')
     def 'should support serialization after initialized'() {
         given:
-        PersistentSet pset = new PersistentSet(String, null, ['a','b','c'] as Set)
+        PersistentSet pset = new PersistentSet(String, null, ['a', 'b', 'c'] as Set)
         def initializedField = ReflectionUtils.findField(AbstractPersistentCollection, 'initialized')
         ReflectionUtils.makeAccessible(initializedField)
         ReflectionUtils.setField(initializedField, pset, true)
+
         when:
         def psetSerialized = SerializationUtils.deserialize(SerializationUtils.serialize(pset))
         then:
-        psetSerialized == ['a','b','c'] as Set
+        psetSerialized == ['a', 'b', 'c'] as Set
         psetSerialized == pset
-
     }
 
 }

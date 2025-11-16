@@ -15,23 +15,24 @@
  */
 package org.grails.datastore.mapping.reflect
 
-import org.grails.datastore.mapping.keyvalue.mapping.config.KeyValueMappingFactory
-import org.grails.datastore.mapping.model.config.GormProperties
+import java.beans.PropertyDescriptor
+
 import org.junit.jupiter.api.Test
 
-import java.beans.PropertyDescriptor
+import org.grails.datastore.mapping.keyvalue.mapping.config.KeyValueMappingFactory
+import org.grails.datastore.mapping.model.config.GormProperties
 
 /**
  * @author Graeme Rocher
  * @since 1.1
  */
-class ClassPropertyFetcherTests  {
+class ClassPropertyFetcherTests {
 
     @Test
     void testGetProperty() {
         def cpf = ClassPropertyFetcher.forClass(Foo)
 
-        assert 'foo' == cpf.getPropertyValue('name')
+        assert cpf.getPropertyValue('name') == 'foo'
         assert cpf.getPropertiesAssignableToType(CharSequence).size() == 1
         assert cpf.getPropertiesAssignableToType(String).size() == 1
     }
@@ -46,7 +47,6 @@ class ClassPropertyFetcherTests  {
         assert tc.getStaticPropertyValuesFromInheritanceHierarchy(GormProperties.TRANSIENT, Collection) == [[], ['transientProperty']]
         assert tsc.getStaticPropertyValuesFromInheritanceHierarchy(GormProperties.TRANSIENT, Collection) == [[], ['transientProperty'], ['bar']]
     }
-
 
     @Test
     void testClassPropertyFetcherWithTraitProperty() {
@@ -80,15 +80,14 @@ class ClassPropertyFetcherTests  {
 
         assert prop != null
         assert prop.type == Long
-
     }
 
     @Test
     void testGetObjectTypeForWrappedBeanProperty() {
-        GroovyObject mc = (GroovyObject)Foo.metaClass
+        GroovyObject mc = (GroovyObject) Foo.metaClass
 
         // Wrap the getter and setter similar to how they'd be wrapped for hibernate proxy handling
-        mc.setProperty('getBar', {->
+        mc.setProperty('getBar', { ->
             delegate.@bar
         })
         mc.setProperty('setBar', {
@@ -104,27 +103,36 @@ class ClassPropertyFetcherTests  {
     }
 
     static class Foo {
+
         static String name = 'foo'
 
         String bar
+
     }
+
 }
 
 trait TestTrait<F extends Serializable> {
+
     F from
+
 }
 
 class DomainWithTrait implements Serializable, TestTrait<DomainWithTrait> {
+
     String name
+
 }
 
 class TransientParent {
 
     static mapWith = 'neo4j'
     static transients = []
+
 }
 
 class TransientChild extends TransientParent {
+
     String name
     String transientProperty
 
@@ -135,7 +143,9 @@ class TransientChild extends TransientParent {
     void setTransientProperty(String transientProperty) {
         this.transientProperty = transientProperty
     }
+
     static transients = ['transientProperty']
+
 }
 
 class TransientSubChild extends TransientChild {
@@ -144,9 +154,11 @@ class TransientSubChild extends TransientChild {
     String bar
 
     static transients = ['bar']
+
 }
 
 class DomainWithMultipleSetter {
+
     Long id
     String name
 
@@ -157,4 +169,5 @@ class DomainWithMultipleSetter {
     void setId(Long id) {
         this.id = id
     }
+
 }

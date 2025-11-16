@@ -15,7 +15,6 @@
  */
 package org.grails.datastore.mapping.dirty.checking
 
-
 import groovy.transform.Sortable
 import spock.lang.Issue
 import spock.lang.Specification
@@ -54,39 +53,45 @@ class DirtyCheckableSpec extends Specification {
         def animal = new Animal()
         animal.trackChanges()
 
-        when:'A boolean property is changed'
+        when: 'A boolean property is changed'
         animal.barks = true
         animal.markDirty('barks', true, false)
 
-        then:'the property changed'
+        then: 'the property changed'
         animal.barks
         animal.hasChanged()
         animal.hasChanged('barks')
 
-        when:'it is set to false'
+        when: 'it is set to false'
         animal.trackChanges() // reset
         animal.barks = false
         animal.markDirty('barks', false, true)
 
-        then:'the property changed'
+        then: 'the property changed'
         !animal.barks
         animal.hasChanged()
         animal.hasChanged('barks')
-
     }
+
 }
 
 class Animal implements DirtyCheckable {
+
     boolean barks
+
 }
 
 class Person implements DirtyCheckable {
+
     String name
     BlogPost lastViewedPost
+
 }
 
 @Sortable(includes = ['title'])
 class BlogPost {
+
     String title
     String content
+
 }

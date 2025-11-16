@@ -15,9 +15,10 @@
  */
 package org.grails.datastore.mapping.config
 
-import org.grails.datastore.mapping.core.DatastoreUtils
 import org.springframework.core.env.PropertyResolver
 import spock.lang.Specification
+
+import org.grails.datastore.mapping.core.DatastoreUtils
 
 class RecursiveConfigurationBuilderSpec extends Specification {
 
@@ -26,7 +27,8 @@ class RecursiveConfigurationBuilderSpec extends Specification {
         PropertyResolver config = DatastoreUtils.createPropertyResolver([:])
 
         when:
-        MongoConnectionSourceSettingsBuilder builder = new MongoConnectionSourceSettingsBuilder(config, 'grails.mongodb');
+        MongoConnectionSourceSettingsBuilder builder =
+                new MongoConnectionSourceSettingsBuilder(config, 'grails.mongodb')
         MongoConnectionSourceSettings settings = builder.build()
 
         then:
@@ -36,10 +38,15 @@ class RecursiveConfigurationBuilderSpec extends Specification {
 
     void 'recursive builder get configured correctly'() {
         given:
-        PropertyResolver config = DatastoreUtils.createPropertyResolver(['grails.mongodb.options.autoEncryptionSettings.bypassAutoEncryption': true])
+        PropertyResolver config = DatastoreUtils.createPropertyResolver(
+                [
+                        'grails.mongodb.options.autoEncryptionSettings.bypassAutoEncryption': true
+                ]
+        )
 
         when:
-        MongoConnectionSourceSettingsBuilder builder = new MongoConnectionSourceSettingsBuilder(config, 'grails.mongodb')
+        MongoConnectionSourceSettingsBuilder builder = new MongoConnectionSourceSettingsBuilder(config,
+                'grails.mongodb')
         MongoConnectionSourceSettings settings = builder.build()
 
         then:
@@ -47,13 +54,16 @@ class RecursiveConfigurationBuilderSpec extends Specification {
         settings.options.autoEncryptionSettings.bypassAutoEncryption
     }
 
-    class MongoConnectionSourceSettingsBuilder extends ConfigurationBuilder<MongoConnectionSourceSettings, MongoConnectionSourceSettings>{
+    class MongoConnectionSourceSettingsBuilder
+            extends ConfigurationBuilder<MongoConnectionSourceSettings, MongoConnectionSourceSettings> {
 
-        MongoConnectionSourceSettingsBuilder(PropertyResolver propertyResolver, String configurationPrefix, Object fallBackConfiguration, String builderMethodPrefix) {
+        MongoConnectionSourceSettingsBuilder(PropertyResolver propertyResolver, String configurationPrefix,
+                Object fallBackConfiguration, String builderMethodPrefix) {
             super(propertyResolver, configurationPrefix, fallBackConfiguration, builderMethodPrefix)
         }
 
-        MongoConnectionSourceSettingsBuilder(PropertyResolver propertyResolver, String configurationPrefix, Object fallBackConfiguration) {
+        MongoConnectionSourceSettingsBuilder(PropertyResolver propertyResolver, String configurationPrefix,
+                Object fallBackConfiguration) {
             super(propertyResolver, configurationPrefix, fallBackConfiguration)
         }
 
@@ -61,7 +71,8 @@ class RecursiveConfigurationBuilderSpec extends Specification {
             super(propertyResolver, configurationPrefix)
         }
 
-        MongoConnectionSourceSettingsBuilder(PropertyResolver propertyResolver, String configurationPrefix, String builderMethodPrefix) {
+        MongoConnectionSourceSettingsBuilder(PropertyResolver propertyResolver, String configurationPrefix,
+                String builderMethodPrefix) {
             super(propertyResolver, configurationPrefix, builderMethodPrefix)
         }
 
@@ -74,6 +85,7 @@ class RecursiveConfigurationBuilderSpec extends Specification {
         protected MongoConnectionSourceSettings toConfiguration(MongoConnectionSourceSettings builder) {
             builder
         }
+
     }
 
     @SettingsBuilder
@@ -99,6 +111,9 @@ class RecursiveConfigurationBuilderSpec extends Specification {
 
     @SettingsBuilder
     static class AutoEncryptionSettings {
+
         boolean bypassAutoEncryption
+
     }
+
 }

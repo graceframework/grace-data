@@ -15,19 +15,21 @@
  */
 package org.grails.datastore.mapping.keyvalue.mapping
 
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+
 import org.grails.datastore.mapping.keyvalue.mapping.config.Family
 import org.grails.datastore.mapping.keyvalue.mapping.config.KeyValue
 import org.grails.datastore.mapping.keyvalue.mapping.config.KeyValueMappingContext
 import org.grails.datastore.mapping.keyvalue.mapping.config.KeyValuePersistentEntity
 import org.grails.datastore.mapping.model.PersistentProperty
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 
 /**
  * @author Graeme Rocher
  * @since 1.0
  */
 class KeyValueMappingFactoryTests {
+
     def context
 
     @BeforeEach
@@ -44,9 +46,9 @@ class KeyValueMappingFactoryTests {
         assert entity != null
 
         Family entityMapping = entity.mapping.mappedForm
-        assert 'myspace' == entityMapping.keyspace
+        assert entityMapping.keyspace == 'myspace'
         assert TestEntity.name == entityMapping.family
-        assert 'id' == entity.mapping.identifier.identifierName[0]
+        assert entity.mapping.identifier.identifierName[0] == 'id'
 
         KeyValue kv = entity.identity.mapping.mappedForm
         assert kv != null
@@ -81,19 +83,26 @@ class KeyValueMappingFactoryTests {
     }
 
     abstract class AbstractTestEntity {
+
         Long id
+
     }
 
     class TestEntity extends AbstractTestEntity {
+
         Long version
+
     }
 
     class FormulaTestEntity extends AbstractTestEntity {
+
         String nonFormulaProperty
         String formulaProperty
 
         static mapping = {
             formulaProperty(formula: 'foo(bar)')
         }
+
     }
+
 }

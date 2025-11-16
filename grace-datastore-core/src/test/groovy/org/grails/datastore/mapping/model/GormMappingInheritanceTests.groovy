@@ -15,11 +15,21 @@
  */
 package org.grails.datastore.mapping.model
 
-import grails.gorm.annotation.Entity
-import org.grails.datastore.mapping.model.types.*
 import org.junit.jupiter.api.Test
 
-import static org.junit.jupiter.api.Assertions.*
+import grails.gorm.annotation.Entity
+
+import org.grails.datastore.mapping.model.types.Association
+import org.grails.datastore.mapping.model.types.Embedded
+import org.grails.datastore.mapping.model.types.ManyToOne
+import org.grails.datastore.mapping.model.types.OneToMany
+import org.grails.datastore.mapping.model.types.OneToOne
+
+import static org.junit.jupiter.api.Assertions.assertEquals
+import static org.junit.jupiter.api.Assertions.assertFalse
+import static org.junit.jupiter.api.Assertions.assertNotNull
+import static org.junit.jupiter.api.Assertions.assertNull
+import static org.junit.jupiter.api.Assertions.assertTrue
 
 /**
  * Tests for correct mapping of entities with inheritance.
@@ -31,7 +41,9 @@ class GormMappingInheritanceTests {
         def context = new TestMappingContext()
         context.addPersistentEntities(DerivedEntityChildA, DerivedEntity, DerivedEntityChildB, DerivedEntityChildC)
         assertEquals 2, context.persistentEntitiesByDiscriminator.size()
-        def secondEntityMappingKey = context.persistentEntitiesByDiscriminator.keySet().find { it.decapitalizedName == 'secondEntity' }
+        def secondEntityMappingKey = context.persistentEntitiesByDiscriminator.keySet().find {
+            it.decapitalizedName == 'secondEntity'
+        }
         assertNotNull secondEntityMappingKey
         def secondEntityMappings = context.persistentEntitiesByDiscriminator.get(secondEntityMappingKey)
         assertEquals 4, secondEntityMappings.size()
@@ -41,7 +53,7 @@ class GormMappingInheritanceTests {
     void testInheritedMappedBy() {
         def context = new TestMappingContext()
         context.addPersistentEntity(SpecialUser)
-        assert 2 == context.persistentEntities.size()
+        assert context.persistentEntities.size() == 2
 
         def user = context.getPersistentEntity(SpecialUser.name)
 
@@ -60,7 +72,6 @@ class GormMappingInheritanceTests {
         Association specialFriendsAssociation = user.getPropertyByName('specialFriends')
         assert (specialFriendsAssociation instanceof OneToMany)
         assert !specialFriendsAssociation.isBidirectional()
-
     }
 
     @Test
@@ -114,64 +125,81 @@ class GormMappingInheritanceTests {
         property = test.getPropertyByName('doNotIndex')
         assertFalse property.mapping.mappedForm.index
     }
+
 }
 
 @Entity
 class DerivedEntity extends SecondEntity {
+
     String baz
 
     static transients = ['baz']
+
 }
 
 @Entity
 class SpecialUser extends User {
+
     Set specialFriends
 
     static hasMany = [specialFriends: User]
 
     // prevent bidirectional associations here
     static mappedBy = [specialFriends: null]
+
 }
 
 @Entity
 class Parent {
+
     Long id
     Set children
 
     static hasMany = [children: BaseChild]
+
 }
 
 @Entity
 class BaseChild {
+
     Long id
 
     Parent parent
 
     static belongsTo = [parent: Parent]
+
 }
 
 @Entity
 class DerivedChild extends BaseChild {
+
     String prop
+
 }
 
 @Entity
 class EmbeddedTest {
+
     Long id
 
     TestEntity testEntity
 
     static embedded = ['testEntity']
+
 }
 
 @Entity
 class DerivedEmbeddedTest extends EmbeddedTest {
+
     TestEntity testEntity2
+
     static embedded = ['testEntity2']
+
 }
 
 @Entity
 class MappingTest {
+
     Long id
 
     String toIndex1
@@ -179,6 +207,7 @@ class MappingTest {
     static mapping = {
         toIndex1 index: true
     }
+
 }
 
 @Entity
@@ -191,16 +220,20 @@ class MappingTest2 extends MappingTest {
         toIndex2 index: true
         doNotIndex index: false
     }
+
 }
 
 @Entity
 class DerivedEntityChildA extends DerivedEntity {
+
 }
 
 @Entity
 class DerivedEntityChildB extends DerivedEntity {
+
 }
 
 @Entity
 class DerivedEntityChildC extends DerivedEntity {
+
 }

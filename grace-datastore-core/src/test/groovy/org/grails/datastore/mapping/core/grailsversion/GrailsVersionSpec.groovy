@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2025 the original author or authors.
+ * Copyright 2017-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  */
 package org.grails.datastore.mapping.core.grailsversion
 
-import spock.lang.Specification
 import spock.lang.PendingFeature
+import spock.lang.Specification
 import spock.lang.Unroll
 
 /**
@@ -24,7 +24,7 @@ import spock.lang.Unroll
  */
 class GrailsVersionSpec extends Specification {
 
-    @PendingFeature(reason='Since there is no dependency on grace-bootstrap at the moment, it is not possible to obtain the current Grails version.')
+    @PendingFeature(reason = 'Since there is no dependency on grace-bootstrap at the moment, it is not possible to obtain the current Grails version.')
     @Unroll
     void 'isAtLeast(#requiredVersion) => #expected'(String requiredVersion, boolean expected) {
         expect:
@@ -32,14 +32,15 @@ class GrailsVersionSpec extends Specification {
 
         where:
         requiredVersion | expected
-        '3.2.0' | true
-        '3.1.0' | true
-        '3.3.0' | true
-        '4.0.0' | false
+        '3.2.0'         | true
+        '3.1.0'         | true
+        '3.3.0'         | true
+        '4.0.0'         | false
     }
 
     @Unroll
-    void 'isAtLeastMajorMinor(#version, #majorVersion, #minorVersion) => #expected'(String version, int majorVersion, int minorVersion, boolean expected) {
+    void 'isAtLeastMajorMinor(#version, #majorVersion, #minorVersion) => #expected'(String version, int majorVersion,
+            int minorVersion, boolean expected) {
         expect:
         expected == GrailsVersion.isAtLeastMajorMinor(version, majorVersion, minorVersion)
 
@@ -54,8 +55,8 @@ class GrailsVersionSpec extends Specification {
 
     @Unroll
     void 'test isAtLeast(#version, #requiredVersion) => expected'(String version,
-                                                                  String requiredVersion,
-                                                                  boolean expected) {
+            String requiredVersion,
+            boolean expected) {
         expect:
         expected == GrailsVersion.isAtLeast(version, requiredVersion)
 

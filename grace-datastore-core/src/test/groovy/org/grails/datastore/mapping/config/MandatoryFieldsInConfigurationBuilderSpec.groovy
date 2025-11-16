@@ -18,9 +18,10 @@ package org.grails.datastore.mapping.config
 import groovy.transform.AutoClone
 import groovy.transform.builder.Builder
 import groovy.transform.builder.SimpleStrategy
-import org.grails.datastore.mapping.core.DatastoreUtils
 import org.springframework.core.env.PropertyResolver
 import spock.lang.Specification
+
+import org.grails.datastore.mapping.core.DatastoreUtils
 
 class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
 
@@ -29,7 +30,8 @@ class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
         PropertyResolver config = DatastoreUtils.createPropertyResolver([:])
 
         when:
-        MongoConnectionSourceSettingsBuilder builder = new MongoConnectionSourceSettingsBuilder(config, 'grails.mongodb')
+        MongoConnectionSourceSettingsBuilder builder = new MongoConnectionSourceSettingsBuilder(config,
+                'grails.mongodb')
         builder.build()
 
         then:
@@ -40,11 +42,12 @@ class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
         given:
         PropertyResolver config = DatastoreUtils.createPropertyResolver([
                 'grails.mongodb.options.autoEncryptionSettings.bypassAutoEncryption': true,
-                'grails.mongodb.options.autoEncryptionSettings.keyVaultNamespace': false
+                'grails.mongodb.options.autoEncryptionSettings.keyVaultNamespace'   : false
         ])
 
         when:
-        MongoConnectionSourceSettingsBuilder builder = new MongoConnectionSourceSettingsBuilder(config, 'grails.mongodb')
+        MongoConnectionSourceSettingsBuilder builder =
+                new MongoConnectionSourceSettingsBuilder(config, 'grails.mongodb')
         MongoConnectionSourceSettings settings = builder.build()
 
         then:
@@ -52,13 +55,16 @@ class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
         settings.options.autoEncryptionSettings.bypassAutoEncryption
     }
 
-    class MongoConnectionSourceSettingsBuilder extends ConfigurationBuilder<MongoConnectionSourceSettings, MongoConnectionSourceSettings>{
+    class MongoConnectionSourceSettingsBuilder
+            extends ConfigurationBuilder<MongoConnectionSourceSettings, MongoConnectionSourceSettings> {
 
-        MongoConnectionSourceSettingsBuilder(PropertyResolver propertyResolver, String configurationPrefix, Object fallBackConfiguration, String builderMethodPrefix) {
+        MongoConnectionSourceSettingsBuilder(PropertyResolver propertyResolver, String configurationPrefix,
+                Object fallBackConfiguration, String builderMethodPrefix) {
             super(propertyResolver, configurationPrefix, fallBackConfiguration, builderMethodPrefix)
         }
 
-        MongoConnectionSourceSettingsBuilder(PropertyResolver propertyResolver, String configurationPrefix, Object fallBackConfiguration) {
+        MongoConnectionSourceSettingsBuilder(PropertyResolver propertyResolver, String configurationPrefix,
+                Object fallBackConfiguration) {
             super(propertyResolver, configurationPrefix, fallBackConfiguration)
         }
 
@@ -66,7 +72,8 @@ class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
             super(propertyResolver, configurationPrefix)
         }
 
-        MongoConnectionSourceSettingsBuilder(PropertyResolver propertyResolver, String configurationPrefix, String builderMethodPrefix) {
+        MongoConnectionSourceSettingsBuilder(PropertyResolver propertyResolver, String configurationPrefix,
+                String builderMethodPrefix) {
             super(propertyResolver, configurationPrefix, builderMethodPrefix)
         }
 
@@ -79,11 +86,13 @@ class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
         protected MongoConnectionSourceSettings toConfiguration(MongoConnectionSourceSettings builder) {
             builder
         }
+
     }
 
     @AutoClone
     @Builder(builderStrategy = SimpleStrategy, prefix = '')
     static class MongoConnectionSourceSettings {
+
         MongoClientOptions.Builder options = MongoClientOptions.builder()
 
     }
@@ -93,7 +102,7 @@ class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
         private AutoEncryptionSettings autoEncryptionSettings
 
         private MongoClientOptions(Builder builder) {
-            autoEncryptionSettings = builder.autoEncryptionSettings;
+            this.autoEncryptionSettings = builder.autoEncryptionSettings
         }
 
         static Builder builder() {
@@ -112,11 +121,13 @@ class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
             MongoClientOptions build() {
                 new MongoClientOptions(this)
             }
+
         }
+
     }
 
-
     static class AutoEncryptionSettings {
+
         private boolean bypassAutoEncryption
         private String keyVaultNamespace
 
@@ -131,12 +142,13 @@ class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
 
         static String notNull(String name, Object value) {
             if (value == null) {
-                throw new IllegalArgumentException(name + ' can not be null');
+                throw new IllegalArgumentException(name + ' can not be null')
             }
             value
         }
 
         static class Builder {
+
             private boolean bypassAutoEncryption
             private String keyVaultNamespace
 
@@ -156,6 +168,9 @@ class MandatoryFieldsInConfigurationBuilderSpec extends Specification {
             AutoEncryptionSettings build() {
                 new AutoEncryptionSettings(this)
             }
+
         }
+
     }
+
 }

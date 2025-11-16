@@ -31,4 +31,5 @@ class NameUtilsSpec extends Specification {
         'name'  | 'name'
         'IName' | 'iName'
     }
+
 }

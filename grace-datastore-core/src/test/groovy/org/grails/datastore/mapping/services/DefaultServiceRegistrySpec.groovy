@@ -15,8 +15,9 @@
  */
 package org.grails.datastore.mapping.services
 
-import org.grails.datastore.mapping.core.Datastore
 import spock.lang.Specification
+
+import org.grails.datastore.mapping.core.Datastore
 
 /**
  * Created by graemerocher on 11/01/2017.
@@ -37,8 +38,13 @@ class DefaultServiceRegistrySpec extends Specification {
         reg.getService(TestService) != reg2.getService(TestService)
         reg.getService(TestService).datastore != reg2.getService(TestService).datastore
     }
+
 }
 
 class TestService implements Service, ITestService {
+
 }
-interface ITestService {}
+
+interface ITestService {
+
+}

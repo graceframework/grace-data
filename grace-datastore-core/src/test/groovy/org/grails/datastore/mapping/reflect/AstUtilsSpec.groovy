@@ -35,4 +35,5 @@ class AstUtilsSpec extends Specification {
         AstUtils.implementsInterface(node, itfc.name)
         !AstUtils.implementsInterface(node, 'Another')
     }
+
 }

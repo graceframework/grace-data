@@ -15,9 +15,10 @@
  */
 package org.grails.datastore.mapping.model.config
 
+import spock.lang.Specification
+
 import org.grails.datastore.mapping.keyvalue.mapping.config.GormKeyValueMappingFactory
 import org.grails.datastore.mapping.reflect.ClassPropertyFetcher
-import spock.lang.Specification
 
 class GormMappingConfigurationStrategySpec extends Specification {
 
@@ -34,9 +35,15 @@ class GormMappingConfigurationStrategySpec extends Specification {
     }
 
     class A {
+
         static hasMany = [foo: String]
+
     }
+
     class B extends A {
+
         static hasMany = [foo: Integer]
+
     }
+
 }

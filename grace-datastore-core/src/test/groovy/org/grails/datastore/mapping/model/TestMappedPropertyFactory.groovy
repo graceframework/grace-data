@@ -19,4 +19,5 @@ class TestMappedPropertyFactory extends AbstractGormMappingFactory {
     protected Class getEntityMappedFormType() {
         Entity
     }
+
 }
