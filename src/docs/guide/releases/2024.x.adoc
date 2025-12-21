@@ -1,0 +1,95 @@
+=== 2024.0.0-M1
+
+link:{github}/releases/tag/v2024.0.0-M1[release notes]
+
+⭐️ New Features
+
+* Update grace-datastore-core to remove dependency on javassist link:{github}/issues/81[#81]
+* Remove `grace-datastore-async` link:{github}/issues/77[#77]
+  - Use `grace-async-core` instead of `grace-datastore-async` See https://github.com/graceframework/grace-async/issues/78
+
+* Restructure Gradle builds link:{github}/issues/76[#76]
+  - Use Gradle version catalog to simplify dependency management
+  - Sharing Build Logic using buildSrc
+  - Update Checkstyle and CodeNarc plugin
+
+* Decouple `grace-datastore-gorm-support` from Grace framework link:{github}/issues/73[#73]
+  - Move EntityTraitInjector and GormTransformer to `grace-plugin-domain-class`
+  - Move ProxyHandler and PersistenceContextInterceptor to `grace-datastore-gorm-support`
+  - Remove unused ConfigSupport
+  - Relocate GrailsVersionSpec.groovy to `grace-datastore-core`
+  - Relocate GormEntityTraitSpec.groovy to `grace-datastore-gorm`
+  - Remove dependencies on `grace-bootstrap` and `grace-core`
+
+* Remove dependencies on `grace-bootstrap` and `grace-core` 
+* Relocate GormEntityTraitSpec.groovy to `grace-datastore-gorm` 
+* Relocate GrailsVersionSpec.groovy to `grace-datastore-core` 
+* Enhance `AstUtils.isDomainClass(ClassNode)` to support Domain classes not under the `app/domain` link:{github}/issues/66[#66]
+  - In this PR we also deprecate the `AstUtils.isDomainClass(URL)`, please don't use it anymore
+
+* Migrate to Central Portal OSSRH Staging API link:{github}/issues/60[#60]
+
+🐞 Bug Fixes
+
+* Remove unused Gemfile 
+* Fix javadoc errors 
+* Suppress rawtypes warning 
+* Fixes groovydoc task: because no Groovy Jar was found on class path link:{github}/issues/78[#78]
+* Remove unused ConfigSupport 
+* Remove deprecated GlobalJpaEntityTransform link:{github}/issues/72[#72]
+* Remove unused GlobalTraitRepairTransformation link:{github}/issues/71[#71]
+* Correct the property key `grails.compiler.traits.TraitInjector` in `grails.factories` link:{github}/issues/65[#65]
+
+🛠 Improvements
+
+* Add release notes for 2024.x
+* Update README - Update the versions of Groovy
+* Code formatting with Checkstyle and Codenarc 
+* Add Checkstyle and Codenarc versions to Gradle version catalog link:{github}/issues/80[#80]
+  - Improve the 'clean' tasks
+
+* Update Codenarc rules 
+* Code formatting with Checkstyle and Codenarc 
+* Update github source repo 
+* Update build scripts 
+
+* Restore unit tests for `grace-datastore-core` and `grace-datastore-gorm` link:{github}/issues/75[#75]
+  - Relocate validation tests from `grace-datastore-gorm-validation` to `grace-datastore-gorm`
+  - Remove deprecated JpaMappingSyntaxTests
+  - Make all the tests pass
+
+* Make all the tests pass 
+* Relocate validation tests from `grace-datastore-gorm-validation` to `grace-datastore-gorm` 
+* Move ProxyHandler and PersistenceContextInterceptor to `grace-datastore-gorm-support` 
+* Move EntityTraitInjector and GormTransformer to `grace-plugin-domain-class` 
+* Use org.grails.datastore.mapping.validation.ValidationException instead of grails.validation.ValidationException 
+
+* Use GORM Entity instead of `grails.persistence.Entity` link:{github}/issues/64[#64]
+* Refactor GormTransformer link:{github}/issues/63[#63]
+  - Do not use `shouldInject(URL url)` anymore
+  - Load GormTransformer from `grails.factories`
+
+* Refine GormEntityTransformation: Adding 'Artefact' annotation to Gorm Entity link:{github}/issues/62[#62]
+* Update README - Update badge version of Grace
+* Update README - Update document link
+
+🚀 Dependency Upgrades
+
+* Upgrade to Eclipse Expressly 5.0.0 link:{github}/issues/69[#69]
+* Upgrade to Groovy 4.0.29 link:{github}/issues/79[#79]
+* Upgrade to Groovy 4.0.27 link:{github}/issues/58[#58]
+* Upgrade to Grace 2024.0.0-M1 link:{github}/issues/61[#61]
+* Upgrade to Grace 2023.3.0 link:{github}/issues/56[#56]
+* Upgrade to Grace Async 7.0.0-M1 link:{github}/issues/67[#67]
+* Upgrade to Gradle 8.14.3 link:{github}/issues/74[#74]
+* Upgrade to Jakarta Expression Language 5.0.1 link:{github}/issues/68[#68]
+* Upgrade to JavaParser Core 3.26.4 link:{github}/issues/70[#70]
+* Upgrade to Spring Framework 6.2.15 link:{github}/issues/82[#82]
+
+⚙️ Tasks
+
+* Bump gradle/actions from 4.0.0 to 4.4.2 
+* Bump actions/checkout from 4 to 5 
+* Start building against Grace Async 7.0.0 snapshots link:{github}/issues/67[#67]
+* Update GitHub workflows - Switch to 2024.0.x
+* Next development version: 2024.0.0-SNAPSHOT
