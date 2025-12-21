@@ -159,7 +159,6 @@ public class DomainEventListener extends AbstractPersistenceEventListener
     }
 
     public boolean beforeInsert(final PersistentEntity entity, final EntityAccess ea, PreInsertEvent event) {
-
         if (entity.isVersioned()) {
             try {
                 setVersion(ea);
