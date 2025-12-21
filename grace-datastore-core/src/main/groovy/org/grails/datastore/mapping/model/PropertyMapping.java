@@ -30,7 +30,6 @@ public interface PropertyMapping<T extends Property> {
      *
      * @return The ClassMapping instance
      */
-    @SuppressWarnings("rawtypes")
     ClassMapping getClassMapping();
 
     /**

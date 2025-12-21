@@ -109,13 +109,13 @@ public abstract class Association<T extends Property> extends AbstractPersistent
     /**
      * @return The inverse side or null if the association is not bidirectional
      */
-    public Association getInverseSide() {
+    public Association<?> getInverseSide() {
         final PersistentProperty associatedProperty = this.associatedEntity.getPropertyByName(this.referencedPropertyName);
         if (associatedProperty == null) {
             return null;
         }
         if (associatedProperty instanceof Association) {
-            return (Association) associatedProperty;
+            return (Association<?>) associatedProperty;
         }
         throw new IllegalMappingException("The inverse side [" + this.associatedEntity.getName() + "." +
                 associatedProperty.getName() + "] of the association [" + getOwner().getName() + "." +

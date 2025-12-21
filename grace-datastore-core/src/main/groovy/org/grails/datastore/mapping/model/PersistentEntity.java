@@ -125,7 +125,7 @@ public interface PersistentEntity extends Initializable {
     /**
      * @return The underlying Java class for this entity
      */
-    Class getJavaClass();
+    Class<?> getJavaClass();
 
     /**
      * Tests whether the given instance is an instance of this persistent entity
@@ -213,7 +213,7 @@ public interface PersistentEntity extends Initializable {
      * @param type The type
      * @return True if it does
      */
-    boolean hasProperty(String name, Class type);
+    boolean hasProperty(String name, Class<?> type);
 
     /**
      * True if the given property is the identifier
@@ -234,6 +234,6 @@ public interface PersistentEntity extends Initializable {
      * @param type The class to add
      * @return True if the operation was successful
      */
-    boolean addOwner(Class type);
+    boolean addOwner(Class<?> type);
 
 }

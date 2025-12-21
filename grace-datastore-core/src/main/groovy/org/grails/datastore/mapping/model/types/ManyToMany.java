@@ -35,7 +35,7 @@ public abstract class ManyToMany<T extends Property> extends ToMany<T> {
         super(owner, context, descriptor);
     }
 
-    public ManyToMany(PersistentEntity owner, MappingContext context, String name, @SuppressWarnings("rawtypes") Class type) {
+    public ManyToMany(PersistentEntity owner, MappingContext context, String name, Class<?> type) {
         super(owner, context, name, type);
     }
 

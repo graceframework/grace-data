@@ -53,7 +53,7 @@ import org.grails.datastore.mapping.reflect.EntityReflector;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public abstract class AbstractPersistentEntity<T extends Entity> implements PersistentEntity {
 
-    protected final Class javaClass;
+    protected final Class<?> javaClass;
 
     protected final MappingContext context;
 
@@ -63,9 +63,9 @@ public abstract class AbstractPersistentEntity<T extends Entity> implements Pers
 
     protected List<Embedded> embedded;
 
-    protected Map<String, PersistentProperty> propertiesByName = new HashMap<String, PersistentProperty>();
+    protected Map<String, PersistentProperty> propertiesByName = new HashMap<>();
 
-    protected Map<String, PersistentProperty> mappedPropertiesByName = new HashMap<String, PersistentProperty>();
+    protected Map<String, PersistentProperty> mappedPropertiesByName = new HashMap<>();
 
     protected PersistentProperty identity;
 
@@ -101,7 +101,7 @@ public abstract class AbstractPersistentEntity<T extends Entity> implements Pers
 
     private TenantId tenantId;
 
-    public AbstractPersistentEntity(Class javaClass, MappingContext context) {
+    public AbstractPersistentEntity(Class<?> javaClass, MappingContext context) {
         Assert.notNull(javaClass, "The argument [javaClass] cannot be null");
         this.javaClass = javaClass;
         this.context = context;
@@ -177,7 +177,6 @@ public abstract class AbstractPersistentEntity<T extends Entity> implements Pers
             this.persistentPropertyNames = new ArrayList<>();
             this.associations = new ArrayList();
             this.embedded = new ArrayList();
-
 
             boolean multiTenancyEnabled = this.isMultiTenant &&
                     this.context.getMultiTenancyMode() == MultiTenancySettings.MultiTenancyMode.DISCRIMINATOR;
@@ -420,7 +419,7 @@ public abstract class AbstractPersistentEntity<T extends Entity> implements Pers
     }
 
     @Override
-    public Class getJavaClass() {
+    public Class<?> getJavaClass() {
         return this.javaClass;
     }
 
@@ -477,7 +476,7 @@ public abstract class AbstractPersistentEntity<T extends Entity> implements Pers
     }
 
     @Override
-    public boolean addOwner(Class type) {
+    public boolean addOwner(Class<?> type) {
         return this.owners.add(type);
     }
 

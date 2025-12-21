@@ -33,7 +33,7 @@ public abstract class ManyToOne<T extends Property> extends ToOne<T> {
         super(owner, context, descriptor);
     }
 
-    public ManyToOne(PersistentEntity owner, MappingContext context, String name, @SuppressWarnings("rawtypes") Class type) {
+    public ManyToOne(PersistentEntity owner, MappingContext context, String name, Class<?> type) {
         super(owner, context, name, type);
     }
 

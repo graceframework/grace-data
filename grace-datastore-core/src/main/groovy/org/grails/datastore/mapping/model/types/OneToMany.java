@@ -27,14 +27,13 @@ import org.grails.datastore.mapping.model.PersistentEntity;
  * @author Graeme Rocher
  * @since 1.0
  */
-@SuppressWarnings("rawtypes")
 public abstract class OneToMany<T extends Property> extends ToMany<T> {
 
     public OneToMany(PersistentEntity owner, MappingContext context, PropertyDescriptor descriptor) {
         super(owner, context, descriptor);
     }
 
-    public OneToMany(PersistentEntity owner, MappingContext context, String name, Class type) {
+    public OneToMany(PersistentEntity owner, MappingContext context, String name, Class<?> type) {
         super(owner, context, name, type);
     }
 

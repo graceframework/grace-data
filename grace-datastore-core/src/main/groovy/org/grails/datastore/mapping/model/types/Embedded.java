@@ -33,7 +33,7 @@ public abstract class Embedded<T extends Property> extends ToOne<T> {
         super(owner, context, descriptor);
     }
 
-    public Embedded(PersistentEntity owner, MappingContext context, String name, @SuppressWarnings("rawtypes") Class type) {
+    public Embedded(PersistentEntity owner, MappingContext context, String name, Class<?> type) {
         super(owner, context, name, type);
     }
 

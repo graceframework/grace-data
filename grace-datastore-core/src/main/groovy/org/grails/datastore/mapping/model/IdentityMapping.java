@@ -19,13 +19,12 @@ package org.grails.datastore.mapping.model;
  * @author Graeme Rocher
  * @since 1.0
  */
-@SuppressWarnings("rawtypes")
 public interface IdentityMapping extends PropertyMapping {
 
     /**
      * The identifier property name(s). Usually there is just one identifier
      * name, however in the case of a composite or natural identifier there
-     * may be serveral.
+     * may be several.
      *
      * @return identifier names that make up the key
      */

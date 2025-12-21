@@ -234,7 +234,6 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
     @Override
     public Validator getEntityValidator(PersistentEntity entity) {
         if (entity != null) {
-
             Validator validator = this.entityValidators.get(entity);
             if (validator == null && this.validatorRegistry != null) {
                 Validator v = this.validatorRegistry.getValidator(entity);
@@ -268,7 +267,7 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
      * @return The PersistentEntity instance
      */
     @Override
-    public PersistentEntity addExternalPersistentEntity(Class javaClass) {
+    public PersistentEntity addExternalPersistentEntity(Class<?> javaClass) {
         Assert.notNull(javaClass, "PersistentEntity class cannot be null");
 
         PersistentEntity entity = this.persistentEntitiesByName.get(javaClass.getName());
@@ -288,7 +287,7 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
      * @return The PersistentEntity instance
      */
     @Override
-    public PersistentEntity addPersistentEntity(Class javaClass, boolean override) {
+    public PersistentEntity addPersistentEntity(Class<?> javaClass, boolean override) {
         Assert.notNull(javaClass, "PersistentEntity class cannot be null");
         if (override) {
             return addPersistentEntityInternal(javaClass, false, this.canInitializeEntities);
@@ -297,7 +296,7 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
     }
 
     @Override
-    public Collection<PersistentEntity> addPersistentEntities(Class... javaClasses) {
+    public Collection<PersistentEntity> addPersistentEntities(Class<?>... javaClasses) {
         Collection<PersistentEntity> entities = new ArrayList<>();
 
         for (Class javaClass : javaClasses) {
@@ -308,18 +307,20 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
 
             registerEntityWithContext(entity);
             entities.add(entity);
-
         }
+
         if (this.canInitializeEntities) {
             for (PersistentEntity entity : entities) {
                 initializePersistentEntity(entity);
             }
         }
+
         for (Listener eventListener : this.eventListeners) {
             for (PersistentEntity entity : entities) {
                 eventListener.persistentEntityAdded(entity);
             }
         }
+
         return entities;
     }
 
@@ -365,7 +366,6 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
         this.persistentEntities.remove(entity);
         this.persistentEntities.add(entity);
         this.persistentEntitiesByName.put(entity.getName(), entity);
-
     }
 
     @Override
@@ -417,7 +417,6 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
                 parent = parent.getParentEntity();
             }
         }
-
     }
 
     /**
@@ -516,9 +515,8 @@ public abstract class AbstractMappingContext implements MappingContext, Initiali
         return this.persistentEntities;
     }
 
-    public boolean isPersistentEntity(Class type) {
+    public boolean isPersistentEntity(Class<?> type) {
         return type != null && getPersistentEntity(type.getName()) != null;
-
     }
 
     @Override

@@ -28,7 +28,6 @@ import org.grails.datastore.mapping.reflect.NameUtils;
  * @author Graeme Rocher
  * @since 1.0
  */
-@SuppressWarnings("rawtypes")
 public abstract class AbstractPersistentProperty<T extends Property> implements PersistentProperty<T> {
 
     protected final PersistentEntity owner;
@@ -37,7 +36,7 @@ public abstract class AbstractPersistentProperty<T extends Property> implements 
 
     protected final String name;
 
-    protected final Class type;
+    protected final Class<?> type;
 
     protected Boolean inherited;
 
@@ -49,7 +48,7 @@ public abstract class AbstractPersistentProperty<T extends Property> implements 
         this(owner, context, descriptor.getName(), descriptor.getPropertyType());
     }
 
-    public AbstractPersistentProperty(PersistentEntity owner, MappingContext context, String name, Class type) {
+    public AbstractPersistentProperty(PersistentEntity owner, MappingContext context, String name, Class<?> type) {
         this.owner = owner;
         this.context = context;
         this.name = name;
@@ -67,7 +66,7 @@ public abstract class AbstractPersistentProperty<T extends Property> implements 
     }
 
     @Override
-    public Class getType() {
+    public Class<?> getType() {
         return this.type;
     }
 

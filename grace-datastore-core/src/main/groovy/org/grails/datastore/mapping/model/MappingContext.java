@@ -107,7 +107,7 @@ public interface MappingContext {
      * @param javaClasses The Java class representing the entity
      * @return The PersistentEntity instance
      */
-    Collection<PersistentEntity> addPersistentEntities(Class... javaClasses);
+    Collection<PersistentEntity> addPersistentEntities(Class<?>... javaClasses);
 
     /**
      * Adds a PersistentEntity instance
@@ -115,7 +115,7 @@ public interface MappingContext {
      * @param javaClass The Java class representing the entity
      * @return The PersistentEntity instance
      */
-    PersistentEntity addPersistentEntity(Class javaClass);
+    PersistentEntity addPersistentEntity(Class<?> javaClass);
 
     /**
      * Adds a PersistentEntity instance
@@ -124,7 +124,7 @@ public interface MappingContext {
      * @param override  Whether to override an existing entity
      * @return The PersistentEntity instance
      */
-    PersistentEntity addPersistentEntity(Class javaClass, boolean override);
+    PersistentEntity addPersistentEntity(Class<?> javaClass, boolean override);
 
     /**
      * Adds a persistent entity that is not mapped by this MappingContext instance.
@@ -133,7 +133,7 @@ public interface MappingContext {
      * @param javaClass The Java class
      * @return The persistent entity
      */
-    PersistentEntity addExternalPersistentEntity(Class javaClass);
+    PersistentEntity addExternalPersistentEntity(Class<?> javaClass);
 
     /**
      * Adds a validator to be used by the entity for validation
@@ -205,7 +205,7 @@ public interface MappingContext {
      * @param type The type to check
      * @return True if it is
      */
-    boolean isPersistentEntity(Class type);
+    boolean isPersistentEntity(Class<?> type);
 
     /**
      * Returns whether the specified value is a persistent entity
@@ -243,7 +243,7 @@ public interface MappingContext {
      */
     void addMappingContextListener(Listener listener);
 
-    PersistentEntity createEmbeddedEntity(Class type);
+    PersistentEntity createEmbeddedEntity(Class<?> type);
 
     /**
      * Obtains a {@link EntityReflector} instance for the given entity

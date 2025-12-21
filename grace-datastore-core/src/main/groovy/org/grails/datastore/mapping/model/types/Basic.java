@@ -34,12 +34,11 @@ import org.grails.datastore.mapping.reflect.ClassPropertyFetcher;
  * @author Graeme Rocher
  * @since 1.0
  */
-@SuppressWarnings("rawtypes")
 public abstract class Basic<T extends Property> extends ToMany<T> {
 
     private CustomTypeMarshaller customTypeMarshaller;
 
-    private Class componentType;
+    private Class<?> componentType;
 
     public Basic(PersistentEntity owner, MappingContext context,
             PropertyDescriptor descriptor) {
@@ -47,7 +46,7 @@ public abstract class Basic<T extends Property> extends ToMany<T> {
         initializeComponentType();
     }
 
-    public Basic(PersistentEntity owner, MappingContext context, String name, Class type) {
+    public Basic(PersistentEntity owner, MappingContext context, String name, Class<T> type) {
         super(owner, context, name, type);
         initializeComponentType();
     }
@@ -84,12 +83,12 @@ public abstract class Basic<T extends Property> extends ToMany<T> {
 
     }
 
-    public Class getComponentType() {
+    public Class<?> getComponentType() {
         return this.componentType;
     }
 
     @Override
-    public Association getInverseSide() {
+    public Association<T> getInverseSide() {
         return null; // basic collection types have no inverse side
     }
 

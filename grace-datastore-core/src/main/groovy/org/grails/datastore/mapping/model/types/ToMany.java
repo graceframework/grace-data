@@ -35,7 +35,7 @@ public abstract class ToMany<T extends Property> extends Association<T> {
         super(owner, context, descriptor);
     }
 
-    public ToMany(PersistentEntity owner, MappingContext context, String name, @SuppressWarnings("rawtypes") Class type) {
+    public ToMany(PersistentEntity owner, MappingContext context, String name, Class<?> type) {
         super(owner, context, name, type);
     }
 

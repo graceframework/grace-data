@@ -30,7 +30,7 @@ import org.grails.datastore.mapping.model.PersistentEntity;
  */
 public abstract class TenantId<T extends Property> extends AbstractPersistentProperty<T> {
 
-    public TenantId(PersistentEntity owner, MappingContext context, String name, Class type) {
+    public TenantId(PersistentEntity owner, MappingContext context, String name, Class<?> type) {
         super(owner, context, name, type);
     }
 
