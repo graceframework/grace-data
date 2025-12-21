@@ -13,7 +13,7 @@ dependencies {
     api libs.spring.beans
     api libs.spring.tx
     implementation libs.caffeine
-    implementation libs.javassist
+    compileOnly libs.javassist
 
     testImplementation project(":grace-datastore-gorm")
     testImplementation libs.spring.context
