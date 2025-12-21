@@ -152,7 +152,7 @@ extends <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/Ini
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>public&nbsp;boolean</code></td>
-                            <td class="colLast"><code><strong><a href="#addOwner(java.lang.Class)">addOwner</a></strong>(java.lang.Class type)</code><br>Add a class to the owners list of this PersistentEntity</td>
+                            <td class="colLast"><code><strong><a href="#addOwner(Class)">addOwner</a></strong>(java.lang.Class&lt;?&gt; type)</code><br>Add a class to the owners list of this PersistentEntity</td>
                         </tr>
                         
                         <tr class="rowColor">
@@ -193,7 +193,7 @@ extends <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/Ini
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>public&nbsp;java.lang.Class</code></td>
+                            <td class="colLast"><code>public&nbsp;java.lang.Class&lt;?&gt;</code></td>
                             <td class="colLast"><code><strong><a href="#getJavaClass()">getJavaClass</a></strong>()</code><br> <DL><DT><B>Returns:</B></DT><DD>The underlying Java class for this entity</DD></DL></td>
                         </tr>
                         
@@ -267,7 +267,7 @@ extends <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/Ini
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>public&nbsp;boolean</code></td>
-                            <td class="colLast"><code><strong><a href="#hasProperty(java.lang.String, java.lang.Class)">hasProperty</a></strong>(java.lang.String name, java.lang.Class type)</code><br>Checks whether an entity has a bean property of the given name and type</td>
+                            <td class="colLast"><code><strong><a href="#hasProperty(java.lang.String, Class)">hasProperty</a></strong>(java.lang.String name, java.lang.Class&lt;?&gt; type)</code><br>Checks whether an entity has a bean property of the given name and type</td>
                         </tr>
                         
                         <tr class="altColor">
@@ -375,10 +375,10 @@ extends <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/Ini
                 </a>
                     <h3>Method Detail</h3>
                     
-                        <a name="addOwner(java.lang.Class)"><!-- --></a>
+                        <a name="addOwner(Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>addOwner</strong>(java.lang.Class type)</h4>
+                                <h4>public&nbsp;boolean <strong>addOwner</strong>(java.lang.Class&lt;?&gt; type)</h4>
                                 <p> Add a class to the owners list of this PersistentEntity
       <DL><DT><B>Parameters:</B></DT><DD><code>type</code> -  The class to add</DD></DL><DL><DT><B>Returns:</B></DT><DD>True if the operation was successful</DD></DL></p>
                             </li>
@@ -443,7 +443,7 @@ extends <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/Ini
                         <a name="getJavaClass()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.Class <strong>getJavaClass</strong>()</h4>
+                                <h4>public&nbsp;java.lang.Class&lt;?&gt; <strong>getJavaClass</strong>()</h4>
                                 <p>
       <DL><DT><B>Returns:</B></DT><DD>The underlying Java class for this entity</DD></DL></p>
                             </li>
@@ -549,10 +549,10 @@ extends <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/Ini
                             </li>
                         </ul>
                     
-                        <a name="hasProperty(java.lang.String, java.lang.Class)"><!-- --></a>
+                        <a name="hasProperty(java.lang.String, Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>hasProperty</strong>(java.lang.String name, java.lang.Class type)</h4>
+                                <h4>public&nbsp;boolean <strong>hasProperty</strong>(java.lang.String name, java.lang.Class&lt;?&gt; type)</h4>
                                 <p> Checks whether an entity has a bean property of the given name and type
       <DL><DT><B>Parameters:</B></DT><DD><code>name</code> -  The name</DD><DD><code>type</code> -  The type</DD></DL><DL><DT><B>Returns:</B></DT><DD>True if it does</DD></DL></p>
                             </li>

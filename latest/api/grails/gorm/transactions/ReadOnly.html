@@ -110,7 +110,7 @@ if (location.href.indexOf('is-external=true') == -1) {
 public @interface ReadOnly</pre>
 
     <p> Define a read-only transaction
-  <DL><DT><B>Since:</B></DT><DD>6.1</DD></DL><DL><DT><B>Authors:</B></DT><DD>Graeme Rocher</DD></DL></p>
+  <DL><DT><B>Authors:</B></DT><DD>Graeme Rocher</DD></DL><DL><DT><B>Since:</B></DT><DD>6.1</DD></DL></p>
 
           </li>
     </ul>
@@ -151,12 +151,14 @@ public @interface ReadOnly</pre>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code><strong>java.lang.Class&lt;? extends ConnectionSourcesProvider&gt;[]</strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#datastore">datastore</a></code><br>If you are using multiple GORM implementations and wish to create a transaction for a specific implementation then use this. </td>
+                            <td class="colLast"><code><a href="#datastore">datastore</a></code><br>If you are using multiple GORM implementations and wish to create a transaction for a specific implementation then use this.
+ </td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code><strong>boolean</strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#inheritRollbackOnly">inheritRollbackOnly</a></code><br>In Spring, when there are nested transaction calls, the execution of the outermost callback will throw UnexpectedRollbackException if TransactionStatus.setRollbackOnly() was called in a nested transaction callback.</td>
+                            <td class="colLast"><code><a href="#inheritRollbackOnly">inheritRollbackOnly</a></code><br>In Spring, when there are nested transaction calls, the execution of the outermost callback will throw UnexpectedRollbackException
+ if TransactionStatus.setRollbackOnly() was called in a nested transaction callback.</td>
                         </tr>
                         
                         <tr class="rowColor">
@@ -276,7 +278,8 @@ public @interface ReadOnly</pre>
                         <ul class="blockListLast">
                             <li class="blockList">
                                 <h4>public&nbsp;java.lang.Class&lt;? extends ConnectionSourcesProvider&gt;[] <strong>datastore</strong></h4>
-                                <p> If you are using multiple GORM implementations and wish to create a transaction for a specific implementation then use this. For example <CODE>@Transactional(forDatastore=HibernateDatastore) </CODE> <DL><DT><B>Returns:</B></DT><DD>The type of the datastore</DD></DL><DL><DT><B>Default:</B></DT><DD>{}</DD></DL></p>
+                                <p> If you are using multiple GORM implementations and wish to create a transaction for a specific implementation then use this.
+ For example <CODE>@Transactional(forDatastore=HibernateDatastore) </CODE> <DL><DT><B>Returns:</B></DT><DD>The type of the datastore</DD></DL><DL><DT><B>Default:</B></DT><DD>{}</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -284,9 +287,11 @@ public @interface ReadOnly</pre>
                         <ul class="blockListLast">
                             <li class="blockList">
                                 <h4>public&nbsp;boolean <strong>inheritRollbackOnly</strong></h4>
-                                <p> In Spring, when there are nested transaction calls, the execution of the outermost callback will throw UnexpectedRollbackException if TransactionStatus.setRollbackOnly() was called in a nested transaction callback.
-
- This feature will make the setRollbackOnly state get inherited to parent level transaction template calls and therefore prevent UnexpectedRollbackException.
+                                <p> In Spring, when there are nested transaction calls, the execution of the outermost callback will throw UnexpectedRollbackException
+ if TransactionStatus.setRollbackOnly() was called in a nested transaction callback.
+ <p>
+ This feature will make the setRollbackOnly state get inherited to parent level transaction template calls
+ and therefore prevent UnexpectedRollbackException.
  The default value is true. <DL><DT><B>Default:</B></DT><DD>true</DD></DL></p>
                             </li>
                         </ul>

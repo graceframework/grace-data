@@ -147,7 +147,7 @@ public interface Criteria</pre>
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a></code></td>
-                            <td class="colLast"><code><strong><a href="#allEq(Map)">allEq</a></strong>(java.util.Map&lt;java.lang.String, java.lang.Object&gt; propertyValues)</code><br>Apply an "equals" constraint to each property in the key set of a <tt>Map</tt></td>
+                            <td class="colLast"><code><strong><a href="#allEq(Map)">allEq</a></strong>(java.util.Map&lt;java.lang.String, java.lang.Object&gt; propertyValues)</code><br>Apply an "equals" constraint to each property in the key set of a <CODE>Map</CODE></td>
                         </tr>
                         
                         <tr class="rowColor">
@@ -594,7 +594,7 @@ public interface Criteria</pre>
                         <ul class="blockListLast">
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>allEq</strong>(java.util.Map&lt;java.lang.String, java.lang.Object&gt; propertyValues)</h4>
-                                <p> Apply an "equals" constraint to each property in the key set of a <tt>Map</tt>
+                                <p> Apply an "equals" constraint to each property in the key set of a <CODE>Map</CODE>
       <DL><DT><B>Parameters:</B></DT><DD><code>propertyValues</code> -  a map from property names to values</DD></DL><DL><DT><B>Returns:</B></DT><DD>Criterion</DD></DL><DL><DT><B>See Also:</B></DT><DD>org.grails.datastore.mapping.query.Query.Conjunction</DD></DL></p>
                             </li>
                         </ul>
@@ -613,7 +613,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>between</strong>(java.lang.String propertyName, java.lang.Object start, java.lang.Object finish)</h4>
                                 <p> Restricts the results by the given property value range (inclusive)
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>start</code> -  The start of the range</DD><DD><code>finish</code> -  The end of the range</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>start</code> -         The start of the range</DD><DD><code>finish</code> -        The end of the range</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -622,7 +622,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>cache</strong>(boolean shouldCache)</h4>
                                 <p> <p>Configures the second-level cache with the default usage of 'read-write' and the default include of 'all' if
-  the passed argument is true
+ the passed argument is true
 
  <code> { cache true } </code>
       <DL><DT><B>Parameters:</B></DT><DD><code>shouldCache</code> -  True if the default cache configuration should be applied</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
@@ -634,7 +634,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>eq</strong>(java.lang.String propertyName, java.lang.Object propertyValue)</h4>
                                 <p> Creates an "equals" Criterion based on the specified property name and value
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -643,7 +643,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>eqAll</strong>(java.lang.String propertyName, groovy.lang.Closure&lt;?&gt; propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is equals to all the given returned values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  A closure that is converted to a <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html' title='QueryableCriteria'>QueryableCriteria</a></DD></DL><DL><DT><B>Returns:</B></DT><DD>This criterion instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  A closure that is converted to a <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html' title='QueryableCriteria'>QueryableCriteria</a></DD></DL><DL><DT><B>Returns:</B></DT><DD>This criterion instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -652,7 +652,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>eqAll</strong>(java.lang.String propertyName, <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html'>QueryableCriteria</a> propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is equal to all the given returned values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -661,7 +661,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>eqProperty</strong>(java.lang.String propertyName, java.lang.String otherPropertyName)</h4>
                                 <p> Constrains a property to be equal to a specified other property
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property</DD><DD><code>otherPropertyName</code> -  The other property</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -       The property</DD><DD><code>otherPropertyName</code> -  The other property</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -679,7 +679,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>ge</strong>(java.lang.String property, java.lang.Object value)</h4>
                                 <p> Used to restrict a value to be greater than or equal to the given value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The property</DD><DD><code>value</code> -  The value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The Criterion instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The property</DD><DD><code>value</code> -     The value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The Criterion instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -688,7 +688,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>geAll</strong>(java.lang.String propertyName, groovy.lang.Closure&lt;?&gt; propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is greater than or equals to all the given returned values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  A closure that is converted to a <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html' title='QueryableCriteria'>QueryableCriteria</a></DD></DL><DL><DT><B>Returns:</B></DT><DD>This criterion instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  A closure that is converted to a <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html' title='QueryableCriteria'>QueryableCriteria</a></DD></DL><DL><DT><B>Returns:</B></DT><DD>This criterion instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -697,7 +697,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>geAll</strong>(java.lang.String propertyName, <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html'>QueryableCriteria</a> propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is greater than all the given returned values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -706,7 +706,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>geProperty</strong>(java.lang.String propertyName, java.lang.String otherPropertyName)</h4>
                                 <p> Constrains a property to be greater than or equal to a specified other property
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property</DD><DD><code>otherPropertyName</code> -  The other property</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -       The property</DD><DD><code>otherPropertyName</code> -  The other property</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -715,7 +715,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>geSome</strong>(java.lang.String propertyName, <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html'>QueryableCriteria</a> propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is greater than or equal to some of the given values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -724,7 +724,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>geSome</strong>(java.lang.String propertyName, groovy.lang.Closure&lt;?&gt; propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is greater than or equal to some of the given values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -733,7 +733,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>gt</strong>(java.lang.String property, java.lang.Object value)</h4>
                                 <p> Used to restrict a value to be greater than or equal to the given value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The property</DD><DD><code>value</code> -  The value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The Criterion instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The property</DD><DD><code>value</code> -     The value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The Criterion instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -742,7 +742,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>gtAll</strong>(java.lang.String propertyName, groovy.lang.Closure&lt;?&gt; propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is greater than all the given returned values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  A closure that is converted to a <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html' title='QueryableCriteria'>QueryableCriteria</a></DD></DL><DL><DT><B>Returns:</B></DT><DD>This criterion instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  A closure that is converted to a <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html' title='QueryableCriteria'>QueryableCriteria</a></DD></DL><DL><DT><B>Returns:</B></DT><DD>This criterion instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -751,7 +751,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>gtAll</strong>(java.lang.String propertyName, <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html'>QueryableCriteria</a> propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is greater than all the given returned values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -760,7 +760,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>gtProperty</strong>(java.lang.String propertyName, java.lang.String otherPropertyName)</h4>
                                 <p> Constrains a property to be greater than a specified other property
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property</DD><DD><code>otherPropertyName</code> -  The other property</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -       The property</DD><DD><code>otherPropertyName</code> -  The other property</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -769,7 +769,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>gtSome</strong>(java.lang.String propertyName, <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html'>QueryableCriteria</a> propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is greater than some of the given values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -778,7 +778,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>gtSome</strong>(java.lang.String propertyName, groovy.lang.Closure&lt;?&gt; propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is greater than some of the given values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -787,7 +787,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>gte</strong>(java.lang.String property, java.lang.Object value)</h4>
                                 <p> Used to restrict a value to be greater than or equal to the given value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The property</DD><DD><code>value</code> -  The value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The Criterion instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The property</DD><DD><code>value</code> -     The value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The Criterion instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -814,7 +814,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>ilike</strong>(java.lang.String propertyName, java.lang.Object propertyValue)</h4>
                                 <p> Creates an ilike Criterion based on the specified property name and value. Unlike a like condition, ilike is case insensitive
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -823,7 +823,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>in</strong>(java.lang.String propertyName, java.util.Collection values)</h4>
                                 <p> Creates an "in" Criterion based on the specified property name and list of values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>values</code> -  The values</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>values</code> -        The values</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -832,7 +832,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>in</strong>(java.lang.String propertyName, <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html' title='QueryableCriteria'>QueryableCriteria</a>&lt;?&gt; subquery)</h4>
                                 <p> Creates an "in" Criterion using a subquery
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>subquery</code> -  The subquery</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>subquery</code> -      The subquery</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -841,7 +841,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>in</strong>(java.lang.String propertyName, groovy.lang.Closure&lt;?&gt; subquery)</h4>
                                 <p> Creates an "in" Criterion using a subquery
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>subquery</code> -  The subquery</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>subquery</code> -      The subquery</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -850,7 +850,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>in</strong>(java.lang.String propertyName, java.lang.Object[] values)</h4>
                                 <p> Creates an "in" Criterion based on the specified property name and list of values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>values</code> -  The values</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>values</code> -        The values</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -859,7 +859,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>inList</strong>(java.lang.String propertyName, <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html' title='QueryableCriteria'>QueryableCriteria</a>&lt;?&gt; subquery)</h4>
                                 <p> Creates an "in" Criterion using a subquery
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>subquery</code> -  The subquery</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>subquery</code> -      The subquery</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -868,7 +868,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>inList</strong>(java.lang.String propertyName, groovy.lang.Closure&lt;?&gt; subquery)</h4>
                                 <p> Creates an "in" Criterion using a subquery
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>subquery</code> -  The subquery</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>subquery</code> -      The subquery</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -877,7 +877,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>inList</strong>(java.lang.String propertyName, java.util.Collection values)</h4>
                                 <p> Creates an "in" Criterion based on the specified property name and list of values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>values</code> -  The values</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>values</code> -        The values</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -886,7 +886,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>inList</strong>(java.lang.String propertyName, java.lang.Object[] values)</h4>
                                 <p> Creates an "in" Criterion based on the specified property name and list of values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>values</code> -  The values</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>values</code> -        The values</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -931,7 +931,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>le</strong>(java.lang.String property, java.lang.Object value)</h4>
                                 <p> Used to restrict a value to be less than or equal to the given value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The property</DD><DD><code>value</code> -  The value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The Criterion instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The property</DD><DD><code>value</code> -     The value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The Criterion instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -940,7 +940,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>leAll</strong>(java.lang.String propertyName, groovy.lang.Closure&lt;?&gt; propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is less than or equal to all the given returned values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  A closure that is converted to a <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html' title='QueryableCriteria'>QueryableCriteria</a></DD></DL><DL><DT><B>Returns:</B></DT><DD>This criterion instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  A closure that is converted to a <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html' title='QueryableCriteria'>QueryableCriteria</a></DD></DL><DL><DT><B>Returns:</B></DT><DD>This criterion instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -949,7 +949,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>leAll</strong>(java.lang.String propertyName, <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html'>QueryableCriteria</a> propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is less than all the given returned values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -958,7 +958,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>leProperty</strong>(java.lang.String propertyName, java.lang.String otherPropertyName)</h4>
                                 <p> Constrains a property to be less than or equal to a specified other property
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property</DD><DD><code>otherPropertyName</code> -  The other property</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -       The property</DD><DD><code>otherPropertyName</code> -  The other property</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -967,7 +967,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>leSome</strong>(java.lang.String propertyName, <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html'>QueryableCriteria</a> propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is less than or equal to some of the given values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -976,7 +976,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>leSome</strong>(java.lang.String propertyName, groovy.lang.Closure&lt;?&gt; propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is less than or equal to some of the given values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -985,7 +985,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>like</strong>(java.lang.String propertyName, java.lang.Object propertyValue)</h4>
                                 <p> Creates a like Criterion based on the specified property name and value
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -994,7 +994,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>lt</strong>(java.lang.String property, java.lang.Object value)</h4>
                                 <p> Used to restrict a value to be less than or equal to the given value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The property</DD><DD><code>value</code> -  The value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The Criterion instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The property</DD><DD><code>value</code> -     The value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The Criterion instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1003,7 +1003,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>ltAll</strong>(java.lang.String propertyName, groovy.lang.Closure&lt;?&gt; propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is less than all the given returned values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  A closure that is converted to a <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html' title='QueryableCriteria'>QueryableCriteria</a></DD></DL><DL><DT><B>Returns:</B></DT><DD>This criterion instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  A closure that is converted to a <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html' title='QueryableCriteria'>QueryableCriteria</a></DD></DL><DL><DT><B>Returns:</B></DT><DD>This criterion instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1012,7 +1012,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>ltAll</strong>(java.lang.String propertyName, <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html'>QueryableCriteria</a> propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is less than all the given returned values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1021,7 +1021,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>ltProperty</strong>(java.lang.String propertyName, java.lang.String otherPropertyName)</h4>
                                 <p> Constrains a property to be less than a specified other property
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property</DD><DD><code>otherPropertyName</code> -  The other property</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -       The property</DD><DD><code>otherPropertyName</code> -  The other property</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1030,7 +1030,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>ltSome</strong>(java.lang.String propertyName, <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html'>QueryableCriteria</a> propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is less than some of the given values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1039,7 +1039,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>ltSome</strong>(java.lang.String propertyName, groovy.lang.Closure&lt;?&gt; propertyValue)</h4>
                                 <p> Creates a subquery criterion that ensures the given property is less than some of the given values
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1048,7 +1048,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>lte</strong>(java.lang.String property, java.lang.Object value)</h4>
                                 <p> Used to restrict a value to be less than or equal to the given value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The property</DD><DD><code>value</code> -  The value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The Criterion instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The property</DD><DD><code>value</code> -     The value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The Criterion instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1057,7 +1057,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>ne</strong>(java.lang.String propertyName, java.lang.Object propertyValue)</h4>
                                 <p> Creates a "not equals" Criterion based on the specified property name and value
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1066,7 +1066,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>neProperty</strong>(java.lang.String propertyName, java.lang.String otherPropertyName)</h4>
                                 <p> Constrains a property to be not equal to a specified other property
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property</DD><DD><code>otherPropertyName</code> -  The other property</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -       The property</DD><DD><code>otherPropertyName</code> -  The other property</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1093,7 +1093,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>notIn</strong>(java.lang.String propertyName, <a href='../../../../../../org/grails/datastore/mapping/query/api/QueryableCriteria.html' title='QueryableCriteria'>QueryableCriteria</a>&lt;?&gt; subquery)</h4>
                                 <p> Creates a negated "in" Criterion using a subquery
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>subquery</code> -  The subquery</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>subquery</code> -      The subquery</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1102,7 +1102,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>notIn</strong>(java.lang.String propertyName, groovy.lang.Closure&lt;?&gt; subquery)</h4>
                                 <p> Creates a negated "in" Criterion using a subquery
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>subquery</code> -  The subquery</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>subquery</code> -      The subquery</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1138,7 +1138,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>order</strong>(java.lang.String propertyName, java.lang.String direction)</h4>
                                 <p> Orders by the specified property name and direction
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name to order by</DD><DD><code>direction</code> -  Either "asc" for ascending or "desc" for descending</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name to order by</DD><DD><code>direction</code> -     Either "asc" for ascending or "desc" for descending</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1148,7 +1148,7 @@ public interface Criteria</pre>
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>readOnly</strong>(boolean readOnly)</h4>
                                 <p> <p>Configures the hibernate readOnly property to avoid checking for changes on the objects if the passed argument is true
 
- <code> { readOnly true } </code>          
+ <code> { readOnly true } </code>
       <DL><DT><B>Parameters:</B></DT><DD><code>readOnly</code> -  True to disable dirty checking</DD></DL><DL><DT><B>Returns:</B></DT><DD>This Criteria instance</DD></DL></p>
                             </li>
                         </ul>
@@ -1158,7 +1158,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>rlike</strong>(java.lang.String propertyName, java.lang.Object propertyValue)</h4>
                                 <p> Creates an rlike Criterion based on the specified property name and value
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -   The property name</DD><DD><code>propertyValue</code> -  The property value</DD></DL><DL><DT><B>Returns:</B></DT><DD>The criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1167,7 +1167,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>sizeEq</strong>(java.lang.String propertyName, int size)</h4>
                                 <p> Creates a Criterion that constrains a collection property by size
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>size</code> -  The size to constrain by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>size</code> -          The size to constrain by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1176,7 +1176,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>sizeGe</strong>(java.lang.String propertyName, int size)</h4>
                                 <p> Creates a Criterion that constrains a collection property to be greater than or equal to the given size
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>size</code> -  The size to constrain by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>size</code> -          The size to constrain by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1185,7 +1185,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>sizeGt</strong>(java.lang.String propertyName, int size)</h4>
                                 <p> Creates a Criterion that constrains a collection property to be greater than the given size
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>size</code> -  The size to constrain by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>size</code> -          The size to constrain by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1194,7 +1194,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>sizeLe</strong>(java.lang.String propertyName, int size)</h4>
                                 <p> Creates a Criterion that constrains a collection property to be less than or equal to the given size
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>size</code> -  The size to constrain by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>size</code> -          The size to constrain by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1203,7 +1203,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>sizeLt</strong>(java.lang.String propertyName, int size)</h4>
                                 <p> Creates a Criterion that constrains a collection property to be less than to the given size
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>size</code> -  The size to constrain by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>size</code> -          The size to constrain by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1212,7 +1212,7 @@ public interface Criteria</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/query/api/Criteria.html'>Criteria</a> <strong>sizeNe</strong>(java.lang.String propertyName, int size)</h4>
                                 <p> Creates a Criterion that constrains a collection property to be not equal to the given size
-      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>size</code> -  The size to constrain by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>propertyName</code> -  The property name</DD><DD><code>size</code> -          The size to constrain by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This criteria</DD></DL></p>
                             </li>
                         </ul>
                     

@@ -300,14 +300,14 @@ extends java.lang.Object</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;static&nbsp;java.beans.PropertyDescriptor[] <strong>getPropertiesOfType</strong>(java.lang.Class&lt;?&gt; clazz, java.lang.Class&lt;?&gt; propertyType)</h4>
                                 <p> Retrieves all the properties of the given class for the given type
-      <DL><DT><B>Parameters:</B></DT><DD><code>clazz</code> -  The class to retrieve the properties from</DD><DD><code>propertyType</code> -  The type of the properties you wish to retrieve</DD></DL><DL><DT><B>Returns:</B></DT><DD>An array of PropertyDescriptor instances</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>clazz</code> -         The class to retrieve the properties from</DD><DD><code>propertyType</code> -  The type of the properties you wish to retrieve</DD></DL><DL><DT><B>Returns:</B></DT><DD>An array of PropertyDescriptor instances</DD></DL></p>
                             </li>
                         </ul>
                     
                         <a name="instantiate(Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.SuppressWarnings({ "rawtypes", "unchecked" })<br>public&nbsp;static&nbsp;T <strong>instantiate</strong>(java.lang.Class&lt;T&gt; clazz)</h4>
+                                <h4>&lt;T&gt; public&nbsp;static&nbsp;T <strong>instantiate</strong>(java.lang.Class&lt;T&gt; clazz)</h4>
                                 <p> Instantiates an object catching any relevant exceptions and rethrowing as a runtime exception
       <DL><DT><B>Parameters:</B></DT><DD><code>clazz</code> -  The class</DD></DL><DL><DT><B>Returns:</B></DT><DD>The instantiated object or null if the class parameter was null</DD></DL></p>
                             </li>
@@ -317,12 +317,12 @@ extends java.lang.Object</pre>
                         <ul class="blockListLast">
                             <li class="blockList">
                                 <h4>public&nbsp;static&nbsp;boolean <strong>isAssignableFrom</strong>(java.lang.Class&lt;?&gt; leftType, java.lang.Class&lt;?&gt; rightType)</h4>
-                                <p> <p>Tests whether or not the left hand type is compatible with the right hand type in Groovy
+                                <p> <p>Tests weather or not the left hand type is compatible with the right hand type in Groovy
  terms, i.e. can the left type be assigned a value of the right hand type in Groovy.</p>
  <p>This handles Java primitive type equivalence and uses isAssignableFrom for all other types,
  with a bit of magic for native types and polymorphism i.e. Number assigned an int.
  If either parameter is null an exception is thrown</p>
-      <DL><DT><B>Parameters:</B></DT><DD><code>leftType</code> -  The type of the left hand part of a notional assignment</DD><DD><code>rightType</code> -  The type of the right hand part of a notional assignment</DD></DL><DL><DT><B>Returns:</B></DT><DD>True if values of the right hand type can be assigned in Groovy to variables of the left hand type.</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>leftType</code> -   The type of the left hand part of a notional assignment</DD><DD><code>rightType</code> -  The type of the right hand part of a notional assignment</DD></DL><DL><DT><B>Returns:</B></DT><DD>True if values of the right hand type can be assigned in Groovy to variables of the left hand type.</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -331,7 +331,7 @@ extends java.lang.Object</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;static&nbsp;boolean <strong>isGetter</strong>(java.lang.String name, java.lang.Class&lt;?&gt;[] args)</h4>
                                 <p> Returns true if the name of the method specified and the number of arguments make it a javabean property
-      <DL><DT><B>Parameters:</B></DT><DD><code>name</code> -  True if its a Javabean property</DD><DD><code>args</code> -  The arguments</DD></DL><DL><DT><B>Returns:</B></DT><DD>true if it is a javabean property method</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>name</code> -  True if it's a Javabean property</DD><DD><code>args</code> -  The arguments</DD></DL><DL><DT><B>Returns:</B></DT><DD>true if it is a javabean property method</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -350,7 +350,7 @@ extends java.lang.Object</pre>
                                 <p> Make the given field accessible, explicitly setting it accessible if necessary.
  The <code>setAccessible(true)</code> method is only called when actually necessary,
  to avoid unnecessary conflicts with a JVM SecurityManager (if active).
-
+ <p>
  Based on the same method in Spring core.
       <DL><DT><B>Parameters:</B></DT><DD><code>field</code> -  the field to make accessible</DD></DL><DL><DT><B>See Also:</B></DT><DD>java.lang.reflect.Field#setAccessible</DD></DL></p>
                             </li>
@@ -363,7 +363,7 @@ extends java.lang.Object</pre>
                                 <p> Make the given method accessible, explicitly setting it accessible if necessary.
  The <code>setAccessible(true)</code> method is only called when actually necessary,
  to avoid unnecessary conflicts with a JVM SecurityManager (if active).
-
+ <p>
  Based on the same method in Spring core.
       <DL><DT><B>Parameters:</B></DT><DD><code>method</code> -  the method to make accessible</DD></DL><DL><DT><B>See Also:</B></DT><DD>java.lang.reflect.Method#setAccessible</DD></DL></p>
                             </li>

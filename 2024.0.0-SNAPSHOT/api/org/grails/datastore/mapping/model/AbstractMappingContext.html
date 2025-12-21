@@ -277,7 +277,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a></code></td>
-                            <td class="colLast"><code><strong><a href="#addExternalPersistentEntity(java.lang.Class)">addExternalPersistentEntity</a></strong>(java.lang.Class javaClass)</code><br>Adds an external PersistentEntity instance, one that is not managed and persisted by this context</td>
+                            <td class="colLast"><code><strong><a href="#addExternalPersistentEntity(Class)">addExternalPersistentEntity</a></strong>(java.lang.Class&lt;?&gt; javaClass)</code><br>Adds an external PersistentEntity instance, one that is not managed and persisted by this context</td>
                         </tr>
                         
                         <tr class="altColor">
@@ -289,13 +289,13 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>public&nbsp;java.util.Collection&lt;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html' title='PersistentEntity'>PersistentEntity</a>&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#addPersistentEntities(java.lang.Class)">addPersistentEntities</a></strong>(java.lang.Class javaClasses)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#addPersistentEntities(Class)">addPersistentEntities</a></strong>(java.lang.Class&lt;?&gt; javaClasses)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a></code></td>
-                            <td class="colLast"><code><strong><a href="#addPersistentEntity(java.lang.Class, boolean)">addPersistentEntity</a></strong>(java.lang.Class javaClass, boolean override)</code><br>Adds a PersistentEntity instance</td>
+                            <td class="colLast"><code><strong><a href="#addPersistentEntity(Class, boolean)">addPersistentEntity</a></strong>(java.lang.Class&lt;?&gt; javaClass, boolean override)</code><br>Adds a PersistentEntity instance</td>
                         </tr>
                         
                         <tr class="rowColor">
@@ -451,7 +451,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>public&nbsp;boolean</code></td>
-                            <td class="colLast"><code><strong><a href="#isPersistentEntity(java.lang.Class)">isPersistentEntity</a></strong>(java.lang.Class type)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#isPersistentEntity(Class)">isPersistentEntity</a></strong>(java.lang.Class&lt;?&gt; type)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
@@ -675,16 +675,16 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="addEntityValidator(org.grails.datastore.mapping.model.PersistentEntity, org.springframework.validation.Validator)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;void <strong>addEntityValidator</strong>(<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> entity, <a href='../../../../../org.springframework.validation.Validator.html'>Validator</a> validator)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;void <strong>addEntityValidator</strong>(<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> entity, <a href='../../../../../org.springframework.validation.Validator.html'>Validator</a> validator)</h4>
                                 <p> Adds a validator for an entity
-      <DL><DT><B>Parameters:</B></DT><DD><code>entity</code> -  The PersistentEntity The entity</DD><DD><code>validator</code> -  The validator The validator</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>entity</code> -     The PersistentEntity The entity</DD><DD><code>validator</code> -  The validator The validator</DD></DL></p>
                             </li>
                         </ul>
                     
-                        <a name="addExternalPersistentEntity(java.lang.Class)"><!-- --></a>
+                        <a name="addExternalPersistentEntity(Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>addExternalPersistentEntity</strong>(java.lang.Class javaClass)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>addExternalPersistentEntity</strong>(java.lang.Class&lt;?&gt; javaClass)</h4>
                                 <p> Adds an external PersistentEntity instance, one that is not managed and persisted by this context
       <DL><DT><B>Parameters:</B></DT><DD><code>javaClass</code> -  The Java class representing the entity</DD></DL><DL><DT><B>Returns:</B></DT><DD>The PersistentEntity instance</DD></DL></p>
                             </li>
@@ -693,23 +693,23 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="addMappingContextListener(grails.gorm.tests.SessionCreationEventSpec.Listener)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;void <strong>addMappingContextListener</strong>(<a href='../../../../../grails/gorm/tests/SessionCreationEventSpec.Listener.html'>SessionCreationEventSpec.Listener</a> listener)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;void <strong>addMappingContextListener</strong>(<a href='../../../../../grails/gorm/tests/SessionCreationEventSpec.Listener.html'>SessionCreationEventSpec.Listener</a> listener)</h4>
                                 <p></p>
                             </li>
                         </ul>
                     
-                        <a name="addPersistentEntities(java.lang.Class)"><!-- --></a>
+                        <a name="addPersistentEntities(Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.util.Collection&lt;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html' title='PersistentEntity'>PersistentEntity</a>&gt; <strong>addPersistentEntities</strong>(java.lang.Class javaClasses)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;java.util.Collection&lt;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html' title='PersistentEntity'>PersistentEntity</a>&gt; <strong>addPersistentEntities</strong>(java.lang.Class&lt;?&gt; javaClasses)</h4>
                                 <p></p>
                             </li>
                         </ul>
                     
-                        <a name="addPersistentEntity(java.lang.Class, boolean)"><!-- --></a>
+                        <a name="addPersistentEntity(Class, boolean)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>addPersistentEntity</strong>(java.lang.Class javaClass, boolean override)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>addPersistentEntity</strong>(java.lang.Class&lt;?&gt; javaClass, boolean override)</h4>
                                 <p> Adds a PersistentEntity instance
       <DL><DT><B>Parameters:</B></DT><DD><code>javaClass</code> -  The Java class representing the entity</DD><DD><code>override</code> -   Whether to override an existing entity</DD></DL><DL><DT><B>Returns:</B></DT><DD>The PersistentEntity instance</DD></DL></p>
                             </li>
@@ -718,7 +718,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="addPersistentEntity(java.lang.Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>addPersistentEntity</strong>(java.lang.Class javaClass)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>addPersistentEntity</strong>(java.lang.Class javaClass)</h4>
                                 <p> Adds a PersistentEntity instance
       <DL><DT><B>Parameters:</B></DT><DD><code>javaClass</code> -  The Java class representing the entity</DD></DL><DL><DT><B>Returns:</B></DT><DD>The PersistentEntity instance</DD></DL></p>
                             </li>
@@ -727,7 +727,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="addTypeConverter(org.springframework.core.convert.converter.Converter)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;void <strong>addTypeConverter</strong>(<a href='../../../../../org.springframework.core.convert.converter.Converter.html'>Converter</a> converter)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;void <strong>addTypeConverter</strong>(<a href='../../../../../org.springframework.core.convert.converter.Converter.html'>Converter</a> converter)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -743,7 +743,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="createEmbeddedEntity(java.lang.Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>createEmbeddedEntity</strong>(java.lang.Class type)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>createEmbeddedEntity</strong>(java.lang.Class type)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -783,7 +783,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="getChildEntityByDiscriminator(org.grails.datastore.mapping.model.PersistentEntity, java.lang.String)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>getChildEntityByDiscriminator</strong>(<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> root, java.lang.String discriminator)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>getChildEntityByDiscriminator</strong>(<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> root, java.lang.String discriminator)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -791,7 +791,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="getConversionService()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org.springframework.core.convert.ConversionService.html'>ConversionService</a> <strong>getConversionService</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org.springframework.core.convert.ConversionService.html'>ConversionService</a> <strong>getConversionService</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -799,7 +799,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="getConverterRegistry()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org.springframework.core.convert.converter.ConverterRegistry.html'>ConverterRegistry</a> <strong>getConverterRegistry</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org.springframework.core.convert.converter.ConverterRegistry.html'>ConverterRegistry</a> <strong>getConverterRegistry</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -824,16 +824,16 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="getEntityValidator(org.grails.datastore.mapping.model.PersistentEntity)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org.springframework.validation.Validator.html'>Validator</a> <strong>getEntityValidator</strong>(<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> entity)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org.springframework.validation.Validator.html'>Validator</a> <strong>getEntityValidator</strong>(<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> entity)</h4>
                                 <p> Retrieves a validator for an entity
-      <DL><DT><B>Parameters:</B></DT><DD><code>entity</code> -  The entity The entity</DD></DL><DL><DT><B>Returns:</B></DT><DD>The validator or null if there is none</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>entity</code> -  The entity</DD></DL><DL><DT><B>Returns:</B></DT><DD>The validator or null if there is none</DD></DL></p>
                             </li>
                         </ul>
                     
                         <a name="getMappingFactory()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;abstract&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/MappingFactory.html'>MappingFactory</a> <strong>getMappingFactory</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;abstract&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/MappingFactory.html'>MappingFactory</a> <strong>getMappingFactory</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -849,7 +849,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="getPersistentEntities()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.util.Collection&lt;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html' title='PersistentEntity'>PersistentEntity</a>&gt; <strong>getPersistentEntities</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;java.util.Collection&lt;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html' title='PersistentEntity'>PersistentEntity</a>&gt; <strong>getPersistentEntities</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -857,7 +857,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="getPersistentEntity(java.lang.String)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>getPersistentEntity</strong>(java.lang.String name)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>getPersistentEntity</strong>(java.lang.String name)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -865,7 +865,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="getProxyFactory()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/proxy/ProxyFactory.html'>ProxyFactory</a> <strong>getProxyFactory</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/proxy/ProxyFactory.html'>ProxyFactory</a> <strong>getProxyFactory</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -897,7 +897,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="initialize()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;void <strong>initialize</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;void <strong>initialize</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -905,7 +905,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="isInInheritanceHierarchy(org.grails.datastore.mapping.model.PersistentEntity)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>isInInheritanceHierarchy</strong>(<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> entity)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;boolean <strong>isInInheritanceHierarchy</strong>(<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> entity)</h4>
                                 <p> Returns true if the given entity is in an inheritance hierarchy
       <DL><DT><B>Parameters:</B></DT><DD><code>entity</code> -  The entity</DD></DL><DL><DT><B>Returns:</B></DT><DD>True if it is</DD></DL></p>
                             </li>
@@ -914,15 +914,15 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="isInitialized()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>isInitialized</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;boolean <strong>isInitialized</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
                     
-                        <a name="isPersistentEntity(java.lang.Class)"><!-- --></a>
+                        <a name="isPersistentEntity(Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>isPersistentEntity</strong>(java.lang.Class type)</h4>
+                                <h4>public&nbsp;boolean <strong>isPersistentEntity</strong>(java.lang.Class&lt;?&gt; type)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -930,7 +930,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="isPersistentEntity(java.lang.Object)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>isPersistentEntity</strong>(java.lang.Object value)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;boolean <strong>isPersistentEntity</strong>(java.lang.Object value)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -962,7 +962,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/lifecycle/
                         <a name="setProxyFactory(org.grails.datastore.mapping.proxy.ProxyFactory)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;void <strong>setProxyFactory</strong>(<a href='../../../../../org/grails/datastore/mapping/proxy/ProxyFactory.html'>ProxyFactory</a> factory)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;void <strong>setProxyFactory</strong>(<a href='../../../../../org/grails/datastore/mapping/proxy/ProxyFactory.html'>ProxyFactory</a> factory)</h4>
                                 <p></p>
                             </li>
                         </ul>

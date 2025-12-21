@@ -165,7 +165,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code><strong>protected&nbsp;java.lang.Class</strong></code>&nbsp;</td>
+                            <td class="colFirst"><code><strong>protected&nbsp;java.lang.Class&lt;?&gt;</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#javaClass">javaClass</a></code></td>
                             <td class="colLast"></td>
                         </tr>
@@ -233,7 +233,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         
                         <tr class="altColor">
                             <td class="colFirst">
-                                <code><strong><a href="#AbstractPersistentEntity(java.lang.Class, org.grails.datastore.mapping.model.MappingContext)">AbstractPersistentEntity</a></strong>(java.lang.Class javaClass, <a href='../../../../../org/grails/datastore/mapping/model/MappingContext.html'>MappingContext</a> context)</code><br></td>
+                                <code><strong><a href="#AbstractPersistentEntity(Class, org.grails.datastore.mapping.model.MappingContext)">AbstractPersistentEntity</a></strong>(java.lang.Class&lt;?&gt; javaClass, <a href='../../../../../org/grails/datastore/mapping/model/MappingContext.html'>MappingContext</a> context)</code><br></td>
                         </tr>
                         
                     </table>
@@ -260,7 +260,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>public&nbsp;boolean</code></td>
-                            <td class="colLast"><code><strong><a href="#addOwner(java.lang.Class)">addOwner</a></strong>(java.lang.Class type)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#addOwner(Class)">addOwner</a></strong>(java.lang.Class&lt;?&gt; type)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
@@ -307,7 +307,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>public&nbsp;java.lang.Class</code></td>
+                            <td class="colLast"><code>public&nbsp;java.lang.Class&lt;?&gt;</code></td>
                             <td class="colLast"><code><strong><a href="#getJavaClass()">getJavaClass</a></strong>()</code><br></td>
                         </tr>
                         
@@ -573,7 +573,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="javaClass"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>protected&nbsp;final&nbsp;java.lang.Class <strong>javaClass</strong></h4>
+                                <h4>protected&nbsp;final&nbsp;java.lang.Class&lt;?&gt; <strong>javaClass</strong></h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -642,10 +642,10 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                 </a>
                     <h3>Constructor Detail</h3>
                     
-                        <a name="AbstractPersistentEntity(java.lang.Class, org.grails.datastore.mapping.model.MappingContext)"><!-- --></a>
+                        <a name="AbstractPersistentEntity(Class, org.grails.datastore.mapping.model.MappingContext)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<strong>AbstractPersistentEntity</strong>(java.lang.Class javaClass, <a href='../../../../../org/grails/datastore/mapping/model/MappingContext.html'>MappingContext</a> context)</h4>
+                                <h4>public&nbsp;<strong>AbstractPersistentEntity</strong>(java.lang.Class&lt;?&gt; javaClass, <a href='../../../../../org/grails/datastore/mapping/model/MappingContext.html'>MappingContext</a> context)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -663,10 +663,10 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                 </a>
                     <h3>Method Detail</h3>
                     
-                        <a name="addOwner(java.lang.Class)"><!-- --></a>
+                        <a name="addOwner(Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>addOwner</strong>(java.lang.Class type)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;boolean <strong>addOwner</strong>(java.lang.Class&lt;?&gt; type)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -682,7 +682,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getAssociations()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.util.List&lt;<a href='../../../../../org/grails/datastore/mapping/model/types/Association.html' title='Association'>Association</a>&gt; <strong>getAssociations</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;java.util.List&lt;<a href='../../../../../org/grails/datastore/mapping/model/types/Association.html' title='Association'>Association</a>&gt; <strong>getAssociations</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -698,7 +698,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getDecapitalizedName()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.String <strong>getDecapitalizedName</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;java.lang.String <strong>getDecapitalizedName</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -706,7 +706,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getDiscriminator()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.String <strong>getDiscriminator</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;java.lang.String <strong>getDiscriminator</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -722,7 +722,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getIdentity()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentProperty.html'>PersistentProperty</a> <strong>getIdentity</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentProperty.html'>PersistentProperty</a> <strong>getIdentity</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -730,7 +730,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getJavaClass()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.Class <strong>getJavaClass</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;java.lang.Class&lt;?&gt; <strong>getJavaClass</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -746,7 +746,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getMapping()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/ClassMapping.html' title='ClassMapping'>ClassMapping</a>&lt;T&gt; <strong>getMapping</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/ClassMapping.html' title='ClassMapping'>ClassMapping</a>&lt;T&gt; <strong>getMapping</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -754,7 +754,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getMappingContext()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/MappingContext.html'>MappingContext</a> <strong>getMappingContext</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/MappingContext.html'>MappingContext</a> <strong>getMappingContext</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -770,7 +770,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getName()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.String <strong>getName</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;java.lang.String <strong>getName</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -778,7 +778,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getParentEntity()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>getParentEntity</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>getParentEntity</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -786,7 +786,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getPersistentProperties()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.util.List&lt;<a href='../../../../../org/grails/datastore/mapping/model/PersistentProperty.html' title='PersistentProperty'>PersistentProperty</a>&gt; <strong>getPersistentProperties</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;java.util.List&lt;<a href='../../../../../org/grails/datastore/mapping/model/PersistentProperty.html' title='PersistentProperty'>PersistentProperty</a>&gt; <strong>getPersistentProperties</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -794,7 +794,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getPersistentPropertyNames()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.util.List&lt;java.lang.String&gt; <strong>getPersistentPropertyNames</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;java.util.List&lt;java.lang.String&gt; <strong>getPersistentPropertyNames</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -802,7 +802,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getPropertyByName(java.lang.String)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentProperty.html'>PersistentProperty</a> <strong>getPropertyByName</strong>(java.lang.String name)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentProperty.html'>PersistentProperty</a> <strong>getPropertyByName</strong>(java.lang.String name)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -818,7 +818,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getRootEntity()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>getRootEntity</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>getRootEntity</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -826,7 +826,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getTenantId()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/types/TenantId.html'>TenantId</a> <strong>getTenantId</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/types/TenantId.html'>TenantId</a> <strong>getTenantId</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -834,7 +834,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="getVersion()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentProperty.html'>PersistentProperty</a> <strong>getVersion</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/model/PersistentProperty.html'>PersistentProperty</a> <strong>getVersion</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -842,7 +842,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="hasProperty(java.lang.String, java.lang.Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>hasProperty</strong>(java.lang.String name, java.lang.Class type)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;boolean <strong>hasProperty</strong>(java.lang.String name, java.lang.Class type)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -866,7 +866,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="initialize()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;void <strong>initialize</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;void <strong>initialize</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -890,7 +890,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="isExternal()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>isExternal</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;boolean <strong>isExternal</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -898,7 +898,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="isIdentityName(java.lang.String)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>isIdentityName</strong>(java.lang.String propertyName)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;boolean <strong>isIdentityName</strong>(java.lang.String propertyName)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -906,7 +906,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="isInitialized()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>isInitialized</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;boolean <strong>isInitialized</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -914,7 +914,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="isInstance(java.lang.Object)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>isInstance</strong>(java.lang.Object obj)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;boolean <strong>isInstance</strong>(java.lang.Object obj)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -930,7 +930,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="isOwningEntity(org.grails.datastore.mapping.model.PersistentEntity)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>isOwningEntity</strong>(<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> owner)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;boolean <strong>isOwningEntity</strong>(<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> owner)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -938,7 +938,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="isRoot()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>isRoot</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;boolean <strong>isRoot</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -946,7 +946,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="isVersioned()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;boolean <strong>isVersioned</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;boolean <strong>isVersioned</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -954,7 +954,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="newInstance()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.Object <strong>newInstance</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;java.lang.Object <strong>newInstance</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -970,7 +970,7 @@ implements <a href='../../../../../org/grails/datastore/mapping/model/Persistent
                         <a name="setExternal(boolean)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;void <strong>setExternal</strong>(boolean external)</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;void <strong>setExternal</strong>(boolean external)</h4>
                                 <p></p>
                             </li>
                         </ul>

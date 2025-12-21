@@ -166,7 +166,7 @@ implements java.lang.Cloneable</pre>
                         </tr>
                         
                         <tr class="rowColor">
-                            <td class="colFirst"><code><strong>static&nbsp;interface</strong></code>&nbsp;</td>
+                            <td class="colFirst"><code><strong>interface</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href='../../../../../org/grails/datastore/mapping/query/Query.Criterion.html'>Query.Criterion</a></code></td>
                             <td class="colLast">Represents a criterion to be used in a criteria query</td>
                         </tr>
@@ -1160,7 +1160,7 @@ implements java.lang.Cloneable</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;void <strong>add</strong>(<a href='../../../../../Junction.html'>Junction</a> currentJunction, <a href='../../../../../org/grails/datastore/mapping/query/Query.Criterion.html'>Query.Criterion</a> criterion)</h4>
                                 <p> Adds the specified criterion instance to the given junction
-      <DL><DT><B>Parameters:</B></DT><DD><code>currentJunction</code> -  The junction to add the criterion to</DD><DD><code>criterion</code> -  The criterion instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>currentJunction</code> -  The junction to add the criterion to</DD><DD><code>criterion</code> -        The criterion instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1187,7 +1187,7 @@ implements java.lang.Cloneable</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/query/Query.html'>Query</a> <strong>between</strong>(java.lang.String property, java.lang.Object start, java.lang.Object end)</h4>
                                 <p> Restricts the results by the given property value range
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>start</code> -  The start of the range</DD><DD><code>end</code> -  The end of the range</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>start</code> -     The start of the range</DD><DD><code>end</code> -       The end of the range</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1240,7 +1240,7 @@ implements java.lang.Cloneable</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/query/Query.html'>Query</a> <strong>eq</strong>(java.lang.String property, java.lang.Object value)</h4>
                                 <p> Restricts the results by the given properties value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -  The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -     The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1250,7 +1250,7 @@ implements java.lang.Cloneable</pre>
                                 <h4>protected&nbsp;abstract&nbsp;java.util.List <strong>executeQuery</strong>(<a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> entity, <a href='../../../../../Junction.html'>Junction</a> criteria)</h4>
                                 <p> Subclasses should implement this to provide the concrete implementation
  of querying
-      <DL><DT><B>Parameters:</B></DT><DD><code>entity</code> -  The entity</DD><DD><code>criteria</code> -  The criteria</DD></DL><DL><DT><B>Returns:</B></DT><DD>The results</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>entity</code> -    The entity</DD><DD><code>criteria</code> -  The criteria</DD></DL><DL><DT><B>Returns:</B></DT><DD>The results</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1287,7 +1287,7 @@ implements java.lang.Cloneable</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/query/Query.html'>Query</a> <strong>ge</strong>(java.lang.String property, java.lang.Object value)</h4>
                                 <p> Used to restrict a value to be greater than or equal to the given value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -  The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -     The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1332,7 +1332,7 @@ implements java.lang.Cloneable</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/query/Query.html'>Query</a> <strong>gt</strong>(java.lang.String property, java.lang.Object value)</h4>
                                 <p> Used to restrict a value to be greater than the given value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -  The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -     The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1341,7 +1341,7 @@ implements java.lang.Cloneable</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/query/Query.html'>Query</a> <strong>gte</strong>(java.lang.String property, java.lang.Object value)</h4>
                                 <p> Used to restrict a value to be greater than or equal to the given value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -  The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -     The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1359,7 +1359,7 @@ implements java.lang.Cloneable</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/query/Query.html'>Query</a> <strong>ilike</strong>(java.lang.String property, java.lang.String expr)</h4>
                                 <p> Restricts the results by the given properties value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>expr</code> -  The expression to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>expr</code> -      The expression to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1368,7 +1368,7 @@ implements java.lang.Cloneable</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/query/Query.html'>Query</a> <strong>in</strong>(java.lang.String property, java.util.List values)</h4>
                                 <p> Restricts the results by the given property values
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>values</code> -  The values to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>values</code> -    The values to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1431,7 +1431,7 @@ implements java.lang.Cloneable</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/query/Query.html'>Query</a> <strong>le</strong>(java.lang.String property, java.lang.Object value)</h4>
                                 <p> Used to restrict a value to be less than or equal to the given value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -  The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -     The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1440,7 +1440,7 @@ implements java.lang.Cloneable</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/query/Query.html'>Query</a> <strong>like</strong>(java.lang.String property, java.lang.String expr)</h4>
                                 <p> Restricts the results by the given properties value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>expr</code> -  The expression to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>expr</code> -      The expression to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1476,7 +1476,7 @@ implements java.lang.Cloneable</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/query/Query.html'>Query</a> <strong>lt</strong>(java.lang.String property, java.lang.Object value)</h4>
                                 <p> Used to restrict a value to be less than the given value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -  The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -     The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1485,7 +1485,7 @@ implements java.lang.Cloneable</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/query/Query.html'>Query</a> <strong>lte</strong>(java.lang.String property, java.lang.Object value)</h4>
                                 <p> Used to restrict a value to be less than or equal to the given value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -  The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>value</code> -     The value to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -1573,7 +1573,7 @@ implements java.lang.Cloneable</pre>
                             <li class="blockList">
                                 <h4>public&nbsp;<a href='../../../../../org/grails/datastore/mapping/query/Query.html'>Query</a> <strong>rlike</strong>(java.lang.String property, java.lang.String expr)</h4>
                                 <p> Restricts the results by the given properties value
-      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>expr</code> -  The expression to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>property</code> -  The name of the property</DD><DD><code>expr</code> -      The expression to restrict by</DD></DL><DL><DT><B>Returns:</B></DT><DD>This query instance</DD></DL></p>
                             </li>
                         </ul>
                     

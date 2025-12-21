@@ -101,8 +101,7 @@ if (location.href.indexOf('is-external=true') == -1) {
             <!-- todo: direct known subclasses -->
             <hr>
 
-<pre>@java.lang.SuppressWarnings("rawtypes")
-public abstract class Basic&lt;T extends Property&gt;
+<pre>public abstract class Basic&lt;T extends Property&gt;
 extends <a href='../../../../../../org/grails/datastore/mapping/model/types/ToMany.html'>ToMany</a></pre>
 
     <p> Models a basic collection type such as a list of Strings
@@ -168,7 +167,7 @@ extends <a href='../../../../../../org/grails/datastore/mapping/model/types/ToMa
                         
                         <tr class="rowColor">
                             <td class="colFirst">
-                                <code><strong><a href="#Basic(org.grails.datastore.mapping.model.PersistentEntity, org.grails.datastore.mapping.model.MappingContext, java.lang.String, java.lang.Class)">Basic</a></strong>(<a href='../../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> owner, <a href='../../../../../../org/grails/datastore/mapping/model/MappingContext.html'>MappingContext</a> context, java.lang.String name, java.lang.Class type)</code><br></td>
+                                <code><strong><a href="#Basic(org.grails.datastore.mapping.model.PersistentEntity, org.grails.datastore.mapping.model.MappingContext, java.lang.String, Class)">Basic</a></strong>(<a href='../../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> owner, <a href='../../../../../../org/grails/datastore/mapping/model/MappingContext.html'>MappingContext</a> context, java.lang.String name, java.lang.Class&lt;T&gt; type)</code><br></td>
                         </tr>
                         
                     </table>
@@ -200,7 +199,7 @@ extends <a href='../../../../../../org/grails/datastore/mapping/model/types/ToMa
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>public&nbsp;java.lang.Class</code></td>
+                            <td class="colLast"><code>public&nbsp;java.lang.Class&lt;?&gt;</code></td>
                             <td class="colLast"><code><strong><a href="#getComponentType()">getComponentType</a></strong>()</code><br></td>
                         </tr>
                         
@@ -212,7 +211,7 @@ extends <a href='../../../../../../org/grails/datastore/mapping/model/types/ToMa
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/model/types/Association.html'>Association</a></code></td>
+                            <td class="colLast"><code>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/model/types/Association.html' title='Association'>Association</a>&lt;T&gt;</code></td>
                             <td class="colLast"><code><strong><a href="#getInverseSide()">getInverseSide</a></strong>()</code><br></td>
                         </tr>
                         
@@ -297,10 +296,10 @@ extends <a href='../../../../../../org/grails/datastore/mapping/model/types/ToMa
                             </li>
                         </ul>
                     
-                        <a name="Basic(org.grails.datastore.mapping.model.PersistentEntity, org.grails.datastore.mapping.model.MappingContext, java.lang.String, java.lang.Class)"><!-- --></a>
+                        <a name="Basic(org.grails.datastore.mapping.model.PersistentEntity, org.grails.datastore.mapping.model.MappingContext, java.lang.String, Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<strong>Basic</strong>(<a href='../../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> owner, <a href='../../../../../../org/grails/datastore/mapping/model/MappingContext.html'>MappingContext</a> context, java.lang.String name, java.lang.Class type)</h4>
+                                <h4>public&nbsp;<strong>Basic</strong>(<a href='../../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> owner, <a href='../../../../../../org/grails/datastore/mapping/model/MappingContext.html'>MappingContext</a> context, java.lang.String name, java.lang.Class&lt;T&gt; type)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -329,7 +328,7 @@ extends <a href='../../../../../../org/grails/datastore/mapping/model/types/ToMa
                         <a name="getComponentType()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.Class <strong>getComponentType</strong>()</h4>
+                                <h4>public&nbsp;java.lang.Class&lt;?&gt; <strong>getComponentType</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -346,7 +345,7 @@ extends <a href='../../../../../../org/grails/datastore/mapping/model/types/ToMa
                         <a name="getInverseSide()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/model/types/Association.html'>Association</a> <strong>getInverseSide</strong>()</h4>
+                                <h4>@java.lang.Override<br>public&nbsp;<a href='../../../../../../org/grails/datastore/mapping/model/types/Association.html' title='Association'>Association</a>&lt;T&gt; <strong>getInverseSide</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>

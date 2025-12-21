@@ -103,7 +103,7 @@ if (location.href.indexOf('is-external=true') == -1) {
 <pre>public interface PropertyValueIndexer&lt;K&gt;</pre>
 
     <p> Responsible for creating indices for property values used in queries.
-
+ <p>
  This interface is designed for usage in datastores that don't automatically
  create indices and require the application to create the indices manually.
   <DL><DT><B>Authors:</B></DT><DD>Graeme Rocher</DD></DL><DL><DT><B>Since:</B></DT><DD>1.0</DD></DL></p>
@@ -213,7 +213,7 @@ if (location.href.indexOf('is-external=true') == -1) {
                             <li class="blockList">
                                 <h4>public&nbsp;void <strong>deindex</strong>(java.lang.Object value, K primaryKey)</h4>
                                 <p> Removes the index for the given value and key
-      <DL><DT><B>Parameters:</B></DT><DD><code>value</code> -  The value</DD><DD><code>primaryKey</code> -  The key</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>value</code> -       The value</DD><DD><code>primaryKey</code> -  The key</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -231,7 +231,7 @@ if (location.href.indexOf('is-external=true') == -1) {
                             <li class="blockList">
                                 <h4>public&nbsp;void <strong>index</strong>(java.lang.Object value, K primaryKey)</h4>
                                 <p> Creates an index for the given value to the specified key
-      <DL><DT><B>Parameters:</B></DT><DD><code>value</code> -  The value</DD><DD><code>primaryKey</code> -  The key</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>value</code> -       The value</DD><DD><code>primaryKey</code> -  The key</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -249,7 +249,7 @@ if (location.href.indexOf('is-external=true') == -1) {
                             <li class="blockList">
                                 <h4>public&nbsp;java.util.List&lt;K&gt; <strong>query</strong>(java.lang.Object value, int offset, int max)</h4>
                                 <p> Queries the given value and returns the keys
-      <DL><DT><B>Parameters:</B></DT><DD><code>value</code> -  The value to query by</DD><DD><code>offset</code> -  The offset position to start from</DD><DD><code>max</code> -  The maximum number of records</DD></DL><DL><DT><B>Returns:</B></DT><DD>The primary keys</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>value</code> -   The value to query by</DD><DD><code>offset</code> -  The offset position to start from</DD><DD><code>max</code> -     The maximum number of records</DD></DL><DL><DT><B>Returns:</B></DT><DD>The primary keys</DD></DL></p>
                             </li>
                         </ul>
                     

@@ -108,7 +108,7 @@ if (location.href.indexOf('is-external=true') == -1) {
 extends <a href='../../../../../org/grails/datastore/mapping/engine/AssociationQueryExecutor.html'>AssociationQueryExecutor</a></pre>
 
     <p> Responsible for creating indices for associations used in queries.
-
+ <p>
  An instance may be specific to a particular association of a particular native instance of an entity (the parent
  of the association).
   <DL><DT><B>Authors:</B></DT><DD>Graeme Rocher</DD></DL><DL><DT><B>Since:</B></DT><DD>1.0</DD></DL></p>
@@ -225,10 +225,10 @@ extends <a href='../../../../../org/grails/datastore/mapping/engine/AssociationQ
                                 <h4>public&nbsp;void <strong>index</strong>(K primaryKey, java.util.List&lt;T&gt; foreignKeys)</h4>
                                 <p> Creates an index queryable via the primary key. This is called *after* the entity this association indexer
  is part of has been persisted.
-
+ <p>
  Usually, for a particular association type, only this OR <a href='#preIndex(java.lang.Object, java.util.List)'>preIndex(Object, java.util.List)</a> will be
  implemented.
-      <DL><DT><B>Parameters:</B></DT><DD><code>primaryKey</code> -  The primary key</DD><DD><code>foreignKeys</code> -  The foreign keys</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>primaryKey</code> -   The primary key</DD><DD><code>foreignKeys</code> -  The foreign keys</DD></DL></p>
                             </li>
                         </ul>
                     
@@ -248,10 +248,10 @@ extends <a href='../../../../../org/grails/datastore/mapping/engine/AssociationQ
                                 <p> Creates an index queryable via the primary key. This is called *before* the entity that this association
  indexer is part of is persisted, but after the native entry has been updated ready to be persisted.
  This allows the index to be placed in the native instance itself, e.g. in a document database.
-
+ <p>
  Usually, for a particular association type, only this OR <a href='#index(java.lang.Object, java.util.List)'>index(Object, java.util.List)</a> will be
  implemented.
-      <DL><DT><B>Parameters:</B></DT><DD><code>primaryKey</code> -  The primary key</DD><DD><code>foreignKeys</code> -  The foreign keys</DD></DL></p>
+      <DL><DT><B>Parameters:</B></DT><DD><code>primaryKey</code> -   The primary key</DD><DD><code>foreignKeys</code> -  The foreign keys</DD></DL></p>
                             </li>
                         </ul>
                     

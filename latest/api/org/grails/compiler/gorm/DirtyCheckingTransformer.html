@@ -112,8 +112,11 @@ extends java.lang.Object
 implements groovy.transform.CompilationUnitAware</pre>
 
     <p>
- Transforms a domain class making it possible for the domain class to take responsibility of tracking changes to itself, thus removing the responsibility from the ORM system which would have to maintain parallel state
- and compare the state of the domain class to the stored state. With this transformation the storage of the state is not necessary as the state is kept in the domain class itself <DL><DT><B>Authors:</B></DT><DD>Graeme Rocher</DD></DL><DL><DT><B>Since:</B></DT><DD>2.0</DD></DL></p>
+ Transforms a domain class making it possible for the domain class to take responsibility of tracking changes to itself,
+ thus removing the responsibility from the ORM system which would have to maintain parallel state
+ and compare the state of the domain class to the stored state.
+
+ With this transformation the storage of the state is not necessary as the state is kept in the domain class itself. <DL><DT><B>Authors:</B></DT><DD>Graeme Rocher</DD></DL><DL><DT><B>Since:</B></DT><DD>2.0</DD></DL></p>
 
           </li>
     </ul>
@@ -510,7 +513,7 @@ implements groovy.transform.CompilationUnitAware</pre>
                         <a name="setCompilationUnit(org.codehaus.groovy.control.CompilationUnit)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>void <strong>setCompilationUnit</strong>(org.codehaus.groovy.control.CompilationUnit compilationUnit)</h4>
+                                <h4>@java.lang.Override<br>void <strong>setCompilationUnit</strong>(org.codehaus.groovy.control.CompilationUnit compilationUnit)</h4>
                                 <p></p>
                             </li>
                         </ul>

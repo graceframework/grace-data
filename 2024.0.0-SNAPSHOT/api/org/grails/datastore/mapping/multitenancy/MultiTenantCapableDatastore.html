@@ -264,8 +264,9 @@ extends <a href='../../../../../org/grails/datastore/mapping/core/connections/Co
                             <li class="blockList">
                                 <h4>&lt;T1&gt; public&nbsp;<a href='../../../../../T1.html'>T1</a> <strong>withNewSession</strong>(java.io.Serializable tenantId, groovy.lang.Closure&lt;T1&gt; callable)</h4>
                                 <p> Execute a new session with the given tenantId IF the session is not already present. This differs from the regular withNewSession method.
- The idea is that if there is already a transaction or session bound for the current tenant it should be re-used, otherwise one should be created
-      <DL><DT><B>Parameters:</B></DT><DD><code>tenantId</code> -  The tenant id</DD><DD><code>callable</code> -  the callable</DD></DL><DL><DT><B>Type Parameters:</B></DT><DD><code>T1</code> -  the return type</DD></DL><DL><DT><B>Returns:</B></DT><DD>The return value of the closure</DD></DL></p>
+ The idea is that if there is already a transaction or session bound for the current tenant it should be re-used,
+ otherwise one should be created
+      <DL><DT><B>Parameters:</B></DT><DD><code>tenantId</code> -  The tenant id</DD><DD><code>callable</code> -  the callable</DD></DL><DL><DT><B>Type Parameters:</B></DT><DD><code>T1</code> -      the return type</DD></DL><DL><DT><B>Returns:</B></DT><DD>The return value of the closure</DD></DL></p>
                             </li>
                         </ul>
                     
