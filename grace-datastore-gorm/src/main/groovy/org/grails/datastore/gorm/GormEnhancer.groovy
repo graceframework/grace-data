@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2025 the original author or authors.
+ * Copyright 2010-2026 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -448,7 +448,6 @@ class GormEnhancer implements Closeable {
     @Override
     @CompileStatic
     void close() throws IOException {
-        removeConstraints()
         DATASTORES_BY_TYPE.clear()
 
         def registry = GroovySystem.metaClassRegistry
@@ -484,21 +483,6 @@ class GormEnhancer implements Closeable {
     private static IllegalStateException stateException(Class entity) {
         new IllegalStateException("Either class [$entity.name] is not a domain class or GORM has not been initialized correctly or has already been shutdown. " +
                 'Ensure GORM is loaded and configured correctly before calling any methods on a GORM entity.')
-    }
-
-    @CompileDynamic
-    protected void removeConstraints() {
-        try {
-            String className = 'org.codehaus.groovy.grails.validation.ConstrainedProperty'
-            ClassLoader classLoader = getClass().getClassLoader()
-            if (ClassUtils.isPresent(className, classLoader)) {
-                classLoader.loadClass(className).removeConstraint('unique')
-            }
-        }
-        catch (Throwable e) {
-            log.debug('Not running in Grails 2 environment, cannot de-register constraints. ' +
-                    "This exception can be safely ignored if you are not using Grails 2. ${e.message}", e)
-        }
     }
 
     protected void registerConstraints(Datastore datastore) {
