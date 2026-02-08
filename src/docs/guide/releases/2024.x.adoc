@@ -1,3 +1,26 @@
+=== 2024.0.0-RC1
+
+link:{github}/releases/tag/v2024.0.0-RC1[release notes]
+
+🛠 Improvements
+
+* Update README
+* Add release notes for 2024.0.0-RC1
+* Update copyright in doc.properties
+* Remove unused `GormEnhancer.removeConstraints()` link:{github}/issues/86[#86]
+* Remove adding the `Artefact` to Entity, using `AdditionalGormEntityTransformation` to perform additional transformations for Entity link:{github}/issues/83[#83]
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace 2024.0.0-M2 link:{github}/issues/84[#84]
+* Upgrade to Grace Async 7.0.0-RC1 link:{github}/issues/85[#85]
+* Upgrade to Gradle 8.14.4 link:{github}/issues/90[#90]
+* Upgrade to Groovy 4.0.30 link:{github}/issues/89[#89]
+
+⚙️ Tasks
+
+* Release v2024.0.0-RC1
+
 === 2024.0.0-M1
 
 link:{github}/releases/tag/v2024.0.0-M1[release notes]
