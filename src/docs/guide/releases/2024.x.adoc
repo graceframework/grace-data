@@ -1,3 +1,26 @@
+=== 2024.0.0
+
+link:{github}/releases/tag/v2024.0.0[release notes]
+
+🛠 Improvements
+
+* Update README
+* Add release notes for 2024.0.0
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace 2024.0.0-RC1 link:{github}/issues/92[#92]
+* Upgrade to Grace Async 7.0.0 link:{github}/issues/93[#93]
+* Upgrade to Hibernate Validator 8.0.3.Final link:{github}/issues/94[#94]
+* Upgrade to Spring Framework 6.2.17 link:{github}/issues/95[#95]
+
+⚙️ Tasks
+
+* Release v2024.0.0
+* Upgrade to gradle/actions/setup-gradle@v5.0.2
+* Upgrade to actions/setup-java@v5
+* Upgrade to actions/checkout@v6
+
 === 2024.0.0-RC1
 
 link:{github}/releases/tag/v2024.0.0-RC1[release notes]
