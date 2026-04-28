@@ -6,7 +6,6 @@ grails.gorm.async
 grails.gorm.dirty.checking
 grails.gorm.multitenancy
 grails.gorm.services
-grails.gorm.tests
 grails.gorm.time
 grails.gorm.transactions
 grails.gorm.validation
