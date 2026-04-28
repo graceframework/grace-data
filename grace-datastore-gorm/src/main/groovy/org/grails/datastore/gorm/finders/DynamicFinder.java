@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2025 the original author or authors.
+ * Copyright 2010-2026 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,6 +68,7 @@ import org.grails.datastore.mapping.reflect.NameUtils;
  * Abstract base class for dynamic finders.
  *
  * @author Graeme Rocher
+ * @author Michael Yan
  * @since 1.0
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -499,8 +500,7 @@ public abstract class DynamicFinder extends AbstractFinder implements QueryBuild
      * @param query The query
      * @param argMap The query arguments
      */
-    //TODO: Change {code}Class<? extends Object>{code} to {class<?>} once GROOVY-9460 is fixed.
-    public static void populateArgumentsForCriteria(Class<? extends Object> targetClass, Query query, Map argMap) {
+    public static void populateArgumentsForCriteria(Class<?> targetClass, Query query, Map argMap) {
         if (argMap == null) {
             return;
         }
