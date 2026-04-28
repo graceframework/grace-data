@@ -50,7 +50,7 @@ tasks.withType(Groovydoc) {
     destinationDir = project.file('build/docs/manual/api')
     def files = []
     project.rootProject.subprojects
-            .findAll { !it.name != 'docs' && !it.name.startsWith('examples') }
+            .findAll { !it.name != 'docs' && !it.name.startsWith('examples') && !it.name.endsWith('tck') }
             .each { subproject ->
                 if(subproject.file('src/main/groovy').exists()) {
                     files += subproject.files('src/main/groovy')
