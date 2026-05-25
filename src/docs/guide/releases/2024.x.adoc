@@ -1,3 +1,29 @@
+=== 2024.1.0-RC1
+
+link:{github}/releases/tag/v2024.1.0-RC1[release notes]
+
+🛠 Improvements
+
+* Update README
+* Add release notes for 2024.1.0-RC1
+* Add more groovydoc `link` to fix wrong javadoc links link:{github}/issues/123[#123]
+* Add .sdkmanrc with latest java version 17.0.19-zulu link:{github}/issues/113[#113]
+* Upgrade Release Drafter Gradle Action to v7 link:{github}/issues/112[#112]
+* Upgrade GitHub workflows: migrate java distribution from `adopt` to `zulu` link:{github}/issues/111[#111]
+
+🚀 Dependency Upgrades
+
+* Upgrade to Caffeine 3.2.4 link:{github}/issues/121[#121]
+* Upgrade to Grace Async 7.1.0-RC1 link:{github}/issues/122[#122]
+* Upgrade to Grace Gradle Plugin 2024.1.0-M3 link:{github}/issues/116[#116]
+* Upgrade to Gradle 8.14.5 link:{github}/issues/118[#118]
+* Upgrade to JUnit Platform 1.12.2 link:{github}/issues/115[#115]
+* Upgrade to JUnit Jupiter 5.12.2 link:{github}/issues/114[#114]
+
+⚙️ Tasks
+
+* Release v2024.1.0-RC1
+
 === 2024.1.0-M1
 
 link:{github}/releases/tag/v2024.1.0-M1[release notes]
