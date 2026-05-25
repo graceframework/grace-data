@@ -106,9 +106,9 @@ if (location.href.indexOf('is-external=true') == -1) {
             <!-- todo: direct known subclasses -->
             <hr>
 
-<pre>@groovy.transform.CompileStatic
+<pre>@<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/transform/CompileStatic.html' title='CompileStatic'>CompileStatic</a>
 class TenantDelegatingGormOperations&lt;D&gt;
-extends java.lang.Object
+extends <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a>
 implements GormAllOperations&lt;D&gt;</pre>
 
     <p> Wraps each method call in the the given tenant id <DL><DT><B>Authors:</B></DT><DD>Graeme Rocher</DD></DL><DL><DT><B>Since:</B></DT><DD>6.0</DD></DL></p>
@@ -152,7 +152,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code><strong>java.io.Serializable</strong></code>&nbsp;</td>
+                            <td class="colFirst"><code><strong><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a></strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#tenantId">tenantId</a></code><br></td>
                         </tr>
                         
@@ -180,7 +180,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         
                         <tr class="altColor">
                             <td class="colFirst">
-                                <code><strong><a href="#TenantDelegatingGormOperations(org.grails.datastore.mapping.core.Datastore, java.io.Serializable, GormAllOperations)">TenantDelegatingGormOperations</a></strong>(<a href='../../../../../org/grails/datastore/mapping/core/Datastore.html'>Datastore</a> datastore, java.io.Serializable tenantId, GormAllOperations&lt;D&gt; allOperations)</code><br></td>
+                                <code><strong><a href="#TenantDelegatingGormOperations(org.grails.datastore.mapping.core.Datastore, java.io.Serializable, GormAllOperations)">TenantDelegatingGormOperations</a></strong>(<a href='../../../../../org/grails/datastore/mapping/core/Datastore.html'>Datastore</a> datastore, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> tenantId, GormAllOperations&lt;D&gt; allOperations)</code><br></td>
                         </tr>
                         
                     </table>
@@ -212,7 +212,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.lang.Integer</code></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a></code></td>
                             <td class="colLast"><code><strong><a href="#count()">count</a></strong>()</code><br></td>
                         </tr>
                         
@@ -237,19 +237,19 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>void</code></td>
-                            <td class="colLast"><code><strong><a href="#delete(D, java.util.Map)">delete</a></strong>(D instance, java.util.Map params)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#delete(D, java.util.Map)">delete</a></strong>(D instance, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>void</code></td>
-                            <td class="colLast"><code><strong><a href="#deleteAll(java.lang.Object)">deleteAll</a></strong>(java.lang.Object[] objectsToDelete)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#deleteAll(java.lang.Object)">deleteAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a>[] objectsToDelete)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>void</code></td>
-                            <td class="colLast"><code><strong><a href="#deleteAll(java.lang.Iterable)">deleteAll</a></strong>(java.lang.Iterable objectsToDelete)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#deleteAll(java.lang.Iterable)">deleteAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html' title='Iterable'>Iterable</a> objectsToDelete)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
@@ -261,91 +261,91 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>GormAllOperations&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#eachTenant(groovy.lang.Closure)">eachTenant</a></strong>(groovy.lang.Closure callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#eachTenant(groovy.lang.Closure)">eachTenant</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List</code></td>
-                            <td class="colLast"><code><strong><a href="#executeQuery(java.lang.CharSequence)">executeQuery</a></strong>(java.lang.CharSequence query)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a></code></td>
+                            <td class="colLast"><code><strong><a href="#executeQuery(java.lang.CharSequence)">executeQuery</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List</code></td>
-                            <td class="colLast"><code><strong><a href="#executeQuery(java.lang.CharSequence, java.util.Map)">executeQuery</a></strong>(java.lang.CharSequence query, java.util.Map args)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a></code></td>
+                            <td class="colLast"><code><strong><a href="#executeQuery(java.lang.CharSequence, java.util.Map)">executeQuery</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List</code></td>
-                            <td class="colLast"><code><strong><a href="#executeQuery(java.lang.CharSequence, java.util.Map, java.util.Map)">executeQuery</a></strong>(java.lang.CharSequence query, java.util.Map params, java.util.Map args)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a></code></td>
+                            <td class="colLast"><code><strong><a href="#executeQuery(java.lang.CharSequence, java.util.Map, java.util.Map)">executeQuery</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List</code></td>
-                            <td class="colLast"><code><strong><a href="#executeQuery(java.lang.CharSequence, java.util.Collection)">executeQuery</a></strong>(java.lang.CharSequence query, java.util.Collection params)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a></code></td>
+                            <td class="colLast"><code><strong><a href="#executeQuery(java.lang.CharSequence, java.util.Collection)">executeQuery</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List</code></td>
-                            <td class="colLast"><code><strong><a href="#executeQuery(java.lang.CharSequence, java.lang.Object)">executeQuery</a></strong>(java.lang.CharSequence query, java.lang.Object[] params)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a></code></td>
+                            <td class="colLast"><code><strong><a href="#executeQuery(java.lang.CharSequence, java.lang.Object)">executeQuery</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a>[] params)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List</code></td>
-                            <td class="colLast"><code><strong><a href="#executeQuery(java.lang.CharSequence, java.util.Collection, java.util.Map)">executeQuery</a></strong>(java.lang.CharSequence query, java.util.Collection params, java.util.Map args)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a></code></td>
+                            <td class="colLast"><code><strong><a href="#executeQuery(java.lang.CharSequence, java.util.Collection, java.util.Map)">executeQuery</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.lang.Integer</code></td>
-                            <td class="colLast"><code><strong><a href="#executeUpdate(java.lang.CharSequence)">executeUpdate</a></strong>(java.lang.CharSequence query)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a></code></td>
+                            <td class="colLast"><code><strong><a href="#executeUpdate(java.lang.CharSequence)">executeUpdate</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.lang.Integer</code></td>
-                            <td class="colLast"><code><strong><a href="#executeUpdate(java.lang.CharSequence, java.util.Map)">executeUpdate</a></strong>(java.lang.CharSequence query, java.util.Map args)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a></code></td>
+                            <td class="colLast"><code><strong><a href="#executeUpdate(java.lang.CharSequence, java.util.Map)">executeUpdate</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.lang.Integer</code></td>
-                            <td class="colLast"><code><strong><a href="#executeUpdate(java.lang.CharSequence, java.util.Map, java.util.Map)">executeUpdate</a></strong>(java.lang.CharSequence query, java.util.Map params, java.util.Map args)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a></code></td>
+                            <td class="colLast"><code><strong><a href="#executeUpdate(java.lang.CharSequence, java.util.Map, java.util.Map)">executeUpdate</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.lang.Integer</code></td>
-                            <td class="colLast"><code><strong><a href="#executeUpdate(java.lang.CharSequence, java.util.Collection)">executeUpdate</a></strong>(java.lang.CharSequence query, java.util.Collection params)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a></code></td>
+                            <td class="colLast"><code><strong><a href="#executeUpdate(java.lang.CharSequence, java.util.Collection)">executeUpdate</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.lang.Integer</code></td>
-                            <td class="colLast"><code><strong><a href="#executeUpdate(java.lang.CharSequence, java.lang.Object)">executeUpdate</a></strong>(java.lang.CharSequence query, java.lang.Object[] params)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a></code></td>
+                            <td class="colLast"><code><strong><a href="#executeUpdate(java.lang.CharSequence, java.lang.Object)">executeUpdate</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a>[] params)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.lang.Integer</code></td>
-                            <td class="colLast"><code><strong><a href="#executeUpdate(java.lang.CharSequence, java.util.Collection, java.util.Map)">executeUpdate</a></strong>(java.lang.CharSequence query, java.util.Collection params, java.util.Map args)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a></code></td>
+                            <td class="colLast"><code><strong><a href="#executeUpdate(java.lang.CharSequence, java.util.Collection, java.util.Map)">executeUpdate</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>boolean</code></td>
-                            <td class="colLast"><code><strong><a href="#exists(java.io.Serializable)">exists</a></strong>(java.io.Serializable id)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#exists(java.io.Serializable)">exists</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> id)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#find(groovy.lang.Closure)">find</a></strong>(groovy.lang.Closure callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#find(groovy.lang.Closure)">find</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
@@ -357,151 +357,151 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#find(D, java.util.Map)">find</a></strong>(D example, java.util.Map args)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#find(D, java.util.Map)">find</a></strong>(D example, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#find(java.lang.CharSequence)">find</a></strong>(java.lang.CharSequence query)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#find(java.lang.CharSequence)">find</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#find(java.lang.CharSequence, java.util.Map)">find</a></strong>(java.lang.CharSequence query, java.util.Map params)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#find(java.lang.CharSequence, java.util.Map)">find</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#find(java.lang.CharSequence, java.util.Map, java.util.Map)">find</a></strong>(java.lang.CharSequence query, java.util.Map params, java.util.Map args)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#find(java.lang.CharSequence, java.util.Map, java.util.Map)">find</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#find(java.lang.CharSequence, java.util.Collection)">find</a></strong>(java.lang.CharSequence query, java.util.Collection params)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#find(java.lang.CharSequence, java.util.Collection)">find</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#find(java.lang.CharSequence, java.lang.Object)">find</a></strong>(java.lang.CharSequence query, java.lang.Object[] params)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#find(java.lang.CharSequence, java.lang.Object)">find</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a>[] params)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#find(java.lang.CharSequence, java.util.Collection, java.util.Map)">find</a></strong>(java.lang.CharSequence query, java.util.Collection params, java.util.Map args)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#find(java.lang.CharSequence, java.util.Collection, java.util.Map)">find</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#findAll(groovy.lang.Closure)">findAll</a></strong>(groovy.lang.Closure callable)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#findAll(groovy.lang.Closure)">findAll</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#findAll(java.util.Map, groovy.lang.Closure)">findAll</a></strong>(java.util.Map args, groovy.lang.Closure callable)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#findAll(java.util.Map, groovy.lang.Closure)">findAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#findAll(java.util.Map)">findAll</a></strong>(java.util.Map params)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#findAll(java.util.Map)">findAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
                             <td class="colLast"><code><strong><a href="#findAll()">findAll</a></strong>()</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
                             <td class="colLast"><code><strong><a href="#findAll(D)">findAll</a></strong>(D example)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#findAll(D, java.util.Map)">findAll</a></strong>(D example, java.util.Map args)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#findAll(D, java.util.Map)">findAll</a></strong>(D example, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#findAll(java.lang.CharSequence)">findAll</a></strong>(java.lang.CharSequence query)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#findAll(java.lang.CharSequence)">findAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#findAll(java.lang.CharSequence, java.util.Map)">findAll</a></strong>(java.lang.CharSequence query, java.util.Map params)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#findAll(java.lang.CharSequence, java.util.Map)">findAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#findAll(java.lang.CharSequence, java.util.Map, java.util.Map)">findAll</a></strong>(java.lang.CharSequence query, java.util.Map params, java.util.Map args)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#findAll(java.lang.CharSequence, java.util.Map, java.util.Map)">findAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#findAll(java.lang.CharSequence, java.util.Collection)">findAll</a></strong>(java.lang.CharSequence query, java.util.Collection params)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#findAll(java.lang.CharSequence, java.util.Collection)">findAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#findAll(java.lang.CharSequence, java.lang.Object)">findAll</a></strong>(java.lang.CharSequence query, java.lang.Object[] params)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#findAll(java.lang.CharSequence, java.lang.Object)">findAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a>[] params)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#findAll(java.lang.CharSequence, java.util.Collection, java.util.Map)">findAll</a></strong>(java.lang.CharSequence query, java.util.Collection params, java.util.Map args)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#findAll(java.lang.CharSequence, java.util.Collection, java.util.Map)">findAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#findAllWhere(java.util.Map)">findAllWhere</a></strong>(java.util.Map queryMap)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#findAllWhere(java.util.Map)">findAllWhere</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryMap)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#findAllWhere(java.util.Map, java.util.Map)">findAllWhere</a></strong>(java.util.Map queryMap, java.util.Map args)</code><br></td>
-                        </tr>
-                        
-                        <tr class="altColor">
-                            <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#findOrCreateWhere(java.util.Map)">findOrCreateWhere</a></strong>(java.util.Map queryMap)</code><br></td>
-                        </tr>
-                        
-                        <tr class="rowColor">
-                            <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#findOrSaveWhere(java.util.Map)">findOrSaveWhere</a></strong>(java.util.Map queryMap)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#findAllWhere(java.util.Map, java.util.Map)">findAllWhere</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryMap, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#findWhere(java.util.Map)">findWhere</a></strong>(java.util.Map queryMap)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#findOrCreateWhere(java.util.Map)">findOrCreateWhere</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryMap)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#findWhere(java.util.Map, java.util.Map)">findWhere</a></strong>(java.util.Map queryMap, java.util.Map args)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#findOrSaveWhere(java.util.Map)">findOrSaveWhere</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryMap)</code><br></td>
+                        </tr>
+                        
+                        <tr class="altColor">
+                            <td class="colFirst"><code></code></td>
+                            <td class="colLast"><code>D</code></td>
+                            <td class="colLast"><code><strong><a href="#findWhere(java.util.Map)">findWhere</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryMap)</code><br></td>
+                        </tr>
+                        
+                        <tr class="rowColor">
+                            <td class="colFirst"><code></code></td>
+                            <td class="colLast"><code>D</code></td>
+                            <td class="colLast"><code><strong><a href="#findWhere(java.util.Map, java.util.Map)">findWhere</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryMap, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
@@ -513,48 +513,48 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#first(java.lang.String)">first</a></strong>(java.lang.String propertyName)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#first(java.lang.String)">first</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> propertyName)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#first(java.util.Map)">first</a></strong>(java.util.Map queryParams)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#first(java.util.Map)">first</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryParams)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#get(java.io.Serializable)">get</a></strong>(java.io.Serializable id)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#get(java.io.Serializable)">get</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> id)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#getAll(Iterable)">getAll</a></strong>(java.lang.Iterable&lt;java.io.Serializable&gt; ids)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#getAll(Iterable)">getAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html' title='Iterable'>Iterable</a>&lt;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a>&gt; ids)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#getAll(java.io.Serializable)">getAll</a></strong>(java.io.Serializable[] ids)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#getAll(java.io.Serializable)">getAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a>[] ids)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
                             <td class="colLast"><code><strong><a href="#getAll()">getAll</a></strong>()</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.lang.Integer</code></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a></code></td>
                             <td class="colLast"><code><strong><a href="#getCount()">getCount</a></strong>()</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;FinderMethod&gt;</code></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;FinderMethod&gt;</code></td>
                             <td class="colLast"><code><strong><a href="#getGormDynamicFinders()">getGormDynamicFinders</a></strong>()</code><br></td>
                         </tr>
                         
@@ -566,7 +566,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.io.Serializable</code></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a></code></td>
                             <td class="colLast"><code><strong><a href="#ident(D)">ident</a></strong>(D instance)</code><br></td>
                         </tr>
                         
@@ -579,13 +579,13 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#insert(D, java.util.Map)">insert</a></strong>(D instance, java.util.Map params)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#insert(D, java.util.Map)">insert</a></strong>(D instance, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>boolean</code></td>
-                            <td class="colLast"><code><strong><a href="#instanceOf(D, java.lang.Class)">instanceOf</a></strong>(D instance, java.lang.Class cls)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#instanceOf(D, java.lang.Class)">instanceOf</a></strong>(D instance, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a> cls)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
@@ -603,31 +603,31 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#last(java.lang.String)">last</a></strong>(java.lang.String propertyName)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#last(java.lang.String)">last</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> propertyName)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#last(java.util.Map)">last</a></strong>(java.util.Map queryParams)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#last(java.util.Map)">last</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryParams)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#list(java.util.Map)">list</a></strong>(java.util.Map params)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#list(java.util.Map)">list</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;D&gt;</code></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt;</code></td>
                             <td class="colLast"><code><strong><a href="#list()">list</a></strong>()</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#load(java.io.Serializable)">load</a></strong>(java.io.Serializable id)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#load(java.io.Serializable)">load</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> id)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
@@ -639,13 +639,13 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#lock(java.io.Serializable)">lock</a></strong>(java.io.Serializable id)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#lock(java.io.Serializable)">lock</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> id)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#merge(D, java.util.Map)">merge</a></strong>(D instance, java.util.Map params)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#merge(D, java.util.Map)">merge</a></strong>(D instance, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
@@ -656,44 +656,44 @@ implements GormAllOperations&lt;D&gt;</pre>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.lang.Object</code></td>
-                            <td class="colLast"><code><strong><a href="#methodMissing(java.lang.String, java.lang.Object)">methodMissing</a></strong>(java.lang.String methodName, java.lang.Object arg)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a></code></td>
+                            <td class="colLast"><code><strong><a href="#methodMissing(java.lang.String, java.lang.Object)">methodMissing</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> methodName, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a> arg)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>T</code></td>
-                            <td class="colLast"><code><strong><a href="#mutex(D, Closure)">mutex</a></strong>(D instance, groovy.lang.Closure&lt;T&gt; callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#mutex(D, Closure)">mutex</a></strong>(D instance, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.lang.Object</code></td>
-                            <td class="colLast"><code><strong><a href="#propertyMissing(D, java.lang.String)">propertyMissing</a></strong>(D instance, java.lang.String name)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a></code></td>
+                            <td class="colLast"><code><strong><a href="#propertyMissing(D, java.lang.String)">propertyMissing</a></strong>(D instance, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> name)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.lang.Object</code></td>
-                            <td class="colLast"><code><strong><a href="#propertyMissing(java.lang.String)">propertyMissing</a></strong>(java.lang.String property)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a></code></td>
+                            <td class="colLast"><code><strong><a href="#propertyMissing(java.lang.String)">propertyMissing</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> property)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>void</code></td>
-                            <td class="colLast"><code><strong><a href="#propertyMissing(java.lang.String, java.lang.Object)">propertyMissing</a></strong>(java.lang.String property, java.lang.Object value)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#propertyMissing(java.lang.String, java.lang.Object)">propertyMissing</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> property, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a> value)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#proxy(java.io.Serializable)">proxy</a></strong>(java.io.Serializable id)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#proxy(java.io.Serializable)">proxy</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> id)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#read(java.io.Serializable)">read</a></strong>(java.io.Serializable id)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#read(java.io.Serializable)">read</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> id)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
@@ -717,115 +717,115 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>D</code></td>
-                            <td class="colLast"><code><strong><a href="#save(D, java.util.Map)">save</a></strong>(D instance, java.util.Map params)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#save(D, java.util.Map)">save</a></strong>(D instance, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;java.io.Serializable&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#saveAll(java.lang.Object)">saveAll</a></strong>(java.lang.Object[] objectsToSave)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a>&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#saveAll(java.lang.Object)">saveAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a>[] objectsToSave)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>java.util.List&lt;java.io.Serializable&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#saveAll(Iterable)">saveAll</a></strong>(java.lang.Iterable&lt;?&gt; objectsToSave)</code><br></td>
-                        </tr>
-                        
-                        <tr class="altColor">
-                            <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>DetachedCriteria&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#where(groovy.lang.Closure)">where</a></strong>(groovy.lang.Closure callable)</code><br></td>
-                        </tr>
-                        
-                        <tr class="rowColor">
-                            <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>DetachedCriteria&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#whereAny(groovy.lang.Closure)">whereAny</a></strong>(groovy.lang.Closure callable)</code><br></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a>&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#saveAll(Iterable)">saveAll</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html' title='Iterable'>Iterable</a>&lt;?&gt; objectsToSave)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>DetachedCriteria&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#whereLazy(groovy.lang.Closure)">whereLazy</a></strong>(groovy.lang.Closure callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#where(groovy.lang.Closure)">where</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</code><br></td>
+                        </tr>
+                        
+                        <tr class="rowColor">
+                            <td class="colFirst"><code></code></td>
+                            <td class="colLast"><code>DetachedCriteria&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#whereAny(groovy.lang.Closure)">whereAny</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</code><br></td>
+                        </tr>
+                        
+                        <tr class="altColor">
+                            <td class="colFirst"><code></code></td>
+                            <td class="colLast"><code>DetachedCriteria&lt;D&gt;</code></td>
+                            <td class="colLast"><code><strong><a href="#whereLazy(groovy.lang.Closure)">whereLazy</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>T</code></td>
-                            <td class="colLast"><code><strong><a href="#withCriteria(Closure)">withCriteria</a></strong>(groovy.lang.Closure&lt;T&gt; callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#withCriteria(Closure)">withCriteria</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>T</code></td>
-                            <td class="colLast"><code><strong><a href="#withCriteria(java.util.Map, Closure)">withCriteria</a></strong>(java.util.Map builderArgs, groovy.lang.Closure&lt;T&gt; callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#withCriteria(java.util.Map, Closure)">withCriteria</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> builderArgs, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>T</code></td>
-                            <td class="colLast"><code><strong><a href="#withDatastoreSession(Closure)">withDatastoreSession</a></strong>(groovy.lang.Closure&lt;T&gt; callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#withDatastoreSession(Closure)">withDatastoreSession</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>T</code></td>
-                            <td class="colLast"><code><strong><a href="#withNewSession(Closure)">withNewSession</a></strong>(groovy.lang.Closure&lt;T&gt; callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#withNewSession(Closure)">withNewSession</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>T</code></td>
-                            <td class="colLast"><code><strong><a href="#withNewTransaction(Closure)">withNewTransaction</a></strong>(groovy.lang.Closure&lt;T&gt; callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#withNewTransaction(Closure)">withNewTransaction</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>T</code></td>
-                            <td class="colLast"><code><strong><a href="#withNewTransaction(java.util.Map, Closure)">withNewTransaction</a></strong>(java.util.Map transactionProperties, groovy.lang.Closure&lt;T&gt; callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#withNewTransaction(java.util.Map, Closure)">withNewTransaction</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> transactionProperties, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>T</code></td>
-                            <td class="colLast"><code><strong><a href="#withSession(Closure)">withSession</a></strong>(groovy.lang.Closure&lt;T&gt; callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#withSession(Closure)">withSession</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>T</code></td>
-                            <td class="colLast"><code><strong><a href="#withStatelessSession(Closure)">withStatelessSession</a></strong>(groovy.lang.Closure&lt;T&gt; callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#withStatelessSession(Closure)">withStatelessSession</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>T</code></td>
-                            <td class="colLast"><code><strong><a href="#withTenant(java.io.Serializable, Closure)">withTenant</a></strong>(java.io.Serializable tenantId, groovy.lang.Closure&lt;T&gt; callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#withTenant(java.io.Serializable, Closure)">withTenant</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> tenantId, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>GormAllOperations&lt;D&gt;</code></td>
-                            <td class="colLast"><code><strong><a href="#withTenant(java.io.Serializable)">withTenant</a></strong>(java.io.Serializable tenantId)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#withTenant(java.io.Serializable)">withTenant</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> tenantId)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>T</code></td>
-                            <td class="colLast"><code><strong><a href="#withTransaction(Closure)">withTransaction</a></strong>(groovy.lang.Closure&lt;T&gt; callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#withTransaction(Closure)">withTransaction</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br></td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>T</code></td>
-                            <td class="colLast"><code><strong><a href="#withTransaction(java.util.Map, Closure)">withTransaction</a></strong>(java.util.Map transactionProperties, groovy.lang.Closure&lt;T&gt; callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#withTransaction(java.util.Map, Closure)">withTransaction</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> transactionProperties, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>T</code></td>
-                            <td class="colLast"><code><strong><a href="#withTransaction(org.springframework.transaction.TransactionDefinition, Closure)">withTransaction</a></strong>(<a href='../../../../../org.springframework.transaction.TransactionDefinition.html'>TransactionDefinition</a> definition, groovy.lang.Closure&lt;T&gt; callable)</code><br></td>
+                            <td class="colLast"><code><strong><a href="#withTransaction(org.springframework.transaction.TransactionDefinition, Closure)">withTransaction</a></strong>(org.springframework.transaction.TransactionDefinition definition, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br></td>
                         </tr>
                         
                     </table>
@@ -843,8 +843,8 @@ implements GormAllOperations&lt;D&gt;</pre>
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code>class java.lang.Object</code></td>
-                            <td class="colLast"><code>java.lang.Object#equals(java.lang.Object), java.lang.Object#getClass(), java.lang.Object#hashCode(), java.lang.Object#notify(), java.lang.Object#notifyAll(), java.lang.Object#toString(), java.lang.Object#wait(), java.lang.Object#wait(long), java.lang.Object#wait(long, int)</code></td>
+                            <td class="colFirst"><code>class <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a></code></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)' title='equals'>equals</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()' title='getClass'>getClass</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()' title='hashCode'>hashCode</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()' title='notify'>notify</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()' title='notifyAll'>notifyAll</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()' title='toString'>toString</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()' title='wait'>wait</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)' title='wait'>wait</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long, int)' title='wait'>wait</a></code></td>
                         </tr>
                     </table>
                    </ul>
@@ -890,7 +890,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="tenantId"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>final&nbsp;java.io.Serializable <strong>tenantId</strong></h4>
+                                <h4>final&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> <strong>tenantId</strong></h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -912,7 +912,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="TenantDelegatingGormOperations(org.grails.datastore.mapping.core.Datastore, java.io.Serializable, GormAllOperations)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4><strong>TenantDelegatingGormOperations</strong>(<a href='../../../../../org/grails/datastore/mapping/core/Datastore.html'>Datastore</a> datastore, java.io.Serializable tenantId, GormAllOperations&lt;D&gt; allOperations)</h4>
+                                <h4><strong>TenantDelegatingGormOperations</strong>(<a href='../../../../../org/grails/datastore/mapping/core/Datastore.html'>Datastore</a> datastore, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> tenantId, GormAllOperations&lt;D&gt; allOperations)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -933,7 +933,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="attach(D)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>attach</strong>(D instance)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>attach</strong>(D instance)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -941,7 +941,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="count()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.lang.Integer <strong>count</strong>()</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a> <strong>count</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -949,7 +949,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="create()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>create</strong>()</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>create</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -957,7 +957,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="createCriteria()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br><a href='../../../../../org/grails/datastore/mapping/query/api/BuildableCriteria.html'>BuildableCriteria</a> <strong>createCriteria</strong>()</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='../../../../../org/grails/datastore/mapping/query/api/BuildableCriteria.html'>BuildableCriteria</a> <strong>createCriteria</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -965,7 +965,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="delete(D)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>void <strong>delete</strong>(D instance)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>void <strong>delete</strong>(D instance)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -973,7 +973,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="delete(D, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>void <strong>delete</strong>(D instance, java.util.Map params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>void <strong>delete</strong>(D instance, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -981,7 +981,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="deleteAll(java.lang.Object)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>void <strong>deleteAll</strong>(java.lang.Object[] objectsToDelete)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>void <strong>deleteAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a>[] objectsToDelete)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -989,7 +989,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="deleteAll(java.lang.Iterable)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>void <strong>deleteAll</strong>(java.lang.Iterable objectsToDelete)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>void <strong>deleteAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html' title='Iterable'>Iterable</a> objectsToDelete)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -997,7 +997,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="discard(D)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>void <strong>discard</strong>(D instance)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>void <strong>discard</strong>(D instance)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1005,7 +1005,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="eachTenant(groovy.lang.Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>GormAllOperations&lt;D&gt; <strong>eachTenant</strong>(groovy.lang.Closure callable)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>GormAllOperations&lt;D&gt; <strong>eachTenant</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1013,7 +1013,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="executeQuery(java.lang.CharSequence)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List <strong>executeQuery</strong>(java.lang.CharSequence query)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a> <strong>executeQuery</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1021,7 +1021,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="executeQuery(java.lang.CharSequence, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List <strong>executeQuery</strong>(java.lang.CharSequence query, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a> <strong>executeQuery</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1029,7 +1029,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="executeQuery(java.lang.CharSequence, java.util.Map, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List <strong>executeQuery</strong>(java.lang.CharSequence query, java.util.Map params, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a> <strong>executeQuery</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1037,7 +1037,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="executeQuery(java.lang.CharSequence, java.util.Collection)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List <strong>executeQuery</strong>(java.lang.CharSequence query, java.util.Collection params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a> <strong>executeQuery</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1045,7 +1045,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="executeQuery(java.lang.CharSequence, java.lang.Object)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List <strong>executeQuery</strong>(java.lang.CharSequence query, java.lang.Object[] params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a> <strong>executeQuery</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a>[] params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1053,7 +1053,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="executeQuery(java.lang.CharSequence, java.util.Collection, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List <strong>executeQuery</strong>(java.lang.CharSequence query, java.util.Collection params, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a> <strong>executeQuery</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1061,7 +1061,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="executeUpdate(java.lang.CharSequence)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.lang.Integer <strong>executeUpdate</strong>(java.lang.CharSequence query)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a> <strong>executeUpdate</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1069,7 +1069,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="executeUpdate(java.lang.CharSequence, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.lang.Integer <strong>executeUpdate</strong>(java.lang.CharSequence query, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a> <strong>executeUpdate</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1077,7 +1077,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="executeUpdate(java.lang.CharSequence, java.util.Map, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.lang.Integer <strong>executeUpdate</strong>(java.lang.CharSequence query, java.util.Map params, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a> <strong>executeUpdate</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1085,7 +1085,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="executeUpdate(java.lang.CharSequence, java.util.Collection)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.lang.Integer <strong>executeUpdate</strong>(java.lang.CharSequence query, java.util.Collection params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a> <strong>executeUpdate</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1093,7 +1093,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="executeUpdate(java.lang.CharSequence, java.lang.Object)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.lang.Integer <strong>executeUpdate</strong>(java.lang.CharSequence query, java.lang.Object[] params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a> <strong>executeUpdate</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a>[] params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1101,7 +1101,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="executeUpdate(java.lang.CharSequence, java.util.Collection, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.lang.Integer <strong>executeUpdate</strong>(java.lang.CharSequence query, java.util.Collection params, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a> <strong>executeUpdate</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1109,7 +1109,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="exists(java.io.Serializable)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>boolean <strong>exists</strong>(java.io.Serializable id)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>boolean <strong>exists</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> id)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1117,7 +1117,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="find(groovy.lang.Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>find</strong>(groovy.lang.Closure callable)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>find</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1125,7 +1125,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="find(D)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>find</strong>(D example)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>find</strong>(D example)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1133,7 +1133,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="find(D, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>find</strong>(D example, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>find</strong>(D example, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1141,7 +1141,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="find(java.lang.CharSequence)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>find</strong>(java.lang.CharSequence query)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>find</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1149,7 +1149,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="find(java.lang.CharSequence, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>find</strong>(java.lang.CharSequence query, java.util.Map params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>find</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1157,7 +1157,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="find(java.lang.CharSequence, java.util.Map, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>find</strong>(java.lang.CharSequence query, java.util.Map params, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>find</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1165,7 +1165,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="find(java.lang.CharSequence, java.util.Collection)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>find</strong>(java.lang.CharSequence query, java.util.Collection params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>find</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1173,7 +1173,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="find(java.lang.CharSequence, java.lang.Object)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>find</strong>(java.lang.CharSequence query, java.lang.Object[] params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>find</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a>[] params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1181,7 +1181,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="find(java.lang.CharSequence, java.util.Collection, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>find</strong>(java.lang.CharSequence query, java.util.Collection params, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>find</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1189,7 +1189,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAll(groovy.lang.Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAll</strong>(groovy.lang.Closure callable)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAll</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1197,7 +1197,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAll(java.util.Map, groovy.lang.Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAll</strong>(java.util.Map args, groovy.lang.Closure callable)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1205,7 +1205,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAll(java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAll</strong>(java.util.Map params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1213,7 +1213,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAll()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAll</strong>()</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAll</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1221,7 +1221,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAll(D)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAll</strong>(D example)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAll</strong>(D example)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1229,7 +1229,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAll(D, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAll</strong>(D example, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAll</strong>(D example, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1237,7 +1237,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAll(java.lang.CharSequence)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAll</strong>(java.lang.CharSequence query)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1245,7 +1245,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAll(java.lang.CharSequence, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAll</strong>(java.lang.CharSequence query, java.util.Map params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1253,7 +1253,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAll(java.lang.CharSequence, java.util.Map, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAll</strong>(java.lang.CharSequence query, java.util.Map params, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1261,7 +1261,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAll(java.lang.CharSequence, java.util.Collection)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAll</strong>(java.lang.CharSequence query, java.util.Collection params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1269,7 +1269,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAll(java.lang.CharSequence, java.lang.Object)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAll</strong>(java.lang.CharSequence query, java.lang.Object[] params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a>[] params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1277,7 +1277,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAll(java.lang.CharSequence, java.util.Collection, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAll</strong>(java.lang.CharSequence query, java.util.Collection params, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html' title='CharSequence'>CharSequence</a> query, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html' title='Collection'>Collection</a> params, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1285,7 +1285,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAllWhere(java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAllWhere</strong>(java.util.Map queryMap)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAllWhere</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryMap)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1293,7 +1293,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findAllWhere(java.util.Map, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>findAllWhere</strong>(java.util.Map queryMap, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>findAllWhere</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryMap, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1301,7 +1301,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findOrCreateWhere(java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>findOrCreateWhere</strong>(java.util.Map queryMap)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>findOrCreateWhere</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryMap)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1309,7 +1309,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findOrSaveWhere(java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>findOrSaveWhere</strong>(java.util.Map queryMap)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>findOrSaveWhere</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryMap)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1317,7 +1317,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findWhere(java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>findWhere</strong>(java.util.Map queryMap)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>findWhere</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryMap)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1325,7 +1325,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="findWhere(java.util.Map, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>findWhere</strong>(java.util.Map queryMap, java.util.Map args)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>findWhere</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryMap, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> args)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1333,7 +1333,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="first()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>first</strong>()</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>first</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1341,7 +1341,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="first(java.lang.String)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>first</strong>(java.lang.String propertyName)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>first</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> propertyName)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1349,7 +1349,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="first(java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>first</strong>(java.util.Map queryParams)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>first</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryParams)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1357,7 +1357,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="get(java.io.Serializable)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>get</strong>(java.io.Serializable id)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>get</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> id)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1365,7 +1365,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="getAll(Iterable)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>getAll</strong>(java.lang.Iterable&lt;java.io.Serializable&gt; ids)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>getAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html' title='Iterable'>Iterable</a>&lt;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a>&gt; ids)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1373,7 +1373,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="getAll(java.io.Serializable)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>getAll</strong>(java.io.Serializable[] ids)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>getAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a>[] ids)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1381,7 +1381,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="getAll()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>getAll</strong>()</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>getAll</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1389,7 +1389,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="getCount()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.lang.Integer <strong>getCount</strong>()</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html' title='Integer'>Integer</a> <strong>getCount</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1397,7 +1397,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="getGormDynamicFinders()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;FinderMethod&gt; <strong>getGormDynamicFinders</strong>()</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;FinderMethod&gt; <strong>getGormDynamicFinders</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1405,7 +1405,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="getGormPersistentEntity()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br><a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>getGormPersistentEntity</strong>()</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='../../../../../org/grails/datastore/mapping/model/PersistentEntity.html'>PersistentEntity</a> <strong>getGormPersistentEntity</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1413,7 +1413,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="ident(D)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.io.Serializable <strong>ident</strong>(D instance)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> <strong>ident</strong>(D instance)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1421,7 +1421,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="insert(D)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>insert</strong>(D instance)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>insert</strong>(D instance)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1429,7 +1429,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="insert(D, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>insert</strong>(D instance, java.util.Map params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>insert</strong>(D instance, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1437,7 +1437,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="instanceOf(D, java.lang.Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>boolean <strong>instanceOf</strong>(D instance, java.lang.Class cls)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>boolean <strong>instanceOf</strong>(D instance, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a> cls)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1445,7 +1445,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="isAttached(D)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>boolean <strong>isAttached</strong>(D instance)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>boolean <strong>isAttached</strong>(D instance)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1453,7 +1453,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="last()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>last</strong>()</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>last</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1461,7 +1461,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="last(java.lang.String)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>last</strong>(java.lang.String propertyName)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>last</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> propertyName)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1469,7 +1469,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="last(java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>last</strong>(java.util.Map queryParams)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>last</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> queryParams)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1477,7 +1477,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="list(java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>list</strong>(java.util.Map params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>list</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1485,7 +1485,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="list()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;D&gt; <strong>list</strong>()</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;D&gt; <strong>list</strong>()</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1493,7 +1493,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="load(java.io.Serializable)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>load</strong>(java.io.Serializable id)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>load</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> id)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1501,7 +1501,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="lock(D)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>lock</strong>(D instance)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>lock</strong>(D instance)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1509,7 +1509,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="lock(java.io.Serializable)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>lock</strong>(java.io.Serializable id)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>lock</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> id)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1517,7 +1517,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="merge(D, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>merge</strong>(D instance, java.util.Map params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>merge</strong>(D instance, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1525,7 +1525,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="merge(D)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>merge</strong>(D d)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>merge</strong>(D d)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1533,7 +1533,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="methodMissing(java.lang.String, java.lang.Object)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.lang.Object <strong>methodMissing</strong>(java.lang.String methodName, java.lang.Object arg)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a> <strong>methodMissing</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> methodName, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a> arg)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1541,7 +1541,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="mutex(D, Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.Override<br>T <strong>mutex</strong>(D instance, groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; @<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>T <strong>mutex</strong>(D instance, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1549,7 +1549,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="propertyMissing(D, java.lang.String)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.lang.Object <strong>propertyMissing</strong>(D instance, java.lang.String name)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a> <strong>propertyMissing</strong>(D instance, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> name)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1557,7 +1557,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="propertyMissing(java.lang.String)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.lang.Object <strong>propertyMissing</strong>(java.lang.String property)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a> <strong>propertyMissing</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> property)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1565,7 +1565,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="propertyMissing(java.lang.String, java.lang.Object)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>void <strong>propertyMissing</strong>(java.lang.String property, java.lang.Object value)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>void <strong>propertyMissing</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> property, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a> value)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1573,7 +1573,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="proxy(java.io.Serializable)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>proxy</strong>(java.io.Serializable id)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>proxy</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> id)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1581,7 +1581,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="read(java.io.Serializable)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>read</strong>(java.io.Serializable id)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>read</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> id)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1589,7 +1589,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="refresh(D)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>refresh</strong>(D instance)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>refresh</strong>(D instance)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1597,7 +1597,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="save(D)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>save</strong>(D instance)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>save</strong>(D instance)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1605,7 +1605,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="save(D, boolean)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>save</strong>(D instance, boolean validate)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>save</strong>(D instance, boolean validate)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1613,7 +1613,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="save(D, java.util.Map)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>D <strong>save</strong>(D instance, java.util.Map params)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>D <strong>save</strong>(D instance, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> params)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1621,7 +1621,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="saveAll(java.lang.Object)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;java.io.Serializable&gt; <strong>saveAll</strong>(java.lang.Object[] objectsToSave)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a>&gt; <strong>saveAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a>[] objectsToSave)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1629,7 +1629,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="saveAll(Iterable)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>java.util.List&lt;java.io.Serializable&gt; <strong>saveAll</strong>(java.lang.Iterable&lt;?&gt; objectsToSave)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html' title='List'>List</a>&lt;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a>&gt; <strong>saveAll</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html' title='Iterable'>Iterable</a>&lt;?&gt; objectsToSave)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1637,7 +1637,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="where(groovy.lang.Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>DetachedCriteria&lt;D&gt; <strong>where</strong>(groovy.lang.Closure callable)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>DetachedCriteria&lt;D&gt; <strong>where</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1645,7 +1645,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="whereAny(groovy.lang.Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>DetachedCriteria&lt;D&gt; <strong>whereAny</strong>(groovy.lang.Closure callable)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>DetachedCriteria&lt;D&gt; <strong>whereAny</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1653,7 +1653,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="whereLazy(groovy.lang.Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>DetachedCriteria&lt;D&gt; <strong>whereLazy</strong>(groovy.lang.Closure callable)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>DetachedCriteria&lt;D&gt; <strong>whereLazy</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1661,7 +1661,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="withCriteria(Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.Override<br>T <strong>withCriteria</strong>(@groovy.lang.DelegatesTo(value: Criteria)<br>groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; @<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>T <strong>withCriteria</strong>(@<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/DelegatesTo.html' title='DelegatesTo'>DelegatesTo</a>(value: Criteria)<br><a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1669,7 +1669,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="withCriteria(java.util.Map, Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.Override<br>T <strong>withCriteria</strong>(java.util.Map builderArgs, @groovy.lang.DelegatesTo(value: Criteria)<br>groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; @<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>T <strong>withCriteria</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> builderArgs, @<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/DelegatesTo.html' title='DelegatesTo'>DelegatesTo</a>(value: Criteria)<br><a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1677,7 +1677,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="withDatastoreSession(Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.Override<br>T <strong>withDatastoreSession</strong>(groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; @<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>T <strong>withDatastoreSession</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1685,7 +1685,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="withNewSession(Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.Override<br>T <strong>withNewSession</strong>(groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; @<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>T <strong>withNewSession</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1693,7 +1693,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="withNewTransaction(Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.Override<br>T <strong>withNewTransaction</strong>(groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; @<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>T <strong>withNewTransaction</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1701,7 +1701,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="withNewTransaction(java.util.Map, Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.Override<br>T <strong>withNewTransaction</strong>(java.util.Map transactionProperties, groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; @<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>T <strong>withNewTransaction</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> transactionProperties, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1709,7 +1709,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="withSession(Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.Override<br>T <strong>withSession</strong>(groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; @<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>T <strong>withSession</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1717,7 +1717,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="withStatelessSession(Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.Override<br>T <strong>withStatelessSession</strong>(groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; @<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>T <strong>withStatelessSession</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1725,7 +1725,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="withTenant(java.io.Serializable, Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.Override<br>T <strong>withTenant</strong>(java.io.Serializable tenantId, groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; @<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>T <strong>withTenant</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> tenantId, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1733,7 +1733,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="withTenant(java.io.Serializable)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>@java.lang.Override<br>GormAllOperations&lt;D&gt; <strong>withTenant</strong>(java.io.Serializable tenantId)</h4>
+                                <h4>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>GormAllOperations&lt;D&gt; <strong>withTenant</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> tenantId)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1741,7 +1741,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="withTransaction(Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.Override<br>T <strong>withTransaction</strong>(groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; @<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>T <strong>withTransaction</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1749,7 +1749,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="withTransaction(java.util.Map, Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.Override<br>T <strong>withTransaction</strong>(java.util.Map transactionProperties, groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; @<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>T <strong>withTransaction</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html' title='Map'>Map</a> transactionProperties, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p></p>
                             </li>
                         </ul>
@@ -1757,7 +1757,7 @@ implements GormAllOperations&lt;D&gt;</pre>
                         <a name="withTransaction(org.springframework.transaction.TransactionDefinition, Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; @java.lang.Override<br>T <strong>withTransaction</strong>(<a href='../../../../../org.springframework.transaction.TransactionDefinition.html'>TransactionDefinition</a> definition, groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; @<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Override.html' title='Override'>Override</a><br>T <strong>withTransaction</strong>(org.springframework.transaction.TransactionDefinition definition, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p></p>
                             </li>
                         </ul>

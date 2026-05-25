@@ -101,11 +101,11 @@ if (location.href.indexOf('is-external=true') == -1) {
             <!-- todo: direct known subclasses -->
             <hr>
 
-<pre>@java.lang.annotation.Target({ ElementType.METHOD, ElementType.TYPE })
-@java.lang.annotation.Retention(RetentionPolicy.RUNTIME)
-@java.lang.annotation.Inherited
-@java.lang.annotation.Documented
-@org.codehaus.groovy.transform.GroovyASTTransformationClass("org.grails.datastore.gorm.transform.OrderedGormTransformation")
+<pre>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Target.html' title='Target'>Target</a>({ ElementType.METHOD, ElementType.TYPE })
+@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Retention.html' title='Retention'>Retention</a>(RetentionPolicy.RUNTIME)
+@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Inherited.html' title='Inherited'>Inherited</a>
+@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Documented.html' title='Documented'>Documented</a>
+@<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/org/codehaus/groovy/transform/GroovyASTTransformationClass.html' title='GroovyASTTransformationClass'>GroovyASTTransformationClass</a>("org.grails.datastore.gorm.transform.OrderedGormTransformation")
 @<a href='../../../org/grails/datastore/gorm/transform/GormASTTransformationClass.html' title='GormASTTransformationClass'>GormASTTransformationClass</a>("org.grails.datastore.gorm.multitenancy.transform.TenantTransform")
 public @interface Tenant</pre>
 
@@ -154,7 +154,7 @@ public @interface Tenant</pre>
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code><strong>java.lang.Class</strong></code>&nbsp;</td>
+                            <td class="colFirst"><code><strong><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a></strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#value">value</a></code><br>The tenant resolver</td>
                         </tr>
                         
@@ -170,7 +170,7 @@ public @interface Tenant</pre>
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code><strong>java.lang.Class&lt;? extends ConnectionSourcesProvider&gt;[]</strong></code>&nbsp;</td>
+                            <td class="colFirst"><code><strong><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends ConnectionSourcesProvider&gt;[]</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#datastore">datastore</a></code><br>If you are using multiple GORM implementations and wish to create a transaction for a specific implementation then use this.
  </td>
                         </tr>
@@ -199,8 +199,8 @@ public @interface Tenant</pre>
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code>class java.lang.Object</code></td>
-                            <td class="colLast"><code>java.lang.Object#equals(java.lang.Object), java.lang.Object#getClass(), java.lang.Object#hashCode(), java.lang.Object#notify(), java.lang.Object#notifyAll(), java.lang.Object#toString(), java.lang.Object#wait(), java.lang.Object#wait(long), java.lang.Object#wait(long, int)</code></td>
+                            <td class="colFirst"><code>class <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a></code></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)' title='equals'>equals</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()' title='getClass'>getClass</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()' title='hashCode'>hashCode</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()' title='notify'>notify</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()' title='notifyAll'>notifyAll</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()' title='toString'>toString</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()' title='wait'>wait</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)' title='wait'>wait</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long, int)' title='wait'>wait</a></code></td>
                         </tr>
                     </table>
                    </ul>
@@ -232,7 +232,7 @@ public @interface Tenant</pre>
                         <a name="datastore"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.Class&lt;? extends ConnectionSourcesProvider&gt;[] <strong>datastore</strong></h4>
+                                <h4>public&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends ConnectionSourcesProvider&gt;[] <strong>datastore</strong></h4>
                                 <p> If you are using multiple GORM implementations and wish to create a transaction for a specific implementation then use this.
  For example <CODE>@Transactional(forDatastore=HibernateDatastore) </CODE> <DL><DT><B>Returns:</B></DT><DD>The type of the datastore</DD></DL><DL><DT><B>Default:</B></DT><DD>{}</DD></DL></p>
                             </li>
@@ -241,7 +241,7 @@ public @interface Tenant</pre>
                         <a name="value"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.Class <strong>value</strong></h4>
+                                <h4>public&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a> <strong>value</strong></h4>
                                 <p> The tenant resolver
       <DL><DT><B>Returns:</B></DT><DD>A closure that resolves the tenant id</DD></DL></p>
                             </li>

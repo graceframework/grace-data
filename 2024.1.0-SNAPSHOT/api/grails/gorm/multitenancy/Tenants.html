@@ -101,10 +101,10 @@ if (location.href.indexOf('is-external=true') == -1) {
             <!-- todo: direct known subclasses -->
             <hr>
 
-<pre>@groovy.transform.CompileStatic
-@groovy.util.logging.Slf4j
+<pre>@<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/transform/CompileStatic.html' title='CompileStatic'>CompileStatic</a>
+@<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/util/logging/Slf4j.html' title='Slf4j'>Slf4j</a>
 class Tenants
-extends java.lang.Object</pre>
+extends <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a></pre>
 
     <p> Helper methods for working with multi tenancy <DL><DT><B>Authors:</B></DT><DD>Graeme Rocher</DD></DL><DL><DT><B>Since:</B></DT><DD>6.0</DD></DL></p>
 
@@ -192,82 +192,82 @@ extends java.lang.Object</pre>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>static&nbsp;java.io.Serializable</code></td>
+                            <td class="colLast"><code>static&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a></code></td>
                             <td class="colLast"><code><strong><a href="#currentId()">currentId</a></strong>()</code><br> <DL><DT><B>Returns:</B></DT><DD>The current tenant id</DD></DL></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>static&nbsp;java.io.Serializable</code></td>
+                            <td class="colLast"><code>static&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a></code></td>
                             <td class="colLast"><code><strong><a href="#currentId(org.grails.datastore.mapping.multitenancy.MultiTenantCapableDatastore)">currentId</a></strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore)</code><br>The current id for the given datastore</td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
-                            <td class="colLast"><code>static&nbsp;java.io.Serializable</code></td>
-                            <td class="colLast"><code><strong><a href="#currentId(Class)">currentId</a></strong>(java.lang.Class&lt;? extends Datastore&gt; datastoreClass)</code><br> <DL><DT><B>Returns:</B></DT><DD>The current tenant id for the given datastore type</DD></DL></td>
+                            <td class="colLast"><code>static&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a></code></td>
+                            <td class="colLast"><code><strong><a href="#currentId(Class)">currentId</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends Datastore&gt; datastoreClass)</code><br> <DL><DT><B>Returns:</B></DT><DD>The current tenant id for the given datastore type</DD></DL></td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>static&nbsp;void</code></td>
-                            <td class="colLast"><code><strong><a href="#eachTenant(groovy.lang.Closure)">eachTenant</a></strong>(groovy.lang.Closure callable)</code><br>Execute the given closure for each tenant.</td>
+                            <td class="colLast"><code><strong><a href="#eachTenant(groovy.lang.Closure)">eachTenant</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</code><br>Execute the given closure for each tenant.</td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>static&nbsp;void</code></td>
-                            <td class="colLast"><code><strong><a href="#eachTenant(Class, groovy.lang.Closure)">eachTenant</a></strong>(java.lang.Class&lt;? extends Datastore&gt; datastoreClass, groovy.lang.Closure callable)</code><br>Execute the given closure for each tenant.</td>
+                            <td class="colLast"><code><strong><a href="#eachTenant(Class, groovy.lang.Closure)">eachTenant</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends Datastore&gt; datastoreClass, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</code><br>Execute the given closure for each tenant.</td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code></code></td>
                             <td class="colLast"><code>static&nbsp;void</code></td>
-                            <td class="colLast"><code><strong><a href="#eachTenant(org.grails.datastore.mapping.multitenancy.MultiTenantCapableDatastore, groovy.lang.Closure)">eachTenant</a></strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore, groovy.lang.Closure callable)</code><br>Execute the given closure for each tenant for the given datastore.
+                            <td class="colLast"><code><strong><a href="#eachTenant(org.grails.datastore.mapping.multitenancy.MultiTenantCapableDatastore, groovy.lang.Closure)">eachTenant</a></strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</code><br>Execute the given closure for each tenant for the given datastore.
  </td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>static&nbsp;T</code></td>
-                            <td class="colLast"><code><strong><a href="#withCurrent(Closure)">withCurrent</a></strong>(groovy.lang.Closure&lt;T&gt; callable)</code><br>Execute the given closure with the current tenant</td>
+                            <td class="colLast"><code><strong><a href="#withCurrent(Closure)">withCurrent</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br>Execute the given closure with the current tenant</td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>static&nbsp;T</code></td>
-                            <td class="colLast"><code><strong><a href="#withCurrent(Class, Closure)">withCurrent</a></strong>(java.lang.Class&lt;? extends Datastore&gt; datastoreClass, groovy.lang.Closure&lt;T&gt; callable)</code><br>Execute the given closure with the current tenant</td>
+                            <td class="colLast"><code><strong><a href="#withCurrent(Class, Closure)">withCurrent</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends Datastore&gt; datastoreClass, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br>Execute the given closure with the current tenant</td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>static&nbsp;T</code></td>
-                            <td class="colLast"><code><strong><a href="#withId(java.io.Serializable, Closure)">withId</a></strong>(java.io.Serializable tenantId, groovy.lang.Closure&lt;T&gt; callable)</code><br>Execute the given closure with given tenant id</td>
+                            <td class="colLast"><code><strong><a href="#withId(java.io.Serializable, Closure)">withId</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> tenantId, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br>Execute the given closure with given tenant id</td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>static&nbsp;T</code></td>
-                            <td class="colLast"><code><strong><a href="#withId(Class, java.io.Serializable, Closure)">withId</a></strong>(java.lang.Class&lt;? extends Datastore&gt; datastoreClass, java.io.Serializable tenantId, groovy.lang.Closure&lt;T&gt; callable)</code><br>Execute the given closure with given tenant id</td>
+                            <td class="colLast"><code><strong><a href="#withId(Class, java.io.Serializable, Closure)">withId</a></strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends Datastore&gt; datastoreClass, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> tenantId, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br>Execute the given closure with given tenant id</td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>static&nbsp;T</code></td>
-                            <td class="colLast"><code><strong><a href="#withId(org.grails.datastore.mapping.multitenancy.MultiTenantCapableDatastore, java.io.Serializable, Closure)">withId</a></strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore, java.io.Serializable tenantId, groovy.lang.Closure&lt;T&gt; callable)</code><br>Execute the given closure with given tenant id for the given datastore.
+                            <td class="colLast"><code><strong><a href="#withId(org.grails.datastore.mapping.multitenancy.MultiTenantCapableDatastore, java.io.Serializable, Closure)">withId</a></strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> tenantId, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br>Execute the given closure with given tenant id for the given datastore.
  </td>
                         </tr>
                         
                         <tr class="rowColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>static&nbsp;T</code></td>
-                            <td class="colLast"><code><strong><a href="#withoutId(Closure)">withoutId</a></strong>(groovy.lang.Closure&lt;T&gt; callable)</code><br>Execute the given closure without any tenant id. </td>
+                            <td class="colLast"><code><strong><a href="#withoutId(Closure)">withoutId</a></strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br>Execute the given closure without any tenant id. </td>
                         </tr>
                         
                         <tr class="altColor">
                             <td class="colFirst"><code>&lt;T&gt;</code></td>
                             <td class="colLast"><code>static&nbsp;T</code></td>
-                            <td class="colLast"><code><strong><a href="#withoutId(org.grails.datastore.mapping.multitenancy.MultiTenantCapableDatastore, Closure)">withoutId</a></strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore, groovy.lang.Closure&lt;T&gt; callable)</code><br>Execute the given closure without tenant id for the given datastore. </td>
+                            <td class="colLast"><code><strong><a href="#withoutId(org.grails.datastore.mapping.multitenancy.MultiTenantCapableDatastore, Closure)">withoutId</a></strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</code><br>Execute the given closure without tenant id for the given datastore. </td>
                         </tr>
                         
                     </table>
@@ -285,8 +285,8 @@ extends java.lang.Object</pre>
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code>class java.lang.Object</code></td>
-                            <td class="colLast"><code>java.lang.Object#equals(java.lang.Object), java.lang.Object#getClass(), java.lang.Object#hashCode(), java.lang.Object#notify(), java.lang.Object#notifyAll(), java.lang.Object#toString(), java.lang.Object#wait(), java.lang.Object#wait(long), java.lang.Object#wait(long, int)</code></td>
+                            <td class="colFirst"><code>class <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a></code></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)' title='equals'>equals</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()' title='getClass'>getClass</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()' title='hashCode'>hashCode</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()' title='notify'>notify</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()' title='notifyAll'>notifyAll</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()' title='toString'>toString</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()' title='wait'>wait</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)' title='wait'>wait</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long, int)' title='wait'>wait</a></code></td>
                         </tr>
                     </table>
                    </ul>
@@ -341,7 +341,7 @@ extends java.lang.Object</pre>
                         <a name="currentId()"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>static&nbsp;java.io.Serializable <strong>currentId</strong>()</h4>
+                                <h4>static&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> <strong>currentId</strong>()</h4>
                                 <p><DL><DT><B>throws:</B></DT><DD>org.grails.datastore.mapping.multitenancy.exceptions.TenantNotFoundException if no current tenant is found</DD></DL> <DL><DT><B>Returns:</B></DT><DD>The current tenant id</DD></DL></p>
                             </li>
                         </ul>
@@ -349,7 +349,7 @@ extends java.lang.Object</pre>
                         <a name="currentId(org.grails.datastore.mapping.multitenancy.MultiTenantCapableDatastore)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>static&nbsp;java.io.Serializable <strong>currentId</strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore)</h4>
+                                <h4>static&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> <strong>currentId</strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore)</h4>
                                 <p> The current id for the given datastore <DL><DT><B>Parameters:</B></DT><DD><code>multiTenantCapableDatastore</code> -  The multi tenant capable datastore</DD></DL><DL><DT><B>Returns:</B></DT><DD>The current id</DD></DL></p>
                             </li>
                         </ul>
@@ -357,7 +357,7 @@ extends java.lang.Object</pre>
                         <a name="currentId(Class)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>static&nbsp;java.io.Serializable <strong>currentId</strong>(java.lang.Class&lt;? extends Datastore&gt; datastoreClass)</h4>
+                                <h4>static&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> <strong>currentId</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends Datastore&gt; datastoreClass)</h4>
                                 <p><DL><DT><B>throws:</B></DT><DD>org.grails.datastore.mapping.multitenancy.exceptions.TenantNotFoundException if no current tenant is found</DD></DL> <DL><DT><B>Returns:</B></DT><DD>The current tenant id for the given datastore type</DD></DL></p>
                             </li>
                         </ul>
@@ -365,7 +365,7 @@ extends java.lang.Object</pre>
                         <a name="eachTenant(groovy.lang.Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>static&nbsp;void <strong>eachTenant</strong>(groovy.lang.Closure callable)</h4>
+                                <h4>static&nbsp;void <strong>eachTenant</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</h4>
                                 <p> Execute the given closure for each tenant. <DL><DT><B>Parameters:</B></DT><DD><code>callable</code> -  The closure</DD></DL><DL><DT><B>Returns:</B></DT><DD>The result of the closure</DD></DL></p>
                             </li>
                         </ul>
@@ -373,7 +373,7 @@ extends java.lang.Object</pre>
                         <a name="eachTenant(Class, groovy.lang.Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>static&nbsp;void <strong>eachTenant</strong>(java.lang.Class&lt;? extends Datastore&gt; datastoreClass, groovy.lang.Closure callable)</h4>
+                                <h4>static&nbsp;void <strong>eachTenant</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends Datastore&gt; datastoreClass, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</h4>
                                 <p> Execute the given closure for each tenant. <DL><DT><B>Parameters:</B></DT><DD><code>callable</code> -  The closure</DD></DL><DL><DT><B>Returns:</B></DT><DD>The result of the closure</DD></DL></p>
                             </li>
                         </ul>
@@ -381,7 +381,7 @@ extends java.lang.Object</pre>
                         <a name="eachTenant(org.grails.datastore.mapping.multitenancy.MultiTenantCapableDatastore, groovy.lang.Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>static&nbsp;void <strong>eachTenant</strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore, groovy.lang.Closure callable)</h4>
+                                <h4>static&nbsp;void <strong>eachTenant</strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a> callable)</h4>
                                 <p> Execute the given closure for each tenant for the given datastore.
  This method will create a new datastore session for the scope of the call
  and hence is designed to be used to manage the connection life cycle. <DL><DT><B>Parameters:</B></DT><DD><code>callable</code> -  The closure</DD></DL><DL><DT><B>Returns:</B></DT><DD>The result of the closure</DD></DL></p>
@@ -391,7 +391,7 @@ extends java.lang.Object</pre>
                         <a name="withCurrent(Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; static&nbsp;T <strong>withCurrent</strong>(groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; static&nbsp;T <strong>withCurrent</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p> Execute the given closure with the current tenant <DL><DT><B>Parameters:</B></DT><DD><code>callable</code> -  The closure</DD></DL><DL><DT><B>Returns:</B></DT><DD>The result of the closure</DD></DL></p>
                             </li>
                         </ul>
@@ -399,7 +399,7 @@ extends java.lang.Object</pre>
                         <a name="withCurrent(Class, Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; static&nbsp;T <strong>withCurrent</strong>(java.lang.Class&lt;? extends Datastore&gt; datastoreClass, groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; static&nbsp;T <strong>withCurrent</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends Datastore&gt; datastoreClass, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p> Execute the given closure with the current tenant <DL><DT><B>Parameters:</B></DT><DD><code>datastoreClass</code> -  The datastore class</DD><DD><code>callable</code> -  The closure</DD></DL><DL><DT><B>Returns:</B></DT><DD>The result of the closure</DD></DL></p>
                             </li>
                         </ul>
@@ -407,7 +407,7 @@ extends java.lang.Object</pre>
                         <a name="withId(java.io.Serializable, Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; static&nbsp;T <strong>withId</strong>(java.io.Serializable tenantId, groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; static&nbsp;T <strong>withId</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> tenantId, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p> Execute the given closure with given tenant id <DL><DT><B>Parameters:</B></DT><DD><code>tenantId</code> -  The tenant id</DD><DD><code>callable</code> -  The closure</DD></DL><DL><DT><B>Returns:</B></DT><DD>The result of the closure</DD></DL></p>
                             </li>
                         </ul>
@@ -415,7 +415,7 @@ extends java.lang.Object</pre>
                         <a name="withId(Class, java.io.Serializable, Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; static&nbsp;T <strong>withId</strong>(java.lang.Class&lt;? extends Datastore&gt; datastoreClass, java.io.Serializable tenantId, groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; static&nbsp;T <strong>withId</strong>(<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends Datastore&gt; datastoreClass, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> tenantId, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p> Execute the given closure with given tenant id <DL><DT><B>Parameters:</B></DT><DD><code>tenantId</code> -  The tenant id</DD><DD><code>callable</code> -  The closure</DD></DL><DL><DT><B>Returns:</B></DT><DD>The result of the closure</DD></DL></p>
                             </li>
                         </ul>
@@ -423,7 +423,7 @@ extends java.lang.Object</pre>
                         <a name="withId(org.grails.datastore.mapping.multitenancy.MultiTenantCapableDatastore, java.io.Serializable, Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; static&nbsp;T <strong>withId</strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore, java.io.Serializable tenantId, groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; static&nbsp;T <strong>withId</strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html' title='Serializable'>Serializable</a> tenantId, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p> Execute the given closure with given tenant id for the given datastore.
  This method will create a new datastore session for the scope of the call
  and hence is designed to be used to manage the connection life cycle. <DL><DT><B>Parameters:</B></DT><DD><code>tenantId</code> -  The tenant id</DD><DD><code>callable</code> -  The closure</DD></DL><DL><DT><B>Returns:</B></DT><DD>The result of the closure</DD></DL></p>
@@ -433,7 +433,7 @@ extends java.lang.Object</pre>
                         <a name="withoutId(Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; static&nbsp;T <strong>withoutId</strong>(groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; static&nbsp;T <strong>withoutId</strong>(<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p> Execute the given closure without any tenant id. In Multi tenancy mode SINGLE this will execute against the default data source. If multi tenancy mode
  MULTI this will execute without including the "tenantId" on any query. Use with caution. <DL><DT><B>Parameters:</B></DT><DD><code>callable</code> -  The closure</DD></DL><DL><DT><B>Returns:</B></DT><DD>The result of the closure</DD></DL></p>
                             </li>
@@ -442,7 +442,7 @@ extends java.lang.Object</pre>
                         <a name="withoutId(org.grails.datastore.mapping.multitenancy.MultiTenantCapableDatastore, Closure)"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>&lt;T&gt; static&nbsp;T <strong>withoutId</strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore, groovy.lang.Closure&lt;T&gt; callable)</h4>
+                                <h4>&lt;T&gt; static&nbsp;T <strong>withoutId</strong>(<a href='../../../org/grails/datastore/mapping/multitenancy/MultiTenantCapableDatastore.html'>MultiTenantCapableDatastore</a> multiTenantCapableDatastore, <a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/groovy/lang/Closure.html' title='Closure'>Closure</a>&lt;T&gt; callable)</h4>
                                 <p> Execute the given closure without tenant id for the given datastore. This method will create a new datastore session for the scope of the call and hence is designed to be used to manage the connection life cycle <DL><DT><B>Parameters:</B></DT><DD><code>callable</code> -  The closure</DD></DL><DL><DT><B>Returns:</B></DT><DD>The result of the closure</DD></DL></p>
                             </li>
                         </ul>

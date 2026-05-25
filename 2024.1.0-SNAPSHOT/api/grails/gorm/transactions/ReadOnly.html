@@ -101,11 +101,11 @@ if (location.href.indexOf('is-external=true') == -1) {
             <!-- todo: direct known subclasses -->
             <hr>
 
-<pre>@java.lang.annotation.Target({ ElementType.METHOD, ElementType.TYPE })
-@java.lang.annotation.Retention(RetentionPolicy.RUNTIME)
-@java.lang.annotation.Inherited
-@java.lang.annotation.Documented
-@org.codehaus.groovy.transform.GroovyASTTransformationClass("org.grails.datastore.gorm.transform.OrderedGormTransformation")
+<pre>@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Target.html' title='Target'>Target</a>({ ElementType.METHOD, ElementType.TYPE })
+@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Retention.html' title='Retention'>Retention</a>(RetentionPolicy.RUNTIME)
+@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Inherited.html' title='Inherited'>Inherited</a>
+@<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Documented.html' title='Documented'>Documented</a>
+@<a href='https://docs.groovy-lang.org/docs/groovy-4.0.31/html/gapi/org/codehaus/groovy/transform/GroovyASTTransformationClass.html' title='GroovyASTTransformationClass'>GroovyASTTransformationClass</a>("org.grails.datastore.gorm.transform.OrderedGormTransformation")
 @<a href='../../../org/grails/datastore/gorm/transform/GormASTTransformationClass.html' title='GormASTTransformationClass'>GormASTTransformationClass</a>("org.grails.datastore.gorm.transactions.transform.TransactionalTransform")
 public @interface ReadOnly</pre>
 
@@ -145,12 +145,12 @@ public @interface ReadOnly</pre>
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code><strong>java.lang.String</strong></code>&nbsp;</td>
+                            <td class="colFirst"><code><strong><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a></strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#connection">connection</a></code><br>The connection to use by default <DL><DT><B>Default:</B></DT><DD>ConnectionSource.DEFAULT</DD></DL></td>
                         </tr>
                         
                         <tr class="rowColor">
-                            <td class="colFirst"><code><strong>java.lang.Class&lt;? extends ConnectionSourcesProvider&gt;[]</strong></code>&nbsp;</td>
+                            <td class="colFirst"><code><strong><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends ConnectionSourcesProvider&gt;[]</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#datastore">datastore</a></code><br>If you are using multiple GORM implementations and wish to create a transaction for a specific implementation then use this.
  </td>
                         </tr>
@@ -162,42 +162,42 @@ public @interface ReadOnly</pre>
                         </tr>
                         
                         <tr class="rowColor">
-                            <td class="colFirst"><code><strong><a href='../../../org.springframework.transaction.annotation.Isolation.html'>Isolation</a></strong></code>&nbsp;</td>
+                            <td class="colFirst"><code><strong>org.springframework.transaction.annotation.Isolation</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#isolation">isolation</a></code><br>The transaction isolation level.
  </td>
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code><strong>java.lang.Class&lt;? extends java.lang.Throwable&gt;[]</strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#noRollbackFor">noRollbackFor</a></code><br>Defines zero (0) or more exception java.lang.Class, which must be a
- subclass of java.lang.Throwable, indicating which exception types must <b>not</b>
+                            <td class="colFirst"><code><strong><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html' title='Throwable'>Throwable</a>&gt;[]</strong></code>&nbsp;</td>
+                            <td class="colLast"><code><a href="#noRollbackFor">noRollbackFor</a></code><br>Defines zero (0) or more exception <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Classes'>Classes</a>, which must be a
+ subclass of <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html' title='Throwable'>Throwable</a>, indicating which exception types must <b>not</b>
  cause a transaction rollback.</td>
                         </tr>
                         
                         <tr class="rowColor">
-                            <td class="colFirst"><code><strong>java.lang.String[]</strong></code>&nbsp;</td>
+                            <td class="colFirst"><code><strong><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a>[]</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#noRollbackForClassName">noRollbackForClassName</a></code><br>Defines zero (0) or more exception names (for exceptions which must be a
- subclass of java.lang.Throwable) indicating which exception types must <b>not</b>
+ subclass of <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html' title='Throwable'>Throwable</a>) indicating which exception types must <b>not</b>
  cause a transaction rollback.</td>
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code><strong><a href='../../../org.springframework.transaction.annotation.Propagation.html'>Propagation</a></strong></code>&nbsp;</td>
+                            <td class="colFirst"><code><strong>org.springframework.transaction.annotation.Propagation</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#propagation">propagation</a></code><br>The transaction propagation type.
  </td>
                         </tr>
                         
                         <tr class="rowColor">
-                            <td class="colFirst"><code><strong>java.lang.Class&lt;? extends java.lang.Throwable&gt;[]</strong></code>&nbsp;</td>
-                            <td class="colLast"><code><a href="#rollbackFor">rollbackFor</a></code><br>Defines zero (0) or more exception java.lang.Class, which must be a
- subclass of java.lang.Throwable, indicating which exception types must cause
+                            <td class="colFirst"><code><strong><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html' title='Throwable'>Throwable</a>&gt;[]</strong></code>&nbsp;</td>
+                            <td class="colLast"><code><a href="#rollbackFor">rollbackFor</a></code><br>Defines zero (0) or more exception <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='classes'>classes</a>, which must be a
+ subclass of <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html' title='Throwable'>Throwable</a>, indicating which exception types must cause
  a transaction rollback.</td>
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code><strong>java.lang.String[]</strong></code>&nbsp;</td>
+                            <td class="colFirst"><code><strong><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a>[]</strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#rollbackForClassName">rollbackForClassName</a></code><br>Defines zero (0) or more exception names (for exceptions which must be a
- subclass of java.lang.Throwable), indicating which exception types must cause
+ subclass of <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html' title='Throwable'>Throwable</a>), indicating which exception types must cause
  a transaction rollback.</td>
                         </tr>
                         
@@ -208,7 +208,7 @@ public @interface ReadOnly</pre>
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code><strong>java.lang.String</strong></code>&nbsp;</td>
+                            <td class="colFirst"><code><strong><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a></strong></code>&nbsp;</td>
                             <td class="colLast"><code><a href="#value">value</a></code><br>A qualifier value for the specified transaction.</td>
                         </tr>
                         
@@ -236,8 +236,8 @@ public @interface ReadOnly</pre>
                         </tr>
                         
                         <tr class="altColor">
-                            <td class="colFirst"><code>class java.lang.Object</code></td>
-                            <td class="colLast"><code>java.lang.Object#equals(java.lang.Object), java.lang.Object#getClass(), java.lang.Object#hashCode(), java.lang.Object#notify(), java.lang.Object#notifyAll(), java.lang.Object#toString(), java.lang.Object#wait(), java.lang.Object#wait(long), java.lang.Object#wait(long, int)</code></td>
+                            <td class="colFirst"><code>class <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html' title='Object'>Object</a></code></td>
+                            <td class="colLast"><code><a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)' title='equals'>equals</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()' title='getClass'>getClass</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()' title='hashCode'>hashCode</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()' title='notify'>notify</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()' title='notifyAll'>notifyAll</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()' title='toString'>toString</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()' title='wait'>wait</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)' title='wait'>wait</a>, <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long, int)' title='wait'>wait</a></code></td>
                         </tr>
                     </table>
                    </ul>
@@ -269,7 +269,7 @@ public @interface ReadOnly</pre>
                         <a name="connection"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.String <strong>connection</strong></h4>
+                                <h4>public&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> <strong>connection</strong></h4>
                                 <p> The connection to use by default <DL><DT><B>Default:</B></DT><DD>ConnectionSource.DEFAULT</DD></DL></p>
                             </li>
                         </ul>
@@ -277,7 +277,7 @@ public @interface ReadOnly</pre>
                         <a name="datastore"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.Class&lt;? extends ConnectionSourcesProvider&gt;[] <strong>datastore</strong></h4>
+                                <h4>public&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends ConnectionSourcesProvider&gt;[] <strong>datastore</strong></h4>
                                 <p> If you are using multiple GORM implementations and wish to create a transaction for a specific implementation then use this.
  For example <CODE>@Transactional(forDatastore=HibernateDatastore) </CODE> <DL><DT><B>Returns:</B></DT><DD>The type of the datastore</DD></DL><DL><DT><B>Default:</B></DT><DD>{}</DD></DL></p>
                             </li>
@@ -299,7 +299,7 @@ public @interface ReadOnly</pre>
                         <a name="isolation"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../org.springframework.transaction.annotation.Isolation.html'>Isolation</a> <strong>isolation</strong></h4>
+                                <h4>public&nbsp;org.springframework.transaction.annotation.Isolation <strong>isolation</strong></h4>
                                 <p> The transaction isolation level.
  Defaults to org.springframework.transaction.annotation.Isolation#DEFAULT. <DL><DT><B>See Also:</B></DT><DD>org.springframework.transaction.interceptor.TransactionAttribute#getIsolationLevel()</DD></DL><DL><DT><B>Default:</B></DT><DD>Isolation.DEFAULT</DD></DL></p>
                             </li>
@@ -308,9 +308,9 @@ public @interface ReadOnly</pre>
                         <a name="noRollbackFor"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.Class&lt;? extends java.lang.Throwable&gt;[] <strong>noRollbackFor</strong></h4>
-                                <p> Defines zero (0) or more exception java.lang.Class, which must be a
- subclass of java.lang.Throwable, indicating which exception types must <b>not</b>
+                                <h4>public&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html' title='Throwable'>Throwable</a>&gt;[] <strong>noRollbackFor</strong></h4>
+                                <p> Defines zero (0) or more exception <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Classes'>Classes</a>, which must be a
+ subclass of <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html' title='Throwable'>Throwable</a>, indicating which exception types must <b>not</b>
  cause a transaction rollback.
  <p>This is the preferred way to construct a rollback rule, matching the
  exception class and subclasses.
@@ -321,9 +321,9 @@ public @interface ReadOnly</pre>
                         <a name="noRollbackForClassName"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.String[] <strong>noRollbackForClassName</strong></h4>
+                                <h4>public&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a>[] <strong>noRollbackForClassName</strong></h4>
                                 <p> Defines zero (0) or more exception names (for exceptions which must be a
- subclass of java.lang.Throwable) indicating which exception types must <b>not</b>
+ subclass of <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html' title='Throwable'>Throwable</a>) indicating which exception types must <b>not</b>
  cause a transaction rollback.
  <p>See the description of <a href='#rollbackForClassName()'>rollbackForClassName()</a> for more info on how
  the specified names are treated.
@@ -334,7 +334,7 @@ public @interface ReadOnly</pre>
                         <a name="propagation"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;<a href='../../../org.springframework.transaction.annotation.Propagation.html'>Propagation</a> <strong>propagation</strong></h4>
+                                <h4>public&nbsp;org.springframework.transaction.annotation.Propagation <strong>propagation</strong></h4>
                                 <p> The transaction propagation type.
  Defaults to org.springframework.transaction.annotation.Propagation#REQUIRED. <DL><DT><B>See Also:</B></DT><DD>org.springframework.transaction.interceptor.TransactionAttribute#getPropagationBehavior()</DD></DL><DL><DT><B>Default:</B></DT><DD>Propagation.REQUIRED</DD></DL></p>
                             </li>
@@ -343,9 +343,9 @@ public @interface ReadOnly</pre>
                         <a name="rollbackFor"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.Class&lt;? extends java.lang.Throwable&gt;[] <strong>rollbackFor</strong></h4>
-                                <p> Defines zero (0) or more exception java.lang.Class, which must be a
- subclass of java.lang.Throwable, indicating which exception types must cause
+                                <h4>public&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='Class'>Class</a>&lt;? extends <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html' title='Throwable'>Throwable</a>&gt;[] <strong>rollbackFor</strong></h4>
+                                <p> Defines zero (0) or more exception <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html' title='classes'>classes</a>, which must be a
+ subclass of <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html' title='Throwable'>Throwable</a>, indicating which exception types must cause
  a transaction rollback.
  <p>This is the preferred way to construct a rollback rule, matching the
  exception class and subclasses.
@@ -356,9 +356,9 @@ public @interface ReadOnly</pre>
                         <a name="rollbackForClassName"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.String[] <strong>rollbackForClassName</strong></h4>
+                                <h4>public&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a>[] <strong>rollbackForClassName</strong></h4>
                                 <p> Defines zero (0) or more exception names (for exceptions which must be a
- subclass of java.lang.Throwable), indicating which exception types must cause
+ subclass of <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html' title='Throwable'>Throwable</a>), indicating which exception types must cause
  a transaction rollback.
  <p>This can be a substring, with no wildcard support at present.
  A value of "ServletException" would match
@@ -367,7 +367,7 @@ public @interface ReadOnly</pre>
  to include package information (which isn't mandatory). For example,
  "Exception" will match nearly anything, and will probably hide other rules.
  "java.lang.Exception" would be correct if "Exception" was meant to define
- a rule for all checked exceptions. With more unusual java.lang.Exception
+ a rule for all checked exceptions. With more unusual <a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html' title='Exception'>Exception</a>
  names such as "BaseBusinessException" there is no need to use a FQN.
  <p>Similar to org.springframework.transaction.interceptor.RollbackRuleAttribute#RollbackRuleAttribute(String exceptionName) <DL><DT><B>Default:</B></DT><DD>{}</DD></DL></p>
                             </li>
@@ -385,7 +385,7 @@ public @interface ReadOnly</pre>
                         <a name="value"><!-- --></a>
                         <ul class="blockListLast">
                             <li class="blockList">
-                                <h4>public&nbsp;java.lang.String <strong>value</strong></h4>
+                                <h4>public&nbsp;<a href='https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html' title='String'>String</a> <strong>value</strong></h4>
                                 <p> A qualifier value for the specified transaction.
  <p>May be used to determine the target transaction manager,
  matching the qualifier value (or the bean name) of a specific
