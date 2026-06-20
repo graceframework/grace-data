@@ -1,3 +1,30 @@
+=== 2024.2.0-M1
+
+link:{github}/releases/tag/v2024.2.0-M1[release notes]
+
+🛠 Improvements
+
+* Update README
+* Add release notes for 2024.2.0-M1
+* Update doc.properties - switch to 2024.2.x branch
+
+🐞 Bug Fixes
+
+* RollbackTransform: don't use the same MY_TYPE as TransactionalTransform link:{github}/issues/137[#137]
+* Remove workaround that ensures the transaction manager is set on the Spock shared instance link:{github}/issues/136[#136]
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace Async 7.2.0-M1 link:{github}/issues/139[#139]
+* Upgrade to Grace Gradle Plugin 2024.1.0 link:{github}/issues/135[#135]
+* Upgrade to Spock 2.4 link:{github}/issues/138[#138]
+
+⚙️ Tasks
+
+* Release v2024.2.0-M1
+* Update github workflows Switch to '2024.2.x' branch
+* Next development version: 2024.2.0-SNAPSHOT
+
 === 2024.1.0
 
 link:{github}/releases/tag/v2024.1.0[release notes]
