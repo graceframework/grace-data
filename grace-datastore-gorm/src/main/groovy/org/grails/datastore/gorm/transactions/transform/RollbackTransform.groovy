@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2025 the original author or authors.
+ * Copyright 2017-2026 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,11 +26,16 @@ import grails.gorm.transactions.Rollback
 @GroovyASTTransformation(phase = CompilePhase.CANONICALIZATION)
 class RollbackTransform extends TransactionalTransform {
 
-    public static final ClassNode MY_TYPE = new ClassNode(Rollback)
+    public static final ClassNode ROLLBACK_TYPE = new ClassNode(Rollback)
 
     @Override
     protected String getTransactionTemplateMethodName() {
         return 'executeAndRollback'
+    }
+
+    @Override
+    protected ClassNode getAnnotationType() {
+        return ROLLBACK_TYPE
     }
 
 }
