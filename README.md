@@ -5,13 +5,13 @@
 [![Grace on X](https://img.shields.io/twitter/follow/graceframework?style=social)](https://x.com/graceframework)
 
 [![Groovy Version](https://img.shields.io/badge/Groovy-4.0.32-blue?style=flat&color=4298b8)](https://groovy-lang.org/releasenotes/groovy-4.0.html)
-[![Grace Version](https://img.shields.io/badge/Grace-2024.1.0-blue?style=flat&color=f49b06)](https://github.com/graceframework/grace-framework/releases/tag/v2024.1.0-RC2)
+[![Grace Version](https://img.shields.io/badge/Grace-2024.1.0-blue?style=flat&color=f49b06)](https://github.com/graceframework/grace-framework/releases/tag/v2024.1.0)
 
 # Grace Data
 
 Grace Data(formerly known as `GORM`) is the data access toolkit used by Grace and provides a rich set of APIs for accessing relational and non-relational data including implementations for Hibernate (SQL), MongoDB, Neo4j, Cassandra, an in-memory ConcurrentHashMap for testing and an automatic GraphQL schema generator.
 
-Currently, there are two implementations for GORM in Grace 2024.1,
+Currently, there are two implementations for GORM in Grace 2024.2,
 
 * [Grace Data Hibernate](https://github.com/graceframework/grace-data-hibernate)
 * [Grace Data MongoDB](https://github.com/graceframework/grace-data-mongodb)
@@ -23,6 +23,7 @@ To make it easier for users to use and upgrade, Grace Data adopts a version poli
 
 | GORM Version | Grace Version |
 |--------------|---------------|
+| 2024.2.x     | 2024.2.x      |
 | 2024.1.x     | 2024.1.x      |
 | 2024.0.x     | 2024.0.x      |
 | 2023.3.x     | 2023.3.x      |
@@ -35,7 +36,7 @@ To make it easier for users to use and upgrade, Grace Data adopts a version poli
 
 ## Ducumentation
 
-* [2024.1.x](https://graceframework.org/grace-data/2024.1.x/)
+* [2024.2.x](https://graceframework.org/grace-data/2024.2.x/)
 
 ## License
 
