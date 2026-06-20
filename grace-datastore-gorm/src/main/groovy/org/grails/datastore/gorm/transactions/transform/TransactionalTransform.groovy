@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2025 the original author or authors.
+ * Copyright 2017-2026 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,9 +86,7 @@ import static org.grails.datastore.mapping.reflect.AstUtils.copyParameters
 import static org.grails.datastore.mapping.reflect.AstUtils.findAnnotation
 import static org.grails.datastore.mapping.reflect.AstUtils.hasOrInheritsProperty
 import static org.grails.datastore.mapping.reflect.AstUtils.implementsInterface
-import static org.grails.datastore.mapping.reflect.AstUtils.isSubclassOf
 import static org.grails.datastore.mapping.reflect.AstUtils.nonGeneric
-import static org.grails.datastore.mapping.reflect.AstUtils.varThis
 
 /**
  * <p>This AST transform reads the {@link Transactional} annotation and transforms method calls by
@@ -311,18 +309,6 @@ class TransactionalTransform extends AbstractDatastoreMethodDecoratingTransforma
 
                 VariableExpression transactionManagerPropertyExpr = varX(transactionManagerField)
                 BlockStatement getterBody = block()
-
-                // this is a hacky workaround that ensures the transaction manager is also set on the spock shared instance which seems to differ for
-                // some reason
-                if (isSubclassOf(declaringClassNode, 'spock.lang.Specification')) {
-                    getterBody.addStatement(
-                            stmt(
-                                    callX(propX(propX(varThis(), 'specificationContext'), 'sharedInstance'),
-                                            SET_TRANSACTION_MANAGER,
-                                            transactionManagerPropertyExpr)
-                            )
-                    )
-                }
 
                 // Prepare the getTransactionManager() method body
                 // if($transactionManager != null)

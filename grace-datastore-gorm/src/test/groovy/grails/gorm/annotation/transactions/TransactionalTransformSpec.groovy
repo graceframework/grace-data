@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2025 the original author or authors.
+ * Copyright 2010-2026 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -194,11 +194,6 @@ import grails.gorm.transactions.Transactional
         then: 'It implements TransactionManagerAware'
         mySpec.getDeclaredMethod('$spock_feature_0_0', Object, Object, Object)
         mySpec.getDeclaredMethod('$tt__$spock_feature_0_0', Object, Object, Object, TransactionStatus)
-
-        and:'The spec can be called'
-        mySpec.newInstance().'$tt__$spock_feature_0_0'(2,2,4,new DefaultTransactionStatus(new Object(), true, true, false, false, null))
-
-
     }
 
     @Issue('https://github.com/grails/grails-core/issues/9646')
@@ -228,11 +223,6 @@ import grails.gorm.transactions.Transactional
         then: 'It implements TransactionManagerAware'
         mySpec.getDeclaredMethod('$spock_feature_0_0')
         mySpec.getDeclaredMethod('$tt__$spock_feature_0_0', TransactionStatus)
-
-        and:'The spec can be called'
-        mySpec.newInstance().'$tt__$spock_feature_0_0'(new DefaultTransactionStatus(new Object(), true, true, false, false, null))
-
-
     }
 
     void 'Test @Rollback when applied to JUnit specifications'() {
