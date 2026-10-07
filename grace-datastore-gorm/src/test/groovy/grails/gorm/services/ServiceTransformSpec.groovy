@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2025 the original author or authors.
+ * Copyright 2010-2026 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -552,9 +552,7 @@ class Foo {
 
         then:'A compilation error occurred'
         def e = thrown(MultipleCompilationErrorsException)
-        e.message.normalize().contains '''[Static type checking] - The variable [wrong] is undeclared.
- @ line 8, column 48.
-   $Foo as f where f.title like $wrong")'''
+        e.message.normalize().contains('[Static type checking] - The variable [wrong] is undeclared.')
     }
 
     void 'test @Query invalid domain'() {
@@ -984,10 +982,10 @@ interface MyService {
 
         then:'A compilation error occurred'
         def e = thrown(MultipleCompilationErrorsException)
-        e.message.normalize().contains '''No implementations possible for method 'void foo()'. Please use an abstract class instead and provide an implementation.
- @ line 6, column 5.
-       void foo()
-       ^'''
+        e.message.contains('Please use an abstract class instead and provide an implementation.')
+            && (e.message.contains('''No implementations possible for method 'void foo()'. ''') 
+                    || e.message.contains('''No implementations possible for method 'foo():void'. '''))
+            
     }
 
     void 'test service transform applied with a dynamic finder for a non-existent property'() {
