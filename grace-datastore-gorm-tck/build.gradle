@@ -7,7 +7,7 @@ dependencies {
     api libs.groovy.test.junit5
     runtimeOnly libs.groovy.dateutil
     api libs.junit.jupiter.api
-    api libs.junit.platform.runner
+    api libs.junit.platform.engine
     runtimeOnly libs.junit.jupiter.engine
     implementation libs.spock.core
 }
