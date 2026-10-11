@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2025 the original author or authors.
+ * Copyright 2010-2026 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ interface MyService {
     Foo find(@NotNull String title) throws jakarta.validation.ConstraintViolationException
     
     @grails.gorm.transactions.NotTransactional
-    Foo findAgain(@NotNull @org.hibernate.validator.constraints.NotBlank String title)
+    Foo findAgain(@NotNull @NotBlank String title)
 }
 @Entity
 class Foo {
