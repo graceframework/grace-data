@@ -253,16 +253,15 @@ mkdir grace-datastore-gorm-xyz/src/test/groovy</code></pre>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.datastore.gorm
 
-<span class="keyword">import</span> <span class="include">org.junit.runners.Suite.SuiteClasses</span>
-<span class="keyword">import</span> <span class="include">org.junit.runners.Suite</span>
-<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>
+<span class="keyword">import</span> <span class="include">org.junit.platform.suite.api.SelectClasses</span>
+<span class="keyword">import</span> <span class="include">org.junit.platform.suite.api.Suite</span>
 <span class="keyword">import</span> <span class="include">grails.gorm.tests.*</span>
 
 <span class="comment">/**
  * @author graemerocher
  */</span>
-<span class="annotation">@RunWith</span>(Suite)
-<span class="annotation">@SuiteClasses</span>([
+<span class="annotation">@Suite</span>
+<span class="annotation">@SelectClasses</span>([
   FindByMethodSpec,
   ListOrderBySpec
 ])

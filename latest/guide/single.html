@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
-        <title>Grace Data (GORM) 2025.0.0-SNAPSHOT</title>
+        <title>Grace Data (GORM) 2024.2.0-SNAPSHOT</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
         <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
@@ -28,7 +28,7 @@ function addJsClass(el) {
                 <div class="docHeader">
                     <h1 class="docTitle">Grace Data (GORM)</h1>
                     <h3 class="docSubTitle">The Data Access toolkit provides a rich set of APIs for accessing relational and non-relational data.</h3>
-                    <span class="docVersion">2025.0.0-SNAPSHOT</span>
+                    <span class="docVersion">2024.2.0-SNAPSHOT</span>
                 </div>
             </div>
             <div class="navLinks">
@@ -73,7 +73,7 @@ function addJsClass(el) {
                         <div class="project">
                             <h1>Grace Data (GORM)</h1>
                             <p><strong>Authors:</strong> Michael Yan</p>
-                            <p><strong>Version:</strong> 2025.0.0-SNAPSHOT</p>
+                            <p><strong>Version:</strong> 2024.2.0-SNAPSHOT</p>
                             
                         </div>
 
@@ -119,7 +119,7 @@ function addJsClass(el) {
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -152,7 +152,7 @@ function addJsClass(el) {
 <h1 id="releases"><a class="anchor" href="#releases"></a>2 Release History</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/releases.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/releases.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -218,7 +218,7 @@ function addJsClass(el) {
 <h2 id="2024.x"><a class="anchor" href="#2024.x"></a>2.1 What's new in 2024.x</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/releases/2024.x.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/releases/2024.x.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -914,7 +914,7 @@ function addJsClass(el) {
 <h2 id="2023.x"><a class="anchor" href="#2023.x"></a>2.2 What's new in 2023.x</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/releases/2023.x.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/releases/2023.x.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1867,7 +1867,7 @@ function addJsClass(el) {
 <h1 id="gettingStarted"><a class="anchor" href="#gettingStarted"></a>3 Getting Started</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/gettingStarted.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/gettingStarted.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1921,10 +1921,16 @@ cd grace-data</pre>
 <p><code>grace-datastore-gorm</code> - The runtime meta-programming and AST transformation infrastructure behind GORM. This also provides end users with APIs like <code>grails.gorm.CriteriaBuilder</code> and <code>grails.gorm.DetachedCriteria</code></p>
 </li>
 <li>
+<p><code>grace-datastore-gorm-async</code> - Provides the asynchronous programming model for GORM — the <code>AsyncEntity</code> trait and the <code>async</code> namespace</p>
+</li>
+<li>
 <p><code>grace-datastore-gorm-support</code> - Support classes for easing the writing of a GORM plugin for Grails</p>
 </li>
 <li>
 <p><code>grace-datastore-gorm-tck</code> - The TCK that includes hundreds of Spock specifications that a GORM implementation will need to pass</p>
+</li>
+<li>
+<p><code>grace-datastore-gorm-validation</code> - Provides a robust, extensible framework for validating GORM entities - a declarative constraint DSL, a registry of reusable validators, and a cascade mechanism for complex object graphs</p>
 </li>
 <li>
 <p><code>grace-datastore-web</code> - Classes required to integrate GORM into a web tier</p>
@@ -1950,7 +1956,7 @@ cd grace-data</pre>
 <h1 id="understandingApi"><a class="anchor" href="#understandingApi"></a>4 Understanding the GORM API</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/understandingApi.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/understandingApi.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -1970,7 +1976,7 @@ cd grace-data</pre>
 <h2 id="datastoreBasics"><a class="anchor" href="#datastoreBasics"></a>4.1 Datastore Basics</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/understandingApi/datastoreBasics.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/understandingApi/datastoreBasics.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2106,7 +2112,7 @@ cd grace-data</pre>
 <h2 id="implementingCrud"><a class="anchor" href="#implementingCrud"></a>4.2 Implementing CRUD</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/understandingApi/implementingCrud.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/understandingApi/implementingCrud.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2363,7 +2369,7 @@ cd grace-data</pre>
 <h2 id="secondaryIndexes"><a class="anchor" href="#secondaryIndexes"></a>4.3 Secondary Indexing</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/understandingApi/secondaryIndexes.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/understandingApi/secondaryIndexes.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2455,7 +2461,7 @@ If the underlying datastore supports secondary indexes then it is ok to just ret
 <h2 id="implementingQueries"><a class="anchor" href="#implementingQueries"></a>4.4 Implementing Querying</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/understandingApi/implementingQueries.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/understandingApi/implementingQueries.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2609,7 +2615,7 @@ If, for instance, the underlying datastore does not support the calculation of a
 <h2 id="gormEnhancer"><a class="anchor" href="#gormEnhancer"></a>4.5 GORM Enhancer</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/understandingApi/gormEnhancer.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/understandingApi/gormEnhancer.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2669,7 +2675,7 @@ enhancer.enhance()</code></pre>
 <h2 id="gormApis"><a class="anchor" href="#gormApis"></a>4.6 Adding to GORM APIs</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/understandingApi/gormApis.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/understandingApi/gormApis.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2734,7 +2740,7 @@ enhancer.enhance()</code></pre>
 <h1 id="stepByStep"><a class="anchor" href="#stepByStep"></a>5 Step-by-Step Guide to Creating an Implementation</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/stepByStep.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/stepByStep.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2887,16 +2893,15 @@ mkdir grace-datastore-gorm-xyz/src/test/groovy</code></pre>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.datastore.gorm
 
-<span class="keyword">import</span> <span class="include">org.junit.runners.Suite.SuiteClasses</span>
-<span class="keyword">import</span> <span class="include">org.junit.runners.Suite</span>
-<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>
+<span class="keyword">import</span> <span class="include">org.junit.platform.suite.api.SelectClasses</span>
+<span class="keyword">import</span> <span class="include">org.junit.platform.suite.api.Suite</span>
 <span class="keyword">import</span> <span class="include">grails.gorm.tests.*</span>
 
 <span class="comment">/**
  * @author graemerocher
  */</span>
-<span class="annotation">@RunWith</span>(Suite)
-<span class="annotation">@SuiteClasses</span>([
+<span class="annotation">@Suite</span>
+<span class="annotation">@SelectClasses</span>([
   FindByMethodSpec,
   ListOrderBySpec
 ])
@@ -2916,7 +2921,7 @@ mkdir grace-datastore-gorm-xyz/src/test/groovy</code></pre>
 <h1 id="testing"><a class="anchor" href="#testing"></a>6 Using the Test Compatibility Kit</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/testing.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/testing.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -2993,7 +2998,7 @@ mkdir grace-datastore-gorm-xyz/src/test/groovy</code></pre>
 <h1 id="support"><a class="anchor" href="#support"></a>7 Support</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/support.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/support.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>

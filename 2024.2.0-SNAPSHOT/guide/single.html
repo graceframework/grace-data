@@ -1921,10 +1921,16 @@ cd grace-data</pre>
 <p><code>grace-datastore-gorm</code> - The runtime meta-programming and AST transformation infrastructure behind GORM. This also provides end users with APIs like <code>grails.gorm.CriteriaBuilder</code> and <code>grails.gorm.DetachedCriteria</code></p>
 </li>
 <li>
+<p><code>grace-datastore-gorm-async</code> - Provides the asynchronous programming model for GORM — the <code>AsyncEntity</code> trait and the <code>async</code> namespace</p>
+</li>
+<li>
 <p><code>grace-datastore-gorm-support</code> - Support classes for easing the writing of a GORM plugin for Grails</p>
 </li>
 <li>
 <p><code>grace-datastore-gorm-tck</code> - The TCK that includes hundreds of Spock specifications that a GORM implementation will need to pass</p>
+</li>
+<li>
+<p><code>grace-datastore-gorm-validation</code> - Provides a robust, extensible framework for validating GORM entities - a declarative constraint DSL, a registry of reusable validators, and a cascade mechanism for complex object graphs</p>
 </li>
 <li>
 <p><code>grace-datastore-web</code> - Classes required to integrate GORM into a web tier</p>
@@ -2887,16 +2893,15 @@ mkdir grace-datastore-gorm-xyz/src/test/groovy</code></pre>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.datastore.gorm
 
-<span class="keyword">import</span> <span class="include">org.junit.runners.Suite.SuiteClasses</span>
-<span class="keyword">import</span> <span class="include">org.junit.runners.Suite</span>
-<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>
+<span class="keyword">import</span> <span class="include">org.junit.platform.suite.api.SelectClasses</span>
+<span class="keyword">import</span> <span class="include">org.junit.platform.suite.api.Suite</span>
 <span class="keyword">import</span> <span class="include">grails.gorm.tests.*</span>
 
 <span class="comment">/**
  * @author graemerocher
  */</span>
-<span class="annotation">@RunWith</span>(Suite)
-<span class="annotation">@SuiteClasses</span>([
+<span class="annotation">@Suite</span>
+<span class="annotation">@SelectClasses</span>([
   FindByMethodSpec,
   ListOrderBySpec
 ])

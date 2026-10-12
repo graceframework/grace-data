@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>3 Getting Started 2025.0.0-SNAPSHOT</title>
+    <title>3 Getting Started 2024.2.0-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -90,7 +90,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>3 Getting Started</h1>
 
-                    <p><strong>Version:</strong> 2025.0.0-SNAPSHOT</p>
+                    <p><strong>Version:</strong> 2024.2.0-SNAPSHOT</p>
                 </div>
 
                 
@@ -100,7 +100,7 @@ function addJsClass() {
 <h1 id="gettingStarted"><a class="anchor" href="#gettingStarted"></a>3 Getting Started</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2025.0.x/src/docs/guide/gettingStarted.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/graceframework/grace-data/edit/2024.2.x/src/docs/guide/gettingStarted.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -154,10 +154,16 @@ cd grace-data</pre>
 <p><code>grace-datastore-gorm</code> - The runtime meta-programming and AST transformation infrastructure behind GORM. This also provides end users with APIs like <code>grails.gorm.CriteriaBuilder</code> and <code>grails.gorm.DetachedCriteria</code></p>
 </li>
 <li>
+<p><code>grace-datastore-gorm-async</code> - Provides the asynchronous programming model for GORM — the <code>AsyncEntity</code> trait and the <code>async</code> namespace</p>
+</li>
+<li>
 <p><code>grace-datastore-gorm-support</code> - Support classes for easing the writing of a GORM plugin for Grails</p>
 </li>
 <li>
 <p><code>grace-datastore-gorm-tck</code> - The TCK that includes hundreds of Spock specifications that a GORM implementation will need to pass</p>
+</li>
+<li>
+<p><code>grace-datastore-gorm-validation</code> - Provides a robust, extensible framework for validating GORM entities - a declarative constraint DSL, a registry of reusable validators, and a cascade mechanism for complex object graphs</p>
 </li>
 <li>
 <p><code>grace-datastore-web</code> - Classes required to integrate GORM into a web tier</p>

@@ -2,7 +2,7 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>5 Step-by-Step Guide to Creating an Implementation 2024.2.0-RC1</title>
+    <title>5 Step-by-Step Guide to Creating an Implementation 2024.2.0-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -90,7 +90,7 @@ function addJsClass() {
                 <div class="project">
                     <h1>5 Step-by-Step Guide to Creating an Implementation</h1>
 
-                    <p><strong>Version:</strong> 2024.2.0-RC1</p>
+                    <p><strong>Version:</strong> 2024.2.0-SNAPSHOT</p>
                 </div>
 
                 
@@ -253,16 +253,15 @@ mkdir grace-datastore-gorm-xyz/src/test/groovy</code></pre>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">package</span> org.grails.datastore.gorm
 
-<span class="keyword">import</span> <span class="include">org.junit.runners.Suite.SuiteClasses</span>
-<span class="keyword">import</span> <span class="include">org.junit.runners.Suite</span>
-<span class="keyword">import</span> <span class="include">org.junit.runner.RunWith</span>
+<span class="keyword">import</span> <span class="include">org.junit.platform.suite.api.SelectClasses</span>
+<span class="keyword">import</span> <span class="include">org.junit.platform.suite.api.Suite</span>
 <span class="keyword">import</span> <span class="include">grails.gorm.tests.*</span>
 
 <span class="comment">/**
  * @author graemerocher
  */</span>
-<span class="annotation">@RunWith</span>(Suite)
-<span class="annotation">@SuiteClasses</span>([
+<span class="annotation">@Suite</span>
+<span class="annotation">@SelectClasses</span>([
   FindByMethodSpec,
   ListOrderBySpec
 ])
