@@ -122,16 +122,15 @@ Then in `src/test/groovy` create test suite class to allow running tests in IDE 
 ----
 package org.grails.datastore.gorm
 
-import org.junit.runners.Suite.SuiteClasses
-import org.junit.runners.Suite
-import org.junit.runner.RunWith
+import org.junit.platform.suite.api.SelectClasses
+import org.junit.platform.suite.api.Suite
 import grails.gorm.tests.*
 
 /**
  * @author graemerocher
  */
-@RunWith(Suite)
-@SuiteClasses([
+@Suite
+@SelectClasses([
   FindByMethodSpec,
   ListOrderBySpec
 ])

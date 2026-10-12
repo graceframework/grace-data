@@ -31,8 +31,10 @@ The project is essentially a multi-project Gradle build. There is a core API and
 
 * `grace-datastore-core` - The core API, this provides core interfaces for implementing a GORM provider
 * `grace-datastore-gorm` - The runtime meta-programming and AST transformation infrastructure behind GORM. This also provides end users with APIs like `grails.gorm.CriteriaBuilder` and `grails.gorm.DetachedCriteria`
+* `grace-datastore-gorm-async` - Provides the asynchronous programming model for GORM — the `AsyncEntity` trait and the `async` namespace
 * `grace-datastore-gorm-support` - Support classes for easing the writing of a GORM plugin for Grails
 * `grace-datastore-gorm-tck` - The TCK that includes hundreds of Spock specifications that a GORM implementation will need to pass
+* `grace-datastore-gorm-validation` - Provides a robust, extensible framework for validating GORM entities - a declarative constraint DSL, a registry of reusable validators, and a cascade mechanism for complex object graphs
 * `grace-datastore-web` - Classes required to integrate GORM into a web tier
 
 In addition to this, there are separate projects of GORM implementations for various datastores:
