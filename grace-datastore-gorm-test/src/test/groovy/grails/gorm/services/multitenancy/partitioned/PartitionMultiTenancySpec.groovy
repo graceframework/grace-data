@@ -128,7 +128,7 @@ class BookService {
     }
 
     @ReadOnly
-    int countBooks() {
+    Long countBooks() {
         Book.count()
     }
 
@@ -150,6 +150,6 @@ interface IBookService {
     @WithoutTenant
     Book saveBook(Book book)
 
-    Integer countBooks()
+    Long countBooks()
 
 }

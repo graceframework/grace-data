@@ -59,7 +59,7 @@ interface IFooService {
     @WithoutTenant
     Foo saveFoo(Foo foo)
 
-    Integer countFoos()
+    Long countFoos()
 }
 
 @Entity

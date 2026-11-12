@@ -101,7 +101,7 @@ class BookService {
     }
 
     @ReadOnly
-    int countBooks() {
+    Long countBooks() {
         Book.count()
     }
 
@@ -113,6 +113,6 @@ interface IBookService {
 
     Book saveBook(String title)
 
-    Integer countBooks()
+    Long countBooks()
 
 }

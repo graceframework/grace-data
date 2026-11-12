@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2025 the original author or authors.
+ * Copyright 2016-2026 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -195,12 +195,12 @@ interface GormStaticOperations<D> {
      * Counts the number of persisted entities
      * @return The number of persisted entities
      */
-    Integer count()
+    Long count()
 
     /**
      * Same as {@link #count()} but allows property-style syntax (Foo.count)
      */
-    Integer getCount()
+    Long getCount()
 
     /**
      * Checks whether an entity exists

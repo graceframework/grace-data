@@ -1218,7 +1218,7 @@ class Project {
             firstName == lastName
         }
         Person result = query.get()
-        int count = query.count()
+        def count = query.count()
 
         then: 'The correct result is returned'
         result != null

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2025 the original author or authors.
+ * Copyright 2010-2026 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ class WithTransactionSpec extends GormDatastoreSpec {
         }
 
         when:
-        int count = TestEntity.count()
+        def count = TestEntity.count()
 //            def results = TestEntity.list(sort:'name') // TODO this fails but doesn't appear to be tx-related, so manually sorting
         def results = TestEntity.list().sort { it.name }
 
@@ -49,7 +49,7 @@ class WithTransactionSpec extends GormDatastoreSpec {
         }
 
         when:
-        int count = TestEntity.count()
+        def count = TestEntity.count()
         def results = TestEntity.list()
 
         then:
@@ -71,7 +71,7 @@ class WithTransactionSpec extends GormDatastoreSpec {
         }
 
         when:
-        int count = TestEntity.count()
+        def count = TestEntity.count()
         def results = TestEntity.list()
 
         then:
@@ -95,7 +95,7 @@ class WithTransactionSpec extends GormDatastoreSpec {
         }
 
         when:
-        int count = TestEntity.count()
+        def count = TestEntity.count()
         def results = TestEntity.list()
 
         then:
