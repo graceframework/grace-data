@@ -28,7 +28,7 @@ class BookService {
     }
 
     @ReadOnly
-    int countBooks() {
+    def countBooks() {
         Book.count()
     }
 

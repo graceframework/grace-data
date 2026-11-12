@@ -195,7 +195,7 @@ class PlayService {
 class TeamService {
 
     @WithoutTenant
-    int countPlayers() {
+    Long countPlayers() {
         Player.count()
     }
 
