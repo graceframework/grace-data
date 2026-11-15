@@ -1,3 +1,28 @@
+=== 2025.0.0-M2
+
+link:{github}/releases/tag/v2025.0.0-M2[release notes]
+
+⚠️ Noteworthy Changes
+
+* GormStaticOperations: return Long from count() instead of Integer link:{github}/issues/191[#191]
+
+🛠 Improvements
+
+* Add release notes for 2025.0.0-M2
+* Include LICENSE and NOTICE files into the JAR file link:{github}/issues/200[#200]
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace Async 8.0.0-M2 link:{github}/issues/198[#198]
+* Upgrade to Grace Gradle Plugin 2025.0.0-M2 link:{github}/issues/196[#196]
+* Upgrade to Gradle 9.8.2 link:{github}/issues/193[#193]
+* Upgrade to Hibernate Validator 9.0.2.Final link:{github}/issues/194[#194]
+* Upgrade to Spring Framework 7.0.10 link:{github}/issues/195[#195]
+
+⚙️ Tasks
+
+* Release 2025.0.0-M2
+
 === 2025.0.0-M1
 
 link:{github}/releases/tag/v2025.0.0-M1[release notes]
