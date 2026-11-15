@@ -1,3 +1,30 @@
+=== 2024.2.0
+
+link:{github}/releases/tag/v2024.2.0[release notes]
+
+⚠️ Noteworthy Changes
+
+* GormStaticOperations: return Long from count() instead of Integer link:{github}/issues/190[#190]
+
+🛠 Improvements
+
+* Add release notes for 2024.2.0
+* Update README
+* Include LICENSE and NOTICE files into the JAR file link:{github}/issues/199[#199]
+* Update guides: gettingStarted.adoc and stepByStep.adoc link:{github}/issues/188[#188]
+
+🚀 Dependency Upgrades
+
+* Upgrade to Grace Async 7.2.0 link:{github}/issues/197[#197]
+* Upgrade to Gradle 8.14.7 link:{github}/issues/192[#192]
+* Upgrade to Hibernate Validator 8.0.5.Final link:{github}/issues/185[#185]
+* Upgrade to JUnit Jupiter 5.14.4 and JUnit Platform 1.14.4 link:{github}/issues/182[#182]
+* Upgrade Java version in sdkmanrc to 17.0.20-zulu link:{github}/issues/173[#173]
+
+⚙️ Tasks
+
+* Release v2024.2.0
+
 === 2024.2.0-RC1
 
 link:{github}/releases/tag/v2024.2.0-RC1[release notes]
